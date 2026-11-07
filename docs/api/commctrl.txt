@@ -1,0 +1,684 @@
+## CommandBands_AddAdornments(hwndCmdBands, hinst, dwFlags, prbbi)
+Adds a band holding the Close button, and optionally Help and OK buttons,
+to a command bands control.
+
+Close posts WM_CLOSE, Help posts WM_HELP and OK posts WM_COMMAND with IDOK.
+The band's identifier is 0xFFFFFFFF unless prbbi sets another.
+
+@param hwndCmdBands The control, from CommandBands_Create.
+@param hinst Application instance.
+@param dwFlags 0, or CMDBAR_HELP and/or CMDBAR_OK.
+@param prbbi Settings for the adornments band, or NULL.
+@return TRUE on success, FALSE on failure.
+
+## CommandBands_AddBands(hwndCmdBands, hinst, cBands, prbbi)
+Adds bands to a command bands control.
+
+Each band gets a command bar, which CommandBands_GetCommandBar returns. To
+put another control in a band, set RBBIM_CHILD in fMask and the control in
+hwndChild.
+
+@param hwndCmdBands The control, from CommandBands_Create.
+@param hinst Application instance.
+@param cBands Number of bands to add.
+@param prbbi Array of cBands REBARBANDINFO structures.
+@return TRUE on success, FALSE on failure.
+
+## CommandBands_Create(hinst, hwndParent, wID, dwStyles, himl)
+Creates a command bands control: a rebar whose bands hold command bars.
+
+Add bands with CommandBands_AddBands, then CommandBands_AddAdornments.
+
+@param hinst Application instance.
+@param hwndParent Parent window.
+@param wID Control identifier, used in rebar notifications.
+@param dwStyles Rebar styles, RBS_*.
+@param himl Image list for band images, or NULL.
+@return The control, or NULL on failure.
+
+## CommandBands_GetCommandBar(hwndCmdBands, uBand)
+Returns the command bar in a band of a command bands control.
+
+The user may have moved the bands, so get the index from the band's
+identifier with RB_IDTOINDEX.
+
+@param hwndCmdBands The control, from CommandBands_Create.
+@param uBand Zero-based index of the band.
+@return The command bar, or NULL on failure.
+
+## CommandBands_GetRestoreInformation(hwndCmdBands, uBand, pcbr)
+Retrieves a band's current state, to restore the layout next time the
+application runs.
+
+Save the result, for example in the registry, before the window closes.
+When restoring, pass its fStyle and cxRestored to CommandBands_AddBands in
+REBARBANDINFO's fStyle and cx, then send RB_MAXIMIZEBAND for any band with
+fMaximized set.
+
+@param hwndCmdBands The control, from CommandBands_Create.
+@param uBand Zero-based index of the band. Use RB_IDTOINDEX to find it.
+@param pcbr Receives the state. Set cbSize first.
+@return TRUE on success, FALSE on failure.
+
+## CommandBands_Show(hwndCmdBands, fShow)
+Shows or hides a command bands control.
+
+@param hwndCmdBands The control, from CommandBands_Create.
+@param fShow TRUE to show, FALSE to hide.
+@return The previous visibility.
+
+## CommandBar_AddAdornments(hwndCB, dwFlags, dwReserved)
+Adds the Close button, and optionally Help and OK buttons, to a command
+bar.
+
+Close posts WM_CLOSE, Help posts WM_HELP and OK posts WM_COMMAND with IDOK.
+Call it after adding everything else (menus, buttons, combo boxes).
+
+@param hwndCB The command bar.
+@param dwFlags 0, or CMDBAR_HELP and/or CMDBAR_OK.
+@param dwReserved Reserved; must be zero.
+@return TRUE on success, FALSE on failure.
+
+## CommandBar_AddBitmap(hwndCB, hInst, idBitmap, iNumImages, iImageWidth, iImageHeight)
+Adds button images to a command bar from a bitmap.
+
+Images should be 16x16. For the system images, pass HINST_COMMCTRL with
+IDB_STD_SMALL_COLOR or IDB_VIEW_SMALL_COLOR, then index them with STD_*
+or VIEW_* offset by the returned index. On Windows CE 1.0 the display is
+2bpp greyscale, so images aren't shown in colour.
+
+@param hwndCB The command bar.
+@param hInst Module containing the bitmap, HINST_COMMCTRL, or NULL if
+       idBitmap is an HBITMAP.
+@param idBitmap Bitmap resource identifier, IDB_* for HINST_COMMCTRL, or
+       a bitmap handle.
+@param iNumImages Number of images in the bitmap. May be 0 for the
+       system bitmaps.
+@param iImageWidth Width of each image: 16. Reserved on Windows CE 1.0.
+@param iImageHeight Height of each image: 16. Reserved on Windows CE
+       1.0.
+@return Index of the first new image, or -1 on failure.
+
+## CommandBar_AlignAdornments(hwndCB)
+Lines up the command bar's adornments, the buttons added with
+CommandBar_AddAdornments, after its buttons or size change.
+
+@param hwndCB The command bar.
+
+## CommandBar_Create(hInst, hwndParent, idCmdBar)
+Creates an empty command bar along the top of a window.
+
+The command bar takes the place of the menu bar and sits inside the
+parent's client area: offset your layout by CommandBar_Height. Destroy with
+CommandBar_Destroy.
+
+@param hInst Application instance.
+@param hwndParent Parent window.
+@param idCmdBar Control identifier.
+@return The command bar, or NULL on failure.
+
+## CommandBar_DrawMenuBar(hwndCB, iButton)
+Repositions and redraws a command bar after one of its menus has changed.
+
+Call it after modifying a command bar menu, instead of DrawMenuBar. Don't
+use 0xFFFFFFFF as a button or separator command identifier: the command bar
+reserves it.
+
+@param hwndCB The command bar.
+@param iButton Zero-based index of the menu bar within the command bar.
+@return TRUE on success, FALSE on failure.
+
+## CommandBar_GetMenu(hwndCB, iButton)
+Returns the menu held by a command bar's menu bar.
+
+@param hwndCB The command bar.
+@param iButton Zero-based index of the button holding the menu bar.
+@return The menu, or NULL on failure, including when the button has no
+        menu.
+
+## CommandBar_Height(hwndCB)
+Returns the height of a command bar.
+
+The command bar covers the top of the parent's client area, so use this to
+find where the usable client area starts.
+
+@param hwndCB The command bar.
+@return The height, in pixels.
+
+## CommandBar_InsertComboBox(hwndCB, hInst, iWidth, dwStyle, idComboBox, iButton)
+Inserts a combo box into a command bar.
+
+@param hwndCB The command bar.
+@param hInst Application instance.
+@param iWidth Width, in pixels.
+@param dwStyle Combo box and window styles. WS_CHILD and WS_VISIBLE are
+       added automatically. On Windows CE 1.0, only CBS_DROPDOWNLIST and
+       WS_VSCROLL are supported.
+@param idComboBox Control identifier.
+@param iButton Zero-based index of the button to insert it before.
+@return The combo box, or NULL on failure.
+
+## CommandBar_InsertMenubar(hwndCB, hInst, idMenu, iButton)
+Inserts a menu bar, loaded from a resource, into a command bar.
+
+Use the same kind of menu resource as a desktop application's main menu.
+Get the menu afterwards with CommandBar_GetMenu.
+
+@param hwndCB The command bar.
+@param hInst Module containing the menu resource.
+@param idMenu Menu resource identifier.
+@param iButton Zero-based index of the button to insert it before.
+@return TRUE on success, FALSE on failure.
+
+## CommandBar_InsertMenubarEx(hwndCB, hInst, pszMenu, iButton)
+Inserts a menu bar into a command bar, from a resource or a menu handle.
+
+@param hwndCB The command bar.
+@param hInst Module containing the menu resource, or NULL if pszMenu is a
+       menu handle.
+@param pszMenu Menu resource name (or MAKEINTRESOURCE identifier), or an
+       HMENU.
+@param iButton Zero-based index of the button to insert it before.
+@return TRUE on success, FALSE on failure.
+
+## CommandBar_Show(hwndCB, fShow)
+Shows or hides a command bar.
+
+Command bars start visible. To hide one before the window first appears,
+call this before ShowWindow on the parent.
+
+@param hwndCB The command bar.
+@param fShow TRUE to show, FALSE to hide.
+@return TRUE if the command bar was visible before, FALSE if hidden.
+
+## CreateStatusWindowW(style, lpszText, hwndParent, wID)
+Creates a status bar, normally along the bottom of the parent window.
+
+A wrapper for CreateWindow with default position and size.
+
+@param style Window styles. Must include WS_CHILD and normally WS_VISIBLE.
+@param lpszText Text for the first part.
+@param hwndParent Parent window.
+@param wID Control identifier, used in notifications to the parent.
+@return The status bar, or NULL on failure.
+
+## CreateToolbarEx(hwnd, ws, wID, nBitmaps, hBMInst, wBMID, lpButtons, iNumButtons, dxButton, dyButton, dxBitmap, dyBitmap, uStructSize)
+Creates a toolbar and adds buttons and their images to it.
+
+@param hwnd Parent window.
+@param ws Window and toolbar styles. Include WS_CHILD.
+@param wID Control identifier.
+@param nBitmaps Number of images in the bitmap.
+@param hBMInst Module containing the bitmap resource, HINST_COMMCTRL for
+       the system images, or NULL if wBMID is an HBITMAP.
+@param wBMID Bitmap resource identifier, or a bitmap handle.
+@param lpButtons Array of TBBUTTON structures.
+@param iNumButtons Number of entries in lpButtons.
+@param dxButton Button width, in pixels, or 0 for the default.
+@param dyButton Button height, in pixels, or 0 for the default.
+@param dxBitmap Image width, in pixels, or 0 for the default.
+@param dyBitmap Image height, in pixels, or 0 for the default.
+@param uStructSize sizeof(TBBUTTON).
+@return The toolbar, or NULL on failure.
+
+## CreateUpDownControl(dwStyle, x, y, cx, cy, hwndParent, nID, hinst, hwndBuddy, nUpper, nLower, nPos)
+Creates an up-down (spin) control.
+
+On Windows CE the buddy window can only be an edit control.
+
+@param dwStyle Window styles, normally WS_CHILD, WS_BORDER and WS_VISIBLE,
+       plus UDS_* styles.
+@param x Left edge, in client coordinates.
+@param y Top edge, in client coordinates.
+@param cx Width, in pixels.
+@param cy Height, in pixels.
+@param hwndParent Parent window.
+@param nID Control identifier.
+@param hinst Application instance.
+@param hwndBuddy Edit control to pair it with, or NULL for none.
+@param nUpper Upper limit of the range.
+@param nLower Lower limit of the range.
+@param nPos Initial position.
+@return The control, or NULL on failure.
+
+## DestroyWindow(hWnd)
+Destroys a window, its child windows and the windows it owns.
+
+Sends WM_DESTROY, and also destroys modeless dialogs. A thread can't
+destroy a window created by another thread. Windows CE doesn't send
+WM_NCDESTROY. CommandBar_Destroy maps to this.
+
+@param hWnd The window to destroy.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## DPA_Destroy(hdpa)
+Frees a dynamic pointer array.
+
+Undocumented in the Windows CE SDK. Frees only the array: free the items
+it points to first.
+
+@param hdpa The array.
+@return TRUE on success, FALSE on failure.
+
+## DPA_GetPtr(hdpa, i)
+Returns an item from a dynamic pointer array.
+
+Undocumented in the Windows CE SDK.
+
+@param hdpa The array.
+@param i Zero-based index of the item.
+@return The item, or NULL if i is out of range.
+
+## DrawStatusTextW(hdc, lprc, szText, uFlags)
+Draws text with a border, in the style of a status bar.
+
+A tab in the text centres what follows it; two tabs right-align it.
+
+@param hdc Device context to draw into.
+@param lprc Rectangle to draw in, in client coordinates. The border is
+       drawn just inside it.
+@param szText The text.
+@param uFlags 0, SBT_NOBORDERS for no border, or SBT_POPOUT for a raised
+       border.
+
+## DSA_Create(cbItem, cItemGrow)
+Creates a dynamic structure array, holding fixed-size items by value.
+
+Undocumented in the Windows CE SDK. Free with DSA_Destroy.
+
+@param cbItem Size of each item, in bytes.
+@param cItemGrow Number of items to grow by when the array is full.
+@return The array, or NULL on failure.
+
+## DSA_Destroy(hdsa)
+Frees a dynamic structure array and the items it holds.
+
+Undocumented in the Windows CE SDK.
+
+@param hdsa The array.
+@return TRUE on success, FALSE on failure.
+
+## DSA_GetItemPtr(hdsa, i)
+Returns a pointer to an item in a dynamic structure array.
+
+Undocumented in the Windows CE SDK. The pointer becomes invalid when the
+array grows or shrinks.
+
+@param hdsa The array.
+@param i Zero-based index of the item.
+@return Pointer to the item, or NULL if i is out of range.
+
+## DSA_InsertItem(hdsa, i, pitem)
+Inserts a copy of an item into a dynamic structure array.
+
+Undocumented in the Windows CE SDK.
+
+@param hdsa The array.
+@param i Index to insert at. An index past the end, such as DA_LAST,
+       appends.
+@param pitem The item to copy in.
+@return Index of the new item, or -1 on failure.
+
+## ImageList_Add(himl, hbmImage, hbmMask)
+Adds one or more images to an image list.
+
+The bitmaps are copied, so delete them with DeleteObject afterwards.
+
+@param himl The image list.
+@param hbmImage Bitmap with the images side by side. The number of images
+       comes from its width.
+@param hbmMask Mask bitmap. Ignored if the list has no mask.
+@return Index of the first new image, or -1 on failure.
+
+## ImageList_AddMasked(himl, hbmImage, crMask)
+Adds one or more images to an image list, making the mask from a colour.
+
+Pixels of crMask colour are set to black in the image and transparent in
+the mask. The bitmap is copied, so delete it with DeleteObject afterwards.
+
+@param himl The image list.
+@param hbmImage Bitmap with the images side by side. The number of images
+       comes from its width.
+@param crMask The transparent colour.
+@return Index of the first new image, or -1 on failure.
+
+## ImageList_BeginDrag(himlTrack, iTrack, dxHotspot, dyHotspot)
+Starts dragging an image.
+
+Creates a temporary drag image list. Show it with ImageList_DragEnter, move
+it with ImageList_DragMove on WM_MOUSEMOVE and finish with
+ImageList_EndDrag.
+
+@param himlTrack The image list.
+@param iTrack Index of the image to drag.
+@param dxHotspot Hot spot x, relative to the image's top left.
+@param dyHotspot Hot spot y, relative to the image's top left.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_Copy(himlDst, iDst, himlSrc, iSrc, uFlags)
+Copies or swaps images within an image list.
+
+@param himlDst The image list. Must be the same as himlSrc.
+@param iDst Zero-based index of the destination image.
+@param himlSrc The image list. Must be the same as himlDst.
+@param iSrc Zero-based index of the source image.
+@param uFlags ILCF_MOVE to copy the source over the destination, or
+       ILCF_SWAP to exchange them.
+@return Nonzero on success, zero on failure.
+
+## ImageList_Create(cx, cy, flags, cInitial, cGrow)
+Creates an image list.
+
+Destroy with ImageList_Destroy.
+
+@param cx Width of each image, in pixels.
+@param cy Height of each image, in pixels.
+@param flags ILC_COLOR or ILC_COLORDDB, optionally with ILC_MASK for a
+       monochrome mask. ILC_COLOR on Windows CE 1.0 is a 2bpp DIB; on
+       later versions it picks the display driver's default, usually 4
+       bits per pixel, or a device-dependent bitmap on older drivers.
+       ILC_COLOR4, ILC_COLOR8, ILC_COLOR16, ILC_COLOR24 and ILC_COLOR32
+       aren't supported.
+@param cInitial Number of images to allocate space for initially.
+@param cGrow Number of images to grow by when the list is full.
+@return The image list, or NULL on failure.
+
+## ImageList_Destroy(himl)
+Destroys an image list.
+
+@param himl The image list.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_DragEnter(hwndLock, x, y)
+Locks a window against updates during a drag and shows the drag image in
+it.
+
+Start the drag with ImageList_BeginDrag first.
+
+@param hwndLock Window to show the drag image in.
+@param x Position of the drag image, relative to the window's top left,
+       not its client area.
+@param y Position of the drag image, relative to the window's top left,
+       not its client area.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_DragLeave(hwndLock)
+Hides the drag image and unlocks the window so it can update.
+
+@param hwndLock Window passed to ImageList_DragEnter.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_DragMove(x, y)
+Moves the drag image, typically on WM_MOUSEMOVE.
+
+@param x New x position, as for ImageList_DragEnter.
+@param y New y position, as for ImageList_DragEnter.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_DragShowNolock(fShow)
+Shows or hides the drag image without locking the window.
+
+@param fShow TRUE to show, FALSE to hide.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_Draw(himl, iDraw, hdcDst, x, y, fStyle)
+Draws an image from an image list.
+
+@param himl The image list.
+@param iDraw Index of the image.
+@param hdcDst Destination device context.
+@param x Left edge in hdcDst.
+@param y Top edge in hdcDst.
+@param fStyle ILD_NORMAL, ILD_TRANSPARENT, ILD_BLEND25 (ILD_FOCUS),
+       ILD_BLEND50 (ILD_SELECTED), ILD_MASK or ILD_IMAGE, optionally with
+       an overlay from INDEXTOOVERLAYMASK. Blending and transparency need
+       a masked list.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_DrawEx(himl, iDraw, hdcDst, x, y, cx, cy, rgbBk, rgbFg, fStyle)
+Draws an image from an image list, with given background and blend
+colours.
+
+@param himl The image list.
+@param iDraw Index of the image.
+@param hdcDst Destination device context.
+@param x Left edge in hdcDst.
+@param y Top edge in hdcDst.
+@param cx Width of the part of the image to draw, or 0 for all of it.
+       Not validated.
+@param cy Height of the part of the image to draw, or 0 for all of it.
+       Not validated.
+@param rgbBk Background colour, CLR_NONE for transparent or CLR_DEFAULT
+       for the list's background colour. Only used with ILC_MASK lists.
+@param rgbFg Blend colour, CLR_NONE to blend with the destination, or
+       CLR_DEFAULT (CLR_HILIGHT) for the highlight colour. Only used with
+       ILD_BLEND25 or ILD_BLEND50.
+@param fStyle Drawing style, as for ImageList_Draw.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_DrawIndirect(pimldp)
+Draws an image from an image list, with the settings in a structure.
+
+@param pimldp The draw settings. Set cbSize first.
+@return Nonzero on success, zero on failure.
+
+## ImageList_Duplicate(himl)
+Creates a copy of an image list, with all its images and settings.
+
+@param himl The image list to copy.
+@return The new image list, or NULL on failure.
+
+## ImageList_EndDrag()
+Ends a drag started with ImageList_BeginDrag.
+
+## ImageList_GetBkColor(himl)
+Returns the background color of an image list.
+
+@param himl The image list.
+@return The background color, or CLR_NONE if images are drawn
+        transparently using the mask.
+
+## ImageList_GetDragImage(ppt, pptHotspot)
+Returns the temporary image list used for the current drag image, and
+the drag position and hot spot offset.
+
+The image list is destroyed by ImageList_EndDrag. Don't destroy it
+yourself.
+
+@param ppt Receives the current drag position, or NULL.
+@param pptHotspot Receives the offset of the drag image from the drag
+       position, or NULL.
+@return The drag image list, or NULL if no drag is in progress.
+
+## ImageList_GetIcon(himl, iImage, fStyle)
+Creates an icon from an image and its mask in an image list.
+
+Windows CE can create only icons this way, not cursors. Destroy the
+result with DestroyIcon.
+
+@param himl The image list.
+@param iImage Index of the image.
+@param fStyle Drawing style, ILD_* as for ImageList_Draw.
+@return The new icon, or NULL on failure.
+
+## ImageList_GetIconSize(himl, cx, cy)
+Gets the width and height of the images in an image list.
+
+All images in a list are the same size.
+
+@param himl The image list.
+@param cx Receives the width, in pixels.
+@param cy Receives the height, in pixels.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_GetImageCount(himl)
+Returns the number of images in an image list.
+
+@param himl The image list.
+@return The number of images.
+
+## ImageList_GetImageInfo(himl, iImage, pImageInfo)
+Gets the bitmaps and bounding rectangle of an image.
+
+The returned bitmaps belong to the image list. They can be used to draw
+or modify the image directly, but don't delete them.
+
+@param himl The image list.
+@param iImage Index of the image.
+@param pImageInfo Receives the image and mask bitmaps and the image's
+       rectangle within them.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_LoadImage(hi, lpbmp, cx, cGrow, crMask, uType, uFlags)
+Creates an image list from a bitmap or icon resource.
+
+Only icons are supported, not cursors. OEM support may vary.
+
+@param hi Instance containing the image, or NULL for an OEM image.
+@param lpbmp Resource name in hi; with LR_LOADFROMFILE a file name; or,
+       if hi is NULL, an OEM image identifier (OBM_* or OIC_*) made
+       with MAKEINTRESOURCE.
+@param cx Width of each image. The height and initial number of images
+       are inferred from the resource.
+@param cGrow Number of images to add when the list grows.
+@param crMask Colour used to create the mask: its pixels become black
+       and set in the mask. CLR_NONE for no mask, CLR_DEFAULT to use the
+       top-left pixel's colour.
+@param uType IMAGE_BITMAP or IMAGE_ICON.
+@param uFlags Unsupported; set to 0.
+@return Image-list handle, or NULL on failure.
+
+## ImageList_Merge(himl1, iImage1, himl2, iImage2, dx, dy)
+Creates a new image list holding one image made by drawing one image
+transparently over another.
+
+The new mask is the OR of the two source masks. Destroy the result with
+ImageList_Destroy.
+
+@param himl1 Image list holding the background image.
+@param iImage1 Index of the background image.
+@param himl2 Image list holding the image to draw on top.
+@param iImage2 Index of the image to draw on top.
+@param dx Horizontal offset of the second image from the first.
+@param dy Vertical offset of the second image from the first.
+@return The new image list, or NULL on failure.
+
+## ImageList_Remove(himl, iRemove)
+Removes an image, or all images, from an image list.
+
+Images after the removed one move down an index.
+
+@param himl The image list.
+@param iRemove Index of the image, or -1 for all images.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_Replace(himl, iReplace, hbmImage, hbmMask)
+Replaces an image in an image list with new image and mask bitmaps.
+
+The bitmaps are copied, so delete them with DeleteObject afterwards.
+
+@param himl The image list.
+@param iReplace Index of the image to replace.
+@param hbmImage The new image bitmap.
+@param hbmMask The new mask bitmap. Ignored if the list has no mask.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_ReplaceIcon(himl, iReplace, hicon)
+Replaces an image with an icon, or appends the icon to the list.
+
+Takes icons only, not cursors. The icon is copied, so an icon you
+created can be destroyed afterwards. Icons from LoadIcon needn't be.
+
+@param himl The image list.
+@param iReplace Index of the image to replace, or -1 to append.
+@param hicon The icon, providing both the image and mask.
+@return Index of the image, or -1 on failure.
+
+## ImageList_SetBkColor(himl, clrBk)
+Sets the background color used when drawing an image list's images.
+
+@param himl The image list.
+@param clrBk The background color, or CLR_NONE to draw images
+       transparently using the mask.
+@return The previous background color, or CLR_NONE on failure.
+
+## ImageList_SetDragCursorImage(himlDrag, iDrag, dxHotspot, dyHotspot)
+Combines an image with the current drag image to make a new drag
+image.
+
+Typically used to add a cursor-like image to the drag image during a
+drag started with ImageList_BeginDrag.
+
+@param himlDrag Image list holding the image to combine.
+@param iDrag Index of the image to combine.
+@param dxHotspot Horizontal position of the hot spot within the image.
+@param dyHotspot Vertical position of the hot spot within the image.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_SetIconSize(himl, cx, cy)
+Sets the size of the images in an image list, removing all images.
+
+@param himl The image list.
+@param cx New image width, in pixels.
+@param cy New image height, in pixels.
+@return TRUE on success, FALSE on failure.
+
+## ImageList_SetImageCount(himl, uNewCount)
+Grows or shrinks an image list to a given number of images.
+
+Images cut off by shrinking are freed. New slots made by growing hold
+no valid image: fill them with ImageList_Replace before drawing them.
+
+@param himl The image list.
+@param uNewCount The new number of images.
+@return Nonzero on success, zero on failure.
+
+## ImageList_SetOverlayImage(himl, iImage, iOverlay)
+Makes an image available as one of up to four overlay masks.
+
+To draw an image with an overlay, pass INDEXTOOVERLAYMASK(iOverlay) in
+the style flags of ImageList_Draw or ImageList_DrawEx.
+
+@param himl The image list.
+@param iImage Index of the image to use as an overlay.
+@param iOverlay Overlay number, 1 to 4.
+@return TRUE on success, FALSE on failure.
+
+## InitCommonControls()
+Loads the common controls DLL and registers its window classes.
+
+Call it before creating any common control, or use InitCommonControlsEx
+to register only the classes you need.
+
+## InitCommonControlsEx(lpInitCtrls)
+Registers chosen common control window classes.
+
+@param lpInitCtrls Structure with dwSize set and dwICC holding ICC_*
+       flags: ICC_BAR_CLASSES (toolbar, status bar, trackbar, command
+       bar), ICC_COOL_CLASSES, ICC_DATE_CLASSES, ICC_LISTVIEW_CLASSES,
+       ICC_PROGRESS_CLASS, ICC_TAB_CLASSES, ICC_TREEVIEW_CLASSES and
+       ICC_UPDOWN_CLASS. Windows CE doesn't support ICC_ANIMATE_CLASS,
+       ICC_HOTKEY_CLASS, ICC_INTERNET_CLASSES or ICC_USEREX_CLASSES.
+@return TRUE on success, FALSE on failure.
+
+## IsWindowVisible(hWnd)
+Returns whether a window has the WS_VISIBLE style.
+
+A window can be "visible" and still be fully covered by other windows
+or clipped by its parent.
+
+@param hWnd The window.
+@return TRUE if the window has WS_VISIBLE, otherwise FALSE.
+
+## Str_SetPtrW(ppsz, psz)
+Replaces a dynamically allocated string with a newly allocated copy of
+another.
+
+Undocumented in the Windows CE SDK. In desktop comctl32 the old string
+is freed, so passing NULL for psz frees the string and sets *ppsz to
+NULL.
+
+@param ppsz The string pointer to update. Must be NULL or a string
+       previously set by Str_SetPtrW.
+@param psz The string to copy, or NULL.
+@return TRUE on success, FALSE if allocation fails.

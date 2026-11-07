@@ -1,0 +1,78 @@
+## SipEnumIM(pEnumIMProc)
+Enumerates the available input methods.
+
+Pass NULL to retrieve the count without callbacks. Enumeration stops
+when the callback returns zero. This call does not initialize the input
+panel environment.
+
+@param pEnumIMProc Callback for each input method, or NULL to get the count.
+@return Number of available input methods, or -1 on error.
+
+## SipGetCurrentIM(pClsid)
+Retrieves the CLSID of the current input method.
+
+@param pClsid Receives the CLSID.
+@return TRUE on success, FALSE on failure; use GetLastError for details.
+
+## SipGetInfo(pSipInfo)
+Retrieves input-panel state, position, unobscured desktop area and IM data.
+
+Set dwImDataSize to 0 unless the current IM provides data you can use;
+requesting unavailable IM data causes failure.
+
+@param pSipInfo Receives input-panel information.
+@return TRUE on success, FALSE on failure; use GetLastError for details.
+
+## SipRegisterNotification(hWnd)
+Registers a window to receive input-panel notifications.
+
+Only one application can register. The registration remains until a
+warm or cold reboot. This call does not initialize the input-panel
+environment.
+
+@param hWnd Window that receives notifications.
+@return TRUE on success, FALSE on failure; use GetLastError for details.
+
+## SipSetCurrentIM(pClsid)
+Requests an input method by CLSID.
+
+If the requested IM cannot be loaded, the default IM is loaded instead.
+Call SipGetCurrentIM afterward to verify which IM is active.
+
+@param pClsid CLSID of the requested input method.
+@return TRUE on success; on failure, the reference specifies an HRESULT
+        error code.
+
+## SipSetDefaultRect(pRect)
+Sets the default size and position of the input panel.
+
+The new default takes effect after an application loads a new input
+method. This call does not initialize the input-panel environment.
+
+@param pRect Default input-panel rectangle.
+@return TRUE on success, FALSE on failure; use GetLastError for details.
+
+## SipSetInfo(pSipInfo)
+Sets the input-panel state, position and unobscured desktop area.
+
+Clear the SIPINFO structure before setting the fields to pass to this
+function.
+
+@param pSipInfo Input-panel settings to apply.
+@return TRUE on success, FALSE on failure; use GetLastError for details.
+
+## SipShowIM(dwFlag)
+Shows or hides the current input panel.
+
+Use SIPF_ON to show it and SIPF_OFF to hide it.
+
+@param dwFlag SIPF_ON or SIPF_OFF.
+@return TRUE on success; on failure, the reference specifies an HRESULT
+        error code.
+
+## SipStatus()
+Reports whether the input-panel environment is installed.
+
+This call does not initialize the input-panel environment.
+
+@return SIP_STATUS_AVAILABLE or SIP_STATUS_UNAVAILABLE.

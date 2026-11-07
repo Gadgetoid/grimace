@@ -1,0 +1,709 @@
+## BITMAP
+This structure defines the type, width, height, color format, and bit
+values of a bitmap.
+
+The bitmap formats currently used are monochrome and color. The
+monochrome bitmap uses a one-bit, one-plane format. Each scan is a
+multiple of 32 bits.
+
+Scans are organized as follows for a monochrome bitmap of height n:
+
+    Scan 0
+    Scan 1
+    .
+    .
+    .
+    Scan n-2
+    Scan n-1
+
+The pixels on a monochrome device are either black or white. If the
+corresponding bit in the bitmap is 1, the pixel is set to the foreground
+color; if the corresponding bit in the bitmap is zero, the pixel is set
+to the background color.
+
+All devices that have the RC_BITBLT device capability support bitmaps.
+For more information, see GetDeviceCaps.
+
+Each device has a unique color format.
+
+@member bmType Specifies the bitmap type; set to zero
+@member bmWidth Specifies the width, in pixels, of the bitmap. The width
+       must be greater than zero.
+@member bmHeight Specifies the height, in pixels, of the bitmap. The
+       height must be greater than zero.
+@member bmWidthBytes Specifies the number of bytes in each scan line.
+       This value must be divisible by 2, because the system assumes
+       that the bit values of a bitmap form an array that is word
+       aligned.
+@member bmPlanes Specifies the count of color planes.
+@member bmBitsPixel Specifies the number of bits required to indicate
+       the color of a pixel.
+@member bmBits Pointer to the location of the bit values for the bitmap.
+       The bmBits member must be a long pointer to an array of character
+       (1-byte) values.
+
+## BITMAPCOREHEADER
+This structure contains information about the dimensions and color
+format of a device-independent bitmap (DIB).
+
+The BITMAPCOREINFO structure combines the BITMAPCOREHEADER structure and
+a color table to provide a complete definition of DIB dimensions and
+colors. For more information about specifying a DIB, see BITMAPCOREINFO.
+
+An application should use the information stored in the bcSize member to
+locate the color table in a BITMAPCOREINFO structure. The following code
+sample shows how to locate the color table.
+
+    pColor = ((LPBYTE) pBitmapCoreInfo +
+            (WORD) (pBitmapCoreInfo -> bcSize))
+
+@member bcSize Specifies the number of bytes required by the structure
+@member bcWidth Specifies the width of the bitmap, in pixels
+@member bcHeight Specifies the height of the bitmap, in pixels
+@member bcPlanes Specifies the number of planes for the target device.
+       This value must be 1.
+@member bcBitCount Specifies the number of bits per pixel. This value
+       must be 1, 2, 4, 8, or 24.
+
+## BITMAPCOREINFO
+This structure defines the dimensions and color information for a device
+independent bitmap (DIB).
+
+A DIB consists of two parts: a BITMAPCOREINFO structure describing the
+dimensions and colors of the bitmap, and an array of bytes defining the
+pixels of the bitmap. The bits in the array are packed together, but
+each scan line must be padded with zeroes to end on a LONG boundary. The
+origin of the bitmap is the lower left corner.
+
+The bcBitCount member of the BITMAPCOREHEADER structure determines the
+number of bits that define each pixel and the maximum number of colors
+in the bitmap. This member can be one of the following values:
+
+Value Description 1 The bitmap is monochrome, and the bmciColors member
+contains two entries. Each bit in the bitmap array represents a pixel.
+If the bit is clear, the pixel is displayed with the color of the first
+entry in the bmciColors table; if the bit is set, the pixel has the
+color of the second entry in the table. 2 The bitmap has a maximum of 4
+colors, and the bmciColors member contains up to 4 entries. 4 The bitmap
+has a maximum of 16 colors, and the bmciColors member contains up to 16
+entries. Each pixel in the bitmap is represented by a 4-bit index into
+the color table. For example, if the first byte in the bitmap is 0x1F,
+the byte represents two pixels. The first pixel contains the color in
+the second table entry, and the second pixel contains the color in the
+sixteenth table entry. 8 The bitmap has a maximum of 256 colors, and the
+bmciColors member contains up to 256 entries. In this case, each byte in
+the array represents a single pixel. 24 The bitmap has a maximum of 2^24
+colors, and the bmciColors member is NULL. Each three-byte triplet in
+the bitmap array represents the relative intensities of blue, green, and
+red, respectively, for a pixel.
+
+The colors in the bmciColors table should appear in order of importance.
+
+Alternatively, for functions that use DIBs, the bmciColors member can be
+an array of 16-bit unsigned integers that specify indexes into the
+currently realized logical palette, instead of explicit RGB values. In
+this case, an application using the bitmap must call the DIB functions
+(CreateDIBitmap, CreateDIBPatternBrush, and CreateDIBSection) with the
+iUsage parameter set to DIB_PAL_COLORS.
+
+Note The bmciColors member should not contain palette indexes if the
+bitmap is to be stored in a file or transferred to another application.
+Unless the application has exclusive use and control of the bitmap, the
+bitmap color table should contain explicit RGB values.
+
+@member bmciHeader Specifies a BITMAPCOREHEADER structure that contains
+       information about the dimensions and color format of a DIB.
+@member bmciColors Specifies an array of RGBTRIPLE structures that
+       define the colors in the bitmap.
+
+## BITMAPFILEHEADER
+This structure contains information about the type, size, and layout of
+a file that containing a device-independent bitmap (DIB).
+
+A BITMAPINFO or BITMAPCOREINFO structure immediately follows the
+BITMAPFILEHEADER structure in the DIB file.
+
+@member bfType Specifies the file type. It must be BM.
+@member bfSize Specifies the size, in bytes, of the bitmap file
+@member bfReserved1 Reserved; set to zero
+@member bfReserved2 Reserved; set to zero
+@member bfOffBits Specifies the offset, in bytes, from the
+       BITMAPFILEHEADER structure to the bitmap bits
+
+## BITMAPINFO
+This structure defines the dimensions and color information of a
+Windows-based device-independent bitmap (DIB).
+
+A device-independent bitmap consists of two distinct parts: a BITMAPINFO
+structure describing the dimensions and colors of the bitmap, and an
+array of bytes defining the pixels of the bitmap. The bits in the array
+are packed together, but each scan line must be padded with zeroes to
+end on a LONG data-type boundary. If the height of the bitmap is
+positive, the bitmap is a bottom-up DIB and its origin is the lower-left
+corner. If the height is negative, the bitmap is a top-down DIB and its
+origin is the upper left corner.
+
+A bitmap is packed when the bitmap array immediately follows the
+BITMAPINFO header. Packed bitmaps are referenced by a single pointer.
+For packed bitmaps, the ClrUsed member of the BITMAPINFOHEADER structure
+must be set to an even number when using the DIB_PAL_COLORS mode so the
+DIB bitmap array starts on a DWORD boundary.
+
+Note The bmiColors member should not contain palette indexes if the
+bitmap is stored in a file or transferred to another application.
+
+Unless the application has exclusive use and control of the bitmap, the
+bitmap color table should contain explicit RGB values.
+
+@member bmiHeader Specifies a bitmap information header structure that
+       contains information about the dimensions of color format. Use
+       the BITMAPINFOHEADER structure.
+@member bmiColors Contains one of the following: An array of RGBQUAD.
+       The elements of the array make up the color table. An array of
+       16-bit unsigned integers that specifies indexes into the
+       currently realized logical palette. This use of bmiColors is
+       allowed for functions that use DIBs. When bmiColors elements
+       contain indexes to a realized logical palette, they must also
+       call the following bitmap functions: CreateDIBPatternBrushPt and
+       CreateDIBSection. The iUsage parameter of CreateDIBSection must
+       be set to DIB_PAL_COLORS. The number of entries in the array
+       depends on the values of the biBitCount and biClrUsed members of
+       the BITMAPINFOHEADER structure. The colors in the bmiColors table
+       appear in order of importance. For more information, see the
+       "Remarks" section.
+
+## BITMAPINFOHEADER
+This structure contains information about the dimensions and color
+format of a device-independent bitmap (DIB).
+
+The BITMAPINFO structure combines the BITMAPINFOHEADER structure and a
+color table to provide a complete definition of the dimensions and
+colors of a DIB.
+
+An application should use the information stored in the biSize member to
+locate the color table in a BITMAPINFO structure, as follows:
+
+    pColor = ((LPSTR)pBitmapInfo +
+        (WORD)(pBitmapInfo->bmiHeader.biSize));
+
+For Windows CE versions 1.0 and 1.01, the biBitCount member must be
+either one or two.
+
+@member biSize Specifies the number of bytes required by the structure.
+@member biWidth Specifies the width of the bitmap, in pixels.
+@member biHeight Specifies the height of the bitmap, in pixels. If
+       biHeight is positive, the bitmap is a bottom-up DIB and its
+       origin is the lower-left corner. If biHeight is negative, the
+       bitmap is a top-down DIB and its origin is the upper-left corner.
+       If biHeight is negative, indicating a top-down DIB, biCompression
+       must be either BI_RGB or BI_BITFIELDS. Top-down DIBs cannot be
+       compressed.
+@member biPlanes Specifies the number of planes for the target device.
+       This value must be set to 1.
+@member biBitCount Specifies the number of bits per pixel. The
+       biBitCount member of the BITMAPINFOHEADER structure determines
+       the number of bits that define each pixel and the maximum number
+       of colors in the bitmap. This member must be one of the following
+       values. Value Description 1 The bitmap is monochrome, and the
+       bmiColors member contains two entries. Each bit in the bitmap
+       array represents a pixel. If the bit is clear, the pixel is
+       displayed with the color of the first entry in the bmiColors
+       table; if the bit is set, the pixel has the color of the second
+       entry in the table. 2 The bitmap has four possible color values.
+       4 The bitmap has a maximum of 16 colors, and the bmiColors member
+       contains up to 16 entries. Each pixel in the bitmap is
+       represented by a 4-bit index into the color table. For example,
+       if the first byte in the bitmap is 0x1F, the byte represents two
+       pixels. The first pixel contains the color in the second table
+       entry, and the second pixel contains the color in the sixteenth
+       table entry. 8 The bitmap has a maximum of 256 colors, and the
+       bmiColors member contains up to 256 entries. In this case, each
+       byte in the array represents a single pixel. 16 The bitmap has a
+       maximum of 2^16 colors. If the biCompression member of the
+       BITMAPINFOHEADER is BI_RGB, the bmiColors member is NULL. Each
+       WORD in the bitmap array represents a single pixel. The relative
+       intensities of red, green, and blue are represented with 5 bits
+       for each color component. The value for blue is in the least
+       significant 5 bits, followed by 5 bits each for green and red.
+       The most significant bit is not used. The bmiColors color table
+       is used for optimizing colors used on palette-based devices, and
+       must contain the number of entries specified by the biClrUsed
+       member of the BITMAPINFOHEADER. 24 The bitmap has a maximum of
+       2^24 colors, and the bmiColors member is NULL. Each 3-byte
+       triplet in the bitmap array represents the relative intensities
+       of blue, green, and red, respectively, for a pixel. The bmiColors
+       color table is used for optimizing colors used on palette-based
+       devices, and must contain the number of entries specified by the
+       biClrUsed member of the BITMAPINFOHEADER. 32 The bitmap has a
+       maximum of 2^32 colors. If the biCompression member of the
+       BITMAPINFOHEADER is BI_RGB, the bmiColors member is NULL. Each
+       DWORD in the bitmap array represents the relative intensities of
+       blue, green, and red, respectively, for a pixel. The high byte in
+       each DWORD is not used. The bmiColors color table is used for
+       optimizing colors used on palette-based devices, and must contain
+       the number of entries specified by the biClrUsed member of the
+       BITMAPINFOHEADER. If the biCompression member of the
+       BITMAPINFOHEADER is BI_BITFIELDS, the bmiColors member contains
+       three DWORD color masks that specify the red, green, and blue
+       components, respectively, of each pixel. Each DWORD in the bitmap
+       array represents a single pixel.
+@member biCompression Specifies the type of compression for a compressed
+       bottom-up bitmap (top-down DIBs cannot be compressed). This
+       member must be the following value: Value Description BI_RGB An
+       uncompressed format
+@member biSizeImage Specifies the size, in bytes, of the image. This may
+       be set to zero for BI_RGB bitmaps.
+@member biXPelsPerMeter Specifies the horizontal resolution, in pixels
+       per meter, of the target device for the bitmap. An application
+       can use this value to select a bitmap from a resource group that
+       best matches the characteristics of the current device.
+@member biYPelsPerMeter Specifies the vertical resolution, in pixels per
+       meter, of the target device for the bitmap
+@member biClrUsed Specifies the number of color indexes in the color
+       table that are actually used by the bitmap. If this value is
+       zero, the bitmap uses the maximum number of colors corresponding
+       to the value of the biBitCount member for the compression mode
+       specified by biCompression. If biClrUsed is nonzero and the
+       biBitCount member is less than 16, the biClrUsed member specifies
+       the actual number of colors the graphics engine or device driver
+       accesses. If biBitCount is 16 or greater, the biClrUsed member
+       specifies the size of the color table used to optimize
+       performance of the system color palettes. If biBitCount equals 16
+       or 32, the optimal color palette starts immediately following the
+       three DWORD masks. If the bitmap is a packed bitmap (a bitmap in
+       which the bitmap array immediately follows the BITMAPINFO header
+       and is referenced by a single pointer), the biClrUsed member must
+       be either zero or the actual size of the color table.
+@member biClrImportant Specifies the number of color indexes required
+       for displaying the bitmap. If this value is zero, all colors are
+       required.
+
+## CHARSETINFO
+This structure contains information about a character set.
+
+@member ciCharset Character set value.
+@member ciACP ANSI code-page identifier.
+@member fs FONTSIGNATURE structure that identifies the Unicode and
+       code-page font signature values.
+
+## DIBSECTION
+This structure contains information about a device-independent bitmap
+(DIB).
+
+@member dsBm Specifies a BITMAP data structure that contains information
+       about the device-independent bitmap: its type, dimensions, color
+       capacities, and a pointer to its bit values.
+@member dsBmih Specifies a bitmap information header structure that
+       contains information about the color format of the DIB. Use the
+       BITMAPINFOHEADER structure.
+@member dsBitfields Specifies three DWORD color masks for the
+       device-independent bitmap. This member is only valid when the
+       BitCount member of the BITMAP INFORMATION HEADER structure has a
+       value greater than 8. Each color mask indicates the bits within a
+       DWORD used to encode one of the three color channels (red, green,
+       and blue).
+@member dshSection Contains a handle to the file mapping object that the
+       CreateDIBSection function used to create the device-independent
+       bitmap. If CreateDIBSection was called with a NULL value for its
+       hSection parameter, causing the system to allocate memory for the
+       bitmap, the dshSection member will be NULL.
+@member dsOffset Specifies the offset to the bitmap's bit values within
+       the file mapping object referenced by dshSection. If dshSection
+       is NULL, the dsOffset value has no meaning.
+
+## FONTSIGNATURE
+This structure contains information identifying the code pages and
+Unicode subranges for which a specified font provides glyphs.
+
+The graphics device interface (GDI) relies on Windows code pages fitting
+within a 32-bit value. Furthermore, the highest two bits within this
+value are reserved for GDI internal use and may not be assigned to code
+pages.
+
+@member fsUsb Specifies a 128-bit Unicode subset bitfield (USB)
+       identifying up to 126 Unicode subranges. Each bit, except the two
+       most significant bits, represents a single subrange. The most
+       significant bit is always 1 and identifies the bitfield as a font
+       signature; the second most significant bit is reserved and must
+       be 0. Unicode subranges are numbered in accordance with the ISO
+       10646 standard.
+@member fsCsb Specifies a 64-bit code-page bitfield (CPB) that
+       identifies a specific character set or code page. Code pages are
+       in the lower 32 bits of this bitfield. The high 32 are used for
+       non-Windows code pages.
+
+## GetBValue(rgb)
+This macro retrieves an intensity value for the blue component of a
+32-bit red, green, blue (RGB) value.
+
+The intensity value is in the range 0 through 255.
+
+The GetBValue macro is defined as follows:
+
+    #define GetBValue(rgb)   ((BYTE) ((rgb) >> 16))
+
+@param rgb Specifies an RGB color value.
+@return The return value is the intensity of the blue component of the
+       specified RGB color.
+
+## GetGValue(rgb)
+This macro retrieves an intensity value for the green component of a
+32-bit red, green, blue (RGB) value.
+
+The intensity value is in the range 0 through 255.
+
+The GetGValue macro is defined as follows:
+
+    #define GetGValue(rgb)   ((BYTE) (((WORD) (rgb)) >> 8))
+
+@param rgb Specifies an RGB color value.
+@return The return value is the intensity of the green component of the
+       specified RGB color.
+
+## GetRValue(rgb)
+This macro retrieves an intensity value for the red component of a
+32-bit red, green, blue (RGB) value.
+
+The intensity value is in the range 0 through 255.
+
+The GetRValue macro is defined as follows:
+
+    #define GetRValue(rgb)   ((BYTE) (rgb))
+
+@param rgb Specifies an RGB color value.
+@return The return value is the intensity of the red component of the
+       specified RGB color.
+
+## GetTextExtentPoint(hdc, lpString, cbString, lpSize)
+This function computes the width and height of the specified string of
+text.
+
+The GetTextExtentPoint function uses the currently selected font to
+compute the dimensions of the string. The width and height, in logical
+units, are computed without considering any clipping.
+
+Because some devices kern characters, the sum of the extents of the
+characters in a string may not be equal to the extent of the string.
+
+The calculated string width takes into account the intercharacter
+spacing set by the SetTextCharacterExtra function.
+
+The GetTextExtentPoint function is identical to the GetTextExtentPoint32
+function.
+
+@param hdc [in] Handle to the device context (DC).
+@param lpString [in] Long pointer to the string of text. The string does
+       not need to be zero-terminated, since cbString specifies the
+       length of the string.
+@param cbString [in] Specifies the number of characters in the string.
+@param lpSize [out] Long pointer to a SIZE structure in which the
+       dimensions of the string are to be returned.
+@return Nonzero indicates success. Zero indicates failure. To get
+       extended error information, call GetLastError.
+
+## GetTextExtentPoint32(hdc, lpString, cbString, lpSize)
+This function computes the width and height of the specified string of
+text.
+
+The GetTextExtentPoint32 function uses the currently selected font to
+compute the dimensions of the string. The width and height, in logical
+units, are computed without considering any clipping.
+
+Because some devices kern characters, the sum of the extents of the
+characters in a string may not be equal to the extent of the string.
+
+The calculated string width takes into account the intercharacter
+spacing set by the SetTextCharacterExtra function.
+
+The GetTextExtentPoint32 function is identical to the GetTextExtentPoint
+function.
+
+@param hdc [in] Handle to the device context (DC).
+@param lpString [in] Long pointer to the string of text. The string does
+       not need to be zero-terminated, since cbString specifies the
+       length of the string.
+@param cbString [in] Specifies the number of characters in the string.
+@param lpSize [out] Long pointer to a SIZE structure in which the
+       dimensions of the string are to be returned.
+@return Nonzero indicates success. Zero indicates failure. To get
+       extended error information, call GetLastError.
+
+## LOGBRUSH
+This structure defines the style, color, and pattern of a logical brush.
+
+Windows CE version 1.0 supports only the following lbStyle values:
+
+BS_NULL
+
+BS_SOLID
+
+Windows CE version 2.0 supports the following additional lbStyle values:
+
+BS_DIBPATTERNPT
+
+BS_PATTERN
+
+Although lbColor controls the foreground color of a hatch brush, the
+SetBkMode and SetBkColor functions control the background color.
+
+@member lbStyle Specifies the brush style. It is one of the following
+       styles: Value Description BS_DIBPATTERN A pattern brush defined
+       by a device-independent bitmap (DIB) specification. If lbStyle is
+       BS_DIBPATTERN, the lbHatch member contains a handle to a packed
+       DIB. Windows 95 and Windows 98: Creating brushes from bitmaps or
+       DIBs larger than 8x8 pixels is not supported. If a larger bitmap
+       is given, only a portion of the bitmap is used. BS_DIBPATTERN8X8
+       Same as BS_DIBPATTERN. BS_DIBPATTERNPT A pattern brush defined by
+       a device-independent bitmap (DIB) specification. If lbStyle is
+       BS_DIBPATTERNPT, the lbHatch member contains a pointer to a
+       packed DIB. BS_HATCHED Hatched brush. BS_HOLLOW Hollow brush.
+       BS_NULL Same as BS_HOLLOW. BS_PATTERN Pattern brush defined by a
+       memory bitmap. BS_PATTERN8X8 Same as BS_PATTERN. BS_SOLID Solid
+       brush.
+@member lbColor Specifies the color in which the brush is to be drawn.
+       If lbStyle is the BS_HOLLOW or BS_PATTERN style, lbColor is
+       ignored. If lbStyle is BS_DIBPATTERN or BS_DIBPATTERNBT, the
+       low-order word of lbColor specifies whether the bmiColors members
+       of the BITMAPINFO structure contain explicit red, green, blue
+       (RGB) values or indices into the currently realized logical
+       palette. The lbColor member must be one of the following values:
+       Value Description DIB_PAL_COLORS The color table consists of an
+       array of 16-bit indices into the currently realized logical
+       palette. DIB_RGB_COLORS The color table contains literal RGB
+       values.
+@member lbHatch Specifies a hatch style. The meaning depends on the
+       brush style defined by lbStyle. If lbStyle is BS_DIBPATTERN, the
+       lbHatch member contains a handle to a packed DIB. If lbStyle is
+       BS_DIBPATTERNPT, the lbHatch member contains a pointer to a
+       packed DIB. If lbStyle is BS_HATCHED, the lbHatch member
+       specifies the orientation of the lines used to create the hatch.
+       It can be one of the following values: Value Description
+       HS_BDIAGONAL A 45-degree upward, left-to-right hatch HS_CROSS
+       Horizontal and vertical cross-hatch HS_DIAGCROSS 45-degree
+       crosshatch HS_FDIAGONAL A 45-degree downward, left-to-right hatch
+       HS_HORIZONTAL Horizontal hatch HS_VERTICAL Vertical hatch If
+       lbStyle is BS_PATTERN, lbHatch is a handle to the bitmap that
+       defines the pattern. The bitmap cannot be a DIB section bitmap,
+       which is created by the CreateDIBSection function. If lbStyle is
+       BS_SOLID or BS_HOLLOW, lbHatch is ignored.
+
+## LOGPALETTE
+This structure defines a logical color palette.
+
+The colors in the palette-entry table should appear in order of
+importance because entries earlier in the logical palette are most
+likely to be placed in the system palette.
+
+@member palVersion Specifies the version number of the system.
+@member palNumEntries Specifies the number of entries in the logical
+       color palette.
+@member palPalEntry Specifies an array of PALETTEENTRY structures that
+       define the color and usage of each entry in the logical palette.
+
+## LOGPEN
+This structure defines the style, width, and color of a pen. The
+CreatePenIndirect function uses the LOGPEN structure.
+
+Windows CE does not support the following values for the lopnStyle
+member:
+
+PS_DOT
+
+PS_DASHDOT
+
+PS_DASHDOTDOT
+
+PS_INSIDEFRAME
+
+If the width of the pen is greater than 1 and the pen style is
+PS_INSIDEFRAME, the line is drawn inside the frame of all GDI objects
+except polygons and polylines. If the pen color does not match an
+available red, green, blue (RGB) value, the pen is drawn with a logical
+(dithered) color. If the pen width is less than or equal to 1, the
+PS_INSIDEFRAME style is identical to the PS_SOLID style.
+
+@member lopnStyle Specifies the pen style, which is one of the following
+       values: Value Description PS_SOLID Pen is solid. PS_DASH Pen is
+       dashed. PS_DOT Pen is dotted. PS_DASHDOT Pen has alternating
+       dashes and dots. PS_DASHDOTDOT Pen has dashes and double dots.
+       PS_NULL Pen is invisible. PS_INSIDEFRAME Pen is solid. When this
+       pen is used in any graphics device interface (GDI) drawing
+       function that takes a bounding rectangle, the dimensions of the
+       figure are shrunk so that it fits entirely in the bounding
+       rectangle, taking into account the width of the pen. This applies
+       only to geometric pens.
+@member lopnWidth Specifies the POINT structure that contains the pen
+       width, in logical units. If the pointer member is NULL, the pen
+       is one pixel wide on raster devices. The y member in the POINT
+       structure for lopnWidth is not used.
+@member lopnColor Specifies the pen color.
+
+## MAKEROP4
+This macro creates a quaternary raster operation (ROP) code for use by
+the MaskBlt function. The macro takes two ternary ROP codes as input,
+one for the foreground and one for the background, and packs their
+Boolean operation indexes into the high-order word of a 32-bit value.
+MAKEROP4 ignores the low-order word.
+
+The MAKEROP4 macro is defined as follows:
+
+    #define MAKEROP4(fore,back)
+              (DWORD)((((back) << 8) & 0xFF000000) | (fore))
+
+@param fore Specifies a foreground ternary raster operation code.
+@param back Specifies a background ternary raster operation code
+@return The return value is a DWORD quaternary raster operation code for
+       use with the MaskBlt function.
+
+## METAFILEPICT
+This structure defines the metafile picture format used for exchanging
+metafile data through the clipboard.
+
+@member mm Specifies the mapping mode in which the picture is drawn.
+@member xExt Specifies the size of the metafile picture for all modes
+       except the MM_ISOTROPIC and MM_ANISOTROPIC modes. (For more
+       information about these modes, see the yExt member.) The x-extent
+       specifies the width of the rectangle within which the picture is
+       drawn. The coordinates are in units that correspond to the
+       mapping mode.
+@member yExt Specifies the size of the metafile picture for all modes
+       except the MM_ISOTROPIC and MM_ANISOTROPIC modes. The y-extent
+       specifies the height of the rectangle within which the picture is
+       drawn. The coordinates are in units that correspond to the
+       mapping mode. For MM_ISOTROPIC and MM_ANISOTROPIC modes, which
+       can be scaled, the xExt and yExt members contain an optional
+       suggested size in MM_HIMETRIC units. For MM_ANISOTROPIC pictures,
+       xExt and yExt can be zero when no suggested size is supplied. For
+       MM_ISOTROPIC pictures, an aspect ratio must be supplied even when
+       no suggested size is given. (If a suggested size is given, the
+       aspect ratio is implied by the size.) To give an aspect ratio
+       without implying a suggested size, set xExt and yExt to negative
+       values whose ratio is the appropriate aspect ratio. The magnitude
+       of the negative xExt and yExt values is ignored; only the ratio
+       is used.
+@member hMF Handle to a memory metafile.
+
+## PALETTEENTRY
+This structure specifies the color and usage of a logical palette entry.
+A logical palette is defined by a LOGPALETTE structure.
+
+Window CE ignores the peFlags member. It should be initialized to 0.
+
+@member peRed Specifies a red intensity value for the palette entry.
+@member peGreen Specifies a green intensity value for the palette entry.
+@member peBlue Specifies a blue intensity value for the palette entry.
+@member peFlags Specifies how the palette entry is to be used. The
+       peFlags member may be set to NULL or one of the following values:
+       Value Description PC_EXPLICIT Specifies that the low-order word
+       of the logical palette entry designates a hardware palette index.
+       This flag allows the application to show the contents of the
+       display device palette. PC_NOCOLLAPSE Specifies that the color be
+       placed in an unused entry in the system palette instead of being
+       matched to an existing color in the system palette. If there are
+       no unused entries in the system palette, the color is matched
+       normally. Once this color is in the system palette, colors in
+       other logical palettes can be matched to this color. PC_RESERVED
+       Specifies that the logical palette entry be used for palette
+       animation. This flag prevents other windows from matching colors
+       to the palette entry since the color frequently changes. If an
+       unused system-palette entry is available, the color is placed in
+       that entry. Otherwise, the color is not available for animation.
+
+## PALETTERGB
+This macro accepts three values that represent the relative intensities
+of red, green, and blue and returns a palette-relative red, green, blue
+(RGB) specifier consisting of 2 in the high-order byte and an RGB value
+in the three low-order bytes (with a value representing the intensity of
+red, green, or blue in each of the bytes). An application using a color
+palette can pass this specifier, instead of an explicit RGB value, to
+functions that expect a color.
+
+The PALETTERGB macro is defined as follows:
+
+    #define PALETTERGB(r, g, b)  (0x02000000 | RGB(r, g, b))
+
+@param bRed Specifies the intensity of the red color field.
+@param bGreen Specifies the intensity of the green color field.
+@param bBlue Specifies the intensity of the blue color field.
+@return The return value is a palette-relative RGB specifier. For output
+       devices that support logical palettes, the system matches a
+       palette-relative RGB value to the nearest color in the logical
+       palette of the device context as though the application had
+       specified an index to that palette entry. If an output device
+       does not support a system palette, the system uses the
+       palette-relative RGB as though it were a conventional RGB
+       doubleword returned by the RGB macro.
+
+## RGB
+This macro selects a red, green, blue (RGB) color based on the specified
+color values and the capabilities of the output device.
+
+The intensity for each argument is in the range 0 through 255. If all
+three intensities are zero, the result is black. If all three
+intensities are 255, the result is white.
+
+For information about using color values in a color palette, see the
+description of the PALETTERGB macro.
+
+The RGB macro is defined as follows:
+
+    #define RGB(r, g ,b)  ((DWORD) (((BYTE) (r) | \
+        ((WORD) (g) << 8)) | \
+        (((DWORD) (BYTE) (b)) << 16)))
+
+@param cRed Specifies the intensity of the red color.
+@param cGreen Specifies the intensity of the green color.
+@param cBlue Specifies the intensity of the blue color.
+@return The return value is the resultant RGB color.
+
+## RGBQUAD
+This structure describes a color consisting of relative intensities of
+red, green, and blue.
+
+Windows CE does not support the rgbReserved member. It should be
+initialized to zero.
+
+The bmiColors member of the BITMAPINFO structure consists of an array of
+RGBQUAD structures.
+
+@member rgbBlue Specifies the intensity of blue in the color.
+@member rgbGreen Specifies the intensity of green in the color.
+@member rgbRed Specifies the intensity of red in the color.
+@member rgbReserved Reserved; set to zero.
+
+## RGBTRIPLE
+This structure describes a color consisting of relative intensities of
+red, green, and blue. The bmciColors member of the BITMAPCOREINFO
+structure consists of an array of RGBTRIPLE structures.
+
+@member rgbtBlue Specifies the intensity of blue in the color.
+@member rgbtGreen Specifies the intensity of green in the color.
+@member rgbtRed Specifies the intensity of red in the color.
+
+## RGNDATA
+This structure contains a header and an array of rectangles that
+comprise a region. The rectangles are sorted top to bottom, left to
+right. They do not overlap.
+
+@member rdh Specifies a RGNDATAHEADER structure. The members of this
+       structure specify the type of region (whether it is rectangular
+       or trapezoidal), the number of rectangles that make up the
+       region, the size of the buffer that contains the rectangle
+       structures, and so on.
+@member Buffer Specifies an arbitrary-size buffer that contains the RECT
+       structures that make up the region.
+
+## RGNDATAHEADER
+This structure describes the data returned by the GetRegionData
+function.
+
+@member dwSize Specifies the size, in bytes, of the header.
+@member iType Specifies the type of region. This value must be
+       RDH_RECTANGLES.
+@member nCount Specifies the number of rectangles that make up the
+       region.
+@member nRgnSize Specifies the size of the buffer required to receive
+       the RECT structure that specifies the coordinates of the
+       rectangles that make up the region. If the size is not known,
+       this member can be zero.
+@member rcBound Specifies a bounding rectangle for the region.

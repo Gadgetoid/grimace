@@ -1,0 +1,174 @@
+## RegCloseKey(hKey)
+Closes a registry key handle.
+
+Windows CE writes changes to the registry before returning. On Windows
+CE 1.0 and 2.0 there is no RegFlushKey to call; on later platforms with
+persistent registry storage, RegFlushKey can request a flush to
+storage, depending on the OEM.
+
+@param hKey Key opened with RegOpenKeyExW or RegCreateKeyExW.
+@return ERROR_SUCCESS, or an error code.
+
+## RegCreateKeyExW(hKey, lpszSubKey, Reserved, lpszClass, dwOptions, samDesired, lpSecurityAttributes, phkResult, lpdwDisposition)
+Creates a registry key, or opens it if it exists.
+
+The new key has no values: add them with RegSetValueExW. Close the
+handle with RegCloseKey.
+
+@param hKey Open key, or HKEY_CLASSES_ROOT, HKEY_CURRENT_USER,
+       HKEY_LOCAL_MACHINE or HKEY_USERS.
+@param lpszSubKey Subkey name, relative to hKey. Not NULL, and must not
+       start with a backslash.
+@param Reserved Must be 0.
+@param lpszClass Class string for a new key, or NULL. Ignored if the key
+       exists.
+@param dwOptions Ignored on Windows CE. Pass 0.
+@param samDesired Ignored on Windows CE. Pass 0.
+@param lpSecurityAttributes Not supported. Pass NULL.
+@param phkResult Receives the key handle.
+@param lpdwDisposition Receives REG_CREATED_NEW_KEY or
+       REG_OPENED_EXISTING_KEY, or NULL.
+@return ERROR_SUCCESS, or an error code.
+
+## RegDeleteKeyW(hKey, lpszSubKey)
+Deletes a registry key, with its values and subkeys.
+
+Windows CE won't delete a key that is open.
+
+@param hKey Open key, or a predefined HKEY_* root.
+@param lpszSubKey Name of the subkey to delete, relative to hKey. Not
+       NULL.
+@return ERROR_SUCCESS, or an error code.
+
+## RegDeleteValueW(hKey, lpszValueName)
+Deletes a value from a registry key.
+
+@param hKey Open key, or a predefined HKEY_* root.
+@param lpszValueName Value name, or NULL or L"" for the key's default
+       value.
+@return ERROR_SUCCESS, or an error code.
+
+## RegEnumKeyExW(hKey, dwIndex, lpszName, lpcchName, lpReserved, lpszClass, lpcchClass, lpftLastWriteTime)
+Returns the name of one subkey of a registry key, by index.
+
+Call with dwIndex from 0 upwards until it returns ERROR_NO_MORE_ITEMS.
+Order is arbitrary. Don't modify the key while enumerating.
+
+@param hKey Open key, or a predefined HKEY_* root.
+@param dwIndex Subkey index.
+@param lpszName Receives the subkey name (not the full path).
+@param lpcchName In: buffer size in characters, including the terminator.
+       Out: characters stored, excluding the terminator.
+@param lpReserved Must be NULL.
+@param lpszClass Receives the subkey's class, or NULL.
+@param lpcchClass In/out size of lpszClass in characters. NULL only if
+       lpszClass is NULL.
+@param lpftLastWriteTime Not used on Windows CE.
+@return ERROR_SUCCESS, ERROR_NO_MORE_ITEMS at the end, or an error code.
+
+## RegEnumValueW(hKey, dwIndex, lpszValueName, lpcchValueName, lpReserved, lpType, lpData, lpcbData)
+Returns the name, type and data of one value of a registry key, by
+index.
+
+Call with dwIndex from 0 upwards until it returns ERROR_NO_MORE_ITEMS.
+Order is arbitrary. RegQueryInfoKeyW gives the largest name and data
+sizes for sizing buffers.
+
+@param hKey Open key, or a predefined HKEY_* root.
+@param dwIndex Value index.
+@param lpszValueName Receives the value name.
+@param lpcchValueName In: buffer size in characters, including the
+       terminator. Out: characters stored, excluding the terminator.
+@param lpReserved Must be NULL.
+@param lpType Receives the type (REG_SZ, REG_DWORD, REG_BINARY,
+       REG_MULTI_SZ and so on), or NULL.
+@param lpData Receives the data, or NULL.
+@param lpcbData In: size of lpData in bytes. Out: bytes stored. NULL
+       only if lpData is NULL.
+@return ERROR_SUCCESS, ERROR_NO_MORE_ITEMS at the end, or an error code.
+
+## RegFlushKey(hKey)
+Requests that the registry be flushed to platform-supported storage.
+
+Returns only when the data has been written. On Windows CE 2.1 and
+later this may flush the entire registry, not just the specified key.
+Whether persistent storage or flushing is supported depends on the OEM:
+without it, or if the OEM fails the request, the call fails. There is
+no lazy flush by default, so call it to save important settings, after
+a group of changes rather than every individual change; frequent
+flushes hurt performance.
+
+@param hKey Open key or a predefined HKEY_* root. Validated but ignored.
+@return ERROR_SUCCESS, or an error code.
+
+## RegOpenKeyExW(hKey, lpszSubKey, ulOptions, samDesired, phkResult)
+Opens an existing registry key.
+
+Doesn't create the key: use RegCreateKeyExW for that. Close the handle
+with RegCloseKey.
+
+@param hKey Open key, or HKEY_CLASSES_ROOT, HKEY_CURRENT_USER,
+       HKEY_LOCAL_MACHINE or HKEY_USERS.
+@param lpszSubKey Subkey path relative to hKey, e.g. L"Software\\Vendor",
+       or NULL or L"" for a new handle to hKey itself.
+@param ulOptions Reserved. Must be 0.
+@param samDesired Ignored on Windows CE: any access is allowed. Pass 0.
+@param phkResult Receives the key handle.
+@return ERROR_SUCCESS, or an error code.
+
+## RegQueryInfoKeyW(hKey, lpszClass, lpcchClass, lpReserved, lpcSubKeys, lpcchMaxSubKeyLen, lpcchMaxClassLen, lpcValues, lpcchMaxValueNameLen, lpcbMaxValueData, lpcbSecurityDescriptor, lpftLastWriteTime)
+Returns a registry key's class, subkey and value counts, and the longest
+name and data sizes.
+
+Lengths in characters exclude the terminator.
+
+@param hKey Open key, or a predefined HKEY_* root.
+@param lpszClass Receives the key's class, or NULL.
+@param lpcchClass In/out size of lpszClass in characters. ERROR_MORE_DATA
+       if too small. Can be NULL if lpszClass is NULL.
+@param lpReserved Must be NULL.
+@param lpcSubKeys Receives the number of subkeys.
+@param lpcchMaxSubKeyLen Receives the longest subkey name length.
+@param lpcchMaxClassLen Receives the longest subkey class length.
+@param lpcValues Receives the number of values.
+@param lpcchMaxValueNameLen Receives the longest value name length, or
+       NULL.
+@param lpcbMaxValueData Not supported on Windows CE. Pass NULL.
+@param lpcbSecurityDescriptor Not supported. Pass NULL.
+@param lpftLastWriteTime Not supported. Pass NULL.
+@return ERROR_SUCCESS, or an error code.
+
+## RegQueryValueExW(hKey, lpszValueName, lpReserved, lpType, lpData, lpcbData)
+Reads the type and data of a registry value.
+
+Pass lpData as NULL to get the size needed in *lpcbData. REG_EXPAND_SZ
+data isn't expanded.
+
+@param hKey Open key, or a predefined HKEY_* root.
+@param lpszValueName Value name, or NULL or L"" for the default value.
+@param lpReserved Must be NULL.
+@param lpType Receives the type (REG_SZ, REG_DWORD, REG_BINARY,
+       REG_MULTI_SZ and so on), or NULL.
+@param lpData Receives the data, or NULL.
+@param lpcbData In: size of lpData in bytes. Out: bytes stored,
+       including any string terminator. NULL only if lpData is NULL.
+@return ERROR_SUCCESS, ERROR_MORE_DATA if lpData is too small (the size
+        needed is stored in *lpcbData), or an error code such as
+        ERROR_FILE_NOT_FOUND.
+
+## RegSetValueExW(hKey, lpszValueName, Reserved, dwType, lpData, cbData)
+Creates or replaces a value in a registry key.
+
+Keep values small: store anything over about 2 KB, and icons, bitmaps
+or executables, in a file and put its name in the registry.
+
+@param hKey Open key, or a predefined HKEY_* root.
+@param lpszValueName Value name, up to 255 characters, or NULL or L"" for
+       the default value.
+@param Reserved Must be 0.
+@param dwType REG_SZ, REG_EXPAND_SZ, REG_MULTI_SZ, REG_DWORD,
+       REG_BINARY, REG_NONE and so on.
+@param lpData The data. Strings are WCHAR.
+@param cbData Size of lpData in bytes, including the terminator(s) for
+       string types. At most about 3.7 KB on Windows CE.
+@return ERROR_SUCCESS, or an error code.

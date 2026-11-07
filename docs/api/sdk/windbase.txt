@@ -1,0 +1,213 @@
+## CEBLOB
+This structure contains information about a Binary Large Object (BLOB)s
+of data in the object store.
+
+@member dwCount Specifies the size, in bytes, of the BLOB.
+@member lpb Pointer to the beginning of the BLOB.
+
+## CEDBASEINFO
+This structure contains information about a database object. This
+structure is used by the CeSetDatabaseInfo and CeCreateDatabaseEx
+functions.
+
+For Windows CE versions 2.10 and later, dwFlags has additional meaning,
+but is still compatible with previous versions. The high-order word of
+dwFlags specifies additional database properties.
+
+@member dwFlags The low-order word specifies the valid members of this
+       structure. This member is one or a combination of the following
+       flags: Value Description CEDB_VALIDMODTIME The ftLastModified
+       member is valid and should be used. CEDB_VALIDNAME The
+       szDbaseName member is valid and should be used. CEDB_VALIDTYPE
+       The dwDbaseType member is valid and should be used.
+       CEDB_VALIDSORTSPEC The rgSortSpecs member is valid and should be
+       used. CEDB_VALIDDBFLAGS The low-order word of the dwFlags member
+       is valid and should be used. The high-order word specifies the
+       associated database properties. This member is the following
+       flag: Value Description CEDB_NOCOMPRESS The database is not
+       compressed. If this flag is used with CeSetDatabaseInfoEx, a
+       compressed database is uncompressed. If this flag is used with
+       CeCreateDatabaseEx, the database is not compressed. To compress a
+       database, CeSetDatabaseInfoEx or CeCreateDatabaseEx is called
+       with CEDB_VALIDDBFLAGS set and the CEDB_NOCOMPRESS bit cleared.
+       By default, all databases are compressed. If you are going to
+       change the compression, it should be done at creation time.
+@member szDbaseName Null-terminated string that contains the name of the
+       database. The string can have up to 32 characters, including the
+       terminating null character. This member must be set when used for
+       CeCreateDatabaseEx.
+@member dwDbaseType Specifies the type identifier for the database.
+@member wNumRecords Returns the number of records in the database.
+@member wNumSortOrder Number of sort orders active in the database. Up
+       to four sort orders can be active at a time.
+@member dwSize Specifies, in bytes, the size of the database.
+@member ftLastModified Returns the last time this database was modified.
+@member rgSortSpecs Array containing the sort order descriptions. Only
+       the first n array members are valid, where n is the value
+       specified by the wNumSortOrder member. If no sort orders are
+       specified for CeCreateDatabaseEx or when CEDB_VALIDSORTSPEC is
+       not specified, then a default sort order is assigned to the
+       database.
+
+## CEDIRINFO
+This structure contains information about a directory object.
+
+@member dwAttributes Specifies the attributes of the directory.
+@member oidParent Object identifier of the parent directory.
+@member szDirName Null-terminated string that contains the name and path
+       of the directory.
+
+## CEFILEINFO
+This structure contains information about a file object.
+
+@member dwAttributes Specifies the attributes of the file.
+@member oidParent Object identifier of the parent directory.
+@member szFileName Null-terminated string that contains the name and
+       path of the file.
+@member ftLastChanged Time stamp that indicates when the contents of the
+       file were last changed.
+@member dwLength Specifies the length, in bytes, of the file.
+
+## CEOIDINFO
+This structure contains information about an object in the object store
+or database volume.
+
+@member wObjType Specifies the type of the object. It is one of the
+       following values: Value Description OBJTYPE_INVALID The object
+       store contains no valid object that has this object identifier.
+       OBJTYPE_FILE The object is a file. OBJTYPE_DIRECTORY The object
+       is a directory. OBJTYPE_DATABASE The object is a database.
+       OBJTYPE_RECORD The object is a record inside a database.
+@member dwSize Specifies the size of CEOIDINFOEX, that is,
+       sizeof(CEOIDINFOEX).
+@member wPad Aligns the structure on a double-word boundary.
+@member infFile CEFILEINFO structure that contains information about a
+       file. This member is valid only if wObjType is OBJTYPE_FILE.
+@member infDirectory CEDIRINFO structure that contains information about
+       a directory. This member is valid only if wObjType is
+       OBJTYPE_DIRECTORY.
+@member infDatabase CEDBASEINFO structure that contains information
+       about a database. This member is valid only if wObjType is
+       OBJTYPE_DATABASE.
+@member infRecord CERECORDINFO structure that contains information about
+       a record in a database. This member is valid only if wObjType is
+       OBJTYPE_RECORD.
+
+## CEPROPVAL
+This structure contains a property value.
+
+@member propid Identifier of the property value. The high-order word is
+       an application-defined identifier, and the low-order word is a
+       predefined constant value that indicates the data type of the
+       value specified by the val member. The low-order word can be one
+       of the following values: Value Description CEVT_BLOB A CEBLOB
+       structure. CEVT_BOOL A Boolean value. CEVT_FILETIME A FILETIME
+       structure. CEVT_I2 A 16-bit signed integer. CEVT_I4 A 32-bit
+       signed integer. CEVT_LPWSTR A null-terminated string. CEVT_R8 A
+       64-bit signed interger. CEVT_UI2 A 16-bit unsigned integer.
+       CEVT_UI4 A 32-bit unsigned integer.
+@member wLenData Not used.
+@member wFlags Special flags for the property. It is one of the
+       following values: Value Description CEDB_PROPNOTFOUND Set by the
+       CeReadRecordProps function if the property was not found.
+       CEDB_PROPDELETE If passed to the CeWriteRecordProps function,
+       this flag causes the property to be deleted.
+@member val Actual value for simple types, or a pointer for strings or
+       Binary Large Objects (BLOBs).
+
+## CERECORDINFO
+This structure contains information about a record object.
+
+@member oidParent Object identifier of the parent database.
+
+## CEVALUNION
+This union contains a value for a property.
+
+@member iVal Specifies an integer.
+@member uiVal Specifies an unsigned integer.
+@member lVal Specifies a long integer.
+@member ulVal Specifies an unsigned long integer.
+@member filetime Specifies a FILETIME structure.
+@member lpwstr Pointer to a null-terminated string.
+@member blob Specifies a CEBLOB structure.
+@member boolVal Specifies a BOOL type.
+@member dblVal Specifies a signed double.
+
+## DB_CEOID_CHANGED
+This message is sent when an object in the object store has been
+modified.
+
+When writing applications for Windows CE version 1.0, use the
+DB_PEGOID_CHANGED message.
+
+@param oidChanged Identifier of the object that was modified.
+@param oidParent Identifier of the parent object of the modified object.
+
+## DB_CEOID_CREATED
+This message is sent when a new object is created in the object store.
+
+When writing applications for Windows CE version 1.0, use the
+DB_PEGOID_CREATED message.
+
+@param oidCreated Identifier of the newly created object.
+@param oidParent Identifier of the parent object of the newly created
+       object.
+
+## DB_CEOID_RECORD_DELETED
+This message is sent when a record has been deleted from the object
+store.
+
+@param oidDeletedRec Identifier of the record that was deleted.
+@param oidParent Identifier of the parent object of the deleted record.
+
+## DB_PEGOID_CHANGED
+This message is sent when an object in the object store has been
+modified. See DB_CEOID_CHANGED.
+
+@param oidChanged Identifier of the object that was modified.
+@param oidParent Identifier of the parent object of the modified object.
+
+## DB_PEGOID_CREATED
+This message is sent when a new object is created in the object store.
+See DB_CEOID_CREATED.
+
+@param oidCreated Identifier of the newly created object.
+@param oidParent Identifier of the parent object of the newly created
+       object.
+
+## DB_PEGOID_RECORD_DELETED
+This message is sent when a record has been deleted from the object
+store.
+
+@param oidDeletedRec Identifier of the record that was deleted.
+@param oidParent Identifier of the parent object of the deleted record.
+
+## SORTORDERSPEC
+This structure contains information about a sort order in a database.
+
+The system supports only simple sorts on a primary key. Records with the
+same key value are be sorted in arbitrary order.
+
+@member propid Identifier of the property to be sorted on. Sorts on
+       binary properties are not allowed.
+@member dwFlags Specifies the sort flags. It is one or a combination of
+       the following flags: CEDB_SORT_DESCENDING: The sort is done in
+       descending order. By default, the sort is done in ascending
+       order. CEDB_SORT_CASEINSENSITIVE: The sort operation is case
+       insensitive. This value is valid only for strings.
+       CEDB_SORT_UNKNOWNFIRST: Records that do not contain this property
+       are placed before all the other records. By default, such records
+       are placed after all other records. CEDB_SORT_GENERICORDER: The
+       default sort order-ascending order, case sensitive-is used.
+       Records that do not contain the sort property are placed at the
+       end of the list.
+
+## TypeFromPropID(propid)
+This macro retrieves the type identifier from a property identifier.
+
+The TypeFromPropID macro is defined as follows:
+
+    #define TypeFromPropID(propid) LOWORD(propid)
+
+@param propid Property identifier from which to retrieve the type
+       identifier.

@@ -1,0 +1,4 @@
+#define IDD_NAME 101
+#define IDC_NAME 1001
+#define IDS_TITLE 201
+#define IDS_GREETING 202

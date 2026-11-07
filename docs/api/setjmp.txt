@@ -1,0 +1,19 @@
+## longjmp(environment, value)
+Restores a stack environment saved by setjmp and resumes after that call.
+
+Call longjmp before the function that called setjmp returns. A value of
+0 is changed to 1. Register variables may not retain their values, and
+these functions do not preserve C++ object semantics.
+
+@param environment Stack environment previously saved by setjmp.
+@param value Value returned by setjmp after control resumes.
+
+## setjmp(environment)
+Saves the current stack environment for a later longjmp.
+
+It returns 0 when saving the environment. After longjmp, it returns the
+value passed to longjmp, or 1 if that value was 0. These functions do
+not preserve C++ object semantics.
+
+@param environment Receives the saved stack environment.
+@return 0 when called directly, or the value passed to longjmp.

@@ -1,0 +1,28 @@
+## Heap32First(hSnapshot, lphe, th32ProcessID, th32HeapID)
+Retrieves the first block in a process heap.
+
+Set lphe->dwSize to the size of HEAPENTRY32 before calling. It's changed
+to the number of bytes written, which may be smaller; don't rely on
+members beyond it. Use Heap32Next to continue through the heap.
+
+@param hSnapshot Snapshot from CreateToolhelp32Snapshot containing heap
+       information.
+@param lphe Receives the heap entry.
+@param th32ProcessID Process that owns the heap.
+@param th32HeapID Heap identifier.
+@return TRUE when an entry is copied; FALSE on failure. GetLastError
+       returns ERROR_NO_MORE_FILES for an invalid or empty heap.
+
+## Heap32ListFirst(hSnapshot, lphl)
+Retrieves the first heap in a process heap list.
+
+Set lphl->dwSize to the size of HEAPLIST32 before calling. It's changed
+to the number of bytes written, which may be smaller; don't rely on
+members beyond it. Use Heap32ListNext to enumerate more heaps.
+
+@param hSnapshot Snapshot from CreateToolhelp32Snapshot containing heap
+       information.
+@param lphl Receives the heap list entry.
+@return TRUE when an entry is copied; FALSE on failure. GetLastError
+       returns ERROR_NO_MORE_FILES if there is no heap list or the
+       snapshot has no heap list information.

@@ -1,0 +1,121 @@
+#ifndef GRIMACE_SDK_SSLSOCK_H
+#define GRIMACE_SDK_SSLSOCK_H
+
+#include <grimace/sdk/wincrypt.h>
+#include <grimace/sdk/wtypes.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct _SSLAUTHREQUESTHOOK;
+typedef struct _SSLAUTHREQUESTHOOK *LPSSLAUTHREQUESTHOOK;
+struct _SSLCIPHERS;
+typedef struct _SSLCIPHERS *LPSSLCIPHERS;
+struct _SSLCLIENTAUTHOPTS;
+typedef struct _SSLCLIENTAUTHOPTS *LPSSLCLIENTAUTHOPTS;
+struct _SSLCLIENTOPTS;
+typedef struct _SSLCLIENTOPTS *LPSSLCLIENTOPTS;
+struct _SSLKEYEXCHANGEHOOK;
+typedef struct _SSLKEYEXCHANGEHOOK *LPSSLKEYEXCHANGEHOOK;
+struct _SSLPROTOCOL;
+typedef struct _SSLPROTOCOL *LPSSLPROTOCOL;
+struct _SSLPROTOCOLS;
+typedef struct _SSLPROTOCOLS *LPSSLPROTOCOLS;
+struct _SSLSERVEROPTS;
+typedef struct _SSLSERVEROPTS *LPSSLSERVEROPTS;
+struct _SSLSIGNATUREHOOK;
+typedef struct _SSLSIGNATUREHOOK *LPSSLSIGNATUREHOOK;
+struct _SSLVALIDATECERTHOOK;
+typedef struct _SSLVALIDATECERTHOOK *LPSSLVALIDATECERTHOOK;
+struct _SSLCONNECTIONINFO;
+typedef struct _SSLCONNECTIONINFO *PSSLCONNECTIONINFO;
+typedef int (*SSLAUTHREQUESTFUNC)(DWORD, LPVOID, DWORD, LPBLOB, DWORD, LPDWORD, LPBLOB *);
+typedef struct _SSLAUTHREQUESTHOOK SSLAUTHREQUESTHOOK;
+typedef struct _SSLCIPHERS SSLCIPHERS;
+typedef struct _SSLCLIENTAUTHOPTS SSLCLIENTAUTHOPTS;
+typedef struct _SSLCLIENTOPTS SSLCLIENTOPTS;
+typedef struct _SSLCONNECTIONINFO SSLCONNECTIONINFO;
+typedef int (*SSLKEYEXCHANGEFUNC)(DWORD, LPVOID, LPBYTE, DWORD, DWORD, LPBYTE, LPDWORD);
+typedef struct _SSLKEYEXCHANGEHOOK SSLKEYEXCHANGEHOOK;
+typedef struct _SSLPROTOCOL SSLPROTOCOL;
+typedef struct _SSLPROTOCOLS SSLPROTOCOLS;
+typedef struct _SSLSERVEROPTS SSLSERVEROPTS;
+typedef int (*SSLSIGNATUREFUNC)(DWORD, LPVOID, LPBYTE, DWORD, DWORD, LPBYTE, LPDWORD);
+typedef struct _SSLSIGNATUREHOOK SSLSIGNATUREHOOK;
+typedef int (*SSLVALIDATECERTFUNC)(DWORD, LPVOID, DWORD, LPBLOB, DWORD);
+typedef struct _SSLVALIDATECERTHOOK SSLVALIDATECERTHOOK;
+struct _SSLAUTHREQUESTHOOK {
+    SSLAUTHREQUESTFUNC HookFunc;
+    LPVOID pvArg;
+};
+
+struct _SSLCIPHERS {
+    DWORD dwProtocol;
+    DWORD dwCount;
+    DWORD CipherList[1];
+};
+
+struct _SSLCLIENTAUTHOPTS {
+    DWORD dwRequestClientAuth;
+    DWORD dwRedoHandshake;
+    DWORD dwType;
+    DWORD dwIssuerCount;
+    LPBLOB pIssuerList;
+    DWORD dwFlags;
+};
+
+struct _SSLCLIENTOPTS {
+    time_t CacheTimeout;
+    DWORD dwCacheEntries;
+    DWORD dwFlags;
+};
+
+struct _SSLCONNECTIONINFO {
+    DWORD dwProtocol;
+    ALG_ID aiCipher;
+    DWORD dwCipherStrength;
+    ALG_ID aiHash;
+    DWORD dwHashStrength;
+    ALG_ID aiExch;
+    DWORD dwExchStrength;
+};
+
+struct _SSLKEYEXCHANGEHOOK {
+    SSLKEYEXCHANGEFUNC HookFunc;
+    LPVOID pvArg;
+};
+
+struct _SSLPROTOCOL {
+    DWORD dwProtocol;
+    DWORD dwVersion;
+    DWORD dwFlags;
+};
+
+struct _SSLPROTOCOLS {
+    DWORD dwCount;
+    SSLPROTOCOL ProtocolList[1];
+};
+
+struct _SSLSERVEROPTS {
+    time_t CacheTimeout;
+    DWORD dwCacheEntries;
+    DWORD dwFlags;
+};
+
+struct _SSLSIGNATUREHOOK {
+    SSLSIGNATUREFUNC HookFunc;
+    LPVOID pvArg;
+};
+
+struct _SSLVALIDATECERTHOOK {
+    SSLVALIDATECERTFUNC HookFunc;
+    LPVOID pvArg;
+};
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

@@ -1,0 +1,27 @@
+## SHGetDesktopFolder(ppshf)
+Retrieves the IShellFolder interface for the desktop namespace root.
+
+Release the returned interface when it is no longer needed.
+
+@param ppshf Receives the desktop IShellFolder interface.
+@return S_OK on success, or an HRESULT error.
+
+## SHGetMalloc(ppMalloc)
+Retrieves the shell's IMalloc interface.
+
+Shell extensions must use this allocator for memory that the shell will
+free. Applications can also use it for their own allocations.
+
+@param ppMalloc Receives the IMalloc interface pointer.
+@return A successful HRESULT, or E_FAIL on failure.
+
+## SHGetSpecialFolderLocation(hwndOwner, nFolder, ppidl)
+Retrieves the item identifier list for a special folder.
+
+The result is relative to the desktop namespace. Free the returned list
+with the shell IMalloc interface from SHGetMalloc.
+
+@param hwndOwner Owner window for any dialog or message box.
+@param nFolder CSIDL identifying the folder.
+@param ppidl Receives the folder's item identifier list.
+@return NOERROR on success, or an OLE error on failure.

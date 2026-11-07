@@ -1,0 +1,125 @@
+## ExtractIconExW(lpszExeFileName, nIconIndex, phiconLarge, phiconSmall, nIcons)
+Extracts an icon from an executable, DLL or icon file.
+
+Free the icons with DestroyIcon.
+
+@param lpszExeFileName Path of the file.
+@param nIconIndex 0 for the first icon, or -N for the icon with
+       resource ID N. Other indexes are not supported.
+@param phiconLarge Receives the large icon, or NULL.
+@param phiconSmall Receives the small icon, or NULL.
+@param nIcons Must be 1.
+@return Nonzero on success, 0 on failure.
+
+## SHCreateShortcut(szShortcut, szTarget)
+Creates a shortcut file pointing at a target path.
+
+@param szShortcut Path of the shortcut to create. Must not be NULL.
+@param szTarget Target path, up to 256 characters.
+@return TRUE on success, FALSE on failure.
+
+## Shell_NotifyIcon(dwMessage, pnid)
+Adds, modifies or removes an icon in the taskbar status area.
+
+OEM support may vary.
+
+@param dwMessage NIM_ADD, NIM_MODIFY or NIM_DELETE.
+@param pnid NOTIFYICONDATA for the operation; its contents depend on
+       dwMessage.
+@return Nonzero on success, zero on failure.
+
+## ShellExecuteEx(lpExecInfo)
+Performs an action on a file, such as launching an application or
+opening a document.
+
+On success, hInstApp receives the started application's instance
+handle. On failure, it contains an SE_ERR_* value, below 32, kept for
+compatibility; use GetLastError for the error code, such as
+ERROR_FILE_NOT_FOUND, ERROR_PATH_NOT_FOUND, ERROR_NO_ASSOCIATION,
+ERROR_ACCESS_DENIED or ERROR_NOT_ENOUGH_MEMORY.
+
+@param lpExecInfo SHELLEXECUTEINFO with the action's settings; receives
+       information about the started application.
+@return Nonzero on success, zero on failure (see GetLastError).
+
+## SHFileOperationW(lpFileOp)
+Copies, moves, renames or deletes files, with optional progress and
+confirmation UI.
+
+Paths in pFrom and pTo are lists of null-terminated strings ending with
+an extra null.
+
+@param lpFileOp SHFILEOPSTRUCT with the operation (FO_COPY, FO_MOVE,
+       FO_RENAME or FO_DELETE), source and destination lists and
+       FOF_* flags.
+@return 0 on success, or nonzero on failure. fAnyOperationsAborted is
+        set if the user cancelled.
+
+## SHGetFileInfo(pszPath, dwFileAttributes, psfi, cbFileInfo, uFlags)
+Retrieves selected information about a file-system object.
+
+SHGFI_USEFILEATTRIBUTES lets you query a file type without opening an
+existing file, for example by passing just an extension with
+FILE_ATTRIBUTE_NORMAL; it can't be combined with SHGFI_ATTRIBUTES,
+SHGFI_EXETYPE or SHGFI_PIDL. Windows CE 2.10 and later don't support
+SHGFI_ATTRIBUTES, SHGFI_EXETYPE, SHGFI_ICONLOCATION, SHGFI_LINKOVERLAY,
+SHGFI_OPENICON, SHGFI_SELECTED or SHGFI_SHELLICONSIZE. Windows CE 2.10
+supports SHGFI_PIDL on the H/PC only; Handheld PC 2000 doesn't support
+it. Destroy an icon returned in psfi with DestroyIcon.
+
+@param pszPath File path or extension, or with SHGFI_PIDL a fully
+       qualified PIDL.
+@param dwFileAttributes FILE_ATTRIBUTE_* values, including
+       FILE_ATTRIBUTE_INROM and FILE_ATTRIBUTE_ROMMODULE, used only with
+       SHGFI_USEFILEATTRIBUTES.
+@param psfi Receives the requested file information.
+@param cbFileInfo Size of the SHFILEINFO structure in bytes.
+@param uFlags SHGFI_* information to retrieve and options for the query.
+@return With SHGFI_SYSICONINDEX, the system image list handle (the small
+       icon list with SHGFI_SMALLICON); otherwise nonzero on success or
+       0 on failure.
+
+## SHGetPathFromIDList(pidl, pszPath)
+Converts a file-system item identifier list to a path.
+
+The destination buffer must hold at least MAX_PATH characters. The
+function fails for locations outside the file system.
+
+@param pidl Fully qualified item identifier list to convert.
+@param pszPath Receives the path.
+@return TRUE on success, FALSE on failure.
+
+## SHGetShortcutTarget(szShortcut, szTarget, cbMax)
+Returns the target path of a shortcut file.
+
+@param szShortcut Path of the shortcut.
+@param szTarget Receives the target path.
+@param cbMax Size of szTarget in characters.
+@return TRUE on success, FALSE on failure.
+
+## SHGetSpecialFolderPath(hwndOwner, lpszPath, nFolder, fCreate)
+Retrieves the path of a special folder identified by a CSIDL.
+
+The output buffer must hold at least MAX_PATH characters. Virtual
+folders are not supported. A nonzero fCreate requests creation of the
+folder if it does not exist. The SDK reference says this function
+returns FALSE even when successful. On the Jornada 720 it leaves the
+buffer empty for CSIDL_DESKTOPDIRECTORY and CSIDL_PROGRAMS: read the
+Desktop and Programs values under
+HKEY_LOCAL_MACHINE\System\Explorer\Shell Folders instead. The CSIDL_*
+values are in shlobj.h.
+
+@param hwndOwner Owner window for any dialog or message box.
+@param lpszPath Receives the folder path.
+@param nFolder CSIDL identifying the folder.
+@param fCreate Nonzero to create the folder if needed.
+@return FALSE, including on success; the return value does not indicate
+        whether the path was retrieved.
+
+## SHLoadDIBitmap(szFileName)
+Loads a .bmp file into a bitmap.
+
+Free with DeleteObject.
+
+@param szFileName Full path of the file.
+@return The bitmap, or NULL on failure.

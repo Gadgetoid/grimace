@@ -1,0 +1,31 @@
+## _fpieee_flt(exc_code, p, handler)
+Invokes a user handler for an IEEE floating-point exception.
+
+Use it as an exception filter in structured exception handling. The
+handler receives an _FPIEEE_RECORD describing the operation, operands
+and result.
+
+@param exc_code Exception code.
+@param p Exception information.
+@param handler IEEE exception handler.
+@return The value returned by handler.
+
+## CeResyncFilesys(hDevice)
+Asks the associated file-system driver to remount a device after media or
+a new volume is inserted. This is intended for use by a device driver.
+
+@param hDevice Handle to a device registered with RegisterDevice.
+@return TRUE on success, FALSE on failure.
+
+This API is part of the complete Windows CE OS package; OEM platform
+configurations may not support it.
+
+## NKDbgPrintfW(lpszFmt)
+Writes a formatted message to the kernel's debug output.
+
+DEBUGMSG, RETAILMSG and the other dbgapi.h macros call it. Where the
+output goes depends on the device: usually a debug serial port or a
+kernel debugger.
+
+@param lpszFmt Wide-character printf-style format string, followed by
+       its arguments.

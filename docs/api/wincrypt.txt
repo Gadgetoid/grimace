@@ -1,0 +1,387 @@
+## CryptAcquireContextW(phProv, pszContainer, pszProvider, dwProvType, dwFlags)
+Acquires a handle to a cryptographic service provider and key container.
+
+Use CRYPT_VERIFYCONTEXT with a NULL container when private keys are not
+needed. Release a successful context with CryptReleaseContext.
+
+@param phProv Receives the provider handle.
+@param pszContainer Key-container name, or NULL for the default.
+@param pszProvider Provider name, or NULL for the default provider.
+@param dwProvType Provider type.
+@param dwFlags Context and key-container options.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptContextAddRef(hProv, pdwReserved, dwFlags)
+Increments the reference count of a provider handle.
+
+Set the reserved parameters to NULL and zero. Each added reference
+requires a matching CryptReleaseContext call.
+
+@param hProv Provider handle.
+@param pdwReserved Reserved; set to NULL.
+@param dwFlags Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptCreateHash(hProv, Algid, hKey, dwFlags, phHash)
+Creates a hash object for the specified algorithm.
+
+Pass hKey as zero for an unkeyed hash; keyed algorithms require a key.
+Add data with CryptHashData or CryptHashSessionKey. Destroy the hash
+with CryptDestroyHash when finished.
+
+@param hProv Provider handle.
+@param Algid Hash algorithm identifier.
+@param hKey Key for a keyed hash, or zero for an unkeyed hash.
+@param dwFlags Reserved; set to zero.
+@param phHash Receives the hash handle.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptDecrypt(hKey, hHash, Final, dwFlags, pbData, pdwDataLen)
+Decrypts data in place with the specified key.
+
+Set Final for the last block. For block ciphers, non-final data length
+must be a multiple of the block size. hHash can receive a hash of the
+decrypted plaintext, or be zero if no hash is needed.
+
+@param hKey Decryption key.
+@param hHash Optional hash handle, or zero.
+@param Final TRUE for the final block.
+@param dwFlags Reserved; set to zero.
+@param pbData Encrypted data; receives plaintext.
+@param pdwDataLen Input byte count; receives plaintext byte count.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptDeriveKey(hProv, Algid, hBaseData, dwFlags, phKey)
+Derives a key from the data in a hash object.
+
+Create and fill hBaseData first. After this call, the hash is finished;
+destroy it with CryptDestroyHash. Set CRYPT_EXPORTABLE if the key must
+be exported.
+
+@param hProv Provider handle.
+@param Algid Algorithm identifier for the new key.
+@param hBaseData Hash containing the derivation data.
+@param dwFlags Key options.
+@param phKey Receives the derived key handle.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptDestroyHash(hHash)
+Destroys a hash object and releases its resources.
+
+@param hHash Hash handle to destroy.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptDestroyKey(hKey)
+Destroys a key handle and releases its resources.
+
+Destroy session and imported keys when finished. For a user key pair,
+this releases the handle but does not destroy the stored key pair.
+
+@param hKey Key handle to destroy.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptDuplicateHash(hHash, pdwReserved, dwFlags, phHash)
+Creates an independent copy of a hash object and its current state.
+
+Destroy both handles separately with CryptDestroyHash. Set reserved
+parameters to NULL and zero.
+
+@param hHash Hash handle to copy.
+@param pdwReserved Reserved; set to NULL.
+@param dwFlags Reserved; set to zero.
+@param phHash Receives the duplicate handle.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptDuplicateKey(hKey, pdwReserved, dwFlags, phKey)
+Creates an independent copy of a key and its current state.
+
+Destroy both handles separately with CryptDestroyKey. Set reserved
+parameters to NULL and zero.
+
+@param hKey Key handle to copy.
+@param pdwReserved Reserved; set to NULL.
+@param dwFlags Reserved; set to zero.
+@param phKey Receives the duplicate handle.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptEncrypt(hKey, hHash, Final, dwFlags, pbData, pdwDataLen, dwBufLen)
+Encrypts data in place with the specified key.
+
+Set Final for the last block. For block ciphers, non-final data length
+must be a multiple of the block size. Set pbData to NULL to query the
+required output size. hHash can receive a hash of the plaintext.
+
+@param hKey Encryption key.
+@param hHash Optional hash handle, or zero.
+@param Final TRUE for the final block.
+@param dwFlags Reserved; set to zero.
+@param pbData Data to encrypt; receives ciphertext.
+@param pdwDataLen Input byte count; receives ciphertext byte count.
+@param dwBufLen Size of pbData in bytes.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptEnumProvidersW(dwIndex, pdwReserved, dwFlags, pdwProvType, pszProvName, pcbProvName)
+Enumerates the installed cryptographic service providers.
+
+Use CRYPT_FIRST to begin enumeration. Set pszProvName to NULL to query
+the required name-buffer size. ERROR_NO_MORE_ITEMS indicates completion.
+
+@param dwIndex Index of the provider to enumerate.
+@param pdwReserved Reserved; set to NULL.
+@param dwFlags Reserved; set to zero.
+@param pdwProvType Receives the provider type.
+@param pszProvName Receives the provider name, or NULL to query size.
+@param pcbProvName Input buffer size and output bytes written.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptEnumProviderTypesW(dwIndex, pdwReserved, dwFlags, pdwProvType, pszTypeName, pcbTypeName)
+Enumerates the cryptographic provider types available on the device.
+
+Use CRYPT_FIRST to begin enumeration. Set pszTypeName to NULL to query
+the required name-buffer size. ERROR_NO_MORE_ITEMS indicates completion.
+
+@param dwIndex Index of the provider type to enumerate.
+@param pdwReserved Reserved; set to NULL.
+@param dwFlags Reserved; set to zero.
+@param pdwProvType Receives the provider type.
+@param pszTypeName Receives its name, or NULL to query size.
+@param pcbTypeName Input buffer size and output bytes written.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptExportKey(hKey, hExpKey, dwBlobType, dwFlags, pbData, pdwDataLen)
+Exports a key as a key BLOB for storage or transfer.
+
+Set pbData to NULL to query the required size. A public-key BLOB does
+not use hExpKey; other BLOB types may require an export-encryption key.
+The key must be exportable.
+
+@param hKey Key to export.
+@param hExpKey Key used to encrypt the BLOB, or zero when unused.
+@param dwBlobType SIMPLEBLOB, PUBLICKEYBLOB, PRIVATEKEYBLOB or OPAQUEBLOB.
+@param dwFlags Reserved; set to zero.
+@param pbData Receives the BLOB, or NULL to query size.
+@param pdwDataLen Input buffer size and output bytes written or required.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptGenKey(hProv, Algid, dwFlags, phKey)
+Generates a random cryptographic key for an algorithm.
+
+Set CRYPT_EXPORTABLE if the key must be exported. For RSA keys, the
+upper 16 bits of dwFlags can specify the key size in bits.
+
+@param hProv Provider handle.
+@param Algid Algorithm or key specification.
+@param dwFlags Key size and generation options.
+@param phKey Receives the key handle.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptGenRandom(hProv, dwLen, pbBuffer)
+Fills a buffer with cryptographically random bytes.
+
+The caller can seed the provider by placing additional random data in
+pbBuffer before calling.
+
+@param hProv Provider handle.
+@param dwLen Number of bytes to generate.
+@param pbBuffer Buffer that receives the bytes and may contain seed data.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptGetDefaultProviderW(dwProvType, pdwReserved, dwFlags, pszProvName, pcbProvName)
+Retrieves the default provider name for a provider type.
+
+Use CRYPT_USER_DEFAULT or CRYPT_MACHINE_DEFAULT. Set pszProvName to
+NULL to query the required buffer size.
+
+@param dwProvType Provider type.
+@param pdwReserved Reserved; set to NULL.
+@param dwFlags User or machine default selector.
+@param pszProvName Receives the provider name, or NULL to query size.
+@param pcbProvName Input buffer size and output bytes written.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptGetHashParam(hHash, dwParam, pbData, pdwDataLen, dwFlags)
+Retrieves a hash object's algorithm, size or hash value.
+
+Set pbData to NULL to query the required size. Reading HP_HASHVAL
+finalizes the hash; no more data can be added afterward.
+
+@param hHash Hash handle.
+@param dwParam HP_ALGID, HP_HASHSIZE, HP_HASHVAL or a CSP-specific value.
+@param pbData Receives the parameter data, or NULL to query size.
+@param pdwDataLen Input buffer size and output bytes written or required.
+@param dwFlags Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptGetKeyParam(hKey, dwParam, pbData, pdwDataLen, dwFlags)
+Retrieves parameters for a key, such as its algorithm, length, mode or IV.
+
+Set pbData to NULL to query the required buffer size. Base symmetric
+key material cannot be retrieved through this function.
+
+@param hKey Key handle.
+@param dwParam Key parameter to retrieve.
+@param pbData Receives the parameter data, or NULL to query size.
+@param pdwDataLen Input buffer size and output bytes written or required.
+@param dwFlags Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptGetProvParam(hProv, dwParam, pbData, pdwDataLen, dwFlags)
+Retrieves configuration or enumeration data from a provider.
+
+PP_ENUMALGS and PP_ENUMCONTAINERS enumerate entries across repeated
+calls. Use CRYPT_FIRST for the first entry; ERROR_NO_MORE_ITEMS marks
+the end. Set pbData to NULL to query buffer size.
+
+@param hProv Provider handle.
+@param dwParam Provider parameter to retrieve.
+@param pbData Receives the parameter data, or NULL to query size.
+@param pdwDataLen Input buffer size and output bytes written or required.
+@param dwFlags Enumeration or security-information flags.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptGetUserKey(hProv, dwKeySpec, phUserKey)
+Retrieves a handle to a permanent user key pair.
+
+dwKeySpec is typically AT_KEYEXCHANGE or AT_SIGNATURE. Destroy the
+returned handle with CryptDestroyKey when finished.
+
+@param hProv Provider handle.
+@param dwKeySpec Key pair to retrieve.
+@param phUserKey Receives the key handle.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptHashData(hHash, pbData, dwDataLen, dwFlags)
+Adds data to a hash object.
+
+Call CryptCreateHash first. Calls can be repeated for chunks of a
+stream. No more data can be added after the hash has been finalized.
+
+@param hHash Hash handle.
+@param pbData Data to hash.
+@param dwDataLen Number of bytes to hash.
+@param dwFlags Hash options.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptHashSessionKey(hHash, hKey, dwFlags)
+Adds a key object to a hash.
+
+Call CryptCreateHash first. This can be interleaved with CryptHashData.
+
+@param hHash Hash handle.
+@param hKey Key handle to hash.
+@param dwFlags Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptImportKey(hProv, pbData, dwDataLen, hPubKey, dwFlags, phKey)
+Imports a key from a key BLOB into a provider.
+
+hPubKey depends on the BLOB type: it can be zero for an unencrypted
+public-key BLOB, or a key used to decrypt or verify other BLOB types.
+Destroy the imported key with CryptDestroyKey.
+
+@param hProv Provider handle.
+@param pbData Key BLOB data.
+@param dwDataLen BLOB size in bytes.
+@param hPubKey Key used to decrypt or verify the BLOB, or zero if unused.
+@param dwFlags Import options such as CRYPT_EXPORTABLE.
+@param phKey Receives the imported key handle.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptReleaseContext(hProv, dwFlags)
+Releases a provider context handle.
+
+Destroy its session keys and hash objects before release; they become
+invalid when the context is released. Set dwFlags to zero.
+
+@param hProv Provider handle to release.
+@param dwFlags Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptSetHashParam(hHash, dwParam, pbData, dwFlags)
+Sets a supported parameter on a hash object.
+
+Supported parameters include HP_HMAC_INFO and HP_HASHVAL. CSP support
+varies. Set dwFlags to zero.
+
+@param hHash Hash handle.
+@param dwParam Parameter to set.
+@param pbData Parameter data.
+@param dwFlags Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptSetKeyParam(hKey, dwParam, pbData, dwFlags)
+Sets a supported parameter on a key, such as its IV, mode or padding.
+
+Supported parameters depend on the key and CSP. Set dwFlags to zero.
+
+@param hKey Key handle.
+@param dwParam Key parameter to set.
+@param pbData Parameter data.
+@param dwFlags Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptSetProviderExW(pszProvName, dwProvType, pdwReserved, dwFlags)
+Sets the user or machine default provider for a provider type.
+
+This affects later CryptAcquireContext calls that omit a provider name.
+Use only with the user's consent. Set pdwReserved to NULL.
+
+@param pszProvName Installed provider name.
+@param dwProvType Provider type.
+@param pdwReserved Reserved; set to NULL.
+@param dwFlags CRYPT_USER_DEFAULT or CRYPT_MACHINE_DEFAULT, optionally
+                with CRYPT_DELETE_DEFAULT.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptSetProviderW(pszProvName, dwProvType)
+Sets the current user's default provider for a provider type.
+
+This affects later CryptAcquireContext calls that omit a provider name.
+It is intended for administrative applications; use only with the
+user's consent.
+
+@param pszProvName Installed provider name.
+@param dwProvType Provider type.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptSetProvParam(hProv, dwParam, pbData, dwFlags)
+Sets a supported provider parameter.
+
+The Microsoft Cryptographic Providers do not support PP_CLIENT_HWND or
+PP_KEYSET_SEC_DESCR.
+
+@param hProv Provider handle.
+@param dwParam Provider parameter to set.
+@param pbData Parameter data.
+@param dwFlags Security-information flags when applicable.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptSignHashW(hHash, dwKeySpec, sDescription, dwFlags, pbSignature, pdwSigLen)
+Signs a completed hash with a user key pair.
+
+Create and fill the hash first. Set sDescription to NULL. Set
+pbSignature to NULL to query the required size. After signing, only
+CryptDestroyHash can be called on the hash.
+
+@param hHash Hash handle to sign.
+@param dwKeySpec AT_KEYEXCHANGE or AT_SIGNATURE key pair.
+@param sDescription Unused; set to NULL.
+@param dwFlags Reserved; set to zero.
+@param pbSignature Receives the signature, or NULL to query size.
+@param pdwSigLen Input buffer size and output bytes written or required.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## CryptVerifySignatureW(hHash, pbSignature, dwSigLen, hPubKey, sDescription, dwFlags)
+Verifies a signature against a completed hash.
+
+Use the public key corresponding to the signing key. Set sDescription
+to NULL. After verification, only CryptDestroyHash can be called on
+the hash.
+
+@param hHash Hash handle to verify.
+@param pbSignature Signature data.
+@param dwSigLen Signature size in bytes.
+@param hPubKey Public key used to verify the signature.
+@param sDescription Unused; set to NULL.
+@param dwFlags Reserved; set to zero.
+@return TRUE if verified, FALSE on failure; use GetLastError.

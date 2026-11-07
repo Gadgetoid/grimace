@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.20)
+project(check_stdlib CXX)
+include(Grimace)
+if(NOT GRIMACE_LIBCXX)
+    message(FATAL_ERROR "The LLVM install at ${GRIMACE_LLVM_ROOT} has no libc++ (include/c++/v1 and share/libcxx/src)")
+endif()
+grimace_add_executable(stdlib stdlib.cpp)
+target_compile_options(stdlib PRIVATE -std=c++23)

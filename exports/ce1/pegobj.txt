@@ -1,0 +1,5 @@
+DeleteAllObjects
+GetObjTypeInfo
+GetObjectHandler
+InitObjType
+ObjectNotify

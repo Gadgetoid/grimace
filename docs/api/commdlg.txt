@@ -1,0 +1,82 @@
+## ChooseColor(lpcc)
+Displays the Color common dialog for choosing an RGB colour.
+
+The dialog offers the system colours and dithered versions of them; it
+doesn't support palettes. On screens narrower than 480 pixels,
+user-defined colours are unavailable and CC_FULLOPEN and
+CC_PREVENTFULLOPEN are ignored. To hook the dialog's messages, set
+CC_ENABLEHOOK in Flags and put a CCHookProc in lpfnHook.
+
+@param lpcc CHOOSECOLOR with the dialog settings; on success, rgbResult
+       receives the selected colour.
+@return Nonzero if the user accepts. 0 if cancelled or on error; call
+       CommDlgExtendedError for the error.
+
+## CommDlgExtendedError()
+Returns the error code from the last failed common dialog call.
+
+Covers GetOpenFileNameW, GetSaveFileNameW and the other common dialogs.
+After a successful call the value is undefined. Windows CE adds
+CDERR_REGISTRYFAILURE, for a failed registry read, and never returns
+CDERR_LOADSTRFAILURE, CDERR_MEMLOCKFAILURE or CDERR_REGISTERMSGFAIL.
+
+@return A CDERR_* or FNERR_* code, such as CDERR_STRUCTSIZE or
+       FNERR_BUFFERTOOSMALL, or 0 if the user cancelled without error.
+
+## GetOpenFileNameW(lpofn)
+Shows the system Open dialog and writes the selected full path to
+lpstrFile.
+
+Windows CE ignores the lCustData, lpfnHook and lpTemplateName members,
+and doesn't support OFN_ALLOWMULTISELECT, OFN_ENABLEHOOK,
+OFN_ENABLETEMPLATE, OFN_ENABLETEMPLATEHANDLE, OFN_NOREADONLYRETURN,
+OFN_NOVALIDATE, OFN_READONLY or OFN_SHAREAWARE. Call
+CommDlgExtendedError to tell a failure from a cancel. GetLastError is
+only set to ERROR_INVALID_PARAMETER or ERROR_OUTOFMEMORY.
+
+@param lpofn Initial settings, with lStructSize, lpstrFile and nMaxFile
+       set. Receives the selected path and related details.
+@return TRUE if the user chose a file. FALSE on cancel, error, or if
+       lpstrFile is too small for the path.
+
+## GetSaveFileNameW(lpofn)
+Shows the system Save As dialog and writes the chosen full path to
+lpstrFile.
+
+Windows CE ignores the lCustData, lpfnHook and lpTemplateName members,
+and doesn't support OFN_ALLOWMULTISELECT, OFN_ENABLEHOOK,
+OFN_ENABLETEMPLATE, OFN_ENABLETEMPLATEHANDLE, OFN_NOREADONLYRETURN,
+OFN_NOVALIDATE, OFN_READONLY or OFN_SHAREAWARE. Call
+CommDlgExtendedError to tell a failure from a cancel. GetLastError is
+only set to ERROR_INVALID_PARAMETER or ERROR_OUTOFMEMORY.
+
+@param lpofn Initial settings, with lStructSize, lpstrFile and nMaxFile
+       set. Receives the chosen path and related details.
+@return TRUE if the user chose a name. FALSE on cancel, error, or if
+       lpstrFile is too small for the path.
+
+## PageSetupDlgW(lppsd)
+Displays Page Setup to choose paper, source, orientation and margins.
+
+The function fills DEVNAMES offsets in bytes, not character units.
+
+@param lppsd Input settings for the dialog; receives the user's selections.
+@return TRUE if the user accepts. FALSE if canceled or an error occurs;
+        call CommDlgExtendedError to inspect an error.
+
+## PrintDlg(lppd)
+Displays the Print or Print Setup dialog and returns the user's
+selections.
+
+PRINTDLG has different members on Windows CE than on desktop Windows.
+PageSetupDlg is the page-setup alternative on Handheld PC 2000. Delete
+a returned device context with DeleteDC. PD_RETURNDEFAULTDC uses the
+last saved or default settings and can fail if they are invalid; show
+the dialog to select a valid printer or destination. A hook procedure
+in lpfnPrintHook that handles WM_CTLCOLORDLG must return a background
+brush.
+
+@param lppd PRINTDLG with the dialog settings; receives the user's
+       selections.
+@return Nonzero if the user accepts. 0 if cancelled or on error; call
+       CommDlgExtendedError for the error (0 after a cancel).

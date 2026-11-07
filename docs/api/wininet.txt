@@ -1,0 +1,1359 @@
+## CommitUrlCacheEntryA(lpszUrlName, lpszLocalFileName, ExpireTime, LastModifiedTime, CacheEntryType, lpHeaderInfo, dwHeaderSize, lpszFileExtension, dwReserved)
+Commits a local file to the Internet cache under a URL.
+This ANSI string variant follows the CE behavior of `CommitUrlCacheEntryW` and uses ANSI text.
+
+Use the local file name returned by CreateUrlCacheEntryA. Supply at
+least "HTTP/1.0 200 OK\r\n\r\n" in the headers for entries consumed
+by WinInet. Set dwReserved to zero.
+
+@param lpszUrlName Unique source URL, without escape characters.
+@param lpszLocalFileName Local file holding the cached data.
+@param ExpireTime Expiration time, or zero if unknown.
+@param LastModifiedTime Last modification time, or zero if unknown.
+@param CacheEntryType Cache type flags.
+@param lpHeaderInfo Optional header data.
+@param dwHeaderSize Header size in bytes.
+@param lpszFileExtension Extension metadata for the cache.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure.
+
+## CommitUrlCacheEntryW(lpszUrlName, lpszLocalFileName, ExpireTime, LastModifiedTime, CacheEntryType, lpHeaderInfo, dwHeaderSize, lpszFileExtension, dwReserved)
+Commits a local file to the Internet cache under a URL.
+
+Use the local file name returned by CreateUrlCacheEntryW. Supply at
+least "HTTP/1.0 200 OK\r\n\r\n" in the headers for entries consumed
+by WinInet. Set dwReserved to zero.
+
+@param lpszUrlName Unique source URL, without escape characters.
+@param lpszLocalFileName Local file holding the cached data.
+@param ExpireTime Expiration time, or zero if unknown.
+@param LastModifiedTime Last modification time, or zero if unknown.
+@param CacheEntryType Cache type flags.
+@param lpHeaderInfo Optional header data.
+@param dwHeaderSize Header size in bytes.
+@param lpszFileExtension Extension metadata for the cache.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure.
+
+## CreateUrlCacheEntryA(lpszUrlName, dwExpectedFileSize, lpszFileExtension, lpszFileName, dwReserved)
+Creates a local cache-file name for a URL.
+This ANSI string variant follows the CE behavior of `CreateUrlCacheEntryW` and uses ANSI text.
+
+The output buffer should hold MAX_PATH characters. Write the data to
+the returned file, then commit it with CommitUrlCacheEntryA. Set
+dwReserved to zero.
+
+@param lpszUrlName Unique source URL, without escape characters.
+@param dwExpectedFileSize Expected file size, or zero if unknown.
+@param lpszFileExtension Extension metadata for the cache.
+@param lpszFileName Receives the local file name.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure.
+
+## CreateUrlCacheEntryW(lpszUrlName, dwExpectedFileSize, lpszFileExtension, lpszFileName, dwReserved)
+Creates a local cache-file name for a URL.
+
+The output buffer should hold MAX_PATH characters. Write the data to
+the returned file, then commit it with CommitUrlCacheEntryW. Set
+dwReserved to zero.
+
+@param lpszUrlName Unique source URL, without escape characters.
+@param dwExpectedFileSize Expected file size, or zero if unknown.
+@param lpszFileExtension Extension metadata for the cache.
+@param lpszFileName Receives the local file name.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure.
+
+## CreateUrlCacheGroup(dwFlags, lpReserved)
+Creates a cache group or generates a group identifier.
+
+CACHEGROUP_FLAG_GIDONLY returns a unique ID without creating a physical
+group. Set lpReserved to NULL.
+
+@param dwFlags CACHEGROUP_FLAG_GIDONLY or zero.
+@param lpReserved Reserved; set to NULL.
+@return Group ID, or zero on failure.
+
+## DeleteUrlCacheEntryA(lpszUrlName)
+Removes a URL and its associated file from the cache.
+This ANSI string variant follows the CE behavior of `DeleteUrlCacheEntryW` and uses ANSI text.
+
+@param lpszUrlName Cache entry URL, without escape characters.
+@return TRUE on success, FALSE on failure.
+
+## DeleteUrlCacheEntryW(lpszUrlName)
+Removes a URL and its associated file from the cache.
+
+@param lpszUrlName Cache entry URL, without escape characters.
+@return TRUE on success, FALSE on failure.
+
+## DeleteUrlCacheGroup(GroupId, dwFlags, lpReserved)
+Deletes a cache group and optionally its associated entries.
+
+CACHEGROUP_FLAG_FLUSHURL_ONDELETE deletes entries not shared by another
+group. Set lpReserved to NULL.
+
+@param GroupId Cache group identifier.
+@param dwFlags CACHEGROUP_FLAG_FLUSHURL_ONDELETE or zero.
+@param lpReserved Reserved; set to NULL.
+@return TRUE on success, FALSE on failure.
+
+## FindCloseUrlCache(hEnumHandle)
+Closes a URL-cache enumeration handle.
+
+@param hEnumHandle Handle returned by a cache enumeration function.
+@return TRUE on success, FALSE on failure.
+
+## FindFirstUrlCacheEntryA(lpszUrlSearchPattern, lpFirstCacheEntryInfo, lpdwFirstCacheEntryInfoBufferSize)
+Begins enumeration of Internet cache entries matching a pattern.
+This ANSI string variant follows the CE behavior of `FindFirstUrlCacheEntryW` and uses ANSI text.
+
+A NULL pattern searches all entries. If the buffer is too small,
+ERROR_INSUFFICIENT_BUFFER is returned and the required size is written
+to the size parameter. Close the enumeration with FindCloseUrlCache.
+
+@param lpszUrlSearchPattern URL pattern, "cookie:", "visited:", or NULL.
+@param lpFirstCacheEntryInfo Receives the first entry.
+@param lpdwFirstCacheEntryInfoBufferSize Input size and output bytes
+       copied or required.
+@return Enumeration handle, or NULL on failure.
+
+## FindFirstUrlCacheEntryExA(lpszUrlSearchPattern, dwFlags, dwFilter, GroupId, lpFirstCacheEntryInfo, lpdwFirstCacheEntryInfoBufferSize, lpGroupAttributes, pcbGroupAttributes, lpReserved)
+Begins a filtered enumeration of Internet cache entries.
+This ANSI string variant follows the CE behavior of `FindFirstUrlCacheEntryExW` and uses ANSI text.
+
+A NULL pattern searches all entries. Set dwFlags to zero and all
+reserved parameters to NULL. GroupId zero selects entries in no group.
+Close the returned handle with FindCloseUrlCache.
+
+@param lpszUrlSearchPattern URL pattern, "cookie:", "visited:", or NULL.
+@param dwFlags Reserved; set to zero.
+@param dwFilter Cache entry types to include.
+@param GroupId Group to enumerate, or zero for ungrouped entries.
+@param lpFirstCacheEntryInfo Receives the first entry.
+@param lpdwFirstCacheEntryInfoBufferSize Input size and output bytes
+       copied or required.
+@param lpGroupAttributes Reserved; set to NULL.
+@param pcbGroupAttributes Reserved; set to NULL.
+@param lpReserved Reserved; set to NULL.
+@return Enumeration handle, or NULL on failure.
+
+## FindFirstUrlCacheEntryExW(lpszUrlSearchPattern, dwFlags, dwFilter, GroupId, lpFirstCacheEntryInfo, lpdwFirstCacheEntryInfoBufferSize, lpGroupAttributes, pcbGroupAttributes, lpReserved)
+Begins a filtered enumeration of Internet cache entries.
+
+A NULL pattern searches all entries. Set dwFlags to zero and all
+reserved parameters to NULL. GroupId zero selects entries in no group.
+Close the returned handle with FindCloseUrlCache.
+
+@param lpszUrlSearchPattern URL pattern, "cookie:", "visited:", or NULL.
+@param dwFlags Reserved; set to zero.
+@param dwFilter Cache entry types to include.
+@param GroupId Group to enumerate, or zero for ungrouped entries.
+@param lpFirstCacheEntryInfo Receives the first entry.
+@param lpdwFirstCacheEntryInfoBufferSize Input size and output bytes
+       copied or required.
+@param lpGroupAttributes Reserved; set to NULL.
+@param pcbGroupAttributes Reserved; set to NULL.
+@param lpReserved Reserved; set to NULL.
+@return Enumeration handle, or NULL on failure.
+
+## FindFirstUrlCacheEntryW(lpszUrlSearchPattern, lpFirstCacheEntryInfo, lpdwFirstCacheEntryInfoBufferSize)
+Begins enumeration of Internet cache entries matching a pattern.
+
+A NULL pattern searches all entries. If the buffer is too small,
+ERROR_INSUFFICIENT_BUFFER is returned and the required size is written
+to the size parameter. Close the enumeration with FindCloseUrlCache.
+
+@param lpszUrlSearchPattern URL pattern, "cookie:", "visited:", or NULL.
+@param lpFirstCacheEntryInfo Receives the first entry.
+@param lpdwFirstCacheEntryInfoBufferSize Input size and output bytes
+       copied or required.
+@return Enumeration handle, or NULL on failure.
+
+## FindNextUrlCacheEntryA(hEnumHandle, lpNextCacheEntryInfo, lpdwNextCacheEntryInfoBufferSize)
+Retrieves the next entry in a cache enumeration.
+This ANSI string variant follows the CE behavior of `FindNextUrlCacheEntryW` and uses ANSI text.
+
+If the entry buffer is too small, the size parameter receives the
+required byte count.
+
+@param hEnumHandle Enumeration handle from FindFirstUrlCacheEntryA.
+@param lpNextCacheEntryInfo Receives the next entry.
+@param lpdwNextCacheEntryInfoBufferSize Input size and output bytes
+       copied or required.
+@return TRUE when an entry is retrieved, FALSE otherwise.
+
+## FindNextUrlCacheEntryExA(hEnumHandle, lpFirstCacheEntryInfo, lpdwFirstCacheEntryInfoBufferSize, lpGroupAttributes, pcbGroupAttributes, lpReserved)
+Retrieves the next entry in a filtered cache enumeration.
+This ANSI string variant follows the CE behavior of `FindNextUrlCacheEntryExW` and uses ANSI text.
+
+Set reserved parameters to NULL. Call FindCloseUrlCache when done.
+
+@param hEnumHandle Enumeration handle from FindFirstUrlCacheEntryExA.
+@param lpFirstCacheEntryInfo Receives the next entry.
+@param lpdwFirstCacheEntryInfoBufferSize Input size and output bytes
+       copied or required.
+@param lpGroupAttributes Reserved; set to NULL.
+@param pcbGroupAttributes Reserved; set to NULL.
+@param lpReserved Reserved; set to NULL.
+@return TRUE when an entry is retrieved, FALSE otherwise.
+
+## FindNextUrlCacheEntryExW(hEnumHandle, lpFirstCacheEntryInfo, lpdwFirstCacheEntryInfoBufferSize, lpGroupAttributes, pcbGroupAttributes, lpReserved)
+Retrieves the next entry in a filtered cache enumeration.
+
+Set reserved parameters to NULL. Call FindCloseUrlCache when done.
+
+@param hEnumHandle Enumeration handle from FindFirstUrlCacheEntryExW.
+@param lpFirstCacheEntryInfo Receives the next entry.
+@param lpdwFirstCacheEntryInfoBufferSize Input size and output bytes
+       copied or required.
+@param lpGroupAttributes Reserved; set to NULL.
+@param pcbGroupAttributes Reserved; set to NULL.
+@param lpReserved Reserved; set to NULL.
+@return TRUE when an entry is retrieved, FALSE otherwise.
+
+## FindNextUrlCacheEntryW(hEnumHandle, lpNextCacheEntryInfo, lpdwNextCacheEntryInfoBufferSize)
+Retrieves the next entry in a cache enumeration.
+
+If the entry buffer is too small, the size parameter receives the
+required byte count.
+
+@param hEnumHandle Enumeration handle from FindFirstUrlCacheEntryW.
+@param lpNextCacheEntryInfo Receives the next entry.
+@param lpdwNextCacheEntryInfoBufferSize Input size and output bytes
+       copied or required.
+@return TRUE when an entry is retrieved, FALSE otherwise.
+
+## FtpCreateDirectoryA(hConnect, lpszDirectory)
+Creates a directory on an FTP server.
+This ANSI string variant follows the CE behavior of `FtpCreateDirectoryW` and uses ANSI text.
+
+The directory may be relative to the server's current directory or a
+qualified path. Use FtpGetCurrentDirectoryA rather than assuming the
+server's directory layout. The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszDirectory Remote directory to create.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpCreateDirectoryW(hConnect, lpszDirectory)
+Creates a directory on an FTP server.
+
+The directory may be relative to the server's current directory or a
+qualified path. Use FtpGetCurrentDirectoryW rather than assuming the
+server's directory layout. The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszDirectory Remote directory to create.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpDeleteFileA(hConnect, lpszFileName)
+Deletes a file on an FTP server.
+This ANSI string variant follows the CE behavior of `FtpDeleteFileW` and uses ANSI text.
+
+The name may be relative to the server's current directory or qualified.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszFileName Remote file to delete.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpDeleteFileW(hConnect, lpszFileName)
+Deletes a file on an FTP server.
+
+The name may be relative to the server's current directory or qualified.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszFileName Remote file to delete.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpFindFirstFileA(hConnect, lpszSearchFile, lpFindFileData, dwFlags, dwContext)
+Starts enumerating files and directories in an FTP directory.
+This ANSI string variant follows the CE behavior of `FtpFindFirstFileW` and uses ANSI text.
+
+Use InternetFindNextFileA to continue and InternetCloseHandle to end the
+search. Only one enumeration can be active per FTP session. The SDK
+lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszSearchFile File or directory pattern, or NULL for current directory.
+@param lpFindFileData Receives the first entry.
+@param dwFlags Cache and transfer options.
+@param dwContext Application context passed to the status callback.
+@return Enumeration handle, or NULL on failure; use GetLastError.
+
+## FtpFindFirstFileW(hConnect, lpszSearchFile, lpFindFileData, dwFlags, dwContext)
+Starts enumerating files and directories in an FTP directory.
+
+Use InternetFindNextFileW to continue and InternetCloseHandle to end the
+search. Only one enumeration can be active per FTP session. The SDK
+lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszSearchFile File or directory pattern, or NULL for current directory.
+@param lpFindFileData Receives the first entry.
+@param dwFlags Cache and transfer options.
+@param dwContext Application context passed to the status callback.
+@return Enumeration handle, or NULL on failure; use GetLastError.
+
+## FtpGetCurrentDirectoryA(hConnect, lpszCurrentDirectory, lpdwCurrentDirectory)
+Retrieves the current directory for an FTP session.
+This ANSI string variant follows the CE behavior of `FtpGetCurrentDirectoryW` and uses ANSI text.
+
+The length includes space for the terminating null. If the buffer is
+too small, the length parameter receives the required size. The SDK
+lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszCurrentDirectory Receives the remote directory.
+@param lpdwCurrentDirectory Input buffer size and output characters
+       copied or required.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpGetCurrentDirectoryW(hConnect, lpszCurrentDirectory, lpdwCurrentDirectory)
+Retrieves the current directory for an FTP session.
+
+The length includes space for the terminating null. If the buffer is
+too small, the length parameter receives the required size. The SDK
+lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszCurrentDirectory Receives the remote directory.
+@param lpdwCurrentDirectory Input buffer size and output characters
+       copied or required.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpGetFileA(hConnect, lpszRemoteFile, lpszNewFile, fFailIfExists, dwFlagsAndAttributes, dwFlags, dwContext)
+Downloads a remote FTP file to a local file.
+This ANSI string variant follows the CE behavior of `FtpGetFileW` and uses ANSI text.
+
+Binary transfer is the default; select ASCII for text translation.
+Use FtpOpenFileA with InternetReadFile for direct control over a
+transfer. The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszRemoteFile Remote file to retrieve.
+@param lpszNewFile Local file to create.
+@param fFailIfExists TRUE to fail if the local file exists.
+@param dwFlagsAndAttributes Attributes for the local file.
+@param dwFlags Transfer type and cache options.
+@param dwContext Application context passed to the status callback.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpGetFileW(hConnect, lpszRemoteFile, lpszNewFile, fFailIfExists, dwFlagsAndAttributes, dwFlags, dwContext)
+Downloads a remote FTP file to a local file.
+
+Binary transfer is the default; select ASCII for text translation.
+Use FtpOpenFileW with InternetReadFile for direct control over a
+transfer. The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszRemoteFile Remote file to retrieve.
+@param lpszNewFile Local file to create.
+@param fFailIfExists TRUE to fail if the local file exists.
+@param dwFlagsAndAttributes Attributes for the local file.
+@param dwFlags Transfer type and cache options.
+@param dwContext Application context passed to the status callback.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpOpenFileA(hConnect, lpszFileName, dwAccess, dwFlags, dwContext)
+Opens a remote FTP file for reading or writing.
+This ANSI string variant follows the CE behavior of `FtpOpenFileW` and uses ANSI text.
+
+Use InternetReadFile or InternetWriteFile for data. Only one file may
+be open per FTP session; close the returned handle with InternetCloseHandle.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszFileName Remote file name.
+@param dwAccess GENERIC_READ or GENERIC_WRITE, not both.
+@param dwFlags Transfer type and cache options.
+@param dwContext Application context passed to the status callback.
+@return Internet handle, or NULL on failure; use GetLastError.
+
+## FtpOpenFileW(hConnect, lpszFileName, dwAccess, dwFlags, dwContext)
+Opens a remote FTP file for reading or writing.
+
+Use InternetReadFile or InternetWriteFile for data. Only one file may
+be open per FTP session; close the returned handle with InternetCloseHandle.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszFileName Remote file name.
+@param dwAccess GENERIC_READ or GENERIC_WRITE, not both.
+@param dwFlags Transfer type and cache options.
+@param dwContext Application context passed to the status callback.
+@return Internet handle, or NULL on failure; use GetLastError.
+
+## FtpPutFileA(hConnect, lpszLocalFile, lpszNewRemoteFile, dwFlags, dwContext)
+Uploads a local file to an FTP server.
+This ANSI string variant follows the CE behavior of `FtpPutFileW` and uses ANSI text.
+
+Use FtpOpenFileA and InternetWriteFile for direct transfer control.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszLocalFile Local file to send.
+@param lpszNewRemoteFile Remote file to create.
+@param dwFlags Transfer type and cache options.
+@param dwContext Application context passed to the status callback.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpPutFileW(hConnect, lpszLocalFile, lpszNewRemoteFile, dwFlags, dwContext)
+Uploads a local file to an FTP server.
+
+Use FtpOpenFileW and InternetWriteFile for direct transfer control.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszLocalFile Local file to send.
+@param lpszNewRemoteFile Remote file to create.
+@param dwFlags Transfer type and cache options.
+@param dwContext Application context passed to the status callback.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpRemoveDirectoryA(hConnect, lpszDirectory)
+Removes a directory from an FTP server.
+This ANSI string variant follows the CE behavior of `FtpRemoveDirectoryW` and uses ANSI text.
+
+Use FtpGetCurrentDirectoryA rather than assuming the server's directory
+layout. The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszDirectory Remote directory to remove.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpRemoveDirectoryW(hConnect, lpszDirectory)
+Removes a directory from an FTP server.
+
+Use FtpGetCurrentDirectoryW rather than assuming the server's directory
+layout. The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszDirectory Remote directory to remove.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpRenameFileA(hConnect, lpszExisting, lpszNew)
+Renames a file on an FTP server.
+This ANSI string variant follows the CE behavior of `FtpRenameFileW` and uses ANSI text.
+
+The names may be relative to the server's current directory or qualified.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszExisting Current remote file name.
+@param lpszNew New remote file name.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpRenameFileW(hConnect, lpszExisting, lpszNew)
+Renames a file on an FTP server.
+
+The names may be relative to the server's current directory or qualified.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszExisting Current remote file name.
+@param lpszNew New remote file name.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpSetCurrentDirectoryA(hConnect, lpszDirectory)
+Changes the current directory for an FTP session.
+This ANSI string variant follows the CE behavior of `FtpSetCurrentDirectoryW` and uses ANSI text.
+
+Use FtpGetCurrentDirectoryA to query the server's actual current path.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectA.
+@param lpszDirectory Directory to select.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## FtpSetCurrentDirectoryW(hConnect, lpszDirectory)
+Changes the current directory for an FTP session.
+
+Use FtpGetCurrentDirectoryW to query the server's actual current path.
+The SDK lists Inetftp.dll only for Intel x86.
+
+@param hConnect FTP session from InternetConnectW.
+@param lpszDirectory Directory to select.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## GetUrlCacheEntryInfoA(lpszUrlName, lpCacheEntryInfo, lpdwCacheEntryInfoBufferSize)
+Retrieves information about a URL cache entry.
+This ANSI string variant follows the CE behavior of `GetUrlCacheEntryInfoW` and uses ANSI text.
+
+The URL is matched as stored; anchors are not parsed. The size
+parameter is the input buffer size and receives the bytes copied or
+required.
+
+@param lpszUrlName Cache entry name without escape characters.
+@param lpCacheEntryInfo Receives cache entry information.
+@param lpdwCacheEntryInfoBufferSize Buffer size in bytes; receives
+       bytes copied or required.
+@return TRUE on success, FALSE on failure.
+
+## GetUrlCacheEntryInfoExA(lpszUrl, lpCacheEntryInfo, lpdwCacheEntryInfoBufSize, lpszReserved, lpdwReserved, lpReserved, dwFlags)
+Retrieves cache information for a URL after applying cached redirects.
+This ANSI string variant follows the CE behavior of `GetUrlCacheEntryInfoExW` and uses ANSI text.
+
+Set all reserved parameters and dwFlags to zero. The size parameter is
+the input buffer size and receives the bytes copied.
+
+@param lpszUrl Cache URL, without escape characters.
+@param lpCacheEntryInfo Receives cache entry information.
+@param lpdwCacheEntryInfoBufSize Input size and output bytes copied or required.
+@param lpszReserved Reserved; set to NULL.
+@param lpdwReserved Reserved; set to NULL.
+@param lpReserved Reserved; set to NULL.
+@param dwFlags Reserved; set to zero.
+@return TRUE if the URL is found, FALSE otherwise.
+
+## GetUrlCacheEntryInfoExW(lpszUrl, lpCacheEntryInfo, lpdwCacheEntryInfoBufSize, lpszReserved, lpdwReserved, lpReserved, dwFlags)
+Retrieves cache information for a URL after applying cached redirects.
+
+Set all reserved parameters and dwFlags to zero. The size parameter is
+the input buffer size and receives the bytes copied.
+
+@param lpszUrl Cache URL, without escape characters.
+@param lpCacheEntryInfo Receives cache entry information.
+@param lpdwCacheEntryInfoBufSize Input size and output bytes copied or required.
+@param lpszReserved Reserved; set to NULL.
+@param lpdwReserved Reserved; set to NULL.
+@param lpReserved Reserved; set to NULL.
+@param dwFlags Reserved; set to zero.
+@return TRUE if the URL is found, FALSE otherwise.
+
+## GetUrlCacheEntryInfoW(lpszUrlName, lpCacheEntryInfo, lpdwCacheEntryInfoBufferSize)
+Retrieves information about a URL cache entry.
+
+The URL is matched as stored; anchors are not parsed. The size
+parameter is the input buffer size and receives the bytes copied or
+required.
+
+@param lpszUrlName Cache entry name without escape characters.
+@param lpCacheEntryInfo Receives cache entry information.
+@param lpdwCacheEntryInfoBufferSize Buffer size in bytes; receives
+       bytes copied or required.
+@return TRUE on success, FALSE on failure.
+
+## HttpAddRequestHeadersA(hRequest, lpszHeaders, dwHeadersLength, dwModifiers)
+Adds or updates headers on an HTTP request.
+This ANSI string variant follows the CE behavior of `HttpAddRequestHeadersW` and uses ANSI text.
+
+Terminate each header with CR-LF. Use HTTP_ADDREQ_FLAG_* to append,
+replace or coalesce headers.
+
+@param hRequest Open request from HttpOpenRequestA.
+@param lpszHeaders Header lines to add.
+@param dwHeadersLength Header length in characters, or -1 for a
+       null-terminated string.
+@param dwModifiers HTTP_ADDREQ_FLAG_* options.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## HttpAddRequestHeadersW(hRequest, lpszHeaders, dwHeadersLength, dwModifiers)
+Adds or updates headers on an HTTP request.
+
+Terminate each header with CR-LF. Use HTTP_ADDREQ_FLAG_* to append,
+replace or coalesce headers.
+
+@param hRequest Open request from HttpOpenRequestW.
+@param lpszHeaders Header lines to add.
+@param dwHeadersLength Header length in characters, or -1 for a
+       null-terminated string.
+@param dwModifiers HTTP_ADDREQ_FLAG_* options.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## HttpEndRequestA(hRequest, lpBuffersOut, dwFlags, dwContext)
+Finishes a request started with HttpSendRequestExA.
+This ANSI string variant follows the CE behavior of `HttpEndRequestW` and uses ANSI text.
+
+@param hRequest Request handle.
+@param lpBuffersOut Optional output buffers.
+@param dwFlags HSR_* request flags.
+@param dwContext Application callback context.
+@return TRUE on success, FALSE on failure.
+
+## HttpEndRequestW(hRequest, lpBuffersOut, dwFlags, dwContext)
+Finishes a request started with HttpSendRequestExW.
+
+@param hRequest Request handle.
+@param lpBuffersOut Optional output buffers.
+@param dwFlags HSR_* request flags.
+@param dwContext Application callback context.
+@return TRUE on success, FALSE on failure.
+
+## HttpOpenRequestA(hConnect, lpszVerb, lpszObjectName, lpszVersion, lpszReferrer, lplpszAcceptTypes, dwFlags, dwContext)
+Creates an HTTP request handle on a connected session.
+This ANSI string variant follows the CE behavior of `HttpOpenRequestW` and uses ANSI text.
+
+NULL verb defaults to GET; NULL version defaults to HTTP/1.0. Use
+InternetCloseHandle to close the request. WinInet requests complete
+synchronously on CE.
+
+@param hConnect HTTP session from InternetConnectA.
+@param lpszVerb Request method, or NULL for GET.
+@param lpszObjectName Target path or object.
+@param lpszVersion HTTP version, or NULL for HTTP/1.0.
+@param lpszReferrer Referring URL, or NULL.
+@param lplpszAcceptTypes Null-terminated accepted content types, or NULL.
+@param dwFlags HTTP request flags.
+@param dwContext Application callback context.
+@return Request handle, or NULL on failure; use GetLastError.
+
+## HttpOpenRequestW(hConnect, lpszVerb, lpszObjectName, lpszVersion, lpszReferrer, lplpszAcceptTypes, dwFlags, dwContext)
+Creates an HTTP request handle on a connected session.
+
+NULL verb defaults to GET; NULL version defaults to HTTP/1.0. Use
+InternetCloseHandle to close the request. WinInet requests complete
+synchronously on CE.
+
+@param hConnect HTTP session from InternetConnectW.
+@param lpszVerb Request method, or NULL for GET.
+@param lpszObjectName Target path or object.
+@param lpszVersion HTTP version, or NULL for HTTP/1.0.
+@param lpszReferrer Referring URL, or NULL.
+@param lplpszAcceptTypes Null-terminated accepted content types, or NULL.
+@param dwFlags HTTP request flags.
+@param dwContext Application callback context.
+@return Request handle, or NULL on failure; use GetLastError.
+
+## HttpQueryInfoA(hRequest, dwInfoLevel, lpBuffer, lpdwBufferLength, lpdwIndex)
+Queries an HTTP response or request header.
+This ANSI string variant follows the CE behavior of `HttpQueryInfoW` and uses ANSI text.
+
+Use HTTP_QUERY_* with optional flags such as HTTP_QUERY_FLAG_NUMBER or
+HTTP_QUERY_FLAG_SYSTEMTIME. For repeated headers, use lpdwIndex to
+select and advance through values. The length is in characters for
+string results.
+
+@param hRequest Open HTTP request handle.
+@param dwInfoLevel Header to retrieve and result format.
+@param lpBuffer Receives the header value.
+@param lpdwBufferLength Input buffer size and output length or required
+       size.
+@param lpdwIndex Index for repeated headers; receives the next index.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## HttpQueryInfoW(hRequest, dwInfoLevel, lpBuffer, lpdwBufferLength, lpdwIndex)
+Queries an HTTP response or request header.
+
+Use HTTP_QUERY_* with optional flags such as HTTP_QUERY_FLAG_NUMBER or
+HTTP_QUERY_FLAG_SYSTEMTIME. For repeated headers, use lpdwIndex to
+select and advance through values. The length is in characters for
+string results.
+
+@param hRequest Open HTTP request handle.
+@param dwInfoLevel Header to retrieve and result format.
+@param lpBuffer Receives the header value.
+@param lpdwBufferLength Input buffer size and output length or required
+       size.
+@param lpdwIndex Index for repeated headers; receives the next index.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## HttpSendRequestA(hRequest, lpszHeaders, dwHeadersLength, lpOptional, dwOptionalLength)
+Sends an HTTP request and optional body to the server.
+This ANSI string variant follows the CE behavior of `HttpSendRequestW` and uses ANSI text.
+
+Optional data is commonly used with POST or PUT. On CE its buffer must
+be smaller than 32 bytes or larger than about 150 bytes, and begin with
+CR-LF. Read the response before reusing the request handle.
+
+@param hRequest Open HTTP request handle.
+@param lpszHeaders Additional headers, or NULL.
+@param dwHeadersLength Header length in characters, or -1 for a
+       null-terminated string.
+@param lpOptional Optional request body, or NULL.
+@param dwOptionalLength Body length in bytes.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## HttpSendRequestExA(hRequest, lpBuffersIn, lpBuffersOut, dwFlags, dwContext)
+Begins sending a request body, including chunked transfers.
+This ANSI string variant follows the CE behavior of `HttpSendRequestExW` and uses ANSI text.
+
+Use HttpEndRequestA to finish the operation.
+
+@param hRequest Request handle from HttpOpenRequestA.
+@param lpBuffersIn Optional input buffers.
+@param lpBuffersOut Optional output buffers.
+@param dwFlags HSR_* transfer flags.
+@param dwContext Application callback context.
+@return TRUE on success, FALSE on failure.
+
+## HttpSendRequestExW(hRequest, lpBuffersIn, lpBuffersOut, dwFlags, dwContext)
+Begins sending a request body, including chunked transfers.
+
+Use HttpEndRequestW to finish the operation.
+
+@param hRequest Request handle from HttpOpenRequestW.
+@param lpBuffersIn Optional input buffers.
+@param lpBuffersOut Optional output buffers.
+@param dwFlags HSR_* transfer flags.
+@param dwContext Application callback context.
+@return TRUE on success, FALSE on failure.
+
+## HttpSendRequestW(hRequest, lpszHeaders, dwHeadersLength, lpOptional, dwOptionalLength)
+Sends an HTTP request and optional body to the server.
+
+Optional data is commonly used with POST or PUT. On CE its buffer must
+be smaller than 32 bytes or larger than about 150 bytes, and begin with
+CR-LF. Read the response before reusing the request handle.
+
+@param hRequest Open HTTP request handle.
+@param lpszHeaders Additional headers, or NULL.
+@param dwHeadersLength Header length in characters, or -1 for a
+       null-terminated string.
+@param lpOptional Optional request body, or NULL.
+@param dwOptionalLength Body length in bytes.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetCanonicalizeUrlA(lpszUrl, lpszBuffer, lpdwBufferLength, dwFlags)
+Canonicalizes a URL, escaping unsafe characters and removing meta segments.
+This ANSI string variant follows the CE behavior of `InternetCanonicalizeUrlW` and uses ANSI text.
+
+Use ICU_DECODE with ICU_NO_ENCODE to decode without re-encoding. CE
+reports lengths in characters; on insufficient buffer, the required
+length includes the terminator.
+
+@param lpszUrl URL to canonicalize.
+@param lpszBuffer Receives the canonical URL.
+@param lpdwBufferLength Buffer size in characters; receives result
+       length or required size.
+@param dwFlags ICU_* canonicalization options.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetCanonicalizeUrlW(lpszUrl, lpszBuffer, lpdwBufferLength, dwFlags)
+Canonicalizes a URL, escaping unsafe characters and removing meta segments.
+
+Use ICU_DECODE with ICU_NO_ENCODE to decode without re-encoding. CE
+reports lengths in characters; on insufficient buffer, the required
+length includes the terminator.
+
+@param lpszUrl URL to canonicalize.
+@param lpszBuffer Receives the canonical URL.
+@param lpdwBufferLength Buffer size in characters; receives result
+       length or required size.
+@param dwFlags ICU_* canonicalization options.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetCloseHandle(hInternet)
+Closes an Internet handle and its child handles.
+
+Closing cancels pending operations and discards outstanding data. With
+asynchronous requests, completion callbacks may arrive before the final
+INTERNET_STATUS_HANDLE_CLOSING callback.
+
+@param hInternet Handle to close.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetCombineUrlA(lpszBaseUrl, lpszRelativeUrl, lpszBuffer, lpdwBufferLength, dwFlags)
+Combines a base URL and relative URL into a canonical URL.
+This ANSI string variant follows the CE behavior of `InternetCombineUrlW` and uses ANSI text.
+
+CE reports lengths in characters. On insufficient buffer, the required
+length includes the terminator.
+
+@param lpszBaseUrl Base URL.
+@param lpszRelativeUrl Relative URL.
+@param lpszBuffer Receives the combined URL.
+@param lpdwBufferLength Buffer size in characters; receives result
+       length or required size.
+@param dwFlags ICU_* canonicalization options.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetCombineUrlW(lpszBaseUrl, lpszRelativeUrl, lpszBuffer, lpdwBufferLength, dwFlags)
+Combines a base URL and relative URL into a canonical URL.
+
+CE reports lengths in characters. On insufficient buffer, the required
+length includes the terminator.
+
+@param lpszBaseUrl Base URL.
+@param lpszRelativeUrl Relative URL.
+@param lpszBuffer Receives the combined URL.
+@param lpdwBufferLength Buffer size in characters; receives result
+       length or required size.
+@param dwFlags ICU_* canonicalization options.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetConnectA(hInternet, lpszServerName, nServerPort, lpszUserName, lpszPassword, dwService, dwFlags, dwContext)
+Opens an FTP or HTTP session to a server.
+This ANSI string variant follows the CE behavior of `InternetConnectW` and uses ANSI text.
+
+CE supports FTP and HTTP, not Gopher; INTERNET_FLAG_SECURE is not
+supported here. FTP may use INTERNET_FLAG_PASSIVE. Use
+InternetCloseHandle to close the session. Requests complete
+synchronously on CE.
+
+@param hInternet Internet session from InternetOpenA.
+@param lpszServerName Host name or dotted-decimal address.
+@param nServerPort Service port, or INTERNET_INVALID_PORT_NUMBER for default.
+@param lpszUserName User name, or NULL for the service default.
+@param lpszPassword Password, or NULL for the service default.
+@param dwService INTERNET_SERVICE_FTP or INTERNET_SERVICE_HTTP.
+@param dwFlags Service flags, including INTERNET_FLAG_PASSIVE for FTP.
+@param dwContext Application callback context.
+@return Connection handle, or NULL on failure; use GetLastError.
+
+## InternetConnectW(hInternet, lpszServerName, nServerPort, lpszUserName, lpszPassword, dwService, dwFlags, dwContext)
+Opens an FTP or HTTP session to a server.
+
+CE supports FTP and HTTP, not Gopher; INTERNET_FLAG_SECURE is not
+supported here. FTP may use INTERNET_FLAG_PASSIVE. Use
+InternetCloseHandle to close the session. Requests complete
+synchronously on CE.
+
+@param hInternet Internet session from InternetOpenW.
+@param lpszServerName Host name or dotted-decimal address.
+@param nServerPort Service port, or INTERNET_INVALID_PORT_NUMBER for default.
+@param lpszUserName User name, or NULL for the service default.
+@param lpszPassword Password, or NULL for the service default.
+@param dwService INTERNET_SERVICE_FTP or INTERNET_SERVICE_HTTP.
+@param dwFlags Service flags, including INTERNET_FLAG_PASSIVE for FTP.
+@param dwContext Application callback context.
+@return Connection handle, or NULL on failure; use GetLastError.
+
+## InternetCrackUrlA(lpszUrl, dwUrlLength, dwFlags, lpUrlComponents)
+Splits a URL into components described by URL_COMPONENTS.
+This ANSI string variant follows the CE behavior of `InternetCrackUrlW` and uses ANSI text.
+
+Set dwStructSize in the structure. For each component, supply a buffer
+and its capacity to receive a copy, or a null buffer and nonzero length
+to receive a pointer into the input URL. ICU_DECODE and ICU_ESCAPE
+require component buffers.
+
+@param lpszUrl Null-terminated URL to parse.
+@param dwUrlLength URL length, or zero for a null-terminated string.
+@param dwFlags ICU_DECODE and/or ICU_ESCAPE.
+@param lpUrlComponents Receives the components; initialize dwStructSize.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetCrackUrlW(lpszUrl, dwUrlLength, dwFlags, lpUrlComponents)
+Splits a URL into components described by URL_COMPONENTS.
+
+Set dwStructSize in the structure. For each component, supply a buffer
+and its capacity to receive a copy, or a null buffer and nonzero length
+to receive a pointer into the input URL. ICU_DECODE and ICU_ESCAPE
+require component buffers.
+
+@param lpszUrl Null-terminated URL to parse.
+@param dwUrlLength URL length, or zero for a null-terminated string.
+@param dwFlags ICU_DECODE and/or ICU_ESCAPE.
+@param lpUrlComponents Receives the components; initialize dwStructSize.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetCreateUrlA(lpUrlComponents, dwFlags, lpszUrl, lpdwUrlLength)
+Builds a URL from URL_COMPONENTS.
+This ANSI string variant follows the CE behavior of `InternetCreateUrlW` and uses ANSI text.
+
+CE reports lengths in characters; on insufficient buffer, the required
+length includes the terminator.
+
+@param lpUrlComponents URL parts to combine.
+@param dwFlags ICU_ESCAPE and/or ICU_USERNAME.
+@param lpszUrl Receives the URL.
+@param lpdwUrlLength Buffer size in characters; receives result length
+       or required size.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetCreateUrlW(lpUrlComponents, dwFlags, lpszUrl, lpdwUrlLength)
+Builds a URL from URL_COMPONENTS.
+
+CE reports lengths in characters; on insufficient buffer, the required
+length includes the terminator.
+
+@param lpUrlComponents URL parts to combine.
+@param dwFlags ICU_ESCAPE and/or ICU_USERNAME.
+@param lpszUrl Receives the URL.
+@param lpdwUrlLength Buffer size in characters; receives result length
+       or required size.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetErrorDlg(hWnd, hRequest, dwError, dwFlags, lppvData)
+Displays the appropriate dialog for an Internet request error.
+
+FLAGS_ERROR_UI_FILTER_FOR_ERRORS can inspect response headers for
+authentication errors hidden by HttpSendRequest. Results can request
+the request be retried.
+
+@param hWnd Parent window, or NULL.
+@param hRequest Internet request handle.
+@param dwError Error to display.
+@param dwFlags Error-dialog options.
+@param lppvData Error-specific data, or NULL when unused.
+@return ERROR_SUCCESS, ERROR_CANCELLED or ERROR_INTERNET_FORCE_RETRY.
+
+## InternetFindNextFileA(hFind, lpvFindData)
+Retrieves the next file or directory in an Internet enumeration.
+This ANSI string variant follows the CE behavior of `InternetFindNextFileW` and uses ANSI text.
+
+For FTP, lpvFindData receives WIN32_FIND_DATA. FALSE with
+ERROR_NO_MORE_FILES indicates the enumeration is complete.
+
+@param hFind Enumeration handle from FtpFindFirstFileA or a directory URL.
+@param lpvFindData Receives the next entry.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetFindNextFileW(hFind, lpvFindData)
+Retrieves the next file or directory in an Internet enumeration.
+
+For FTP, lpvFindData receives WIN32_FIND_DATA. FALSE with
+ERROR_NO_MORE_FILES indicates the enumeration is complete.
+
+@param hFind Enumeration handle from FtpFindFirstFileW or a directory URL.
+@param lpvFindData Receives the next entry.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetGetConnectedState(lpdwFlags, dwReserved)
+Checks whether the local system has an Internet connection.
+
+lpdwFlags can identify configured, LAN, modem, offline, proxy or RAS
+state. Set dwReserved to zero.
+
+@param lpdwFlags Receives INTERNET_CONNECTION_* and INTERNET_RAS_INSTALLED flags.
+@param dwReserved Reserved; set to zero.
+@return TRUE if connected, FALSE otherwise.
+
+## InternetGetCookieA(lpszUrl, lpszCookieName, lpCookieData, lpdwSize)
+Retrieves cookies associated with a URL.
+This ANSI string variant follows the CE behavior of `InternetGetCookieW` and uses ANSI text.
+
+lpszCookieName is not implemented. Set lpCookieData to NULL to query
+the required size. Persistent cookies come from the cookies directory;
+session cookies are available only in the process that set them.
+
+@param lpszUrl URL associated with the cookies.
+@param lpszCookieName Unimplemented; pass NULL.
+@param lpCookieData Receives cookie data, or NULL to query size.
+@param lpdwSize Buffer size and output bytes required or copied.
+@return TRUE on success, FALSE on failure.
+
+## InternetGetCookieW(lpszUrl, lpszCookieName, lpCookieData, lpdwSize)
+Retrieves cookies associated with a URL.
+
+lpszCookieName is not implemented. Set lpCookieData to NULL to query
+the required size. Persistent cookies come from the cookies directory;
+session cookies are available only in the process that set them.
+
+@param lpszUrl URL associated with the cookies.
+@param lpszCookieName Unimplemented; pass NULL.
+@param lpCookieData Receives cookie data, or NULL to query size.
+@param lpdwSize Buffer size and output bytes required or copied.
+@return TRUE on success, FALSE on failure.
+
+## InternetGetLastResponseInfoA(lpdwError, lpszBuffer, lpdwBufferLength)
+Retrieves extended error text from the last Internet operation on this thread.
+This ANSI string variant follows the CE behavior of `InternetGetLastResponseInfoW` and uses ANSI text.
+
+Use after GetLastError returns ERROR_INTERNET_EXTENDED_ERROR. The output
+length excludes the terminator; ERROR_INSUFFICIENT_BUFFER reports the
+required size.
+
+@param lpdwError Receives the Internet error code.
+@param lpszBuffer Receives the null-terminated text.
+@param lpdwBufferLength Buffer size and output characters copied.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetGetLastResponseInfoW(lpdwError, lpszBuffer, lpdwBufferLength)
+Retrieves extended error text from the last Internet operation on this thread.
+
+Use after GetLastError returns ERROR_INTERNET_EXTENDED_ERROR. The output
+length excludes the terminator; ERROR_INSUFFICIENT_BUFFER reports the
+required size.
+
+@param lpdwError Receives the Internet error code.
+@param lpszBuffer Receives the null-terminated text.
+@param lpdwBufferLength Buffer size and output characters copied.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetGoOnline(lpszURL, hwndParent, dwFlags)
+Prompts the user for permission to connect to a URL.
+
+Set dwFlags to zero.
+
+@param lpszURL URL to connect to.
+@param hwndParent Parent window for the prompt.
+@param dwFlags Reserved; set to zero.
+@return TRUE on success, FALSE on failure.
+
+## InternetLockRequestFile(hInternet, lphLockRequestInfo)
+Locks the cache file associated with an Internet handle.
+
+Unlock it with InternetUnlockRequestFile when finished. With
+NO_CACHE_WRITE or DONT_CACHE, a temporary file is created unless the
+resource is HTTPS; locking HTTPS resources in that case fails.
+
+@param hInternet Handle from FtpOpenFile, HttpOpenRequest or InternetOpenUrl.
+@param lphLockRequestInfo Receives the lock handle.
+@return TRUE on success, FALSE on failure.
+
+## InternetOpenA(lpszAgent, dwAccessType, lpszProxy, lpszProxyBypass, dwFlags)
+Initializes WinInet and returns a session handle.
+This ANSI string variant follows the CE behavior of `InternetOpenW` and uses ANSI text.
+
+CE supports direct, proxy and preconfigured proxy access, but only one
+proxy and no bypass list. Only InternetReadFile and
+InternetQueryDataAvailable can complete asynchronously. Close the
+session with InternetCloseHandle.
+
+@param lpszAgent User-agent string.
+@param dwAccessType INTERNET_OPEN_TYPE_DIRECT, _PROXY or _PRECONFIG.
+@param lpszProxy Proxy setting, or NULL to read the registry.
+@param lpszProxyBypass Unsupported; set to NULL.
+@param dwFlags Internet session flags.
+@return Internet session handle, or NULL on failure; use GetLastError.
+
+## InternetOpenUrlA(hInternet, lpszUrl, lpszHeaders, dwHeadersLength, dwFlags, dwContext)
+Opens an FTP, HTTP or HTTPS URL for reading without InternetConnect.
+This ANSI string variant follows the CE behavior of `InternetOpenUrlW` and uses ANSI text.
+
+CE supports only RAW_DATA, RELOAD and SECURE among the general flags.
+Use InternetReadFile for data or InternetFindNextFile for directory
+entries, then close the handle with InternetCloseHandle. Operations
+complete synchronously on CE.
+
+@param hInternet Session from InternetOpenA.
+@param lpszUrl FTP, HTTP or HTTPS URL.
+@param lpszHeaders Optional HTTP headers.
+@param dwHeadersLength Header length in characters, or -1 for
+       null-terminated headers.
+@param dwFlags Supported Internet flags.
+@param dwContext Application callback context.
+@return URL handle, or NULL on failure; use GetLastError.
+
+## InternetOpenUrlW(hInternet, lpszUrl, lpszHeaders, dwHeadersLength, dwFlags, dwContext)
+Opens an FTP, HTTP or HTTPS URL for reading without InternetConnect.
+
+CE supports only RAW_DATA, RELOAD and SECURE among the general flags.
+Use InternetReadFile for data or InternetFindNextFile for directory
+entries, then close the handle with InternetCloseHandle. Operations
+complete synchronously on CE.
+
+@param hInternet Session from InternetOpenW.
+@param lpszUrl FTP, HTTP or HTTPS URL.
+@param lpszHeaders Optional HTTP headers.
+@param dwHeadersLength Header length in characters, or -1 for
+       null-terminated headers.
+@param dwFlags Supported Internet flags.
+@param dwContext Application callback context.
+@return URL handle, or NULL on failure; use GetLastError.
+
+## InternetOpenW(lpszAgent, dwAccessType, lpszProxy, lpszProxyBypass, dwFlags)
+Initializes WinInet and returns a session handle.
+
+CE supports direct, proxy and preconfigured proxy access, but only one
+proxy and no bypass list. Only InternetReadFile and
+InternetQueryDataAvailable can complete asynchronously. Close the
+session with InternetCloseHandle.
+
+@param lpszAgent User-agent string.
+@param dwAccessType INTERNET_OPEN_TYPE_DIRECT, _PROXY or _PRECONFIG.
+@param lpszProxy Proxy setting, or NULL to read the registry.
+@param lpszProxyBypass Unsupported; set to NULL.
+@param dwFlags Internet session flags.
+@return Internet session handle, or NULL on failure; use GetLastError.
+
+## InternetQueryDataAvailable(hFile, lpdwNumberOfBytesAvailable, dwFlags, dwContext)
+Reports bytes available for the next InternetReadFile call.
+
+The call waits until data is available or the file ends. For a request
+sent with HttpSendRequestExW, call HttpEndRequestW first.
+
+@param hFile Internet file handle.
+@param lpdwNumberOfBytesAvailable Receives available bytes, or NULL.
+@param dwFlags Reserved; set to zero.
+@param dwContext Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetQueryOptionA(hInternet, dwOption, lpBuffer, lpdwBufferLength)
+Retrieves an option from an Internet handle.
+This ANSI string variant follows the CE behavior of `InternetQueryOptionW` and uses ANSI text.
+
+CE supports connection, timeout, buffer-size, credential, proxy,
+user-agent, callback, context and handle-type options.
+
+@param hInternet Internet handle to query.
+@param dwOption INTERNET_OPTION_* value.
+@param lpBuffer Receives the option data.
+@param lpdwBufferLength Input buffer size and output length or required size.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetQueryOptionW(hInternet, dwOption, lpBuffer, lpdwBufferLength)
+Retrieves an option from an Internet handle.
+
+CE supports connection, timeout, buffer-size, credential, proxy,
+user-agent, callback, context and handle-type options.
+
+@param hInternet Internet handle to query.
+@param dwOption INTERNET_OPTION_* value.
+@param lpBuffer Receives the option data.
+@param lpdwBufferLength Input buffer size and output length or required size.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetReadFile(hFile, lpBuffer, dwNumberOfBytesToRead, lpdwNumberOfBytesRead)
+Reads data from an Internet file or request handle.
+
+Continue until the call succeeds with zero bytes read, which indicates
+end of data. Read through end-of-file so cached data is committed. Close
+the handle when finished.
+
+@param hFile Handle from InternetOpenUrl, FtpOpenFile or HttpOpenRequest.
+@param lpBuffer Receives the data.
+@param dwNumberOfBytesToRead Maximum bytes to read.
+@param lpdwNumberOfBytesRead Receives bytes read; set to zero on entry.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetReadFileExA(hFile, lpBuffersOut, dwFlags, dwContext)
+Reads data from a handle opened by InternetOpenUrl, FtpOpenFile or HttpOpenRequest.
+
+`IRF_ASYNC`, `IRF_SYNC` and `IRF_USE_CONTEXT` match the corresponding
+WinInet API flags. `IRF_NO_WAIT` returns available data without waiting.
+OEM support may vary.
+
+@param hFile Handle returned by InternetOpenUrl, FtpOpenFile or HttpOpenRequest.
+@param lpBuffersOut Receives downloaded data in an INTERNET_BUFFERSA structure.
+@param dwFlags Flags controlling the read.
+@param dwContext Context value for asynchronous operations.
+@return TRUE on success, FALSE on failure.
+
+## InternetSetCookieA(lpszUrl, lpszCookieName, lpszCookieData)
+Sets a cookie associated with a URL.
+This ANSI string variant follows the CE behavior of `InternetSetCookieW` and uses ANSI text.
+
+Cookies without an expiration date remain in memory and are available
+only to the process that set them. Persistent cookies are stored in the
+cookies directory.
+
+@param lpszUrl URL associated with the cookie.
+@param lpszCookieName Optional cookie name, or NULL.
+@param lpszCookieData Cookie data.
+@return TRUE on success, FALSE on failure.
+
+## InternetSetCookieW(lpszUrl, lpszCookieName, lpszCookieData)
+Sets a cookie associated with a URL.
+
+Cookies without an expiration date remain in memory and are available
+only to the process that set them. Persistent cookies are stored in the
+cookies directory.
+
+@param lpszUrl URL associated with the cookie.
+@param lpszCookieName Optional cookie name, or NULL.
+@param lpszCookieData Cookie data.
+@return TRUE on success, FALSE on failure.
+
+## InternetSetFilePointer(hFile, lDistanceToMove, pReserved, dwMoveMethod, dwContext)
+Moves the read position in a cached Internet file.
+
+The handle must not use NO_CACHE_WRITE or DONT_CACHE. Set pReserved and
+dwContext to zero/NULL as required. Seeking is unreliable for unknown
+content lengths or chunked transfers, and unavailable after end-of-file.
+
+@param hFile Cached HTTP or HTTPS file handle.
+@param lDistanceToMove Signed byte offset.
+@param pReserved Reserved; set to NULL.
+@param dwMoveMethod FILE_BEGIN, FILE_CURRENT or FILE_END.
+@param dwContext Context value.
+@return New position, or -1 on failure.
+
+## InternetSetOptionA(hInternet, dwOption, lpBuffer, dwBufferLength)
+Sets an option on an Internet handle.
+This ANSI string variant follows the CE behavior of `InternetSetOptionW` and uses ANSI text.
+
+CE supports context, connection and data timeouts, buffer sizes,
+credentials, proxy settings and user-agent options.
+
+@param hInternet Internet handle to update.
+@param dwOption INTERNET_OPTION_* value.
+@param lpBuffer Option data.
+@param dwBufferLength Size of lpBuffer in bytes.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetSetOptionW(hInternet, dwOption, lpBuffer, dwBufferLength)
+Sets an option on an Internet handle.
+
+CE supports context, connection and data timeouts, buffer sizes,
+credentials, proxy settings and user-agent options.
+
+@param hInternet Internet handle to update.
+@param dwOption INTERNET_OPTION_* value.
+@param lpBuffer Option data.
+@param dwBufferLength Size of lpBuffer in bytes.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetSetStatusCallback(hInternet, lpfnInternetCallback)
+Registers or replaces a callback for Internet-operation status.
+
+Callbacks are inherited by child handles. On CE, only
+InternetReadFile and InternetQueryDataAvailable can complete
+asynchronously; asynchronous operations require a callback.
+
+@param hInternet Internet handle.
+@param lpfnInternetCallback Callback, or NULL to remove the callback.
+@return Previous callback, NULL if none, or INTERNET_INVALID_STATUS_CALLBACK.
+
+## InternetTimeFromSystemTimeA(pst, dwRFC, lpszTime, cbTime)
+Formats a SYSTEMTIME as an HTTP date string.
+This ANSI string variant follows the CE behavior of `InternetTimeFromSystemTimeW` and uses ANSI text.
+
+INTERNET_RFC1123_FORMAT is the only supported format. cbTime is a
+character count and the output buffer should be INTERNET_RFC1123_BUFSIZE.
+
+@param pst Date and time to format.
+@param dwRFC INTERNET_RFC1123_FORMAT.
+@param lpszTime Receives the formatted string.
+@param cbTime Buffer size in characters.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetTimeFromSystemTimeW(pst, dwRFC, lpszTime, cbTime)
+Formats a SYSTEMTIME as an HTTP date string.
+
+INTERNET_RFC1123_FORMAT is the only supported format. cbTime is a
+character count and the output buffer should be INTERNET_RFC1123_BUFSIZE.
+
+@param pst Date and time to format.
+@param dwRFC INTERNET_RFC1123_FORMAT.
+@param lpszTime Receives the formatted string.
+@param cbTime Buffer size in characters.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetTimeToSystemTimeA(lpszTime, pst, dwReserved)
+Parses an HTTP date string into a SYSTEMTIME.
+This ANSI string variant follows the CE behavior of `InternetTimeToSystemTimeW` and uses ANSI text.
+
+Set dwReserved to zero.
+
+@param lpszTime Null-terminated date/time string.
+@param pst Receives the parsed date and time.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetTimeToSystemTimeW(lpszTime, pst, dwReserved)
+Parses an HTTP date string into a SYSTEMTIME.
+
+Set dwReserved to zero.
+
+@param lpszTime Null-terminated date/time string.
+@param pst Receives the parsed date and time.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## InternetUnlockRequestFile(hLockRequestInfo)
+Unlocks a cache file locked by InternetLockRequestFile.
+
+After unlocking, the cache manager may delete the entry.
+
+@param hLockRequestInfo Lock handle returned by InternetLockRequestFile.
+@return TRUE on success, FALSE on failure.
+
+## InternetWriteFile(hFile, lpBuffer, dwNumberOfBytesToWrite, lpdwNumberOfBytesWritten)
+Writes data to an open FTP or HTTP request.
+
+Call InternetCloseHandle to end the transfer.
+
+@param hFile Handle from FtpOpenFile or HttpSendRequestExW.
+@param lpBuffer Data to write.
+@param dwNumberOfBytesToWrite Number of bytes to write.
+@param lpdwNumberOfBytesWritten Receives bytes written; set to zero on entry.
+@return TRUE on success, FALSE on failure.
+
+## RetrieveUrlCacheEntryFileA(lpszUrlName, lpCacheEntryInfo, lpdwCacheEntryInfoBufferSize, dwReserved)
+Retrieves and locks the file associated with a cache URL.
+This ANSI string variant follows the CE behavior of `RetrieveUrlCacheEntryFileW` and uses ANSI text.
+
+Unlock the file after use. The cache manager may copy packed cache data
+to a temporary file. This function does not parse URL anchors. Set
+dwReserved to zero.
+
+@param lpszUrlName Cache entry URL without escape characters.
+@param lpCacheEntryInfo Receives cache information.
+@param lpdwCacheEntryInfoBufferSize Input size and output bytes copied
+       or required.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure.
+
+## RetrieveUrlCacheEntryFileW(lpszUrlName, lpCacheEntryInfo, lpdwCacheEntryInfoBufferSize, dwReserved)
+Retrieves and locks the file associated with a cache URL.
+
+Unlock the file after use. The cache manager may copy packed cache data
+to a temporary file. This function does not parse URL anchors. Set
+dwReserved to zero.
+
+@param lpszUrlName Cache entry URL without escape characters.
+@param lpCacheEntryInfo Receives cache information.
+@param lpdwCacheEntryInfoBufferSize Input size and output bytes copied
+       or required.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure.
+
+## SetUrlCacheEntryGroupA(lpszUrlName, dwFlags, GroupId, pbGroupAttributes, cbGroupAttributes, lpReserved)
+Adds a cache entry to a group or removes it from a group.
+This ANSI string variant follows the CE behavior of `SetUrlCacheEntryGroupW` and uses ANSI text.
+
+An entry can belong to multiple groups. Set reserved parameters to
+NULL/zero.
+
+@param lpszUrlName Cache entry URL.
+@param dwFlags INTERNET_CACHE_GROUP_ADD or INTERNET_CACHE_GROUP_REMOVE.
+@param GroupId Cache group identifier.
+@param pbGroupAttributes Reserved; set to NULL.
+@param cbGroupAttributes Reserved; set to zero.
+@param lpReserved Reserved; set to NULL.
+@return TRUE on success, FALSE on failure.
+
+## SetUrlCacheEntryGroupW(lpszUrlName, dwFlags, GroupId, pbGroupAttributes, cbGroupAttributes, lpReserved)
+Adds a cache entry to a group or removes it from a group.
+
+An entry can belong to multiple groups. Set reserved parameters to
+NULL/zero.
+
+@param lpszUrlName Cache entry URL.
+@param dwFlags INTERNET_CACHE_GROUP_ADD or INTERNET_CACHE_GROUP_REMOVE.
+@param GroupId Cache group identifier.
+@param pbGroupAttributes Reserved; set to NULL.
+@param cbGroupAttributes Reserved; set to zero.
+@param lpReserved Reserved; set to NULL.
+@return TRUE on success, FALSE on failure.
+
+## SetUrlCacheEntryInfoA(lpszUrlName, lpCacheEntryInfo, dwFieldControl)
+Updates selected fields of a cache entry.
+This ANSI string variant follows the CE behavior of `SetUrlCacheEntryInfoW` and uses ANSI text.
+
+dwFieldControl selects fields such as access time, attributes,
+expiration, modification time, hit rate or sync time. Header information
+is not implemented.
+
+@param lpszUrlName Cache entry URL.
+@param lpCacheEntryInfo New cache-entry values.
+@param dwFieldControl CACHE_ENTRY_*_FC fields to update.
+@return TRUE on success, FALSE on failure.
+
+## SetUrlCacheEntryInfoW(lpszUrlName, lpCacheEntryInfo, dwFieldControl)
+Updates selected fields of a cache entry.
+
+dwFieldControl selects fields such as access time, attributes,
+expiration, modification time, hit rate or sync time. Header information
+is not implemented.
+
+@param lpszUrlName Cache entry URL.
+@param lpCacheEntryInfo New cache-entry values.
+@param dwFieldControl CACHE_ENTRY_*_FC fields to update.
+@return TRUE on success, FALSE on failure.
+
+## UnlockUrlCacheEntryFileA(lpszUrlName, dwReserved)
+Unlocks a cache entry file retrieved by RetrieveUrlCacheEntryFileA.
+This ANSI string variant follows the CE behavior of `UnlockUrlCacheEntryFileW` and uses ANSI text.
+
+Do not access the file after unlocking. The cache manager may delete it.
+Set dwReserved to zero.
+
+@param lpszUrlName Cache entry URL without escape characters.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure.
+
+## UnlockUrlCacheEntryFileW(lpszUrlName, dwReserved)
+Unlocks a cache entry file retrieved by RetrieveUrlCacheEntryFileW.
+
+Do not access the file after unlocking. The cache manager may delete it.
+Set dwReserved to zero.
+
+@param lpszUrlName Cache entry URL without escape characters.
+@param dwReserved Reserved; set to zero.
+@return TRUE on success, FALSE on failure.

@@ -1,0 +1,13 @@
+TransportConnect
+TransportCount
+TransportDel
+TransportDisconnect
+TransportError
+TransportErrorMsg
+TransportFreeMsg
+TransportInit
+TransportProps
+TransportRecv
+TransportRelease
+TransportSend
+TransportView

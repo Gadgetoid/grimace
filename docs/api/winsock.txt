@@ -1,0 +1,441 @@
+## __WSAFDIsSet(fd, set)
+Tests whether a socket is in an fd_set.
+
+The implementation behind the FD_ISSET macro: use FD_ISSET instead.
+
+@param fd The socket.
+@param set The set, e.g. as returned by select.
+@return Nonzero if fd is in the set, otherwise 0.
+
+## accept(s, addr, addrlen)
+Accepts a pending connection on a listening socket.
+
+Returns a new connected socket; the listening socket stays open. Blocks
+until a connection arrives unless the socket is nonblocking.
+
+@param s Socket that has been bound and put in listen mode.
+@param addr Receives the peer's address, or NULL. Must be NULL for
+       IrDA sockets.
+@param addrlen In: size of addr in bytes. Out: size of the address
+       stored. NULL if addr is NULL, and for IrDA sockets.
+@return The new socket, or INVALID_SOCKET on failure (see
+        WSAGetLastError; WSAEWOULDBLOCK if nonblocking with nothing
+        pending). Windows CE never returns WSAEINTR.
+
+## bind(s, addr, namelen)
+Assigns a local address and port to a socket.
+
+Call before listen, or before recvfrom on an unconnected datagram
+socket. With INADDR_ANY any local interface is used; with port 0 the
+stack picks a free port in the range 1024 to 5000 (see getsockname).
+For IrDA sockets, include af_irda.h and pass a SOCKADDR_IRDA; there is
+no INADDR_ANY equivalent, and IrDA clients don't call bind.
+
+@param s Unbound socket.
+@param addr Local address, e.g. a SOCKADDR_IN cast to struct sockaddr *.
+@param namelen Size of addr in bytes.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError, e.g.
+       WSAEADDRINUSE).
+
+## closesocket(s)
+Closes a socket and frees its descriptor.
+
+By default, returns at once and sends any queued data in the
+background. With SO_LINGER and a zero timeout, it resets the connection
+and discards unsent data; with a nonzero timeout it blocks until the
+data is sent or the timeout expires (WSAEWOULDBLOCK if the socket is
+nonblocking).
+
+@param s The socket.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError). Windows CE
+        never returns WSAEINTR.
+
+## connect(s, name, namelen)
+Connects a socket to a remote address.
+
+For a stream socket, opens the connection. For a datagram socket, sets
+the default destination for send and recv. Binds an unbound socket
+automatically. On a nonblocking socket it fails with WSAEWOULDBLOCK
+and completes in the background: select for writability to see when.
+For IrDA, find a device with the IRLMP_ENUMDEVICES socket option and
+pass a SOCKADDR_IRDA.
+
+@param s Unconnected socket.
+@param name Remote address, e.g. a SOCKADDR_IN.
+@param namelen Size of name in bytes.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError, e.g.
+        WSAECONNREFUSED, WSAETIMEDOUT). Windows CE never returns
+        WSAEINTR.
+
+## gethostbyaddr(addr, len, type)
+Looks up a host by its IP address.
+
+The result belongs to Winsock, one per thread: don't modify or free it,
+and copy what you need before the next Winsock call.
+
+@param addr The address, in network byte order (e.g. a struct in_addr
+       cast to const char *).
+@param len Length of addr: 4.
+@param type Address family: PF_INET (AF_INET).
+@return The host entry, or NULL on failure (see WSAGetLastError, e.g.
+        WSAHOST_NOT_FOUND).
+
+## gethostbyname(name)
+Looks up a host by name.
+
+The result belongs to Winsock, one per thread: don't modify or free it,
+and copy what you need before the next Winsock call. Dotted IP strings
+aren't resolved: use inet_addr instead. Lookups by a host name in
+Japanese characters fail on the Japanese version of Windows CE.
+
+@param name Host name.
+@return The host entry, or NULL on failure (see WSAGetLastError, e.g.
+        WSAHOST_NOT_FOUND).
+
+## gethostname(name, namelen)
+Returns the local host name.
+
+The name may be a plain name or fully qualified, but always resolves
+with gethostbyname.
+
+@param name Receives the null-terminated host name.
+@param namelen Size of name in bytes.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError; WSAEFAULT if
+        the buffer is too small).
+
+## getpeername(s, name, namelen)
+Returns the remote address of a connected socket.
+
+@param s Connected socket.
+@param name Receives the peer address.
+@param namelen In: size of name in bytes. Out: size of the address
+       stored.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError; WSAENOTCONN
+        if not connected).
+
+## getprotobyname(name)
+Looks up a protocol by name.
+
+The result belongs to Winsock: don't modify or free it, and copy what
+you need before the next Winsock call.
+
+@param name Protocol name, e.g. "tcp" or "udp".
+@return The protocol entry, or NULL on failure (see WSAGetLastError).
+
+## getprotobynumber(number)
+Looks up a protocol by number.
+
+The result belongs to Winsock: don't modify or free it, and copy what
+you need before the next Winsock call.
+
+@param number Protocol number in host byte order, e.g. IPPROTO_TCP.
+@return The protocol entry, or NULL on failure (see WSAGetLastError).
+
+## getservbyname(name, proto)
+Looks up a service's port by name and protocol.
+
+The result belongs to Winsock: don't modify or free it, and copy what
+you need before the next Winsock call. s_port is in network byte order.
+
+@param name Service name, e.g. "http".
+@param proto Protocol name, e.g. "tcp", or NULL to match any.
+@return The service entry, or NULL on failure (see WSAGetLastError).
+
+## getservbyport(port, proto)
+Looks up a service by port and protocol.
+
+The result belongs to Winsock: don't modify or free it, and copy what
+you need before the next Winsock call.
+
+@param port Port number, in network byte order.
+@param proto Protocol name, e.g. "tcp", or NULL to match any.
+@return The service entry, or NULL on failure (see WSAGetLastError).
+
+## getsockname(s, name, namelen)
+Returns the local address of a socket.
+
+Useful after bind with port 0, or after connect without bind. A socket
+bound to INADDR_ANY may not report its IP address until it is connected.
+
+@param s Bound or connected socket.
+@param name Receives the local address.
+@param namelen In: size of name in bytes. Out: size of the address
+       stored.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError; WSAEINVAL if
+        not bound).
+
+## getsockopt(s, level, optname, optval, optlen)
+Reads a socket option.
+
+Returns the default if the option was never set. Not supported:
+SO_RCVLOWAT, SO_RCVTIMEO, SO_SNDLOWAT, SO_SNDTIMEO, IP_OPTIONS and
+TCP_MAXSEG. For IrDA, include af_irda.h: IRLMP_ENUMDEVICES lists
+devices in range (a DEVICELIST; if the buffer is too small, optlen
+receives the size needed), IRLMP_IAS_QUERY reads an IAS attribute and
+IRLMP_SEND_PDU_LEN gives the largest send in IRLMP_IRLPT_MODE. Of the
+SOL_SOCKET options, IrDA supports only SO_LINGER and SO_DONTLINGER.
+
+@param s The socket.
+@param level SOL_SOCKET, IPPROTO_TCP (for TCP_NODELAY) or SOL_IRLMP.
+@param optname Option, e.g. SO_ACCEPTCONN, SO_BROADCAST, SO_DEBUG,
+       SO_DONTLINGER, SO_DONTROUTE, SO_ERROR (reads and clears),
+       SO_KEEPALIVE, SO_LINGER, SO_OOBINLINE, SO_RCVBUF, SO_REUSEADDR,
+       SO_SNDBUF, SO_TYPE or TCP_NODELAY.
+@param optval Receives the value: a struct linger for SO_LINGER, an
+       int or BOOL for most others.
+@param optlen In: size of optval in bytes. Out: size of the value.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError;
+        WSAENOPROTOOPT for an unsupported option).
+
+## htonl(hostlong)
+Converts a 32-bit value from host to network (big-endian) byte order.
+
+@param hostlong Value in host byte order.
+@return The value in network byte order.
+
+## htons(hostshort)
+Converts a 16-bit value from host to network (big-endian) byte order.
+
+@param hostshort Value in host byte order.
+@return The value in network byte order.
+
+## inet_addr(cp)
+Parses a dotted IPv4 address string.
+
+Accepts a.b.c.d, and the BSD forms a.b.c, a.b and a, where the last part
+fills the remaining bytes.
+
+@param cp The address string, e.g. "192.168.0.1".
+@return The address in network byte order, suitable for
+        sin_addr.s_addr, or INADDR_NONE if the string is invalid. Note
+        INADDR_NONE is also the value of "255.255.255.255".
+
+## inet_ntoa(in)
+Formats an IPv4 address as a dotted string.
+
+The string is in a per-thread Winsock buffer, valid until the next
+Winsock call on the thread: copy it if you need to keep it.
+
+@param in The address.
+@return The string, e.g. "192.168.0.1", or NULL on failure.
+
+## ioctlsocket(s, cmd, argp)
+Gets or sets a socket's I/O mode.
+
+@param s The socket.
+@param cmd FIONBIO (set nonblocking if *argp is nonzero, blocking if 0;
+       sockets start blocking), FIONREAD (*argp receives the bytes a
+       single recv can read, or the size of the next datagram) or
+       SIOCATMARK (*argp receives TRUE if no out-of-band data is waiting;
+       SOCK_STREAM with SO_OOBINLINE only).
+@param argp Argument for cmd, in and/or out.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError).
+
+## listen(s, backlog)
+Puts a bound stream socket into listening mode.
+
+Accept the connections with accept. Connections arriving when the queue
+is full are refused.
+
+@param s Bound, unconnected SOCK_STREAM socket.
+@param backlog Maximum queue of pending connections. Silently clamped
+       to 1 to 5, or to 2 for IrDA sockets.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError).
+
+## ntohl(netlong)
+Converts a 32-bit value from network (big-endian) to host byte order.
+
+@param netlong Value in network byte order.
+@return The value in host byte order.
+
+## ntohs(netshort)
+Converts a 16-bit value from network (big-endian) to host byte order.
+
+@param netshort Value in network byte order.
+@return The value in host byte order.
+
+## recv(s, buf, len, flags)
+Receives data from a connected socket.
+
+Blocks until data arrives unless the socket is nonblocking
+(WSAEWOULDBLOCK). A stream socket returns what is available, up to len.
+A datagram larger than buf is truncated, the rest is lost, and the call
+fails with WSAEMSGSIZE.
+
+@param s Connected socket.
+@param buf Receives the data.
+@param len Size of buf in bytes.
+@param flags 0, or MSG_PEEK (leave the data queued) and/or MSG_OOB.
+@return Bytes received, 0 if the peer closed the connection gracefully,
+        or SOCKET_ERROR (see WSAGetLastError, e.g. WSAECONNRESET).
+
+## recvfrom(s, buf, len, flags, from, fromlen)
+Receives a datagram and the address it came from.
+
+Blocks until data arrives unless the socket is nonblocking
+(WSAEWOULDBLOCK). A datagram larger than buf is truncated, the rest is
+lost, and the call fails with WSAEMSGSIZE. On stream sockets it works
+like recv and from is ignored.
+
+@param s Bound socket.
+@param buf Receives the data.
+@param len Size of buf in bytes.
+@param flags 0, or MSG_PEEK (leave the data queued) and/or MSG_OOB.
+@param from Receives the sender's address, or NULL.
+@param fromlen In: size of from in bytes. Out: size of the address
+       stored. NULL if from is NULL.
+@return Bytes received, 0 if the peer closed a stream connection, or
+        SOCKET_ERROR (see WSAGetLastError).
+
+## select(nfds, readfds, writefds, exceptfds, timeout)
+Waits until one or more sockets are readable, writable or have an
+error.
+
+Each set is updated in place to hold only the sockets that are ready.
+Build sets with FD_ZERO and FD_SET and test them with FD_ISSET. An
+fd_set holds up to FD_SETSIZE (64 by default) sockets. Readable covers
+a pending connection on a listening socket and a closed connection
+(recv returns 0). Writable covers completion of a nonblocking connect;
+a failed connect shows in exceptfds.
+
+@param nfds Ignored. Pass 0.
+@param readfds Sockets to check for readability, or NULL.
+@param writefds Sockets to check for writability, or NULL.
+@param exceptfds Sockets to check for errors and out-of-band data, or
+       NULL.
+@param timeout Maximum wait, NULL to wait indefinitely, or {0, 0} to
+       poll.
+@return The number of ready sockets, 0 on timeout, or SOCKET_ERROR (see
+        WSAGetLastError).
+
+## send(s, buf, len, flags)
+Sends data on a connected socket.
+
+Success means the data was queued, not delivered. Blocks while there is
+no buffer space unless the socket is nonblocking (WSAEWOULDBLOCK).
+A nonblocking stream socket may send fewer bytes than requested. A
+datagram too large for the protocol fails with WSAEMSGSIZE and nothing
+is sent. For IrDA sockets, include af_irda.h.
+
+@param s Connected socket.
+@param buf The data.
+@param len Length of the data in bytes.
+@param flags 0, or MSG_DONTROUTE (may be ignored) and/or MSG_OOB
+       (SOCK_STREAM only).
+@return Bytes sent, which may be less than len, or SOCKET_ERROR (see
+        WSAGetLastError).
+
+## sendto(s, buf, len, flags, to, tolen)
+Sends a datagram to a given address.
+
+Success means the data was queued, not delivered. On stream sockets,
+to and tolen are ignored and it works like send. To broadcast, enable
+SO_BROADCAST and send to INADDR_BROADCAST; keep broadcasts under 512
+bytes of data. A datagram too large for the protocol fails with
+WSAEMSGSIZE and nothing is sent.
+
+@param s The socket.
+@param buf The data.
+@param len Length of the data in bytes.
+@param flags 0, or MSG_DONTROUTE (may be ignored) and/or MSG_OOB
+       (SOCK_STREAM only).
+@param to Destination address, e.g. a SOCKADDR_IN.
+@param tolen Size of to in bytes.
+@return Bytes sent, which may be less than len, or SOCKET_ERROR (see
+        WSAGetLastError).
+
+## sethostname(pName, cName)
+Sets the device's host name, as gethostname returns it.
+
+Windows CE specific.
+
+@param pName The new host name.
+@param cName Length of pName in bytes.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError).
+
+## setsockopt(s, level, optname, optval, optlen)
+Sets a socket option.
+
+For BOOL options, optval points to an int: nonzero to enable, 0 to
+disable. SO_REUSEADDR only takes effect if set before bind. Not
+supported: SO_RCVLOWAT, SO_SNDLOWAT and SO_SNDTIMEO; Windows CE 1.0 and
+2.0 also don't support SO_ACCEPTCONN, SO_ERROR, SO_TYPE, SO_RCVTIMEO or
+IP_OPTIONS, and Windows CE 2.0 doesn't support SO_RCVBUF
+(WSAEOPNOTSUPP). From Windows CE 2.0, SO_SECURE at SOL_SOCKET with a
+DWORD set to SO_SEC_SSL, before connecting, uses SSL (WSAEISCONN if
+already connected). Windows CE 3.0 supports IP_MULTICAST_TTL,
+IP_MULTICAST_IF, IP_ADD_MEMBERSHIP and IP_DROP_MEMBERSHIP at
+IPPROTO_IP. For IrDA, include af_irda.h: at SOL_IRLMP, IRLMP_IAS_SET
+sets a local IAS attribute, IRLMP_IRLPT_MODE (nonzero int) enables IrLPT
+printing mode, and IRLMP_RAW_MODE selects unreliable IrLMP instead of
+TinyTP and must be set straight after socket, before other Winsock
+calls. Of the SOL_SOCKET options, IrDA supports only SO_LINGER.
+
+@param s The socket.
+@param level SOL_SOCKET, IPPROTO_TCP (for TCP_NODELAY only), IPPROTO_IP
+       or SOL_IRLMP.
+@param optname Option, e.g. SO_BROADCAST, SO_DEBUG, SO_DONTLINGER,
+       SO_DONTROUTE, SO_KEEPALIVE, SO_LINGER, SO_OOBINLINE,
+       SO_REUSEADDR, SO_SNDBUF or TCP_NODELAY (disables Nagle).
+@param optval The value: a struct linger for SO_LINGER (l_onoff,
+       l_linger in seconds), a DWORD for SO_SECURE, an option-specific
+       structure, otherwise usually an int.
+@param optlen Size of optval in bytes.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError;
+       WSAENOPROTOOPT for an unsupported option).
+
+## shutdown(s, how)
+Stops sends, receives or both on a socket.
+
+Doesn't close the socket or free its resources: call closesocket after.
+Doesn't block, whatever SO_LINGER says. Don't reuse the socket after
+shutdown.
+
+@param s The socket.
+@param how 0 (SD_RECEIVE) to stop receiving, 1 (SD_SEND) to stop sending
+       (TCP sends a FIN), or 2 (SD_BOTH) for both.
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError).
+
+## socket(af, type, protocol)
+Creates a socket.
+
+Call WSAStartup first. Close with closesocket.
+
+@param af Address family: AF_INET (PF_INET), or AF_IRDA for infrared
+       (include af_irda.h).
+@param type SOCK_STREAM (TCP) or SOCK_DGRAM (UDP). IrDA supports only
+       SOCK_STREAM.
+@param protocol 0 for the default for af and type. Must be 0 for IrDA.
+@return The new socket, or INVALID_SOCKET on failure (see
+        WSAGetLastError; WSAEBADF for IrDA if the shared serial port is
+        busy).
+
+## WSACleanup()
+Balances a successful WSAStartup call and releases Winsock resources.
+
+Windows CE provides this function for compatibility. Call once for
+every successful WSAStartup; only the final call for the task releases
+the implementation state, and earlier ones just decrement a count. Open
+sockets are reset and freed as if closed with closesocket, and pending
+data can be lost: to make sure it is sent, shut down the connection with
+shutdown and wait for it to close before calling closesocket and
+WSACleanup. In a multithreaded process this ends Winsock for all
+threads.
+
+@return 0 on success, or SOCKET_ERROR (see WSAGetLastError).
+
+## WSAStartup(wVersionRequested, lpWSAData)
+Initializes Winsock and negotiates the supported socket API version.
+
+Call this before other Winsock functions, and call WSACleanup once for
+every successful startup. Windows CE reports version 1.1. If the
+version in lpWSAData->wVersion is unacceptable, call WSACleanup. On
+failure, the return value itself is the error code; don't call
+WSAGetLastError.
+
+@param wVersionRequested Highest Winsock version the caller can use,
+       e.g. MAKEWORD(1, 1): major version in the low byte, minor in the
+       high byte.
+@param lpWSAData Receives details of the Winsock implementation.
+@return 0 on success, or WSASYSNOTREADY, WSAVERNOTSUPPORTED,
+       WSAEINPROGRESS, WSAEPROCLIM or WSAEFAULT.

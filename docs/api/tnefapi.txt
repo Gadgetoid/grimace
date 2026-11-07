@@ -1,0 +1,115 @@
+## ModifiedUTF7ToUnicode(lpMultiByteStr, cchMultiByte, lpWideCharStr, cchWideChar)
+Converts a modified UTF-7 string to Unicode.
+
+The input length is in bytes and the output capacity is in wide characters.
+The returned count includes the terminating null. Zero indicates failure.
+OEM support may vary.
+
+@param lpMultiByteStr Modified UTF-7 input string.
+@param cchMultiByte Number of input bytes.
+@param lpWideCharStr Receives the null-terminated Unicode string.
+@param cchWideChar Output buffer capacity in wide characters.
+@return Character count including the terminator, or zero on failure.
+
+## TnefBuildInfo(pti, szSubject, lpnii, lpmaa)
+Creates an encoded TNEF file from message properties and attachments.
+
+The output file name comes from `pti->szTnefFileName`. The documented
+implementation supports meeting request properties. OEM support may vary.
+
+@param pti TNEF file information, including the output file name.
+@param szSubject Null-terminated message subject.
+@param lpnii Non-IPM message properties.
+@param lpmaa Attachment information.
+@return TRUE on success, FALSE on failure.
+
+## TnefConvertToUnicode(CodePage, dwFlags, lpMultiByteStr, cchMultiByte, lpWideCharStr, cchWideChar)
+Converts a string from a supported code page to Unicode.
+
+Documented code pages are 1250-1258, 20866, 21886, 28592-28600, 28604,
+28605, 65000 and 65001. `MB_PRECOMPOSED` is the default; `MB_COMPOSITE`
+is mutually exclusive with it. `MB_ERR_INVALID_CHARS` makes invalid input
+fail with `ERROR_NO_UNICODE_TRANSLATION`; `MB_USEGLYPHCHARS` selects glyph
+characters instead of control characters. If `cchWideChar` is zero, the
+return value is the required output size. OEM support may vary.
+
+@param CodePage Source code page identifier.
+@param dwFlags Character conversion flags.
+@param lpMultiByteStr Input string.
+@param cchMultiByte Number of input characters.
+@param lpWideCharStr Receives the converted string.
+@param cchWideChar Output capacity in wide characters, or zero to query size.
+@return Number of wide characters written or required, or zero on failure.
+
+## TnefDecodeBuffer(EncodeType, BufToDecode, DecodedBuf, puiLength)
+Decodes a Base64, quoted-printable or UUEncoded buffer.
+
+`puiLength` supplies the output buffer capacity in bytes and receives the
+decoded size. If the buffer is too small, it receives the required size.
+Use `TransportError` or `TransportErrorMsg` for extended error information.
+OEM support may vary.
+
+@param EncodeType Encoding format.
+@param BufToDecode Encoded input buffer.
+@param DecodedBuf Receives the decoded bytes.
+@param puiLength Input capacity and output decoded size, in bytes.
+@return TRUE on success, FALSE on failure.
+
+## TnefDecodeFile(EncodeType, FileToDecode, DecodedFileName)
+Decodes a Base64, quoted-printable or UUEncoded file.
+
+On success, the decoded file is written to `DecodedFileName`; delete it
+when it is no longer needed. OEM support may vary.
+
+@param EncodeType Encoding format.
+@param FileToDecode Input file name.
+@param DecodedFileName Output file name.
+@return TRUE on success, FALSE on failure.
+
+## TnefEncodeBuffer(EncodeType, cbIn, BufToEncode, pcbOut, EncodedBuf)
+Encodes a buffer as Base64, quoted-printable or UUEncode.
+
+`pcbOut` supplies the output buffer capacity and receives the encoded size.
+The call fails if the output buffer is too small. OEM support may vary.
+
+@param EncodeType Encoding format.
+@param cbIn Input size, in bytes.
+@param BufToEncode Data to encode.
+@param pcbOut Input output capacity and output encoded size, in bytes.
+@param EncodedBuf Receives the encoded data.
+@return TRUE on success, FALSE on failure.
+
+## TnefEncodeFile(FileToEncode, EncodeType)
+Encodes a file as Base64, quoted-printable or UUEncode.
+
+The input file is unchanged. The returned file name is allocated and must
+be released with `LocalFree`; delete the encoded file when finished. OEM
+support may vary.
+
+@param FileToEncode Input file name.
+@param EncodeType Encoding format.
+@return Name of the encoded file, or NULL on failure.
+
+## TnefGetInfo(pti, lplpnii, lplpmaa)
+Extracts message properties and optional attachment information from a TNEF file.
+
+The file named by `pti` is deleted whether the call succeeds or fails.
+OEM support may vary.
+
+@param pti Information describing the TNEF file.
+@param lplpnii Receives the non-IPM message properties.
+@param lplpmaa Optionally receives attachment information.
+@return TRUE on success, FALSE on failure.
+
+## UnicodeToModifiedUTF7(wszIn, cchIn, pchOut, cchOut)
+Converts a Unicode string to modified UTF-7.
+
+The input count and output capacity are character counts. A return value
+equal to `cchIn` indicates success; a smaller value indicates failure.
+OEM support may vary.
+
+@param wszIn Unicode input string.
+@param cchIn Number of input characters.
+@param pchOut Receives the modified UTF-7 string.
+@param cchOut Output buffer capacity in characters.
+@return Number of input characters translated; `cchIn` indicates success.

@@ -1,0 +1,132 @@
+## WNetAddConnection3W(hwndOwner, lpNetResource, lpPassword, lpUserName, dwFlags)
+Connects to a network resource.
+
+Windows CE has no drive letters: a connection with a local name appears
+as a folder of that name under \NETWORK. Only the Microsoft Windows
+Network provider is supported. Persistent connections are kept in the
+registry but not restored automatically at logon. Disconnect with
+WNetCancelConnection2W.
+
+@param hwndOwner Owner window for any credential prompt, or NULL.
+@param lpNetResource The resource. Set dwType and lpRemoteName
+       (\\server\share). lpLocalName can be any name of up to 64
+       characters, NULL or empty for no local name, or "*" for
+       "share on server".
+@param lpPassword Password, NULL for the default, or "" for none.
+@param lpUserName User name, or NULL for the default.
+@param dwFlags 0, or CONNECT_UPDATE_PROFILE to make the connection
+       persistent.
+@return NO_ERROR on success, or a Win32 error code (see
+        WNetGetLastErrorW for provider errors).
+
+## WNetCancelConnection2W(lpName, dwFlags, fForce)
+Breaks a network connection and removes its folder from \NETWORK.
+
+@param lpName Local name or remote (UNC) name of the connection.
+@param dwFlags 0, or CONNECT_UPDATE_PROFILE to also forget a persistent
+       connection.
+@param fForce TRUE to disconnect even with open files.
+@return NO_ERROR on success, or a Win32 error code such as
+        ERROR_NOT_CONNECTED or ERROR_OPEN_FILES.
+
+## WNetCloseEnum(hEnum)
+Ends an enumeration started by WNetOpenEnumW.
+
+@param hEnum The enumeration handle.
+@return NO_ERROR on success, or a Win32 error code.
+
+## WNetConnectionDialog1W(lpConnectDlgStruc)
+Shows a dialog for browsing to and connecting to a network resource.
+
+@param lpConnectDlgStruc Owner window, resource and flags. Set cbStructure.
+       Windows CE ignores dwDevNum and supports only 0 or CONNDLG_RO_PATH
+       in dwFlags.
+@return NO_ERROR on success, -1 if the user cancelled, or a Win32 error
+        code.
+
+## WNetDisconnectDialog(hwnd, dwType)
+Shows a dialog for choosing network connections to disconnect.
+
+@param hwnd Owner window.
+@param dwType Resource type, RESOURCETYPE_DISK or RESOURCETYPE_PRINT.
+@return NO_ERROR on success, -1 if the user cancelled, or a Win32 error
+        code.
+
+## WNetDisconnectDialog1W(lpDiscDlgStruc)
+Disconnects a given network resource, with dialogs for confirmation and
+errors.
+
+Asks the user to confirm if the connection has open files.
+
+@param lpDiscDlgStruc Owner window, local and remote names and flags. Set
+       cbStructure.
+@return NO_ERROR on success, or a Win32 error code such as
+        ERROR_OPEN_FILES or ERROR_NOT_CONNECTED.
+
+## WNetEnumResourceW(hEnum, lpcCount, lpBuffer, lpBufferSize)
+Gets the next batch of results from an enumeration started by
+WNetOpenEnumW.
+
+Call repeatedly until it returns ERROR_NO_MORE_ITEMS.
+
+@param hEnum The enumeration handle.
+@param lpcCount In: maximum entries to return, or 0xFFFFFFFF for as many as
+       fit. Out: the number returned.
+@param lpBuffer Receives an array of NETRESOURCEW structures followed by
+       their strings.
+@param lpBufferSize In: size of lpBuffer, in bytes. Out: the size needed,
+       if ERROR_MORE_DATA.
+@return NO_ERROR, ERROR_NO_MORE_ITEMS, ERROR_MORE_DATA, or another Win32
+        error code.
+
+## WNetGetConnectionW(lpLocalName, lpRemoteName, lpnLength)
+Gets the remote name of a connection from its local name.
+
+@param lpLocalName Local name of the connection.
+@param lpRemoteName Receives the remote (UNC) name.
+@param lpnLength In: size of lpRemoteName, in characters. Out: the size
+       needed, if ERROR_MORE_DATA.
+@return NO_ERROR on success, or a Win32 error code such as
+        ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
+
+## WNetGetUniversalNameW(lpLocalPath, dwInfoLevel, lpBuffer, lpBufferSize)
+Converts a path under \NETWORK to its UNC form.
+
+Windows CE has no drive letters: lpLocalPath should be in a connection's
+folder under \NETWORK.
+
+@param lpLocalPath The local path.
+@param dwInfoLevel UNIVERSAL_NAME_INFO_LEVEL or REMOTE_NAME_INFO_LEVEL.
+@param lpBuffer Receives a UNIVERSAL_NAME_INFOW or REMOTE_NAME_INFOW
+       structure followed by its strings.
+@param lpBufferSize In: size of lpBuffer, in bytes. Out: the size needed,
+       if ERROR_MORE_DATA.
+@return NO_ERROR on success, or a Win32 error code such as
+        ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
+
+## WNetGetUserW(lpName, lpUserName, lpnLength)
+Gets the default user name, or the one a connection was made with.
+
+@param lpName Local or remote name of a connection, or NULL for the
+       current user.
+@param lpUserName Receives the user name.
+@param lpnLength In: size of lpUserName, in characters. Out: the size
+       needed, if ERROR_MORE_DATA.
+@return NO_ERROR on success, or a Win32 error code such as
+        ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
+
+## WNetOpenEnumW(dwScope, dwType, dwUsage, lpNetResource, lphEnum)
+Starts enumerating network resources or current connections.
+
+Read results with WNetEnumResourceW and finish with WNetCloseEnum.
+
+@param dwScope RESOURCE_CONNECTED, RESOURCE_GLOBALNET or
+       RESOURCE_REMEMBERED. Windows CE doesn't support RESOURCE_CONTEXT.
+@param dwType RESOURCETYPE_ANY, RESOURCETYPE_DISK or RESOURCETYPE_PRINT.
+@param dwUsage 0 for all, or RESOURCEUSAGE_CONNECTABLE and/or
+       RESOURCEUSAGE_CONTAINER. Ignored unless dwScope is
+       RESOURCE_GLOBALNET.
+@param lpNetResource Container to enumerate, from an earlier enumeration,
+       or NULL for the top of the network.
+@param lphEnum Receives the enumeration handle.
+@return NO_ERROR on success, or a Win32 error code.

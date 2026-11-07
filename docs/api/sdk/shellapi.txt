@@ -1,0 +1,164 @@
+## SHGetFileInfo(pszPath, dwFileAttributes, psfi, cbFileInfo, uFlags)
+This function retrieves information about an object in the file system,
+such as a file, a folder, a directory, or a drive root.
+
+For Windows CE versions 2.10 and later, SHGetFileInfo does not support
+the following values for uFlags:
+
+SHGFI_ATTRIBUTES
+
+SHGFI_EXETYPE
+
+SHGFI_ICONLOCATION
+
+SHGFI_LINKOVERLAY
+
+SHGFI_OPENICON
+
+SHGFI_SELECTED
+
+SHGFI_SHELLICONSIZE
+
+Also for Windows CE versions 2.10 and later, SHGetFileInfo supports the
+SHGFI_PIDL flag for the H/PC platform only.
+
+@param pszPath [in] Pointer to a buffer that contains the path and file
+       name. Both absolute and relative paths are valid. If the uFlags
+       parameter includes the SHGFI_PIDL flag, this parameter must be
+       the address of an ITEMLIST (PIDL) structure that contains the
+       list of item identifiers that uniquely identifies the file within
+       the shell's namespace. The PIDL must be a fully qualified PIDL.
+       Relative PIDLs are not allowed. If the uFlags parameter includes
+       the SHGFI_USEFILEATTRIBUTES flag, this parameter does not have to
+       be a valid file name. The function will proceed as if the file
+       exists with the specified name and with the file attributes
+       passed in the dwFileAttributes parameter. This allows you to
+       obtain information about a file type by passing just the
+       extension for pszPath and passing FILE_ATTRIBUTE_NORMAL in
+       dwFileAttributes. This string can use either short (the 8.3 form)
+       or long file names.
+@param dwFileAttributes [in] Combination of one or more file attribute
+       flags (FILE_ATTRIBUTE_* values). If uFlags does not include the
+       SHGFI_USEFILEATTRIBUTES flag, this parameter is ignored. Windows
+       CE supports the following additional values for the
+       dwFileAttributes parameter: Value Description
+       FILE_ATTRIBUTE_INROM The file is an operating system file stored
+       in ROM. These files are read-only. FILE_ATTRIBUTE_ROMMODULE The
+       file is an operating system file stored in ROM, designed to
+       execute in place. In other words, code from this file is executed
+       directly from ROM, rather than being first copied to RAM. The
+       CreateFile function cannot be used to access this file, instead
+       the LoadLibrary and CreateProcess functions must be used.
+@param psfi [in] Pointer to a SHFILEINFO structure to receive the file
+       information.
+@param cbFileInfo [in] Size, in bytes, of the SHFILEINFO structure
+       pointed to by the psfi parameter.
+@param uFlags [in] Flags that specify the file information to retrieve.
+       It can be a combination of the following values: Value
+       Description SHGFI_ATTR_SPECIFIED Modifies SHGFI_ATTRIBUTES.
+       Indicates that the dwAttributes member of the SHFILEINFO
+       structure at psfi contains the specific attributes that are
+       desired. SHGFI_ATTRIBUTES Retrieve the item attributes. The
+       attributes are copied to the dwAttributes member of the structure
+       specified in the psfi parameter. SHGFI_DISPLAYNAME Retrieve the
+       display name for the file. The name is copied to the
+       szDisplayName member of the structure specified in psfi. The
+       returned display name uses the long file name, if there is one,
+       rather than the 8.3 form of the file name. SHGFI_EXETYPE Retrieve
+       the type of the executable file if pszPath identifies an
+       executable file. This flag cannot be specified with any other
+       flags. SHGFI_ICON Retrieve the handle to the icon that represents
+       the file and the index of the icon within the system image list.
+       The handle is copied to the hIcon member of the structure
+       specified by psfi, and the index is copied to the iIcon member.
+       The return value is the handle to the system image list. You must
+       call the DestroyIcon function on this icon handle.
+       SHGFI_ICONLOCATION Retrieve the name of the file that contains
+       the icon representing the file. The name is copied to the
+       szDisplayName member of the structure specified in psfi.
+       SHGFI_LARGEICON Modify SHGFI_ICON, causing the function to
+       retrieve the file's large icon. SHGFI_LINKOVERLAY Modify
+       SHGFI_ICON, causing the function to add the link overlay to the
+       file's icon. SHGFI_OPENICON Modify SHGFI_ICON, causing the
+       function to retrieve the file's open icon. A container object
+       displays an open icon to indicate that the container is open.
+       SHGFI_PIDL Indicate that pszPath is the address of an ITEMIDLIST
+       structure rather than a path name. SHGFI_SELECTED Modify
+       SHGFI_ICON, causing the function to blend the file's icon with
+       the system highlight color. SHGFI_SHELLICONSIZE Modify
+       SHGFI_ICON, causing the function to retrieve a shell-sized icon.
+       If this flag is not specified the function sizes the icon
+       according to the system metric values. SHGFI_SMALLICON Modify
+       SHGFI_ICON, causing the function to retrieve the file's small
+       icon. SHGFI_SYSICONINDEX Retrieve the index of the icon within
+       the system image list. The index is copied to the iIcon member of
+       the structure specified by psfi. The return value is the handle
+       to the system image list. SHGFI_TYPENAME Retrieve the string that
+       describes the file's type. The string is copied to the szTypeName
+       member of the structure specified in psfi.
+       SHGFI_USEFILEATTRIBUTES Indicates that the function should not
+       attempt to access the file specified by pszPath. Rather, it
+       should act as if the file specified by pszPath exists with the
+       file attributes passed in dwFileAttributes. This flag cannot be
+       combined with the SHGFI_ATTRIBUTES, SHGFI_EXETYPE, or SHGFI_PIDL
+       flags.
+@return Returns a value whose meaning depends on the uFlags parameter.
+       If uFlags contains the SHGFI_EXETYPE flag, the return value
+       specifies the type of the executable file. It will be one of the
+       following values: Value Executable File Type 0 Nonexecutable file
+       or an error condition Low-order word = NE or PE and high-order
+       word = 3.0, 3.5, or 4.0 Windows application Low-order word = MZ
+       and high-order word = 0 MS-DOS .exe, .com, or .bat file Low-order
+       word = PE and high-order word = 0 Win32 console application If
+       uFlags contains SHGFI_SYSICONINDEX, the return value is the
+       handle to the system image list that contains the large icon
+       images. If SHGFI_SMALLICON is included with SHGFI_SYSICONINDEX,
+       the return value is the handle to the image list that contains
+       the small icon images. If uFlags does not contain SHGFI_EXETYPE
+       or SHGFI_SYSICONINDEX, the return value is nonzero if successful,
+       or zero otherwise.
+
+## ShellExecuteEx(lpExecInfo)
+This function performs an action on a file. The file can be an
+executable file or a document.
+
+If the function succeeds, it sets the hInstApp member of the
+SHELLEXECUTEINFO structure to the instance handle to the application
+that the function started. If the function fails, hInstApp is one of the
+SE_ERR_ error values indicating the cause of the failure. (An instance
+handle will always be greater than 32 and an error value less than 32.)
+Note that the SE_ERR_ error values are for compatibility with the
+ShellExecute function; use the GetLastError function to retrieve error
+information.
+
+The error value returned by GetLastError corresponds to the SE_ERR_
+values and is one of the values described in the following table.
+
+Value Description ERROR_FILE_NOT_FOUND The specified file was not found.
+ERROR_PATH_NOT_FOUND The specified path was not found. ERROR_DDE_FAIL
+The DDE transaction failed. ERROR_NO_ASSOCIATION There is no application
+associated with the given file name extension. ERROR_ACCESS_DENIED
+Access to the specified file is denied. ERROR_DLL_NOT_FOUND One of the
+library files necessary to run the application can't be found.
+ERROR_CANCELLED The function prompted the user for the location of the
+application, but the user canceled the request. ERROR_NOT_ENOUGH_MEMORY
+There is not enough memory to perform the specified action.
+ERROR_SHARING_VIOLATION A sharing violation occurred.
+
+@param lpExecInfo Long pointer to a SHELLEXECUTEINFO structure that
+       contains and receives information about the application being
+       executed.
+@return Nonzero indicates success. Zero indicates failure. To get
+       extended error information, call GetLastError.
+
+## Shell_NotifyIcon(dwMessage, pnid)
+This function sends a message to the system to add, modify, or delete an
+icon from the taskbar status area.
+
+@param dwMessage [in] Specifies the message value to send. It is one of
+       these values: Value Description NIM_ADD Adds an icon to the
+       status area. NIM_DELETE Deletes an icon from the status area.
+       NIM_MODIFY Modifies an icon in the status area.
+@param pnid [in] Pointer to a NOTIFYICONDATA structure. The content of
+       the structure depends on the value of dwMessage.
+@return Nonzero indicates success. Zero indicates failure.

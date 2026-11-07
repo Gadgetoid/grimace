@@ -1,0 +1,4 @@
+AudioPlaySound
+AudioPowerHandler
+AudioWaveOutGetVolume
+AudioWaveOutSetVolume

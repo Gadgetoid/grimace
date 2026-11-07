@@ -1,0 +1,128 @@
+## CloseToolhelp32Snapshot(hSnapshot)
+Closes a Tool Help snapshot and releases its system resources.
+
+@param hSnapshot Snapshot from CreateToolhelp32Snapshot.
+@return TRUE on success, FALSE on failure.
+
+## CreateToolhelp32Snapshot(dwFlags, th32ProcessID)
+Captures a read-only snapshot of processes, threads, modules or heaps.
+
+The snapshot is a copy of the system state, read by the other Tool Help
+functions. Close it with CloseToolhelp32Snapshot, not CloseHandle.
+
+@param dwFlags TH32CS_SNAPPROCESS, TH32CS_SNAPTHREAD, TH32CS_SNAPMODULE
+       and/or TH32CS_SNAPHEAPLIST, or TH32CS_SNAPALL for all four.
+       THCS_GETALLMODES lists all modules loaded in the system.
+@param th32ProcessID Process to snapshot for heap or module data, or 0
+       for the current process. Ignored otherwise.
+@return Snapshot handle, or INVALID_HANDLE_VALUE on failure (see
+       GetLastError).
+
+## Heap32ListNext(hSnapshot, lphl)
+Retrieves the next heap in a snapshot's heap list.
+
+Set lphl->dwSize as for Heap32ListFirst, which retrieves the first
+entry.
+
+@param hSnapshot Snapshot containing the heap list.
+@param lphl Receives the next heap entry.
+@return TRUE when an entry is copied; FALSE when no more entries exist
+       or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
+       the end.
+
+## Heap32Next(hSnapshot, lphe)
+Retrieves the next block in a heap.
+
+Call Heap32First to retrieve the first block.
+
+@param hSnapshot Snapshot containing the heap.
+@param lphe Receives the next heap block.
+@return TRUE when an entry is copied; FALSE when no more blocks exist
+       or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
+       the end and ERROR_INVALID_DATA if the heap is corrupt or was
+       modified so that the walk can't continue.
+
+## Module32First(hSnapshot, lpme)
+Retrieves the first module recorded for a process in a snapshot.
+
+Set lpme->dwSize to the size of MODULEENTRY32 before calling. It's
+changed to the number of bytes written, which may be smaller; don't rely
+on members beyond it. Use Module32Next to continue the enumeration.
+
+@param hSnapshot Snapshot from CreateToolhelp32Snapshot containing module
+       information.
+@param lpme Receives the module entry.
+@return TRUE when an entry is copied; FALSE on failure. GetLastError
+       returns ERROR_NO_MORE_FILES if the snapshot has no modules.
+
+## Module32Next(hSnapshot, lpme)
+Retrieves the next module in a snapshot.
+
+Call Module32First to retrieve the first entry.
+
+@param hSnapshot Snapshot containing module information.
+@param lpme Receives the next module entry.
+@return TRUE when an entry is copied; FALSE when no more modules exist
+       or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
+       the end.
+
+## Process32First(hSnapshot, lppe)
+Retrieves the first process recorded in a system snapshot.
+
+Set lppe->dwSize to the size of PROCESSENTRY32 before calling. It's
+changed to the number of bytes written, which may be smaller; don't rely
+on members beyond it. Use Process32Next to continue the enumeration.
+
+@param hSnapshot Snapshot from CreateToolhelp32Snapshot containing
+       process information.
+@param lppe Receives the process entry.
+@return TRUE when an entry is copied; FALSE on failure. GetLastError
+       returns ERROR_NO_MORE_FILES if the snapshot has no processes.
+
+## Process32Next(hSnapshot, lppe)
+Retrieves the next process in a system snapshot.
+
+Call Process32First to retrieve the first entry.
+
+@param hSnapshot Snapshot containing process information.
+@param lppe Receives the next process entry.
+@return TRUE when an entry is copied; FALSE when no more processes exist
+       or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
+       the end.
+
+## Thread32First(hSnapshot, lpte)
+Retrieves the first thread recorded in a system snapshot.
+
+Set lpte->dwSize to the size of THREADENTRY32 before calling. It's
+changed to the number of bytes written, which may be smaller; don't rely
+on members beyond it. Use Thread32Next to continue the enumeration.
+
+@param hSnapshot Snapshot from CreateToolhelp32Snapshot containing
+       thread information.
+@param lpte Receives the thread entry.
+@return TRUE when an entry is copied; FALSE on failure. GetLastError
+       returns ERROR_NO_MORE_FILES if the snapshot has no threads.
+
+## Thread32Next(hSnapshot, lpte)
+Retrieves the next thread in a system snapshot.
+
+Call Thread32First to retrieve the first entry.
+
+@param hSnapshot Snapshot containing thread information.
+@param lpte Receives the next thread entry.
+@return TRUE when an entry is copied; FALSE when no more threads exist
+       or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
+       the end.
+
+## Toolhelp32ReadProcessMemory(th32ProcessID, lpBaseAddress, lpBuffer, cbRead, lpNumberOfBytesRead)
+Copies bytes from a process address space into the caller's buffer.
+
+The system verifies the entire requested range is readable before
+copying, and fails otherwise.
+
+@param th32ProcessID Process to read, or 0 for the current process.
+@param lpBaseAddress Address in the target process.
+@param lpBuffer Receives the copied bytes.
+@param cbRead Number of bytes to read.
+@param lpNumberOfBytesRead Receives the number copied, or NULL.
+@return TRUE on success, FALSE on failure.

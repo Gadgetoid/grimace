@@ -1,0 +1,9 @@
+ConvertINetMultiByteToUnicode
+ConvertINetReset
+ConvertINetString
+ConvertINetUnicodeToMultiByte
+DllCanUnloadNow
+DllGetClassObject
+IsConvertINetStringAvailable
+LcidToRfc1766W
+Rfc1766ToLcidW

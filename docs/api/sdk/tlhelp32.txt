@@ -1,0 +1,158 @@
+## HEAPENTRY32
+This structure describes one entry (block) of a heap that is being
+examined.
+
+Windows CE does not support movable blocks.
+
+@member dwSize Specifies the length, in bytes, of the structure. Before
+       calling the Heap32First function, set this member to
+       sizeof(HEAPENTRY32). If you do not initialize dwSize, Heap32First
+       will fail.
+@member hHandle Handle to the heap block.
+@member dwAddress Specifies the linear address of the start of the
+       block.
+@member dwBlockSize Specifies the size, in bytes, of the heap block.
+@member dwFlags Specifies a bitmask of fags. It is one of the following
+       values: Value Description LF32_BIGBLOCK A large piece of memory
+       that has been virtually allocated. LF32_DECOMMIT Decommited
+       memory block. LF32_FIXED The memory block has a fixed (unmovable)
+       location. LF32_FREE The memory block is not used.
+@member dwLockCount Specifies the lock count on the memory block. The
+       lock count is incremented each time the LocalLock function is
+       called on the block either by the application or the DLL that the
+       heap belongs to.
+@member dwResvd Reserved; do not use.
+@member th32ProcessID Identifier of the process to examine. The contents
+       of this member can be used by Win32 API elements.
+@member th32HeapID Heap identifier in the owning process context. The
+       contents of this member has meaning only to the tool help
+       functions. It is not a handle, nor is it usable by Win32 API
+       elements.
+
+## HEAPLIST32
+This structure describes an entry from a list that enumerates the heaps
+used by a specified process.
+
+@member dwSize Specifies the length, in bytes, of the structure. Before
+       calling the Heap32ListFirst function, set this member to
+       sizeof(HEAPLIST32). If you do not initialize dwSize, Heap32First
+       will fail.
+@member th32ProcessID Identifier of the process to examine. The contents
+       of this member can be used by Win32 API elements.
+@member th32HeapID Heap identifier in the owning process context. The
+       contents of this member has meaning only to the tool help
+       functions. It is not a handle, nor is it usable by Win32 API
+       elements.
+@member dwFlags Specifies a bitmask of flags. The following flag is
+       currently defined: Value Description HF32_DEFAULT Process's
+       default heap.
+
+## MODULEENTRY32
+This structure describes an entry from a list that enumerates the
+modules used by a specified process.
+
+The modBaseAddr and hModule members are valid only in the context of the
+process specified by th32ProcessID.
+
+@member dwFlags Reserved.
+@member dwSize Specifies the length, in bytes, of the structure. Before
+       calling the Module32First function, set this member to
+       sizeof(MODULEENTRY32). If you do not initialize dwSize,
+       Module32First will fail.
+@member th32ModuleID Module identifier in the context of the owning
+       process. The contents of this member has meaning only to the tool
+       help functions. It is not a handle, nor is it usable by Win32 API
+       elements.
+@member th32ProcessID Identifier of the process being examined. The
+       contents of this member can be used by Win32 API elements.
+@member GlblcntUsage Global usage count on the module.
+@member ProccntUsage Module usage count in the context of the owning
+       process.
+@member modBaseAddr Base address of the module in the context of the
+       owning process.
+@member modBaseSize Size, in bytes, of the module.
+@member hModule Handle to the module in the context of the owning
+       process.
+@member szModule Null-terminated string that contains the module name.
+@member szExePath Null-terminated string that contains the location
+       (path) of the module.
+
+## PROCESSENTRY32
+This structure describes an entry from a list that enumerates the
+processes residing in the system address space when a snapshot was
+taken.
+
+All strings are Unicode.
+
+@member dwSize Specifies the length, in bytes, of the structure. Before
+       calling the Process32First function, set this member to
+       sizeof(PROCESSENTRY32). If you do not initialize dwSize,
+       Process32First will fail.
+@member cntUsage Number of references to the process. Must be 1.
+@member th32ProcessID Identifier of the process. The contents of this
+       member can be used by Win32 API elements.
+@member th32DefaultHeapID Identifier of the default heap for the
+       process. The contents of this member has meaning only to the tool
+       help functions. It is not a handle, nor is it usable by Win32 API
+       elements.
+@member th32ModuleID Module identifier of the process. Must be 0.
+@member cntThreads Number of execution threads started by the process.
+@member th32ParentProcessID Identifier of the process that created the
+       process being examined. Must be 0.
+@member pcPriClassBase Base priority of any threads created by this
+       process. Value is always THREAD_PRIORITY_NORMAL
+@member dwFlags Reserved; do not use.
+@member szExeFile Null-terminated string that contains the path and file
+       name of the executable file for the process.
+@member Th32memoryBase Load address of the executable file.
+@member th32AccessKey Array of bits. Each bit signifies permission to
+       see the address space of one process. For the PROCESSENTRY32
+       structure, the key contains the bit required to see that address
+       space.
+
+## THREADENTRY32
+This structure describes an entry from a list that enumerates the
+threads executing in the system when a snapshot was taken.
+
+Windows CE supports the following additional members:
+
+th32AccessKey: Array of bits. Each bit signifies permission to see the
+address space of one process. In the THREADENTRY32 structure, the key
+contains the bits the thread currently has, thus defining the processes
+it can currently see.
+
+th32CurrentProcessID: Process identifier where the thread is executing.
+
+@member dwSize Specifies the length, in bytes, of the structure. Before
+       calling the Thread32First function, set this member to
+       sizeof(THREADENTRY32). If you do not initialize dwSize,
+       Thread32First will fail.
+@member cntUsage Number of references to the thread. A thread exists as
+       long as its usage count is nonzero. As soon as its usage count
+       becomes zero, a thread terminates.
+@member th32ThreadID Identifier of the thread. This identifier is
+       compatible with the thread identifier returned by the
+       CreateProcess function.
+@member th32OwnerProcessID Identifier of the process that created the
+       thread. The contents of this member can be used by Win32 API
+       elements.
+@member tpBasePri Initial priority level assigned to a thread. This
+       member can be one of the following values: THREAD_PRIORITY_IDLE:
+       Indicates a base priority level of 1 for IDLE_PRIORITY_CLASS,
+       NORMAL_PRIORITY_CLASS, or HIGH_PRIORITY_CLASS processes, and a
+       base priority level of 16 for REALTIME_PRIORITY_CLASS processes.
+       THREAD_PRIORITY_LOWEST: Indicates 2 points below normal priority
+       for the priority class. THREAD_PRIORITY_BELOW_NORMAL: Indicates 1
+       point below normal priority for the priority class.
+       THREAD_PRIORITY_NORMAL: Indicates normal priority for the
+       priority class. THREAD_PRIORITY_ABOVE_NORMAL: Indicates 1 point
+       above normal priority for the priority class.
+       THREAD_PRIORITY_HIGHEST: Indicates 2 points above normal priority
+       for the priority class. THREAD_PRIORITY_TIME_CRITICAL: Indicates
+       a base priority level of 15 for IDLE_PRIORITY_CLASS,
+       NORMAL_PRIORITY_CLASS, or HIGH_PRIORITY_CLASS processes, and a
+       base priority level of 31 for REALTIME_PRIORITY_CLASS processes.
+@member tpDeltaPri Change in the priority level of a thread. This value
+       is a signed delta from the base priority level assigned to the
+       thread.
+@member dwFlags Reserved; do not use.

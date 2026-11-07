@@ -1,0 +1,106 @@
+## HIBYTE
+This macro retrieves the high-order byte from the specified 16-bit
+value.
+
+The HIBYTE macro is defined as follows:
+
+    #define HIBYTE(w)   ((BYTE) (((WORD) (w) >> 8) & 0xFF))
+
+@param wValue Specifies the value to be converted.
+@return The return value is the high-order byte of the specified value.
+
+## HIWORD
+This macro retrieves the high-order word from the specified 32-bit
+value.
+
+The HIWORD macro is defined as follows:
+
+    #define HIWORD(l)   ((WORD) (((DWORD) (l) >> 16) & 0xFFFF))
+
+@param dwValue Specifies the value to be converted.
+@return The return value is the high-order word of the specified value.
+
+## LOBYTE
+This macro retrieves the low-order byte from the specified 16-bit value.
+
+The LOBYTE macro is defined as follows:
+
+    #define LOBYTE(w)   ((BYTE) (w))
+
+@param wValue Specifies the value to be converted.
+@return The return value is the low-order byte of the specified value.
+
+## LOWORD
+This macro retrieves the low-order word from the specified 32-bit value.
+
+The LOWORD macro is defined as follows:
+
+    #define LOWORD(l)   ((WORD) (l))
+
+@param dwValue Specifies the value to be converted.
+@return The return value is the low-order word of the specified value.
+
+## MAKELONG
+This macro creates an unsigned 32-bit value by concatenating two
+specified 16-bit values.
+
+The MAKELONG macro is defined as follows:
+
+    #define MAKELONG(a, b) \
+        ((LONG) (((WORD) (a)) | ((DWORD) ((WORD) (b))) << 16))
+
+@param wLow Specifies the low-order word of the new long value.
+@param wHigh Specifies the high-order word of the new long value.
+@return The return value is an unsigned 32-bit value.
+
+## MAKEWORD
+This macro creates an unsigned 16-bit integer by concatenating two
+spscified unsigned character values.
+
+The MAKEWORD macro is defined as follows:
+
+    #define MAKEWORD(a, b) \
+        ((WORD) (((BYTE) (a)) | ((WORD) ((BYTE) (b))) << 8))
+
+@param bLow Specifies the low-order byte of the new short value.
+@param bHigh Specifies the high-order byte of the new short value.
+@return The return value is an unsigned 16-bit integer value.
+
+## POINT
+This structure defines the x- and y-coordinates of a point.
+
+@member x Specifies the x-coordinate of the point.
+@member y Specifies the y-coordinate of the point.
+
+## POINTS
+This structure defines the coordinates of a point.
+
+@member x Specifies the x-coordinate of the point.
+@member y Specifies the y-coordinate of the point.
+
+## RECT
+This structure defines the coordinates of the upper-left and lower-right
+corners of a rectangle.
+
+When RECT is passed to the FillRect function, the rectangle is filled up
+to, but not including, the right column and bottom row of pixels. This
+structure is identical to the RECTL structure.
+
+@member left Specifies the x-coordinate of the upper-left corner of the
+       rectangle.
+@member top Specifies the y-coordinate of the upper-left corner of the
+       rectangle.
+@member right Specifies the x-coordinate of the lower-right corner of
+       the rectangle.
+@member bottom Specifies the y-coordinate of the lower-right corner of
+       the rectangle.
+
+## SIZE
+This structure specifies the width and height of a rectangle.
+
+The rectangle dimensions stored in this structure may correspond to
+viewport extents, window extents, text extents, bitmap dimensions, or
+the aspect-ratio filter for some extended functions.
+
+@member cx Specifies the rectangle's width.
+@member cy Specifies the rectangle's height.

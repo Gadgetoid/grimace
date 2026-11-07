@@ -1,0 +1,322 @@
+## _atoi64(string)
+Converts a decimal integer string to a long long.
+
+Leading spaces and an optional sign are accepted. Parsing stops at the
+first non-digit; decimal points and exponents are not recognized.
+
+@param string Null-terminated number string.
+@return Converted value, or 0 if no conversion is possible. Overflow is
+        undefined.
+
+## _ecvt(value, digits, decimal, sign)
+Converts value to a string containing digits significant digits.
+
+The output contains digits only. decimal receives the decimal-point
+position; sign is 0 for positive and nonzero for negative. The result
+uses a shared static buffer overwritten by the next _ecvt or _fcvt call.
+
+@param value Number to convert.
+@param digits Number of significant digits.
+@param decimal Receives the decimal-point position.
+@param sign Receives the sign indicator.
+@return Pointer to the digit string.
+
+## _fcvt(value, digits, decimal, sign)
+Converts value to a digit string with digits digits after the decimal.
+
+The output contains digits only. decimal receives the decimal-point
+position; sign is 0 for positive and nonzero for negative. The result
+uses a shared static buffer overwritten by the next _ecvt or _fcvt call.
+
+@param value Number to convert.
+@param digits Number of digits after the decimal point.
+@param decimal Receives the decimal-point position.
+@param sign Receives the sign indicator.
+@return Pointer to the digit string.
+
+## _gcvt(value, digits, buffer)
+Converts value to a decimal or exponential string in buffer.
+
+The output may include a sign, decimal point and exponent. Provide room
+beyond digits plus one byte; the function does not check buffer size.
+
+@param value Number to convert.
+@param digits Number of significant digits to produce.
+@param buffer Receives the null-terminated result.
+@return buffer.
+
+## _itoa(value, buffer, radix)
+Converts an integer to a null-terminated string in the specified base.
+
+radix must be from 2 through 36. A minus sign is emitted for negative
+values only in base 10.
+
+@param value Integer to convert.
+@param buffer Receives the result.
+@param radix Number base.
+@return buffer.
+
+## _lrotl(value, shift)
+Rotates the bits of value left, wrapping shifted-out bits to the right.
+
+@param value Value to rotate.
+@param shift Number of bit positions.
+@return Rotated value.
+
+## _lrotr(value, shift)
+Rotates the bits of value right, wrapping shifted-out bits to the left.
+
+@param value Value to rotate.
+@param shift Number of bit positions.
+@return Rotated value.
+
+## _ltoa(value, buffer, radix)
+Converts a long integer to a null-terminated string in the specified base.
+
+radix must be from 2 through 36. A minus sign is emitted for negative
+values only in base 10.
+
+@param value Long integer to convert.
+@param buffer Receives the result.
+@param radix Number base.
+@return buffer.
+
+## _msize(memory)
+Returns the size in bytes of a heap block allocated by malloc or realloc.
+
+@param memory Pointer to the allocated block.
+@return Block size in bytes.
+
+## _rotl(value, shift)
+Rotates the bits of value left, wrapping shifted-out bits to the right.
+
+@param value Value to rotate.
+@param shift Number of bit positions.
+@return Rotated value.
+
+## _rotr(value, shift)
+Rotates the bits of value right, wrapping shifted-out bits to the left.
+
+@param value Value to rotate.
+@param shift Number of bit positions.
+@return Rotated value.
+
+## _swab(source, destination, count)
+Copies count bytes from source to destination, swapping adjacent bytes.
+
+Use an even count so every copied byte has a pair.
+
+@param source Bytes to copy and swap.
+@param destination Receives the swapped bytes.
+@param count Number of bytes to process.
+
+## _ultoa(value, buffer, radix)
+Converts an unsigned long to a null-terminated string in the specified base.
+
+radix must be from 2 through 36. No overflow checking is performed.
+
+@param value Unsigned long to convert.
+@param buffer Receives the result.
+@param radix Number base.
+@return buffer.
+
+## _wtol(string)
+Converts a wide-character decimal string to a long.
+
+Skips leading white space, accepts an optional sign and stops at the first
+character that isn't a digit.
+
+@param string The string to convert.
+@return The value, or 0 if nothing could be converted.
+
+## _wtoll(string)
+Converts a wide-character decimal string to a long long.
+
+Skips leading white space, accepts an optional sign and stops at the first
+character that isn't a digit.
+
+@param string The string to convert.
+@return The value, or 0 if nothing could be converted.
+
+## abs(value)
+Returns the absolute value of an integer.
+
+@param value Integer to convert.
+@return Absolute value.
+
+## atof(string)
+Converts a numeric string to double precision.
+
+Parsing stops at the first character that is not part of the number.
+The radix character follows the LC_NUMERIC locale setting; input is
+limited to 100 characters.
+
+@param string Null-terminated number string.
+@return Converted value, or 0.0 if it cannot be converted. Overflow is
+        undefined.
+
+## atoi(string)
+Converts a decimal integer string to int.
+
+Leading spaces and an optional sign are accepted. Parsing stops at the
+first non-digit; decimal points and exponents are not recognized.
+
+@param string Null-terminated number string.
+@return Converted value, or 0 if no conversion is possible. Overflow is
+        undefined.
+
+## atol(string)
+Converts a decimal integer string to long.
+
+Leading spaces and an optional sign are accepted. Parsing stops at the
+first non-digit; decimal points and exponents are not recognized.
+
+@param string Null-terminated number string.
+@return Converted value, or 0L if no conversion is possible. Overflow is
+        undefined.
+
+## calloc(count, size)
+Allocates an array and initializes every byte to zero.
+
+@param count Number of elements.
+@param size Size of each element in bytes.
+@return Pointer to the allocated, suitably aligned block, or NULL if
+        allocation fails.
+
+## div(dividend, divisor)
+Returns the integer quotient and remainder of dividend divided by divisor.
+
+The quotient is truncated toward zero. A zero divisor terminates the
+program with an error message.
+
+@param dividend Numerator.
+@param divisor Denominator.
+@return div_t containing quot and rem.
+
+## free(memory)
+Frees a block allocated by malloc or realloc.
+
+Passing NULL is ignored. Passing any other invalid pointer has
+undefined effects.
+
+@param memory Block to free, or NULL.
+
+## labs(value)
+Returns the absolute value of a long integer.
+
+@param value Long integer to convert.
+@return Absolute value.
+
+## ldiv(dividend, divisor)
+Returns the long-integer quotient and remainder of dividend divided by divisor.
+
+The quotient is truncated toward zero. A zero divisor terminates the
+program with an error message.
+
+@param dividend Numerator.
+@param divisor Denominator.
+@return ldiv_t containing quot and rem.
+
+## malloc(size)
+Allocates a suitably aligned heap block of at least size bytes.
+
+A size of zero may return a valid zero-length allocation.
+
+@param size Number of bytes to allocate.
+@return Pointer to the block, or NULL if allocation fails.
+
+## mbstowcs(destination, source, count)
+Converts a multibyte string to a wide-character string.
+
+The result is only null-terminated if there's room for the terminator
+within count.
+
+@param destination Output buffer, or NULL to get the length needed.
+@param source Null-terminated multibyte string.
+@param count Size of destination, in wide characters.
+@return Wide characters written, not counting the terminator, or
+        (size_t)-1 if source holds an invalid multibyte character.
+
+## qsort(base, count, size, compare)
+Sorts count array elements in ascending order using quicksort.
+
+The comparator receives pointers to two elements and returns negative,
+zero or positive when the first is less than, equal to or greater than
+the second.
+
+@param base Start of the array.
+@param count Number of elements.
+@param size Size of each element in bytes.
+@param compare Comparator for two elements.
+
+## rand()
+Returns a pseudorandom integer from 0 through RAND_MAX.
+
+Call srand to seed the generator. Without a prior call, the sequence is
+the same as with srand(1).
+
+@return Pseudorandom integer.
+
+## realloc(memory, size)
+Changes the size of a malloc or realloc block, preserving its contents.
+
+The block may move. If memory is NULL, realloc behaves like malloc. If
+size is zero and memory is non-NULL, the block is freed and NULL returned.
+On allocation failure, the original block is unchanged.
+
+@param memory Existing block, or NULL.
+@param size New size in bytes.
+@return Pointer to the resized block, or NULL on failure.
+
+## srand(seed)
+Sets the starting point for the rand pseudorandom sequence.
+
+Calling srand(1) restarts the default sequence.
+
+@param seed Seed for the generator.
+
+## strtod(string, end)
+Converts the initial numeric portion of string to double precision.
+
+The radix character follows LC_NUMERIC. end receives the first character
+not consumed, or string if no conversion is possible.
+
+@param string Null-terminated number string.
+@param end Receives the stopping character, or NULL if not needed.
+@return Converted value, signed HUGE_VAL on overflow, or 0 if no
+        conversion is possible or underflow occurs.
+
+## strtol(string, end, base)
+Converts the initial portion of string to a long integer in base.
+
+Parsing stops at the first invalid digit. end receives that position, or
+string if no conversion is possible. base must be 0 or from 2 through 36.
+
+@param string Null-terminated number string.
+@param end Receives the stopping character, or NULL if not needed.
+@param base Number base; 0 selects it from the input prefix.
+@return Converted value, LONG_MAX or LONG_MIN on overflow, or 0 if no
+        conversion is possible.
+
+## strtoul(string, end, base)
+Converts the initial portion of string to an unsigned long in base.
+
+Parsing stops at the first invalid digit. end receives that position, or
+string if no conversion is possible. base must be 0 or from 2 through 36.
+
+@param string Null-terminated number string.
+@param end Receives the stopping character, or NULL if not needed.
+@param base Number base; 0 selects it from the input prefix.
+@return Converted value, or 0 if no conversion is possible.
+
+## wcstombs(destination, source, count)
+Converts a wide-character string to a multibyte string.
+
+The result is only null-terminated if there's room for the terminator
+within count.
+
+@param destination Output buffer, or NULL to get the length needed.
+@param source Null-terminated wide-character string.
+@param count Size of destination, in bytes.
+@return Bytes written, not counting the terminator, or (size_t)-1 if a
+        character can't be converted.

@@ -1,0 +1,11 @@
+COM_Close
+COM_Deinit
+COM_IOControl
+COM_Init
+COM_Open
+COM_PowerDown
+COM_PowerUp
+COM_Read
+COM_Seek
+COM_Write
+SerialGetDroppedByteNumber

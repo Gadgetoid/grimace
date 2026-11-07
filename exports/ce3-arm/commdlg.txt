@@ -1,0 +1,4 @@
+ChooseColor
+CommDlgExtendedError
+PageSetupDlgW
+PrintDlg

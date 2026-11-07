@@ -1,0 +1,3 @@
+TSPI_lineGetProcTable
+TSPI_providerInit
+TSPI_providerShutdown

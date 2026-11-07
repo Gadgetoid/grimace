@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+import argparse
+import os
+import re
+import subprocess
+import sys
+import urllib.parse
+import urllib.request
+
+TOOLKIT_2 = "https://archive.org/download/wincetoolkits/WINCE_TOOLKITS.iso/"
+TOOLKIT_1 = "https://archive.org/download/msvcceu.100/MSVCCEU.100.iso/"
+VCCE = "WINDOWS_CE/VISUALC50/VCCE/"
+SETS = [
+    (TOOLKIT_2, "include/ce100", VCCE + "WCE/INCLUDE/WCE100/"),
+    (TOOLKIT_2, "include/ce101", VCCE + "WCE/INCLUDE/WCE101/"),
+    (TOOLKIT_2, "include/ce200", VCCE + "WCE/INCLUDE/WCE200/"),
+    (TOOLKIT_2, "samples/win32", VCCE + "WCE/SAMPLES/WIN32/"),
+    (TOOLKIT_2, "msdn/toolkit2", VCCE + "MSDN/"),
+    (TOOLKIT_2, "msdn/toolkit2-java", "WINDOWS_CE/VISUALJ11/VJCE/MSDN/"),
+    (TOOLKIT_1, "msdn/toolkit1", "wcedev/MSDN/"),
+    (TOOLKIT_1, "lib/ce100/mips", "wcedev/WCE/LIB/WCE100/WCEMIPS/"),
+    (TOOLKIT_1, "lib/ce100/sh3", "wcedev/WCE/LIB/WCE100/WCESH/"),
+    (TOOLKIT_2, "lib/ce101/sh3", VCCE + "WCE/LIB/WCE101/WCESH/"),
+    (TOOLKIT_2, "lib/ce200/mips", VCCE + "WCE/LIB/WCE200/WCEMIPS/"),
+    (TOOLKIT_2, "lib/ce200/sh3", VCCE + "WCE/LIB/WCE200/WCESH/"),
+]
+LIBRARY_EXTENSION = ".lib"
+NOTICE = """Windows CE reference material, fetched by grimace's tools/fetch-reference
+from the Windows CE Toolkits for Visual C++ 5.0 on archive.org (items wincetoolkits and msvcceu.100).
+
+include/ce100, ce101, ce200: SDK headers for Windows CE 1.0, 1.01 and 2.0.
+lib/ce100, ce101, ce200: the SDK's MIPS and SH3 libraries (.lib), import libraries for the system DLLs among them.
+samples/win32: the CE 2.0 toolkit's Win32 sample programs.
+msdn/toolkit1, toolkit2, toolkit2-java: the toolkits' documentation as InfoViewer titles (.ivt, .ivi),
+each extracted to HTML in a folder of the same name. toolkit1 has the Windows CE 1.0 SDK reference (wcesdk),
+toolkit2-java (from the Visual J++ toolkit) the CE 2.0 SDK reference and guide (wcesdk, wcesdkg).
+
+Microsoft's copyright. For reference only: don't copy it into grimace or other projects.
+"""
+
+
+def listing(item):
+    with urllib.request.urlopen(item, timeout=120) as response:
+        page = response.read().decode("utf-8", "replace")
+    paths = set()
+    for link in re.findall(r'href="(?:https:)?%s([^"]+)"' % re.escape(item.split(":", 1)[1]), page):
+        paths.add(urllib.parse.unquote(link))
+    return sorted(paths)
+
+
+def fetch(item, path, destination):
+    if os.path.exists(destination):
+        return False
+    os.makedirs(os.path.dirname(destination), exist_ok=True)
+    with urllib.request.urlopen(item + urllib.parse.quote(path, safe=""), timeout=300) as response:
+        data = response.read()
+    with open(destination + ".part", "wb") as part:
+        part.write(data)
+    os.replace(destination + ".part", destination)
+    return True
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Fetch Windows CE 1.0/2.0 SDK headers, samples and documentation for reference")
+    parser.add_argument("destination", nargs="?", default=os.environ.get("GRIMACE_REFERENCE"), help="folder to fetch into, default $GRIMACE_REFERENCE")
+    arguments = parser.parse_args()
+    if not arguments.destination:
+        sys.exit("fetch-reference: give a destination folder or set GRIMACE_REFERENCE")
+    root = os.path.expanduser(arguments.destination)
+    os.makedirs(root, exist_ok=True)
+    with open(os.path.join(root, "README.txt"), "w") as notice:
+        notice.write(NOTICE)
+    fetched = 0
+    kept = 0
+    listings = {}
+    for item, name, prefix in SETS:
+        if item not in listings:
+            listings[item] = listing(item)
+        for path in listings[item]:
+            if name.startswith("lib/") and not path.lower().endswith(LIBRARY_EXTENSION):
+                continue
+            if path.upper().startswith(prefix.upper()) and not path.endswith("/"):
+                relative = path[len(prefix):]
+                if fetch(item, path, os.path.join(root, name, *relative.split("/"))):
+                    fetched += 1
+                else:
+                    kept += 1
+    print("fetch-reference: %d fetched, %d already present, in %s" % (fetched, kept, root))
+    extractor = os.path.join(os.path.dirname(os.path.abspath(__file__)), "extract-ivt")
+    for name in ("msdn/toolkit1", "msdn/toolkit2", "msdn/toolkit2-java"):
+        folder = os.path.join(root, *name.split("/"))
+        for title in sorted(os.listdir(folder)):
+            stem, extension = os.path.splitext(title)
+            destination = os.path.join(folder, stem.lower())
+            if extension.lower() == ".ivt" and not os.path.exists(destination):
+                subprocess.run([sys.executable, extractor, os.path.join(folder, title), destination], check=True)

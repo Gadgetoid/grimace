@@ -1,0 +1,7 @@
+DllCanUnloadNow
+DllEnumClassObjects
+DllGetClassObject
+MatchExactGetIDsOfNames
+PrintHTML
+ShowHTMLDialog
+ShowModalDialog

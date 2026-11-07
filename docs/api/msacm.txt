@@ -1,0 +1,286 @@
+## acmDriverAddW(phadid, hinstModule, lParam, dwPriority, fdwAdd)
+Adds an ACM driver to the list of available drivers.
+
+The driver is local to the calling process. Remove it with
+acmDriverRemove.
+
+@param phadid Receives the driver identifier.
+@param hinstModule Module containing the driver.
+@param lParam With ACM_DRIVERADDF_FUNCTION, the driver's entry point.
+       With ACM_DRIVERADDF_NOTIFYHWND, the window to notify of driver
+       changes.
+@param dwPriority With ACM_DRIVERADDF_NOTIFYHWND, the message to send.
+       Otherwise 0.
+@param fdwAdd ACM_DRIVERADDF_FUNCTION or ACM_DRIVERADDF_NOTIFYHWND,
+       optionally with ACM_DRIVERADDF_GLOBAL.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALPARAM or
+        MMSYSERR_NOMEM.
+
+## acmDriverClose(had, fdwClose)
+Closes an ACM driver instance opened with acmDriverOpen.
+
+@param had The driver instance.
+@param fdwClose Reserved. Must be 0.
+@return MMSYSERR_NOERROR, or an error such as ACMERR_BUSY or
+        MMSYSERR_INVALHANDLE.
+
+## acmDriverDetailsW(hadid, padd, fdwDetails)
+Gets details of an ACM driver, such as its name and capabilities.
+
+@param hadid The driver identifier.
+@param padd Receives the details. Set cbStruct before calling.
+@param fdwDetails Reserved. Must be 0.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## acmDriverEnum(fnCallback, dwInstance, fdwEnum)
+Enumerates the available ACM drivers.
+
+Enumeration continues until there are no more drivers or the callback
+returns FALSE.
+
+@param fnCallback Called once per driver.
+@param dwInstance Passed through to the callback.
+@param fdwEnum 0, or ACM_DRIVERENUMF_DISABLED to include disabled
+       drivers and ACM_DRIVERENUMF_NOLOCAL to leave out local ones.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALPARAM.
+
+## acmDriverOpen(phad, hadid, fdwOpen)
+Opens an ACM driver, giving an instance to pass to other ACM calls.
+
+Close with acmDriverClose.
+
+@param phad Receives the driver instance.
+@param hadid The driver identifier.
+@param fdwOpen Reserved. Must be 0.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_NOTENABLED or
+        MMSYSERR_NOMEM.
+
+## acmDriverRemove(hadid, fdwRemove)
+Removes a driver added with acmDriverAddW.
+
+@param hadid The driver identifier.
+@param fdwRemove Reserved. Must be 0.
+@return MMSYSERR_NOERROR, or an error such as ACMERR_BUSY or
+        MMSYSERR_INVALHANDLE.
+
+## acmFilterChoose(pafltrc)
+Displays an ACM dialog for selecting a waveform-audio filter.
+
+Initialize `cbStruct`. `pwfltr` must point to the output filter buffer,
+and `cbwfltr` must give its size in bytes. On success, the structure
+contains the selected filter. OEM dialog support may vary.
+
+@param pafltrc Filter-choice settings and output selection.
+@return MMSYSERR_NOERROR, ACMERR_CANCELED, ACMERR_NOTPOSSIBLE or an
+       MMSYSERR_* error.
+
+## acmFilterDetails(had, pafd, fdwDetails)
+Retrieves details for a waveform-audio filter.
+
+Initialize `cbStruct`, `pwfltr` and `cbwfltr`. Use
+ACM_FILTERDETAILSF_FILTER to describe a filter structure, or
+ACM_FILTERDETAILSF_INDEX to retrieve a driver's filter by index. The
+index query requires a driver handle; a NULL `had` selects the first
+suitable driver for the filter query.
+
+@param had ACM driver to query, or NULL to search suitable drivers.
+@param pafd Filter query and output details.
+@param fdwDetails ACM_FILTERDETAILSF_FILTER or ACM_FILTERDETAILSF_INDEX.
+@return MMSYSERR_NOERROR, ACMERR_NOTPOSSIBLE or an MMSYSERR_* error.
+
+## acmFilterEnum(had, pafd, fnCallback, dwInstance, fdwEnum)
+Enumerates waveform-audio filters, optionally restricted to a filter tag.
+
+Initialize `pafd->cbStruct`, `pwfltr` and `cbwfltr`; set
+`dwFilterTag` to WAVE_FILTER_UNKNOWN or a specific tag. Set
+ACM_FILTERENUMF_DWFILTERTAG to enumerate only that tag. Enumeration
+stops when the callback returns FALSE. With no suitable driver, the
+function succeeds without calling the callback.
+
+@param had ACM driver to query, or NULL to search suitable drivers.
+@param pafd Filter details used for the query and callback.
+@param fnCallback Called for each matching filter.
+@param dwInstance Value passed to each callback invocation.
+@param fdwEnum ACM_FILTERENUMF_DWFILTERTAG, or zero for all filters.
+@return MMSYSERR_NOERROR, ACMERR_NOTPOSSIBLE or an MMSYSERR_* error.
+
+## acmFilterTagDetails(had, paftd, fdwDetails)
+Retrieves details for a waveform-audio filter tag.
+
+Initialize `paftd->cbStruct`. Use ACM_FILTERTAGDETAILSF_FILTERTAG to
+query a specified tag, ACM_FILTERTAGDETAILSF_INDEX to query a tag by
+driver index, or ACM_FILTERTAGDETAILSF_LARGESTSIZE to find the tag with
+the largest filter size. The index query requires a driver handle; a
+NULL `had` searches suitable drivers for the other query types.
+
+@param had ACM driver to query, or NULL to search suitable drivers.
+@param paftd Filter-tag query and output details.
+@param fdwDetails ACM_FILTERTAGDETAILSF_* query type.
+@return MMSYSERR_NOERROR, ACMERR_NOTPOSSIBLE or an MMSYSERR_* error.
+
+## acmFilterTagEnum(had, paftd, fnCallback, dwInstance, fdwEnum)
+Enumerates waveform-audio filter tags supported by an ACM driver.
+
+Initialize `paftd->cbStruct` and set `fdwEnum` to zero. Enumeration
+stops when the callback returns FALSE. With no suitable driver, the
+function succeeds without calling the callback.
+
+@param had ACM driver to query, or NULL to search suitable drivers.
+@param paftd Filter-tag details passed to the callback.
+@param fnCallback Called for each filter tag.
+@param dwInstance Value passed to each callback invocation.
+@param fdwEnum Reserved; set to zero.
+@return MMSYSERR_NOERROR or an MMSYSERR_* error.
+
+## acmFormatChoose(pafmtc)
+Displays an ACM dialog for selecting a waveform-audio format.
+
+Initialize `cbStruct`. `pwfx` must point to the output format buffer,
+and `cbwfx` must give its size in bytes. On success, the structure
+contains the selected format. OEM dialog support may vary.
+
+@param pafmtc Format-choice settings and output selection.
+@return MMSYSERR_NOERROR, ACMERR_CANCELED, ACMERR_NOTPOSSIBLE or an
+       MMSYSERR_* error.
+
+## acmFormatEnumW(had, pafd, fnCallback, dwInstance, fdwEnum)
+Enumerates the wave formats a driver or the ACM supports.
+
+Calls fnCallback once per format. The callback returns TRUE to continue
+or FALSE to stop.
+
+@param had Driver to query, or NULL to query all drivers.
+@param pafd ACMFORMATDETAILS with cbStruct, dwFormatTag, pwfx and cbwfx
+       set. pwfx must be large enough for any format (see acmMetrics
+       with ACM_METRIC_MAX_SIZE_FORMAT).
+@param fnCallback Function called for each format found.
+@param dwInstance Value passed through to the callback.
+@param fdwEnum ACM_FORMATENUMF_* flags restricting the formats returned
+       (WFORMATTAG, NCHANNELS, NSAMPLESPERSEC, WBITSPERSAMPLE, CONVERT,
+       SUGGEST, INPUT, OUTPUT and so on), or 0 for all.
+@return MMSYSERR_NOERROR (0), or an MMSYSERR_* or ACMERR_* error.
+
+## acmFormatSuggest(had, pwfxSrc, pwfxDst, cbwfxDst, fdwSuggest)
+Suggests a destination format that a source format can be converted to.
+
+@param had Driver to ask, or NULL to let the ACM search all drivers.
+@param pwfxSrc The source format.
+@param pwfxDst Receives the suggested format. Fields named by fdwSuggest
+       must be filled in on input.
+@param cbwfxDst Size of the pwfxDst buffer, in bytes.
+@param fdwSuggest ACM_FORMATSUGGESTF_* flags (WFORMATTAG, NCHANNELS,
+       NSAMPLESPERSEC, WBITSPERSAMPLE) fixing those fields of pwfxDst,
+       or 0.
+@return MMSYSERR_NOERROR (0), or an error such as ACMERR_NOTPOSSIBLE.
+
+## acmFormatTagEnumW(had, paftd, fnCallback, dwInstance, fdwEnum)
+Enumerates the wave format tags (such as WAVE_FORMAT_PCM) a driver or
+the ACM supports.
+
+Calls fnCallback once per tag. The callback returns TRUE to continue or
+FALSE to stop.
+
+@param had Driver to query, or NULL to query all drivers.
+@param paftd ACMFORMATTAGDETAILS with cbStruct set. Passed to the
+       callback with each tag's details.
+@param fnCallback Function called for each format tag.
+@param dwInstance Value passed through to the callback.
+@param fdwEnum Must be 0.
+@return MMSYSERR_NOERROR (0), or an MMSYSERR_* error.
+
+## acmMetrics(hao, uMetric, pMetric)
+Returns a metric of the ACM or of a driver, stream or driver ID.
+
+@param hao Object to query, or NULL for the ACM as a whole.
+@param uMetric ACM_METRIC_* value, such as ACM_METRIC_COUNT_DRIVERS or
+       ACM_METRIC_MAX_SIZE_FORMAT.
+@param pMetric Receives the value. Its type depends on uMetric, usually
+       a DWORD.
+@return MMSYSERR_NOERROR (0), or an error such as
+        MMSYSERR_NOTSUPPORTED.
+
+## acmStreamClose(has, fdwClose)
+Closes a conversion stream opened with acmStreamOpen.
+
+Unprepare all headers with acmStreamUnprepareHeader first.
+
+@param has The stream.
+@param fdwClose Must be 0.
+@return MMSYSERR_NOERROR (0), or an error such as ACMERR_BUSY.
+
+## acmStreamConvert(has, pash, fdwConvert)
+Converts the data in a prepared stream header.
+
+Synchronous unless the stream was opened with a callback, in which case
+completion is signalled through it and ACMSTREAMHEADER_STATUSF_DONE.
+Check cbSrcLengthUsed and cbDstLengthUsed for the amounts processed.
+
+@param has The stream.
+@param pash Header prepared with acmStreamPrepareHeader.
+@param fdwConvert ACM_STREAMCONVERTF_BLOCKALIGN, ACM_STREAMCONVERTF_START
+       (first buffer after open or reset), ACM_STREAMCONVERTF_END (last
+       buffer, flushes remaining data), or 0.
+@return MMSYSERR_NOERROR (0), or an error such as ACMERR_UNPREPARED.
+
+## acmStreamOpen(phas, had, pwfxSrc, pwfxDst, pwfltr, dwCallback, dwInstance, fdwOpen)
+Opens a conversion stream between two wave formats.
+
+With ACM_STREAMOPENF_QUERY, only checks whether the conversion is
+possible. Close with acmStreamClose.
+
+@param phas Receives the stream handle. May be NULL with
+       ACM_STREAMOPENF_QUERY.
+@param had Driver to use, or NULL to let the ACM pick one.
+@param pwfxSrc The source format.
+@param pwfxDst The destination format.
+@param pwfltr Filter to apply, or NULL for a format conversion.
+@param dwCallback Window, function or event to notify, per the
+       CALLBACK_* flag in fdwOpen, or 0.
+@param dwInstance Value passed to a callback function.
+@param fdwOpen ACM_STREAMOPENF_QUERY, ACM_STREAMOPENF_NONREALTIME,
+       ACM_STREAMOPENF_ASYNC and CALLBACK_WINDOW, CALLBACK_FUNCTION or
+       CALLBACK_EVENT, or 0.
+@return MMSYSERR_NOERROR (0), or an error such as ACMERR_NOTPOSSIBLE.
+
+## acmStreamPrepareHeader(has, pash, fdwPrepare)
+Prepares a stream header for use with acmStreamConvert.
+
+Undo with acmStreamUnprepareHeader before freeing the buffers.
+
+@param has The stream.
+@param pash ACMSTREAMHEADER with cbStruct, pbSrc, cbSrcLength, pbDst and
+       cbDstLength set.
+@param fdwPrepare Must be 0.
+@return MMSYSERR_NOERROR (0), or an error such as MMSYSERR_NOMEM.
+
+## acmStreamReset(has, fdwReset)
+Stops conversions on a stream and marks pending buffers as done.
+
+Only meaningful for asynchronous streams.
+
+@param has The stream.
+@param fdwReset Must be 0.
+@return MMSYSERR_NOERROR (0), or an MMSYSERR_* error.
+
+## acmStreamSize(has, cbInput, pdwOutputBytes, fdwSize)
+Estimates the buffer size needed on one side of a stream for a given
+size on the other.
+
+@param has The stream.
+@param cbInput Size in bytes of the source or destination buffer.
+@param pdwOutputBytes Receives the size in bytes needed on the other
+       side.
+@param fdwSize ACM_STREAMSIZEF_SOURCE (cbInput is the source size) or
+       ACM_STREAMSIZEF_DESTINATION (cbInput is the destination size).
+@return MMSYSERR_NOERROR (0), or an error such as ACMERR_NOTPOSSIBLE.
+
+## acmStreamUnprepareHeader(has, pash, fdwUnprepare)
+Releases the preparation of a stream header made by
+acmStreamPrepareHeader.
+
+Call before freeing the header's buffers and before acmStreamClose.
+
+@param has The stream.
+@param pash The prepared header.
+@param fdwUnprepare Must be 0.
+@return MMSYSERR_NOERROR (0), or an error such as ACMERR_BUSY.

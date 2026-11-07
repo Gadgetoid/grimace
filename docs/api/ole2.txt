@@ -1,0 +1,156 @@
+## CreateOleAdviseHolder(ppOAHolder)
+Creates an OLE advise holder for managing compound-document notifications.
+
+The implementation does not support IOleAdviseHolder::EnumAdvise.
+
+@param ppOAHolder Receives the IOleAdviseHolder interface pointer.
+@return S_OK, or E_OUTOFMEMORY.
+
+## DoDragDrop(pDataObj, pDropSource, dwOKEffects, pdwEffect)
+Runs an OLE drag-and-drop operation for a data source.
+
+Call OleInitialize first. The source supplies IDataObject and IDropSource
+implementations; the target window must be registered with
+RegisterDragDrop. On drop or cancellation, the return value is
+DRAGDROP_S_DROP or DRAGDROP_S_CANCEL.
+
+@param pDataObj IDataObject containing the dragged data.
+@param pDropSource IDropSource implementation for the drag operation.
+@param dwOKEffects DROPEFFECT_* operations the source permits.
+@param pdwEffect Receives the effect selected by the target.
+@return DRAGDROP_S_DROP, DRAGDROP_S_CANCEL or an HRESULT error.
+
+## OleCreate(rclsid, riid, renderopt, pFormatEtc, pClientSite, pStg, ppvObj)
+Creates and initializes a new embedded OLE object in storage.
+
+pStg is required. If pClientSite is NULL, set the client site before
+using the object. The created object is initially blank unless a render
+option requests cached data.
+
+@param rclsid Class identifier of the object to create.
+@param riid Interface identifier to return, usually IID_IOleObject.
+@param renderopt OLERENDER cache option.
+@param pFormatEtc Format description required by renderopt.
+@param pClientSite Container's IOleClientSite, or NULL.
+@param pStg Storage for the new object.
+@param ppvObj Receives the requested interface pointer.
+@return S_OK, E_OUTOFMEMORY, or an object-creation error.
+
+## OleDraw(pUnknown, dwAspect, hdcDraw, lprcBounds)
+Draws an object's IViewObject representation into a device context.
+
+Queries pUnknown for IViewObject and calls Draw with the requested
+aspect and bounds. Do not use a metafile DC.
+
+@param pUnknown Object supporting IViewObject.
+@param dwAspect DVASPECT representation to draw.
+@param hdcDraw Destination device context.
+@param lprcBounds Destination rectangle.
+@return S_OK, OLE_E_BLANK, VIEW_E_DRAW, or a drawing error.
+
+## OleIsRunning(pObject)
+Checks whether an OLE object is in the running state.
+
+Queries the object for IRunnableObject and calls IsRunning.
+
+@param pObject Object to check.
+@return TRUE if running, otherwise FALSE.
+
+## OleRun(pUnknown)
+Puts an OLE object into the running state.
+
+Queries the object for IRunnableObject and calls Run.
+
+@param pUnknown Object to run.
+@return S_OK, OLE_E_CLASSDIFF, or an error from IRunnableObject::Run.
+
+## OleSave(pPS, pStg, fSameAsLoad)
+Saves a persistent-storage object and commits its destination storage.
+
+Writes the object's CLSID, calls IPersistStorage::Save, then commits
+when saving succeeds. Use the interfaces directly for other save cases.
+
+@param pPS Object's IPersistStorage interface.
+@param pStg Destination IStorage.
+@param fSameAsLoad TRUE when pStg is the storage from which it was loaded.
+@return S_OK, STG_E_MEDIUMFULL, or an IPersistStorage error.
+
+## OleSetContainedObject(pUnknown, fContained)
+Notifies an OLE object that it is embedded in a container.
+
+Queries the object for IRunnableObject and calls SetContainedObject.
+
+@param pUnknown Object to update.
+@param fContained TRUE for a contained object, FALSE otherwise.
+@return S_OK, or an error from IRunnableObject::SetContainedObject.
+
+## OleSetMenuDescriptor(holemenu, hwndFrame, hwndActiveObject, lpFrame, lpActiveObj)
+Installs or removes OLE menu-message dispatch on a frame window.
+
+Pass NULL for holemenu to remove dispatch. hwndActiveObject and
+lpActiveObj are unsupported and must be NULL.
+
+@param holemenu Composite descriptor from OleCreateMenuDescriptor, or NULL.
+@param hwndFrame Container frame window.
+@param hwndActiveObject Unsupported; set to NULL.
+@param lpFrame Container's IOleInPlaceFrame interface.
+@param lpActiveObj Unsupported; set to NULL.
+@return S_OK, or an OLE error.
+
+## ReadClassStg(pStg, pclsid)
+Reads the CLSID stored in an IStorage object.
+
+The CLSID is written by WriteClassStg.
+
+@param pStg Storage to read.
+@param pclsid Receives the CLSID; may receive CLSID_NULL.
+@return S_OK, E_OUTOFMEMORY, or an IStorage error.
+
+## ReadClassStm(pStm, pclsid)
+Reads a CLSID previously written to an IStream.
+
+@param pStm Stream containing the CLSID.
+@param pclsid Receives the CLSID.
+@return S_OK, or STG_E_READFAULT if the stream ends before the CLSID.
+
+## RegisterDragDrop(hwnd, pDropTarget)
+Registers a window as an OLE drop target.
+
+Call OleInitialize first. The function holds a reference to
+`pDropTarget`; call RevokeDragDrop when the window is no longer a target.
+
+@param hwnd Window that accepts drops.
+@param pDropTarget IDropTarget implementation for the window.
+@return S_OK, DRAGDROP_E_INVALIDHWND, DRAGDROP_E_ALREADYREGISTERED or an error.
+
+## ReleaseStgMedium(pmedium)
+Releases the resources owned by a storage medium.
+
+The release action depends on tymed and punkForRelease. The medium is
+invalid after this call.
+
+@param pmedium Storage medium to release.
+
+## RevokeDragDrop(hwnd)
+Removes a window's OLE drop-target registration.
+
+This releases the IDropTarget reference acquired by RegisterDragDrop.
+
+@param hwnd Window previously registered as a drop target.
+@return S_OK, DRAGDROP_E_NOTREGISTERED, DRAGDROP_E_INVALIDHWND or an error.
+
+## WriteClassStg(pStg, rclsid)
+Writes a CLSID to an IStorage object for later retrieval by ReadClassStg.
+
+@param pStg Storage object to update.
+@param rclsid Class identifier to store.
+@return S_OK, STG_E_MEDIUMFULL, or an IStorage::SetClass error.
+
+## WriteClassStm(pStm, rclsid)
+Writes a CLSID to an IStream for later retrieval by ReadClassStm.
+
+Most applications do not need to call this helper directly.
+
+@param pStm Stream to update.
+@param rclsid Class identifier to write.
+@return S_OK, STG_E_MEDIUMFULL, or a stream error.

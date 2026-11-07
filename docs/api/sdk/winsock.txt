@@ -1,0 +1,98 @@
+## WSADATA
+This structure is used to store Windows Sockets initialization data
+returned by a call to WSAStartup. It contains data about the Winsock.dll
+implementation.
+
+WSAStartup assigns the following values to the members of the WSADATA
+structure:
+
+WSADATA member Assigned value wVersion wVersionRequested parameter value
+wHighVersion wVersionRequested parameter value szDescription NULL string
+szSystemStatus NULL string iMaxSockets 20 iMaxUdpDg 0 lpVendorInfo NULL
+
+@member wVersion Version of the Windows Sockets specification that the
+       Windows Sockets DLL expects the caller to use. The high-order
+       word specifies the minor version (revision) number; and the
+       low-order word specifies the major version number.
+@member wHighVersion Highest version of the Windows Sockets
+       specification that this DLL can support, usually the same as
+       wVersion.
+@member szDescription Null-terminated string into which the Windows
+       Sockets DLL copies a description of the Windows Sockets
+       implementation, including vendor identification. The text-up to
+       256 characters in length-can contain any characters, but vendors
+       are cautioned against including control and formatting
+       characters. Typically, an application uses this description in a
+       status message.
+@member szSystemStatus Null-terminated string into which the Windows
+       Sockets DLL copies relevant status or configuration data. The
+       Windows Sockets DLL should use this member only if the data might
+       be useful to the user or support staff; it should not be
+       considered as an extension of the szDescription member.
+@member iMaxSockets Maximum number of sockets which a single process can
+       potentially open. A Windows Sockets implementation can provide a
+       global pool of sockets for allocation to any process;
+       alternatively it can allocate per-process resources for sockets.
+       The number can well reflect the way in which the Windows Sockets
+       DLL or the networking software was configured. Application
+       writers can use this number as a crude indication of whether the
+       Windows Sockets implementation is usable by the application. For
+       example, an X Windows server might check iMaxSockets when first
+       started: if it is less than 8, the application would display an
+       error message instructing the user to reconfigure the networking
+       software. (This is a situation in which the szSystemStatus text
+       might be used.) Obviously there is no guarantee that a particular
+       application can actually allocate iMaxSockets sockets, since
+       there can be other Windows Sockets applications in use.
+@member iMaxUdpDg Size, in bytes, of the largest User Datagram Protocol
+       (UDP) datagram that can be sent or received by a Windows Sockets
+       application. If the implementation imposes no limit, iMaxUdpDg is
+       zero. In many implementations of Berkeley sockets, there is an
+       implicit limit of 8192 bytes on UDP datagrams, which are
+       fragmented if necessary. A Windows Sockets implementation can
+       impose a limit based, for instance, on the allocation of fragment
+       reassembly buffers. The minimum value of iMaxUdpDg for a
+       compliant Windows Sockets implementation is 512. Note that
+       regardless of the value of iMaxUdpDg, it is inadvisable to
+       attempt to send a broadcast datagram which is larger than the
+       Maximum Transmission Unit (MTU) for the network. The Windows
+       Sockets API does not provide a mechanism to discover the MTU, but
+       it must be no less than 512 bytes.
+@member lpVendorInfo Long pointer to a vendor-specific data structure.
+       The definition of this structure (if supplied) is beyond the
+       scope of the Windows Sockets specification.
+
+## WSAGetLastError()
+This function retrieves the error status for the last Windows Socket
+operation that failed.
+
+The WSAGetLastError function returns the last network error that
+occurred. When a particular Windows Sockets function indicates that an
+error has occurred, this function should be called to retrieve the
+appropriate error value. This error value can be different from the
+error value obtained from getsockopt SO_ERROR, which is socket-specific
+since WSAGetLastError is for all thread-specific sockets.
+
+A successful function call, or a call to WSAGetLastError, does not reset
+the error value. To reset the error value, use the WSASetLastError
+function call with iError set to zero. A getsockopt SO_ERROR also resets
+the error value to zero.
+
+@return The return value indicates the error value for this thread's
+       last Windows Sockets operation that failed.
+
+## WSASetLastError(iError)
+This function sets the error value that can be retrieved through the
+WSAGetLastError function.
+
+The WSASetLastError function allows an application to set the error
+value to be returned by a subsequent WSAGetLastError call for the
+current thread. Note that any subsequent Windows Sockets routine called
+by the application will override the error value as set by this routine.
+
+The error value set by WSASetLastError is different from the error value
+reset by calling the function getsockopt with SO_ERROR.
+
+@param iError [in] Integer that specifies the error value to be returned
+       by a subsequent WSAGetLastError call.
+@return None.

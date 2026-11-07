@@ -1,0 +1,27 @@
+## CreatePropertySheetPageW(lppsp)
+Creates a property sheet page.
+
+Pass the result to PropertySheetW in the header's phpage array, or add
+it to an open sheet with PSM_ADDPAGE. Pages never given to a sheet must
+be freed with DestroyPropertySheetPage.
+
+@param lppsp PROPSHEETPAGE describing the page, with dwSize set.
+@return The page, or NULL on failure.
+
+## DestroyPropertySheetPage(hPSPage)
+Destroys a page made by CreatePropertySheetPageW.
+
+Only needed for pages not passed to PropertySheetW: the sheet destroys
+its own pages.
+
+@param hPSPage The page.
+@return TRUE on success, FALSE on failure.
+
+## PropertySheetW(lppsph)
+Creates and shows a property sheet with the pages in a header.
+
+@param lppsph PROPSHEETHEADER describing the frame and its pages, with
+       dwSize set.
+@return A positive value on success, or -1 on failure.
+        ID_PSREBOOTSYSTEM or ID_PSRESTARTWINDOWS mean a page sent
+        PSM_REBOOTSYSTEM or PSM_RESTARTWINDOWS.

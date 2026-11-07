@@ -1,0 +1,9 @@
+build/
+__pycache__/
+.DS_Store
+examples/build-*/
+.vscode/
+reference/
+/llvm
+build-config.log
+docs/api/*.*.txt

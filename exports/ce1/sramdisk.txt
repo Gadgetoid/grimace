@@ -1,0 +1,11 @@
+DSK_Close
+DSK_Deinit
+DSK_IOControl
+DSK_Init
+DSK_Open
+DSK_PowerDown
+DSK_PowerUp
+DSK_Read
+DSK_Seek
+DSK_Write
+DetectSRAMDisk

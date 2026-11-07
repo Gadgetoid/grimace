@@ -1,0 +1,9 @@
+## WriteDebugLED(wIndex, dwPattern)
+Sends a debug pattern to an OEM-provided LED.
+
+This works only when the device's OEM implements LED support.
+
+@param wIndex Index identifying an OS component. The OS reserves indexes for
+              its own components; OEMs can use indexes from 0 through
+              MAX_OEM_LEDINDEX.
+@param dwPattern Pattern to send to the LED.

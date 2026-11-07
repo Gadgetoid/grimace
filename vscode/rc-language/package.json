@@ -1,0 +1,86 @@
+{
+    "name": "rc-language",
+    "displayName": "Resource Script (RC)",
+    "description": "Syntax highlighting, errors, hovers, go-to-definition, links and completion for Windows resource scripts (.rc)",
+    "version": "0.2.0",
+    "publisher": "grimace",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Gadgetoid/grimace.git",
+        "directory": "vscode/rc-language"
+    },
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Linters"
+    ],
+    "main": "./extension.js",
+    "activationEvents": [
+        "onLanguage:rc"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "rc",
+                "aliases": [
+                    "Resource Script",
+                    "RC"
+                ],
+                "extensions": [
+                    ".rc",
+                    ".rc2"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "rc",
+                "scopeName": "source.rc",
+                "path": "./syntaxes/rc.tmLanguage.json"
+            }
+        ],
+        "configuration": {
+            "title": "Resource Script (RC)",
+            "properties": {
+                "rcLanguage.llvmRc": {
+                    "type": "string",
+                    "default": "",
+                    "description": "llvm-rc to check scripts with. Empty uses the one the CMake build runs, then $GRIMACE_LLVM_ROOT/bin/llvm-rc, then llvm-rc on the PATH."
+                },
+                "rcLanguage.includePaths": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "description": "Folders searched for #include files, after the CMake build's. ${workspaceFolder} is replaced."
+                },
+                "rcLanguage.defines": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "description": "Macros defined when checking, after the CMake build's, as NAME or NAME=VALUE."
+                },
+                "rcLanguage.checkOnSave": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Check scripts with llvm-rc when they are opened and saved."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "test": "vscode-tmgrammar-test test/*.test.rc && node test/check-files.js && node --test test/lib.test.js"
+    },
+    "devDependencies": {
+        "vscode-oniguruma": "^2.0.1",
+        "vscode-textmate": "^9.3.2",
+        "vscode-tmgrammar-test": "^0.1.3"
+    }
+}

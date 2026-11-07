@@ -1,0 +1,58 @@
+#ifndef GRIMACE_NEW
+#define GRIMACE_NEW
+
+#include <stddef.h>
+
+namespace std {
+
+using size_t = ::size_t;
+
+enum class align_val_t : size_t {};
+
+struct nothrow_t {
+    explicit nothrow_t() = default;
+};
+
+inline constexpr nothrow_t nothrow{};
+
+template <typename T>
+[[nodiscard]] constexpr T *launder(T *pointer) noexcept {
+    return __builtin_launder(pointer);
+}
+
+}
+
+[[nodiscard]] void *operator new(size_t size);
+[[nodiscard]] void *operator new[](size_t size);
+[[nodiscard]] void *operator new(size_t size, std::align_val_t alignment);
+[[nodiscard]] void *operator new[](size_t size, std::align_val_t alignment);
+[[nodiscard]] void *operator new(size_t size, const std::nothrow_t &) noexcept;
+[[nodiscard]] void *operator new[](size_t size, const std::nothrow_t &) noexcept;
+[[nodiscard]] void *operator new(size_t size, std::align_val_t alignment, const std::nothrow_t &) noexcept;
+[[nodiscard]] void *operator new[](size_t size, std::align_val_t alignment, const std::nothrow_t &) noexcept;
+
+void operator delete(void *pointer) noexcept;
+void operator delete[](void *pointer) noexcept;
+void operator delete(void *pointer, size_t size) noexcept;
+void operator delete[](void *pointer, size_t size) noexcept;
+void operator delete(void *pointer, std::align_val_t alignment) noexcept;
+void operator delete[](void *pointer, std::align_val_t alignment) noexcept;
+void operator delete(void *pointer, size_t size, std::align_val_t alignment) noexcept;
+void operator delete[](void *pointer, size_t size, std::align_val_t alignment) noexcept;
+void operator delete(void *pointer, const std::nothrow_t &) noexcept;
+void operator delete[](void *pointer, const std::nothrow_t &) noexcept;
+void operator delete(void *pointer, std::align_val_t alignment, const std::nothrow_t &) noexcept;
+void operator delete[](void *pointer, std::align_val_t alignment, const std::nothrow_t &) noexcept;
+
+[[nodiscard]] inline void *operator new(size_t, void *place) noexcept {
+    return place;
+}
+
+[[nodiscard]] inline void *operator new[](size_t, void *place) noexcept {
+    return place;
+}
+
+inline void operator delete(void *, void *) noexcept {}
+inline void operator delete[](void *, void *) noexcept {}
+
+#endif

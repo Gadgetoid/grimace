@@ -1,0 +1,422 @@
+## PlaySoundW(pszSound, hmod, fdwSound)
+Plays a waveform sound from a file, a resource, memory or a registry
+sound alias.
+
+@param pszSound The sound: a file name, alias, resource name or
+       in-memory image, depending on fdwSound. NULL stops the sound
+       playing.
+@param hmod Module holding the resource for SND_RESOURCE, otherwise
+       NULL.
+@param fdwSound SND_FILENAME, SND_ALIAS, SND_RESOURCE or SND_MEMORY,
+       plus SND_SYNC or SND_ASYNC, and optionally SND_LOOP (with
+       SND_ASYNC), SND_NODEFAULT and SND_NOSTOP.
+@return TRUE on success, FALSE on failure.
+
+## sndPlaySoundW(lpszSound, fuSound)
+Plays a waveform sound from a file, memory or a registry sound entry.
+
+The name is looked up in the registry first, then treated as a file
+name, searched for in the given path then \Windows. If it isn't found,
+the default system sound plays unless SND_NODEFAULT is set. The sound
+must fit in memory. Call GetLastError on failure.
+
+@param lpszSound Registry sound name, file name (.wav optional) or, with
+       SND_MEMORY, a pointer to a .wav image. NULL stops the sound
+       playing.
+@param fuSound SND_SYNC or SND_ASYNC, plus any of SND_LOOP (with
+       SND_ASYNC), SND_MEMORY, SND_NODEFAULT, SND_NOSTOP, SND_ALIAS
+       (registry only) and SND_FILENAME (file only).
+@return TRUE on success, FALSE on failure or if SND_NOSTOP was set and
+        a sound was playing.
+
+## waveInAddBuffer(hwi, pwh, cbwh)
+Queues a buffer on a waveform input device for recording into.
+
+The buffer must first be prepared with waveInPrepareHeader. When it is
+full, or recording stops, the driver sets WHDR_DONE in dwFlags and
+notifies the callback with WIM_DATA. dwBytesRecorded holds the amount
+of data.
+
+@param hwi The input device.
+@param pwh The prepared buffer header.
+@param cbwh sizeof(WAVEHDR).
+@return MMSYSERR_NOERROR, or an error such as WAVERR_UNPREPARED or
+        MMSYSERR_INVALHANDLE.
+
+## waveInClose(hwi)
+Closes a waveform input device.
+
+Fails while buffers are still queued: call waveInReset and unprepare
+them first.
+
+@param hwi The input device.
+@return MMSYSERR_NOERROR, or an error such as WAVERR_STILLPLAYING or
+        MMSYSERR_INVALHANDLE.
+
+## waveInGetDevCaps(uDeviceID, pwic, cbwic)
+Retrieves the capabilities of a waveform-audio input device.
+
+Copies at most cbwic bytes; if cbwic is 0, nothing is copied. OEM
+support may vary.
+
+@param uDeviceID Device index, from 0 to one less than the number of
+       devices, WAVE_MAPPER, or an open input-device handle.
+@param pwic Receives the WAVEINCAPS structure.
+@param cbwic Size of the WAVEINCAPS buffer, in bytes.
+@return MMSYSERR_NOERROR, or an MMSYSERR_* error such as
+       MMSYSERR_BADDEVICEID, MMSYSERR_NODRIVER or MMSYSERR_NOMEM.
+
+## waveInGetErrorText(mmrError, pszText, cchText)
+Retrieves text for a waveform-audio input error code.
+
+The output is null-terminated and truncated if the buffer is too small.
+If cchText is 0, nothing is copied. All descriptions are shorter than
+MAXERRORLENGTH characters. OEM support may vary.
+
+@param mmrError Error code to describe.
+@param pszText Receives the error text.
+@param cchText Size of pszText, in characters.
+@return MMSYSERR_NOERROR, or an MMSYSERR_* error such as
+       MMSYSERR_BADERRNUM, MMSYSERR_NODRIVER or MMSYSERR_NOMEM.
+
+## waveInGetID(hwi, puDeviceID)
+Gets the device identifier of an open waveform input device.
+
+@param hwi The input device.
+@param puDeviceID Receives the device identifier.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveInGetNumDevs()
+Returns the number of waveform input devices.
+
+@return The number of devices, 0 if there are none.
+
+## waveInGetPosition(hwi, pmmt, cbmmt)
+Gets the current recording position of a waveform input device.
+
+Set pmmt->wType to the format wanted (TIME_BYTES, TIME_SAMPLES,
+TIME_MS and so on). If the driver doesn't support it, it substitutes
+another and changes wType. The position resets to 0 on waveInReset.
+
+@param hwi The input device.
+@param pmmt Receives the position.
+@param cbmmt sizeof(MMTIME).
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveInMessage(hwi, uMsg, dw1, dw2)
+Sends a message directly to a waveform input driver.
+
+@param hwi The input device, or a device identifier cast to HWAVEIN.
+@param uMsg The driver message.
+@param dw1 Message parameter.
+@param dw2 Message parameter.
+@return The driver's result.
+
+## waveInOpen(phwi, uDeviceID, pwfx, dwCallback, dwCallbackInstance, fdwOpen)
+Opens a waveform input device for recording.
+
+Recording doesn't begin until waveInStart. Close with waveInClose. A
+callback function runs in a driver context and should only do minimal
+work, such as signalling an event.
+
+@param phwi Receives the device handle. Can be NULL with
+       WAVE_FORMAT_QUERY.
+@param uDeviceID Device identifier from 0 to waveInGetNumDevs() - 1,
+       or WAVE_MAPPER.
+@param pwfx The format to record in.
+@param dwCallback Window, function or event to notify of WIM_OPEN,
+       WIM_DATA and WIM_CLOSE, as given by fdwOpen, or 0.
+@param dwCallbackInstance Passed to a callback function.
+@param fdwOpen CALLBACK_NULL, CALLBACK_WINDOW, CALLBACK_FUNCTION and so
+       on, plus optionally WAVE_FORMAT_QUERY to test the format without
+       opening the device.
+@return MMSYSERR_NOERROR, or an error such as WAVERR_BADFORMAT,
+        MMSYSERR_ALLOCATED or MMSYSERR_BADDEVICEID.
+
+## waveInPrepareHeader(hwi, pwh, cbwh)
+Prepares a buffer for waveform input.
+
+Set lpData, dwBufferLength and dwFlags (0) before calling. Unprepare
+with waveInUnprepareHeader before freeing the buffer.
+
+@param hwi The input device.
+@param pwh The buffer header.
+@param cbwh sizeof(WAVEHDR).
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_NOMEM.
+
+## waveInReset(hwi)
+Stops recording, returns all queued buffers and resets the position to
+0.
+
+Returned buffers are marked WHDR_DONE and reported to the callback.
+
+@param hwi The input device.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveInStart(hwi)
+Starts recording on a waveform input device.
+
+Queue buffers with waveInAddBuffer first. Has no effect if recording
+has already started.
+
+@param hwi The input device.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveInStop(hwi)
+Stops recording on a waveform input device.
+
+The buffer in progress is returned, marked done, with the data so far.
+Other queued buffers stay queued and the position isn't reset.
+
+@param hwi The input device.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveInUnprepareHeader(hwi, pwh, cbwh)
+Undoes waveInPrepareHeader on a buffer.
+
+Call once the driver has returned the buffer, and before freeing it.
+
+@param hwi The input device.
+@param pwh The buffer header.
+@param cbwh sizeof(WAVEHDR).
+@return MMSYSERR_NOERROR, or WAVERR_STILLPLAYING if the buffer is still
+        queued.
+
+## waveOutBreakLoop(hwo)
+Ends a playback loop, letting playback continue with the next buffer.
+
+The current pass of the loop finishes first. Loops are set up with
+WHDR_BEGINLOOP, WHDR_ENDLOOP and dwLoops in WAVEHDR.
+
+@param hwo The output device.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveOutClose(hwo)
+Closes a waveform output device.
+
+Fails while buffers are still queued: call waveOutReset and unprepare
+them first.
+
+@param hwo The output device.
+@return MMSYSERR_NOERROR, or an error such as WAVERR_STILLPLAYING or
+        MMSYSERR_INVALHANDLE.
+
+## waveOutGetDevCaps(uDeviceID, pwoc, cbwoc)
+Retrieves the capabilities of a waveform-audio output device.
+
+Get the number of devices with waveOutGetNumDevs. Copies at most cbwoc
+bytes; if cbwoc is 0, nothing is copied. OEM support may vary.
+
+@param uDeviceID Device index, from 0 to one less than the number of
+       devices, WAVE_MAPPER, or an open output-device handle.
+@param pwoc Receives the WAVEOUTCAPS structure.
+@param cbwoc Size of the WAVEOUTCAPS buffer, in bytes.
+@return MMSYSERR_NOERROR, or an MMSYSERR_* error such as
+       MMSYSERR_INVALHANDLE, MMSYSERR_NODRIVER or MMSYSERR_NOMEM.
+
+## waveOutGetErrorText(mmrError, pszText, cchText)
+Retrieves text for a waveform-audio output error code.
+
+The output is null-terminated and truncated if the buffer is too small.
+If cchText is 0, nothing is copied. All descriptions are shorter than
+MAXERRORLENGTH characters. OEM support may vary.
+
+@param mmrError Error code to describe.
+@param pszText Receives the error text.
+@param cchText Size of pszText, in characters.
+@return MMSYSERR_NOERROR, or an MMSYSERR_* error such as
+       MMSYSERR_INVALHANDLE, MMSYSERR_NODRIVER or MMSYSERR_NOMEM.
+
+## waveOutGetID(hwo, puDeviceID)
+Gets the device identifier of an open waveform output device.
+
+@param hwo The output device.
+@param puDeviceID Receives the device identifier.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveOutGetNumDevs()
+Returns the number of waveform output devices.
+
+@return The number of devices, 0 if there are none.
+
+## waveOutGetPitch(hwo, pdwPitch)
+Gets the pitch multiplier of a waveform output device.
+
+Many devices don't support pitch control.
+
+@param hwo The output device.
+@param pdwPitch Receives the pitch as 16.16 fixed point: 0x00010000 is
+       normal pitch.
+@return MMSYSERR_NOERROR, or MMSYSERR_NOTSUPPORTED or another error.
+
+## waveOutGetPlaybackRate(hwo, pdwRate)
+Gets the playback rate multiplier of a waveform output device.
+
+Many devices don't support rate control.
+
+@param hwo The output device.
+@param pdwRate Receives the rate as 16.16 fixed point: 0x00010000 is
+       normal speed.
+@return MMSYSERR_NOERROR, or MMSYSERR_NOTSUPPORTED or another error.
+
+## waveOutGetPosition(hwo, pmmt, cbmmt)
+Gets the current playback position of a waveform output device.
+
+Set pmmt->wType to the format wanted (TIME_BYTES, TIME_SAMPLES,
+TIME_MS and so on). If the driver doesn't support it, it substitutes
+another and changes wType. The position resets to 0 on waveOutReset.
+
+@param hwo The output device.
+@param pmmt Receives the position.
+@param cbmmt sizeof(MMTIME).
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveOutGetVolume(hwo, pdwVolume)
+Gets the volume of a waveform output device.
+
+Returns the full 16-bit values last set with waveOutSetVolume, even if
+the hardware uses fewer bits. Check WAVECAPS_VOLUME and
+WAVECAPS_LRVOLUME in WAVEOUTCAPS.dwSupport (waveOutGetDevCaps) for
+volume support. Windows CE 1.0 and 2.0 support only the default output
+device and ignore hwo.
+
+@param hwo An open device handle, for that instance only, or a device
+       identifier, for all instances of the device. Ignored on Windows
+       CE 1.0 and 2.0: pass NULL. On Windows CE 1.0 it is a device
+       identifier rather than a handle.
+@param pdwVolume Receives the volume: left channel in the low word,
+       right in the high word, 0x0000 silent to 0xFFFF full. A mono
+       device uses only the low word.
+@return MMSYSERR_NOERROR, or MMSYSERR_INVALHANDLE, MMSYSERR_NODRIVER,
+       MMSYSERR_NOMEM or MMSYSERR_NOTSUPPORTED.
+
+## waveOutMessage(hwo, uMsg, dw1, dw2)
+Sends a message directly to a waveform output driver.
+
+@param hwo The output device, or a device identifier cast to HWAVEOUT.
+@param uMsg The driver message.
+@param dw1 Message parameter.
+@param dw2 Message parameter.
+@return The driver's result.
+
+## waveOutOpen(phwo, uDeviceID, pwfx, dwCallback, dwCallbackInstance, fdwOpen)
+Opens a waveform output device for playback.
+
+Play by preparing buffers with waveOutPrepareHeader and queuing them
+with waveOutWrite. Close with waveOutClose. A callback function runs in
+a driver context and should only do minimal work, such as signalling an
+event.
+
+@param phwo Receives the device handle. Can be NULL with
+       WAVE_FORMAT_QUERY.
+@param uDeviceID Device identifier from 0 to waveOutGetNumDevs() - 1,
+       or WAVE_MAPPER.
+@param pwfx The format of the data to play.
+@param dwCallback Window, function or event to notify of WOM_OPEN,
+       WOM_DONE and WOM_CLOSE, as given by fdwOpen, or 0.
+@param dwCallbackInstance Passed to a callback function.
+@param fdwOpen CALLBACK_NULL, CALLBACK_WINDOW, CALLBACK_FUNCTION and so
+       on, plus optionally WAVE_FORMAT_QUERY to test the format without
+       opening the device.
+@return MMSYSERR_NOERROR, or an error such as WAVERR_BADFORMAT,
+        MMSYSERR_ALLOCATED or MMSYSERR_BADDEVICEID.
+
+## waveOutPause(hwo)
+Pauses playback, keeping the current position.
+
+Resume with waveOutRestart.
+
+@param hwo The output device.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveOutPrepareHeader(hwo, pwh, cbwh)
+Prepares a buffer for playback.
+
+Set lpData, dwBufferLength and dwFlags before calling. Unprepare with
+waveOutUnprepareHeader before freeing the buffer.
+
+@param hwo The output device.
+@param pwh The buffer header.
+@param cbwh sizeof(WAVEHDR).
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_NOMEM.
+
+## waveOutReset(hwo)
+Stops playback, returns all queued buffers and resets the position to
+0.
+
+Returned buffers are marked WHDR_DONE and reported to the callback.
+Also clears a pause.
+
+@param hwo The output device.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveOutRestart(hwo)
+Resumes playback after waveOutPause.
+
+@param hwo The output device.
+@return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
+
+## waveOutSetPitch(hwo, dwPitch)
+Sets the pitch multiplier of a waveform output device.
+
+Changes pitch without changing speed or sample rate. Many devices don't
+support it.
+
+@param hwo The output device.
+@param dwPitch Pitch as 16.16 fixed point: 0x00010000 is normal,
+       0x00008000 is half.
+@return MMSYSERR_NOERROR, or MMSYSERR_NOTSUPPORTED or another error.
+
+## waveOutSetPlaybackRate(hwo, dwRate)
+Sets the playback rate multiplier of a waveform output device.
+
+Changes speed without changing the sample rate or pitch. Many devices
+don't support it.
+
+@param hwo The output device.
+@param dwRate Rate as 16.16 fixed point: 0x00010000 is normal,
+       0x00020000 is double speed.
+@return MMSYSERR_NOERROR, or MMSYSERR_NOTSUPPORTED or another error.
+
+## waveOutSetVolume(hwo, dwVolume)
+Sets the volume of a waveform output device.
+
+Volume is logarithmic. Most hardware uses only the top few bits of each
+value. Check WAVECAPS_VOLUME and WAVECAPS_LRVOLUME in
+WAVEOUTCAPS.dwSupport (waveOutGetDevCaps) for volume support. Windows
+CE 1.0 and 2.0 support only the default output device and ignore hwo.
+
+@param hwo An open device handle, for that instance only, or a device
+       identifier, for all instances of the device. Ignored on Windows
+       CE 1.0 and 2.0: pass NULL. On Windows CE 1.0 it is a device
+       identifier rather than a handle.
+@param dwVolume Left channel in the low word, right in the high word,
+       0x0000 silent to 0xFFFF full. A mono device uses only the low
+       word.
+@return MMSYSERR_NOERROR, or MMSYSERR_INVALHANDLE, MMSYSERR_NODRIVER,
+       MMSYSERR_NOMEM or MMSYSERR_NOTSUPPORTED.
+
+## waveOutUnprepareHeader(hwo, pwh, cbwh)
+Undoes waveOutPrepareHeader on a buffer.
+
+Call once the driver has finished with the buffer (WHDR_DONE set), and
+before freeing it.
+
+@param hwo The output device.
+@param pwh The buffer header.
+@param cbwh sizeof(WAVEHDR).
+@return MMSYSERR_NOERROR, or WAVERR_STILLPLAYING if the buffer is still
+        queued.
+
+## waveOutWrite(hwo, pwh, cbwh)
+Queues a prepared buffer for playback.
+
+Playback starts at once unless the device is paused. When the buffer
+has played, the driver sets WHDR_DONE and notifies the callback with
+WOM_DONE.
+
+@param hwo The output device.
+@param pwh The prepared buffer header.
+@param cbwh sizeof(WAVEHDR).
+@return MMSYSERR_NOERROR, or an error such as WAVERR_UNPREPARED or
+        MMSYSERR_INVALHANDLE.

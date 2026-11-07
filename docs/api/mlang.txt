@@ -1,0 +1,16 @@
+## LcidToRfc1766W(Locale, pszRfc1766, nChar)
+Converts a locale identifier to an RFC 1766 language tag, such as
+"en-us".
+
+@param Locale The locale.
+@param pszRfc1766 Receives the null-terminated tag.
+@param nChar Size of pszRfc1766 in characters.
+@return S_OK on success, or an error HRESULT.
+
+## Rfc1766ToLcidW(pLocale, pszRfc1766)
+Converts an RFC 1766 language tag, such as "en-us", to a locale
+identifier.
+
+@param pLocale Receives the locale.
+@param pszRfc1766 The tag.
+@return S_OK on success, or an error HRESULT.

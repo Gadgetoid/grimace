@@ -1,0 +1,245 @@
+## CLSIDFromProgID(lpszProgID, lpclsid)
+Looks up the class identifier registered for a programmatic identifier.
+
+@param lpszProgID Programmatic identifier to look up.
+@param lpclsid Receives the class identifier.
+@return S_OK, or a COM/registry error such as REGDB_E_CLASSNOTREG.
+
+## CLSIDFromString(lpsz, pclsid)
+Converts a textual class identifier to a CLSID.
+
+@param lpsz Null-terminated class identifier string.
+@param pclsid Receives the parsed CLSID.
+@return S_OK, or CO_E_CLASSSTRING for malformed text.
+
+## CoCreateInstance(rclsid, pUnkOuter, dwClsContext, riid, ppv)
+Creates one instance of a registered COM class and returns an interface.
+
+Windows CE supports only CLSCTX_INPROC_SERVER. Aggregation requires
+class support and a non-NULL controlling IUnknown.
+
+@param rclsid Class identifier to instantiate.
+@param pUnkOuter Controlling IUnknown for aggregation, or NULL.
+@param dwClsContext CLSCTX_INPROC_SERVER.
+@param riid Interface identifier to request.
+@param ppv Receives the requested interface pointer.
+@return S_OK, or a COM activation error.
+
+## CoFreeLibrary(hInst)
+Not supported by the Windows CE implementation.
+
+Use CoFreeUnusedLibraries to release automatically unloadable COM DLLs.
+
+@param hInst Library handle.
+
+## CoFreeUnusedLibraries()
+Unloads automatically loaded COM DLLs that are no longer in use.
+
+The loader asks each eligible DLL's DllCanUnloadNow export whether it
+can be unloaded. Call periodically or during idle processing.
+
+## CoGetClassObject(rclsid, dwClsContext, pvReserved, riid, ppv)
+Retrieves an interface on a registered COM class object.
+
+Use this when creating multiple objects through one class factory.
+Windows CE supports only CLSCTX_INPROC_SERVER; pvReserved must be NULL.
+Release the returned interface when finished.
+
+@param rclsid Class identifier of the class object.
+@param dwClsContext CLSCTX_INPROC_SERVER.
+@param pvReserved Reserved; set to NULL.
+@param riid Interface identifier, usually IID_IClassFactory.
+@param ppv Receives the requested interface pointer.
+@return S_OK, or a COM registration or interface error.
+
+## CoInitializeEx(pvReserved, dwCoInit)
+Initializes COM for the calling thread.
+
+Windows CE supports only COINIT_MULTITHREADED. Balance every successful
+call, including S_FALSE, with CoUninitialize on the same thread.
+
+@param pvReserved Reserved; set to NULL.
+@param dwCoInit COINIT_MULTITHREADED.
+@return S_OK on initialization, S_FALSE if already initialized, or an
+        error code.
+
+## CoLoadLibrary(lpszLibName, bAutoFree)
+Loads a COM server DLL into the calling process.
+
+Normally called internally by CoGetClassObject. bAutoFree is ignored;
+Windows CE tracks library references for COM unloading.
+
+@param lpszLibName DLL name.
+@param bAutoFree Ignored.
+@return Module handle, or NULL on failure.
+
+## CoTaskMemAlloc(cb)
+Allocates memory using the COM task allocator.
+
+Contents are uninitialized. Free the returned block with CoTaskMemFree.
+
+@param cb Allocation size in bytes.
+@return Allocated block, or NULL if allocation fails.
+
+## CoTaskMemFree(pv)
+Frees a block allocated by CoTaskMemAlloc or CoTaskMemRealloc.
+
+Passing NULL has no effect.
+
+@param pv Block to free, or NULL.
+
+## CoTaskMemRealloc(pv, cb)
+Changes the size of a COM task-memory allocation.
+
+The block may move; preserve the returned pointer. If pv is NULL, this
+allocates a new block. A zero size frees a non-NULL block and returns
+NULL.
+
+@param pv Existing task-memory block, or NULL.
+@param cb New size in bytes.
+@return Resized block, or NULL on allocation failure or when freeing.
+
+## CoUninitialize()
+Balances a successful CoInitializeEx call on the current thread.
+
+Call once for every successful initialization. Call during shutdown,
+after the thread has finished its COM work.
+
+## CreateBindCtx(reserved, ppbc)
+Creates a bind context for moniker binding.
+
+The returned IBindCtx holds references to objects bound through it.
+Release it promptly with its IUnknown::Release method.
+
+@param reserved Reserved; set to zero.
+@param ppbc Receives the IBindCtx interface pointer.
+@return S_OK, or E_OUTOFMEMORY.
+
+## CreateStreamOnHGlobal(hGlobal, fDeleteOnRelease, ppstm)
+Creates a readable and writable IStream backed by global memory.
+
+Pass NULL to allocate a new zero-length memory block. The stream's
+initial length is GlobalSize(hGlobal); use IStream::SetSize when the
+logical length matters. It does not support transactions or locking.
+
+@param hGlobal Movable, nondiscardable global-memory handle, or NULL.
+@param fDeleteOnRelease TRUE to free the memory handle when the stream
+       is released.
+@param ppstm Receives the IStream interface pointer.
+@return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
+
+## DllCanUnloadNow()
+Implemented by an in-process COM server, which exports it; COM calls it
+to ask whether the DLL can be unloaded.
+
+@return S_OK if no objects or locks are outstanding, S_FALSE if the DLL
+        is still in use.
+
+## DllGetClassObject(rclsid, riid, ppv)
+DLL entry point implemented by a COM server to expose its class factory.
+
+CoGetClassObject calls this export when loading an in-process server;
+clients should call CoGetClassObject instead of calling this directly.
+
+@param rclsid Class identifier requested.
+@param riid Interface identifier requested, usually IID_IClassFactory.
+@param ppv Receives the requested interface pointer, or NULL on error.
+@return S_OK, CLASS_E_CLASSNOTAVAILABLE, or a standard COM error.
+
+## GetClassFile(szFilename, pclsid)
+Finds the CLSID registered for a file extension.
+
+@param szFilename File name to examine.
+@param pclsid Receives the associated class identifier.
+@return S_OK, MK_E_CANTOPENFILE, MK_E_INVALIDEXTENSION, or a file
+        system error.
+
+## GetHGlobalFromStream(pstm, phglobal)
+Retrieves the current global-memory handle backing an HGLOBAL stream.
+
+The handle may differ from the one originally passed to
+CreateStreamOnHGlobal because the stream can reallocate its memory.
+
+@param pstm Stream created by CreateStreamOnHGlobal.
+@param phglobal Receives the current memory handle.
+@return S_OK, or E_INVALIDARG for an unsupported stream.
+
+## StgCreateDocfile(pwcsName, grfMode, reserved, ppstgOpen)
+Creates a compound-file storage object.
+
+Pass NULL for pwcsName to create a uniquely named temporary file; the
+caller must delete it unless STGM_DELETEONRELEASE is used. grfMode
+controls access, sharing and create/overwrite behavior.
+
+@param pwcsName File path, or NULL for a temporary compound file.
+@param grfMode STGM access and creation flags.
+@param reserved Reserved; set to zero.
+@param ppstgOpen Receives the IStorage interface pointer.
+@return S_OK, STG_* error, or a wrapped file-system error.
+
+## StgCreateDocfileOnILockBytes(plkbyt, grfMode, reserved, ppstgOpen)
+Creates a compound-file storage object over an ILockBytes implementation.
+
+@param plkbyt Underlying byte-array object.
+@param grfMode STGM access and creation flags.
+@param reserved Reserved; set to zero.
+@param ppstgOpen Receives the IStorage interface pointer.
+@return S_OK, STG_* error, or an ILockBytes error.
+
+## StgOpenStorage(pwcsName, pstgPriority, grfMode, snbExclude, reserved, ppstgOpen)
+Opens an existing root compound-file storage object.
+
+This opens root storage only; open nested storage through its parent
+IStorage. Opening with shared write access may require a costly snapshot.
+
+@param pwcsName Storage file path; ignored when pstgPriority is non-NULL.
+@param pstgPriority Previously opened priority storage, or NULL.
+@param grfMode STGM access and sharing flags.
+@param snbExclude Optional names to empty while opening.
+@param reserved Reserved; set to zero.
+@param ppstgOpen Receives the opened IStorage interface pointer.
+@return S_OK, STG_* error, or a wrapped file-system error.
+
+## StgOpenStorageOnILockBytes(plkbyt, pstgPriority, grfMode, snbExclude, reserved, ppstgOpen)
+Opens root compound-file storage backed by an ILockBytes object.
+
+The storage must have been created on that byte array. If priority
+storage is supplied, use the returned IStorage; the input priority
+storage becomes invalid.
+
+@param plkbyt Underlying byte-array object.
+@param pstgPriority Previously opened priority storage, or NULL.
+@param grfMode STGM access and sharing flags.
+@param snbExclude Optional names to empty while opening.
+@param reserved Reserved; set to zero.
+@param ppstgOpen Receives the opened IStorage interface pointer.
+@return S_OK, STG_* error, or an ILockBytes error.
+
+## StringFromCLSID(rclsid, lplpsz)
+Converts a CLSID to a printable string.
+
+Free the returned string with CoTaskMemFree.
+
+@param rclsid Class identifier to convert.
+@param lplpsz Receives the allocated null-terminated string.
+@return S_OK, or E_OUTOFMEMORY.
+
+## StringFromGUID2(rguid, lpsz, cbMax)
+Formats a GUID as a braced string.
+
+The buffer must hold the full string and terminator; a too-small buffer
+returns zero.
+
+@param rguid GUID to convert.
+@param lpsz Receives the null-terminated string.
+@param cbMax Buffer capacity in characters.
+@return Character count including the terminator, or zero if too small.
+
+## StringFromIID(rclsid, lplpsz)
+Converts an interface identifier to a printable string.
+
+Free the returned string with CoTaskMemFree.
+
+@param rclsid Interface identifier to convert.
+@param lplpsz Receives the allocated null-terminated string.
+@return S_OK, or E_OUTOFMEMORY.

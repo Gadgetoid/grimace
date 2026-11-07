@@ -1,0 +1,21 @@
+## CoInternetCreateSecurityManager(pSP, ppSM, dwReserved)
+Creates an Internet security manager.
+
+The service provider allows delegation. The reserved parameter must be
+zero.
+
+@param pSP Service provider for delegation.
+@param ppSM Receives the IInternetSecurityManager interface.
+@param dwReserved Reserved; set to zero.
+@return S_OK on success, or an HRESULT error.
+
+## CoInternetCreateZoneManager(pSP, ppZM, dwReserved)
+Creates an Internet zone manager.
+
+The service provider allows delegation. The reserved parameter must be
+zero.
+
+@param pSP Service provider for delegation.
+@param ppZM Receives the IInternetZoneManager interface.
+@param dwReserved Reserved; set to zero.
+@return S_OK on success, or an HRESULT error.

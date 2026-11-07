@@ -1,0 +1,355 @@
+## _itow(value, buffer, radix)
+Converts an integer to a null-terminated wide string in the given base.
+
+radix must be from 2 through 36. Negative values get a minus sign only
+in base 10.
+
+@param value Integer to convert.
+@param buffer Receives the result.
+@param radix Number base.
+@return buffer.
+
+## _ltow(value, buffer, radix)
+Converts a long integer to a null-terminated wide string in the given base.
+
+radix must be from 2 through 36. Negative values get a minus sign only
+in base 10.
+
+@param value Long integer to convert.
+@param buffer Receives the result.
+@param radix Number base.
+@return buffer.
+
+## _snwprintf(buffer, count, format)
+Formats wide-character output into a buffer, storing no more than count
+characters.
+
+The terminating null is appended unless count is zero or the formatted
+length is at least count. A truncated result returns a negative value.
+
+@param buffer Receives the formatted output.
+@param count Maximum number of wide characters to store.
+@param format Wide-character format-control string.
+@return Characters stored excluding the null terminator, or a negative
+        value if the output does not fit.
+
+## _ultow(value, buffer, radix)
+Converts an unsigned long to a null-terminated wide string in the given base.
+
+radix must be from 2 through 36. No overflow checking is performed.
+
+@param value Unsigned long to convert.
+@param buffer Receives the result.
+@param radix Number base.
+@return buffer.
+
+## _vsnwprintf(buffer, count, format, arguments)
+Formats wide-character output into a buffer using a va_list.
+
+@param buffer Receives the formatted output.
+@param count Maximum number of wide characters to write.
+@param format Wide-character format string.
+@param arguments Argument list.
+@return Number of wide characters written excluding the terminator, or
+        a negative value on error.
+
+## _wcsdup(string)
+Duplicates a string into newly allocated memory.
+
+Free the copy with free.
+
+@param string String to copy.
+@return The copy, or NULL if out of memory.
+
+## _wcsicmp(first, second)
+Compares two strings, ignoring case.
+
+Compares lowercase versions of the strings, so some characters can sort
+unexpectedly.
+
+@param first First null-terminated string.
+@param second Second null-terminated string.
+@return Negative, zero or positive as first sorts before, equal to or
+       after second.
+
+## _wcslwr(string)
+Converts uppercase characters in a string to lowercase in place.
+
+Conversion follows LC_CTYPE; other characters are unchanged.
+
+@param string Null-terminated string to convert.
+@return string.
+
+## _wcsnicmp(first, second, count)
+Compares up to count characters of two strings, ignoring case.
+
+Comparison stops at a null character and is not affected by locale.
+
+@param first First null-terminated string.
+@param second Second null-terminated string.
+@param count Maximum number of characters to compare.
+@return Negative, zero or positive as first sorts before, equal to or
+       after second.
+
+## _wcsnset(string, character, count)
+Sets up to count characters of a string to one character.
+
+Stops at the terminating null if that comes first.
+
+@param string String to change.
+@param character Character to fill with.
+@param count Maximum number of characters to set.
+@return string.
+
+## _wcsrev(string)
+Reverses a string in place.
+
+The terminating null stays at the end.
+
+@param string Null-terminated string to reverse.
+@return string.
+
+## _wcsset(string, character)
+Sets every character of a string to one character.
+
+The terminating null is kept.
+
+@param string String to change.
+@param character Character to fill with.
+@return string.
+
+## _wcsupr(string)
+Converts lowercase characters in a string to uppercase in place.
+
+Conversion follows LC_CTYPE; other characters are unchanged.
+
+@param string Null-terminated string to convert.
+@return string.
+
+## iswctype(character, type)
+Tests a wide character against a character class.
+
+The result is independent of locale.
+
+@param character Character to test.
+@param type Class mask: _UPPER, _LOWER, _DIGIT, _SPACE, _PUNCT,
+       _CONTROL, _BLANK, _HEX or _ALPHA, or a combination.
+@return Nonzero if the character is in the class, 0 if not.
+
+## swprintf(buffer, format)
+Formats values into a string buffer, printf style.
+
+Doesn't check the buffer size: use _snwprintf to limit it. On Windows
+CE 3.0 it supports the same conversions as printf, including floating
+point. Windows CE 1.0 and 2.0 coredll has no swprintf, so there it is a
+wrapper over wsprintfW in grimace::runtime, with the same formats and
+limits as wsprintfW: no floating point, and at most 1023 characters
+plus the terminating null.
+
+@param buffer Buffer that receives the output. Must be large enough.
+@param format Format string, followed by the values to format.
+@return Characters written, not counting the terminating null.
+
+## swscanf(string, format)
+Reads and converts formatted wide-character input from a string.
+
+Each optional argument must point to a value of the type required by its
+format specifier. Overlapping source and destination strings have
+undefined behavior.
+
+@param string Wide-character input string.
+@param format Wide-character format-control string.
+@return Number of fields assigned, 0 if none were assigned, or EOF if
+        an error or end of string occurs before the first conversion.
+
+## towlower(character)
+Converts a wide character to lowercase.
+
+@param character Character to convert.
+@return The lowercase character, or character unchanged if it has none.
+
+## towupper(character)
+Converts a wide character to uppercase.
+
+@param character Character to convert.
+@return The uppercase character, or character unchanged if it has none.
+
+## vswprintf(buffer, format, arguments)
+Formats values from a va_list into a string buffer, printf style.
+
+The va_list form of swprintf, with the same formats and limits. On
+Windows CE 1.0 and 2.0 it is a wrapper over wvsprintfW in
+grimace::runtime.
+
+@param buffer Buffer that receives the output. Must be large enough.
+@param format Format string.
+@param arguments Values to format, from va_start.
+@return Characters written, not counting the terminating null.
+
+## wcscat(destination, source)
+Appends one string to another, including the terminating null.
+
+Overlapping strings have undefined behaviour.
+
+@param destination Null-terminated string to append to. Must have room
+       for the result.
+@param source Null-terminated string to append.
+@return destination.
+
+## wcschr(string, character)
+Finds the first occurrence of a character in a string.
+
+@param string String to search.
+@param character Character to find. The terminating null can be found.
+@return Pointer to the character, or NULL if not found.
+
+## wcscmp(first, second)
+Compares two strings.
+
+The comparison is case-sensitive and is not affected by locale.
+
+@param first First null-terminated string.
+@param second Second null-terminated string.
+@return Negative, zero or positive as first sorts before, equal to or
+       after second.
+
+## wcscpy(destination, source)
+Copies a string, including the terminating null.
+
+Overlapping strings have undefined behaviour.
+
+@param destination Buffer that receives the copy. Must be large enough.
+@param source Null-terminated string to copy.
+@return destination.
+
+## wcscspn(string, characters)
+Returns the length of the initial part of a string that contains none
+of a set of characters.
+
+@param string String to scan.
+@param characters Characters to stop at.
+@return Index of the first character from the set, or the string's
+        length if there is none.
+
+## wcslen(string)
+Returns the length of a string in characters.
+
+@param string The string.
+@return Number of characters, not counting the terminating null.
+
+## wcsncat(destination, source, count)
+Appends up to count characters of one string to another.
+
+Stops sooner if source ends. Always adds a terminating null. Overlapping
+strings have undefined behaviour.
+
+@param destination Null-terminated string to append to. Must have room
+       for count + 1 more characters.
+@param source Null-terminated string to append.
+@param count Maximum number of characters to append.
+@return destination.
+
+## wcsncmp(first, second, count)
+Compares up to count characters of two strings.
+
+The comparison is case-sensitive, is not affected by locale, and stops
+when either string ends.
+
+@param first First string.
+@param second Second string.
+@param count Maximum number of characters to compare.
+@return Negative, zero or positive as first sorts before, equal to or
+       after second.
+
+## wcsncpy(destination, source, count)
+Copies up to count characters of a string.
+
+Pads with nulls if source is shorter than count. Doesn't add a
+terminating null if source is count characters or longer. Overlapping
+strings have undefined behaviour.
+
+@param destination Buffer that receives the copy.
+@param source String to copy.
+@param count Number of characters to write.
+@return destination.
+
+## wcspbrk(string, characters)
+Finds the first character in a string that is in a set.
+
+@param string String to search.
+@param characters Characters to look for.
+@return Pointer to the first match, or NULL if none.
+
+## wcsrchr(string, character)
+Finds the last occurrence of a character in a string.
+
+The terminating null is included in the search.
+
+@param string Null-terminated string to search.
+@param character Character to find.
+@return Pointer to the character, or NULL if not found.
+
+## wcsspn(string, characters)
+Returns the length of the initial part of a string made only of a set of
+characters.
+
+@param string String to scan.
+@param characters Characters allowed.
+@return Index of the first character not in the set.
+
+## wcsstr(string, substring)
+Finds the first occurrence of a substring.
+
+@param string Null-terminated string to search.
+@param substring Null-terminated string to find.
+@return Pointer to the match, or NULL if not found. An empty substring
+       matches at the start of string.
+
+## wcstod(string, end)
+Converts the initial numeric portion of a wide string to double precision.
+
+The radix character follows LC_NUMERIC. end receives the first
+unrecognized character, or string if no conversion is possible.
+
+@param string Null-terminated wide number string.
+@param end Receives the stopping character, or NULL if not needed.
+@return Converted value, signed HUGE_VAL on overflow, or 0 if no
+        conversion is possible or underflow occurs.
+
+## wcstok(string, delimiters)
+Splits a string into tokens.
+
+Pass the string on the first call and NULL on later calls to continue
+from where the last one stopped. Writes nulls into the string over the
+delimiters. Keeps static state between calls, so don't interleave
+tokenising separate strings.
+
+@param string String to tokenise, or NULL to continue.
+@param delimiters Characters that separate tokens. Can differ between
+       calls.
+@return The next token, or NULL when there are no more.
+
+## wcstol(string, end, base)
+Converts the initial portion of a wide string to a long integer in base.
+
+Parsing stops at the first invalid digit. end receives that position, or
+string if no conversion is possible. base must be 0 or from 2 through 36.
+Overflow or underflow sets errno to ERANGE.
+
+@param string Null-terminated wide number string.
+@param end Receives the stopping character, or NULL if not needed.
+@param base Number base; 0 selects it from the input prefix.
+@return Converted value, LONG_MAX or LONG_MIN on overflow, or 0 if no
+        conversion is possible.
+
+## wcstoul(string, end, base)
+Converts the initial portion of a wide string to an unsigned long in base.
+
+Parsing stops at the first invalid digit. end receives that position, or
+string if no conversion is possible. base must be 0 or from 2 through 36.
+
+@param string Null-terminated wide number string.
+@param end Receives the stopping character, or NULL if not needed.
+@param base Number base; 0 selects it from the input prefix.
+@return Converted value, ULONG_MAX on overflow, or 0 if no conversion
+        is possible.

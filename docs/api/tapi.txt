@@ -1,0 +1,1012 @@
+## lineAccept(hCall, lpsUserUserInfo, dwSize)
+Accepts an offered call before answering it.
+
+The application must own the call. User-user data is optional and must
+include its terminating null in `dwSize`; when the pointer is NULL,
+`dwSize` is ignored. The request completes asynchronously.
+
+@param hCall Offered call handle.
+@param lpsUserUserInfo Optional null-terminated user-user data.
+@param dwSize User-user data size in bytes, including the terminator.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineAddProvider(lpszProviderFilename, hwndOwner, lpdwPermanentProviderID)
+Installs a telephony service provider.
+
+TAPI calls the provider's TSPI_lineGetProcTable export to retrieve its
+function table; the provider need export only that entry point.
+
+@param lpszProviderFilename Path to the provider.
+@param hwndOwner Owner window for installation dialogs, or NULL.
+@param lpdwPermanentProviderID Receives the provider ID, or NULL.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineAddToConference(hConfCall, hConsultCall)
+Adds a call to a conference call.
+
+The application must own both calls. The conference call must be on
+hold or on hold pending conference; the added call must be connected,
+on hold, proceeding or ringing. The request completes asynchronously.
+
+@param hConfCall Conference call handle.
+@param hConsultCall Call to add to the conference.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineAnswer(hCall, lpsUserUserInfo, dwSize)
+Answers an offered call.
+
+The application must own the call. User-user data is optional and must
+include its terminating null in `dwSize`; leave `dwSize` unused when
+the data pointer is NULL. The request completes asynchronously.
+
+@param hCall Offered call handle.
+@param lpsUserUserInfo Optional null-terminated user-user data.
+@param dwSize User-user data size in bytes, including the terminator.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineBlindTransfer(hCall, lpszDestAddressW, dwCountryCode)
+Transfers a call to a destination without creating a consultation call.
+
+The application must own a connected call. On completion the call
+typically becomes idle; release its handle with lineDeallocateCall when
+no longer needed. The request completes asynchronously.
+
+@param hCall Call to transfer.
+@param lpszDestAddressW Destination address.
+@param dwCountryCode Country or region code, or zero for the provider default.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineClose(hLine)
+Closes an open line device and invalidates its handle.
+
+Close or drop calls owned on the line first. Closing can revoke
+ownership and drop calls that the application owns.
+
+@param hLine Open line handle to close.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineCompleteTransfer(hCall, hConsultCall, lphConfCall, dwTransferMode)
+Completes a transfer using a consultation call, or turns the calls into a conference.
+
+The application must own both calls. `hCall` must be on hold or
+on-hold-pending-transfer; `hConsultCall` must be connected, ringing,
+busy or proceeding. For LINETRANSFERMODE_CONFERENCE, `lphConfCall`
+receives the new conference handle. The request completes asynchronously.
+
+@param hCall Call to transfer.
+@param hConsultCall Call connected to the transfer destination.
+@param lphConfCall Receives the conference handle for conference mode.
+@param dwTransferMode LINETRANSFERMODE_TRANSFER or
+        LINETRANSFERMODE_CONFERENCE.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineConfigDialogEdit(dwDeviceID, hwndOwner, lpszDeviceClass, lpDeviceConfigIn, dwSize, lpDeviceConfigOut)
+Displays the provider's configuration dialog and returns edited settings.
+
+The opaque output can be passed to lineSetDevConfig. Set dwTotalSize in
+lpDeviceConfigOut before the call; on LINEERR_STRUCTURETOOSMALL,
+dwNeededSize reports the required size. Editing does not affect active
+connections by itself.
+
+@param dwDeviceID Line device to configure.
+@param hwndOwner Owner window for the dialog, or NULL.
+@param lpszDeviceClass Device class to configure, or NULL for the top level.
+@param lpDeviceConfigIn Existing opaque configuration data.
+@param dwSize Size of lpDeviceConfigIn in bytes.
+@param lpDeviceConfigOut Receives the edited configuration.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineDeallocateCall(hCall)
+Releases the application's handle and resources for a call.
+
+This does not change the physical call state. Deallocating the handle
+also stops further LINE_REPLY processing for that call.
+
+@param hCall Call handle to release.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineDevSpecific(hLine, dwAddressID, hCall, lpParams, dwSize)
+Passes an opaque, provider-specific request to a line device.
+
+There is no portable meaning for the parameter block or result. Use this
+only with documentation for the target provider; the CE TAPI reference
+does not support standard TAPI extensions.
+
+@param hLine Line handle.
+@param dwAddressID Address identifier, if required by the provider.
+@param hCall Related call handle, if required by the provider.
+@param lpParams Provider-specific input/output data.
+@param dwSize Size of the data block in bytes.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineDial(hCall, lpszDestAddress, dwCountryCode)
+Dials an address on an existing call.
+
+The application must own a call that is not idle or disconnected. A
+positive return is an asynchronous request ID; call progress is reported
+through TAPI messages. Dialing completes when the address is passed to
+the provider, not when the call connects.
+
+@param hCall Call on which to dial.
+@param lpszDestAddress Null-terminated dialable address.
+@param dwCountryCode Country or region code, or zero for the provider default.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineDrop(hCall, lpsUserUserInfo, dwSize)
+Drops or rejects a call owned by the application.
+
+Optionally sends user-to-user data during disconnect. The network is
+not guaranteed to deliver that data. Dropping a conference call can
+also affect its related calls.
+
+@param hCall Call to drop; it cannot be idle.
+@param lpsUserUserInfo Optional data to send, or NULL.
+@param dwSize Size of the user-user data in bytes.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineForward(hLine, bAllAddresses, dwAddressID, lpForwardList, dwNumRingsNoAnswer, lphConsultCall, lpCallParams)
+Sets call-forwarding instructions for one or all addresses on a line.
+
+The request completes asynchronously; success means the provider
+accepted the request, not that the switch has activated it. A
+LINE_ADDRESSSTATE forwarding message reports switch confirmation. Pass
+NULL for `lpForwardList` to cancel forwarding. `lphConsultCall` must be
+valid even when no consultation call is created.
+
+@param hLine Open line handle.
+@param bAllAddresses TRUE to forward all addresses; otherwise use `dwAddressID`.
+@param dwAddressID Address to forward, ignored when `bAllAddresses` is TRUE.
+@param lpForwardList Forwarding instructions, or NULL to cancel.
+@param dwNumRingsNoAnswer Rings before applying no-answer forwarding.
+@param lphConsultCall Receives a consultation call handle, or NULL if unused.
+@param lpCallParams Optional parameters for a consultation call.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineGenerateDigits(hCall, dwDigitMode, lpszDigits, dwDuration)
+Initiates in-band digit generation on a call.
+
+This is for signaling over an established call, not ordinary call
+dialing. Use one digit mode. A NULL digit string cancels active digit
+generation; completion is reported by a LINE_GENERATE message.
+
+@param hCall Call on which to generate digits.
+@param dwDigitMode Single LINEDIGITMODE_* value.
+@param lpszDigits Null-terminated digits, or NULL to cancel.
+@param dwDuration Digit and inter-digit duration in milliseconds, or zero
+        for the default.
+@return 0 when generation starts, or a negative LINEERR_* code.
+
+## lineGenerateTone(hCall, dwToneMode, dwDuration, dwNumTones, lpTones)
+Initiates in-band tone generation on a call.
+
+Set one LINETONEMODE_* value; zero cancels tone generation. For
+LINETONEMODE_CUSTOM, `lpTones` supplies the tone components. Completion
+is reported by a LINE_GENERATE message.
+
+@param hCall Call on which to generate the tone.
+@param dwToneMode Standard tone mode or LINETONEMODE_CUSTOM.
+@param dwDuration Tone duration in milliseconds, or zero for the default.
+@param dwNumTones Number of custom tone components.
+@param lpTones Custom tone components, ignored for standard tones.
+@return 0 when generation starts, or a negative LINEERR_* code.
+
+## lineGetAddressCaps(hLineApp, dwDeviceID, dwAddressID, dwAPIVersion, dwExtVersion, lpAddressCaps)
+Retrieves the capabilities of an address on a line device.
+
+Set `lpAddressCaps->dwTotalSize` to the buffer size before calling.
+Use the API version negotiated for the line; set `dwExtVersion` to zero
+when not using provider-specific extensions.
+
+@param hLineApp TAPI application handle.
+@param dwDeviceID Line device identifier.
+@param dwAddressID Address identifier on the line.
+@param dwAPIVersion Negotiated TAPI version.
+@param dwExtVersion Provider-specific extension version, or zero.
+@param lpAddressCaps Receives address capabilities.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetAddressID(hLine, lpdwAddressID, dwAddressMode, lpsAddress, dwSize)
+Maps a dialable address to its address identifier on a line.
+
+Use LINEADDRESSMODE_DIALABLEADDR. `dwSize` includes the terminating
+null character.
+
+@param hLine Open line handle.
+@param lpdwAddressID Receives the address identifier.
+@param dwAddressMode Must be LINEADDRESSMODE_DIALABLEADDR.
+@param lpsAddress Null-terminated dialable address.
+@param dwSize Address size in bytes, including the terminator.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetAddressStatus(hLine, dwAddressID, lpAddressStatus)
+Retrieves the current status of an address on a line.
+
+Set `lpAddressStatus->dwTotalSize` to the buffer size before calling.
+
+@param hLine Open line handle.
+@param dwAddressID Address identifier.
+@param lpAddressStatus Receives address status information.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetAppPriority(lpszAppFilename, dwMediaMode, lpExtensionID, dwRequestMode, lpExtensionName, lpdwPriority)
+Retrieves an application's position in the TAPI priority list.
+
+Specify one media mode, or zero to query MAKECALL request priority.
+The extension ID and extension-name output are ignored. Priority zero
+means the application is not in the stored priority list.
+
+@param lpszAppFilename Application executable name without a path.
+@param dwMediaMode One LINEMEDIAMODE_* value, or zero for request mode.
+@param lpExtensionID Ignored.
+@param dwRequestMode LINEREQUESTMODE_MAKECALL when `dwMediaMode` is zero.
+@param lpExtensionName Ignored.
+@param lpdwPriority Receives the priority; one is highest.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetCallInfo(hCall, lpCallInfo)
+Retrieves call-related information for a call in any state.
+
+Set `lpCallInfo->dwTotalSize` to the buffer size before calling. The
+structure contains primarily fixed information about the call.
+
+@param hCall Call to query.
+@param lpCallInfo Receives call information.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetCallStatus(hCall, lpCallStatus)
+Retrieves the current status of a call.
+
+Set `lpCallStatus->dwTotalSize` to the buffer size before calling.
+The result includes the call state, state-specific details and
+operations currently available for the call.
+
+@param hCall Call to query.
+@param lpCallStatus Receives call status information.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetConfRelatedCalls(hCall, lpCallList)
+Retrieves the calls belonging to the same conference as a call.
+
+Set `lpCallList->dwTotalSize` to the buffer size before calling. The
+first returned call is the conference call; remaining calls are
+participants. Newly returned handles have monitor privilege.
+
+@param hCall Conference call or a conferenced participant call.
+@param lpCallList Receives the conference and participant call handles.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetDevCaps(hLineApp, dwDeviceID, dwAPIVersion, dwExtVersion, lpLineDevCaps)
+Retrieves the capabilities of a line device.
+
+Negotiate the TAPI version first. dwExtVersion is unsupported and must
+be zero. Set dwTotalSize in lpLineDevCaps before calling; use the
+returned address count to query each address with lineGetAddressCaps.
+
+@param hLineApp TAPI application handle.
+@param dwDeviceID Line device identifier.
+@param dwAPIVersion Negotiated TAPI version.
+@param dwExtVersion Set to zero.
+@param lpLineDevCaps Receives capabilities; set dwTotalSize first.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetDevConfig(dwDeviceID, lpDeviceConfig, lpszDeviceClass)
+Retrieves the default opaque configuration for a line device.
+
+CE returns a default configuration. Treat the data as opaque: do not
+modify it, and use lineSetDevConfig to restore it. Set dwTotalSize in
+the VARSTRING before calling.
+
+@param dwDeviceID Line device identifier.
+@param lpDeviceConfig Receives configuration in a VARSTRING.
+@param lpszDeviceClass Device class whose configuration is requested.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetIcon(dwDeviceID, lpszDeviceClass, lphIcon)
+Retrieves a provider-supplied icon for a line device.
+
+Set `lpszDeviceClass` to NULL or an empty string for the line icon. The
+returned icon is owned by the provider; copy it if it must outlive the
+provider resource.
+
+@param dwDeviceID Line device identifier.
+@param lpszDeviceClass Optional device class name.
+@param lphIcon Receives the icon handle.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetID(hLine, dwAddressID, hCall, dwSelect, lpDeviceID, lpszDeviceClass)
+Retrieves a line, address or call's device identifier for a device class.
+
+Set exactly one LINECALLSELECT_* flag in dwSelect and initialize the
+output VARSTRING's dwTotalSize before calling.
+
+@param hLine Line handle when selecting a line or address.
+@param dwAddressID Address identifier when selecting an address.
+@param hCall Call handle when selecting a call.
+@param dwSelect LINECALLSELECT_LINE, LINECALLSELECT_ADDRESS or LINECALLSELECT_CALL.
+@param lpDeviceID Receives the device identifier in a VARSTRING.
+@param lpszDeviceClass Device class name.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetLineDevStatus(hLine, lpLineDevStatus)
+Retrieves the current status of a line device.
+
+Set `lpLineDevStatus->dwTotalSize` to the buffer size before calling.
+The result applies to the entire line; use lineGetAddressStatus for an
+individual address.
+
+@param hLine Open line handle.
+@param lpLineDevStatus Receives line status information.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetNewCalls(hLine, dwAddressID, dwSelect, lpCallList)
+Retrieves handles for calls the application does not already know about.
+
+Set `lpCallList->dwTotalSize` to the buffer size before calling. The
+application receives monitor privilege to newly returned calls.
+
+@param hLine Open line handle.
+@param dwAddressID Address identifier when selecting by address.
+@param dwSelect LINECALLSELECT_* scope for the requested calls.
+@param lpCallList Receives the selected call handles.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetNumRings(hLine, dwAddressID, lpdwNumRings)
+Retrieves the minimum ring count requested by applications for an address.
+
+The value is informational; it does not change the call state. If no
+application has set a ring count, the returned value is 0xFFFFFFFF.
+
+@param hLine Open line handle.
+@param dwAddressID Address identifier.
+@param lpdwNumRings Receives the minimum requested ring count.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetProviderList(dwAPIVersion, lpProviderList)
+Retrieves the telephony service providers installed in the system.
+
+Set `lpProviderList->dwTotalSize` to the buffer size before calling.
+
+@param dwAPIVersion Highest TAPI version supported by the application.
+@param lpProviderList Receives the provider list.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetStatusMessages(hLine, lpdwLineStates, lpdwAddressStates)
+Retrieves which line and address status notifications are enabled.
+
+Status reporting is disabled by default; lineSetStatusMessages selects
+which changes TAPI reports.
+
+@param hLine Line handle.
+@param lpdwLineStates Receives enabled LINEDEVSTATE_* flags.
+@param lpdwAddressStates Receives enabled LINEADDRESSSTATE_* flags.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineGetTranslateCaps(hLineApp, dwAPIVersion, lpTranslateCaps)
+Retrieves TAPI address-translation capabilities.
+
+Set `dwTotalSize` in the LINETRANSLATECAPS structure to its buffer size
+before calling. `hLineApp` may be NULL if lineInitialize has not been
+called. OEM support may vary.
+
+@param hLineApp Application handle from lineInitialize, or NULL.
+@param dwAPIVersion Highest TAPI version supported by the application.
+@param lpTranslateCaps Receives the translation capabilities.
+@return Zero on success, or a negative LINEERR_* value.
+
+## lineHandoff(hCall, lpszFileName, dwMediaMode)
+Hands ownership of a call to another application.
+
+Specify the target executable in `lpszFileName`, or set it to NULL to
+select the highest-priority owner for `dwMediaMode`. This does not change
+the call's media mode.
+
+@param hCall Call whose ownership to transfer.
+@param lpszFileName Target application name without a path, or NULL.
+@param dwMediaMode Single LINEMEDIAMODE_* value for indirect handoff.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineHold(hCall)
+Places a connected call on hold.
+
+This performs a hard hold, not a consultation call. The request
+completes asynchronously; retrieve the call with lineUnhold.
+
+@param hCall Call to place on hold. The application must own it.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineInitialize(lphLineApp, hInstance, lpfnCallback, lpszAppName, lpdwNumDevs)
+Initializes TAPI and registers the application's callback.
+
+The callback receives line, address and call events. TAPI messages go
+directly to this callback, so a UI thread must not block in GetMessage
+waiting for a TAPI message; use Sleep(50) followed by PeekMessage.
+Call lineShutdown when the application no longer uses TAPI.
+
+@param lphLineApp Receives the TAPI application handle.
+@param hInstance Application or DLL instance.
+@param lpfnCallback Callback for TAPI events.
+@param lpszAppName Optional displayable ASCII application name, or NULL.
+@param lpdwNumDevs Receives the number of line devices.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineMakeCall(hLine, lphCall, lpszDestAddress, dwCountryCode, lpCallParams)
+Starts a call on a line to a destination address.
+
+The request is asynchronous. The call handle is valid after a successful
+LINE_REPLY. With NULL lpCallParams, TAPI uses default voice-call
+parameters. The address may be NULL for a non-dialed line.
+
+@param hLine Open line on which to place the call.
+@param lphCall Receives the call handle after successful completion.
+@param lpszDestAddress Dialable destination, or NULL for a non-dialed address.
+@param dwCountryCode Destination country code, or 0 for the default.
+@param lpCallParams Optional call setup parameters, or NULL for defaults.
+@return Positive request ID for asynchronous completion, or a negative
+        LINEERR_* code.
+
+## lineMonitorDigits(hCall, dwDigitModes)
+Enables unbuffered detection of digits received on a call.
+
+Set `dwDigitModes` to zero to stop monitoring. Detected digits are
+reported through LINE_MONITORDIGITS messages; monitoring ends when the
+call becomes idle or its handle is deallocated.
+
+@param hCall Call to monitor; it cannot be idle or disconnected.
+@param dwDigitModes LINEDIGITMODE_* flags to monitor.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineMonitorMedia(hCall, dwMediaModes)
+Enables detection of media types on a call.
+
+Set `dwMediaModes` to zero to stop monitoring. Detection is reported
+through TAPI messages and does not change the call's media mode.
+
+@param hCall Call to monitor; it cannot be idle.
+@param dwMediaModes LINEMEDIAMODE_* flags to detect, or zero to cancel.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineNegotiateAPIVersion(hLineApp, dwDeviceID, dwAPILowVersion, dwAPIHighVersion, lpdwAPIVersion, lpExtensionID)
+Negotiates a TAPI version supported by the application and line device.
+
+The selected version is within the requested range. Extensions are not
+supported; set lpExtensionID to NULL.
+
+@param hLineApp TAPI application handle.
+@param dwDeviceID Line device identifier.
+@param dwAPILowVersion Lowest supported TAPI version.
+@param dwAPIHighVersion Highest supported TAPI version.
+@param lpdwAPIVersion Receives the negotiated version.
+@param lpExtensionID Ignored; set to NULL.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineOpen(hLineApp, dwDeviceID, lphLine, dwAPIVersion, dwExtVersion, dwCallbackInstance, dwPrivileges, dwMediaModes, lpCallParams)
+Opens a line device and returns a handle for later line operations.
+
+Set dwExtVersion to zero. dwPrivileges selects outgoing-call-only,
+monitor, owner, or monitor-and-owner access. dwMediaModes applies when
+owner privilege is requested.
+
+@param hLineApp TAPI application handle.
+@param dwDeviceID Line device identifier.
+@param lphLine Receives the open line handle.
+@param dwAPIVersion Version negotiated with lineNegotiateAPIVersion.
+@param dwExtVersion Set to zero.
+@param dwCallbackInstance Application data returned with TAPI messages.
+@param dwPrivileges LINECALLPRIVILEGE_* access for calls.
+@param dwMediaModes Media types the application can own.
+@param lpCallParams Optional call parameters.
+@return 0 on success, or a negative LINEERR_* code.
+
+## linePickup(hLine, dwAddressID, lphCall, lpszDestAddress, lpszGroupID)
+Picks up a call ringing at a destination address or within a group.
+
+The returned call handle is initially owned by the application. Set
+`lpszDestAddress` to NULL for group pickup; some providers require a
+group identifier. The request completes asynchronously.
+
+@param hLine Open line handle.
+@param dwAddressID Address identifier where pickup is initiated.
+@param lphCall Receives the call handle.
+@param lpszDestAddress Destination address, or NULL for group pickup.
+@param lpszGroupID Optional pickup-group identifier.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## linePrepareAddToConference(hConfCall, lphConsultCall, lpCallParams)
+Prepares a conference call to add another party.
+
+The application must own a connected conference call. The request
+typically places it on hold and creates a consultation call; add that
+call with lineAddToConference. Set `lpCallParams` to NULL for defaults.
+
+@param hConfCall Connected conference call handle.
+@param lphConsultCall Receives the consultation call handle.
+@param lpCallParams Optional consultation-call parameters.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineRedirect(hCall, lpszDestAddress, dwCountryCode)
+Redirects an offered call without answering it.
+
+The application must own the offered call. This redirects one call,
+unlike lineForward, which configures forwarding at an address. The
+request completes asynchronously.
+
+@param hCall Offered call to redirect.
+@param lpszDestAddress Destination dialable address.
+@param dwCountryCode Country or region code, or zero for the default.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineReleaseUserUserInfo(hCall)
+Allows newer received user-user information to replace the current call information.
+
+Call this after processing the current user-user data from LINECALLINFO.
+The application must own the call.
+
+@param hCall Call whose user-user information was processed.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineRemoveFromConference(hCall)
+Removes a participant call from its conference.
+
+The application must own a call in the conferenced state. Whether the
+participant remains usable after removal depends on the provider.
+The request completes asynchronously.
+
+@param hCall Conferenced participant call to remove.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineSendUserUserInfo(hCall, lpsUserUserInfo, dwSize)
+Sends user-user information to the remote party on a call.
+
+The application must own the call. Delivery depends on network support;
+the protocol discriminator, if required, is part of the data buffer.
+The request completes asynchronously.
+
+@param hCall Call on which to send the data.
+@param lpsUserUserInfo User-user data buffer.
+@param dwSize Data size in bytes.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineSetAppPriority(lpszAppFilename, dwMediaMode, lpExtensionID, dwRequestMode, lpszExtensionName, dwPriority)
+Sets an application's TAPI handoff priority.
+
+Specify one media mode, or zero for LINEREQUESTMODE_MAKECALL. The
+extension parameters are ignored. Set `dwPriority` to one for highest
+priority or zero to remove the application from the list.
+
+@param lpszAppFilename Application executable name without a path.
+@param dwMediaMode One LINEMEDIAMODE_* value, or zero for request mode.
+@param lpExtensionID Ignored.
+@param dwRequestMode LINEREQUESTMODE_MAKECALL when `dwMediaMode` is zero.
+@param lpszExtensionName Ignored.
+@param dwPriority One for highest priority, or zero to remove the entry.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetCallParams(hCall, dwBearerMode, dwMinRate, dwMaxRate, lpDialParams)
+Changes the bearer mode or data-rate limits of an existing call.
+
+The application must own a call that is not idle or disconnected. Set
+`dwMinRate` and `dwMaxRate` equal when an exact rate is required; pass
+NULL for `lpDialParams` to retain the current dialing parameters. The
+request completes asynchronously.
+
+@param hCall Call whose parameters to change.
+@param dwBearerMode Single LINEBEARERMODE_* value.
+@param dwMinRate Lowest acceptable data rate.
+@param dwMaxRate Highest acceptable data rate.
+@param lpDialParams Optional dialing parameters.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineSetCallPrivilege(hCall, dwCallPrivilege)
+Changes the application's privilege for a call.
+
+Set one LINECALLPRIVILEGE_* value. An application cannot give up sole
+ownership of an active call by switching directly to monitor privilege.
+
+@param hCall Call whose privilege to change.
+@param dwCallPrivilege LINECALLPRIVILEGE_OWNER or LINECALLPRIVILEGE_MONITOR.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetCurrentLocation(hLineApp, dwLocation)
+Sets the current location used for address translation.
+
+dwLocation must be a permanent location ID returned by
+lineGetTranslateCaps.
+
+@param hLineApp TAPI application handle, or NULL before initialization.
+@param dwLocation Permanent location ID.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetDevConfig(dwDeviceID, lpDeviceConfig, dwSize, lpszDeviceClass)
+Applies opaque line-device configuration obtained with lineGetDevConfig.
+
+Do not inspect or modify the configuration data. It is generally valid
+only for the device from which it was obtained.
+
+@param dwDeviceID Line device identifier.
+@param lpDeviceConfig Opaque configuration data.
+@param dwSize Configuration size in bytes.
+@param lpszDeviceClass Device class name.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetMediaMode(hCall, dwMediaModes)
+Sets the media type associated with a call.
+
+The call may be in any state. Set a single media mode, unless
+LINEMEDIAMODE_UNKNOWN is included to narrow the possible media types.
+
+@param hCall Call whose media type to change.
+@param dwMediaModes LINEMEDIAMODE_* value or permitted combination.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetNumRings(hLine, dwAddressID, dwNumRings)
+Sets the ring count this application requests before a call is answered.
+
+This is informational and does not change call state. lineGetNumRings
+returns the minimum count requested by all applications.
+
+@param hLine Open line handle.
+@param dwAddressID Address identifier.
+@param dwNumRings Requested ring count.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetStatusMessages(hLine, dwLineStates, dwAddressStates)
+Selects line and address status changes reported to the application.
+
+Reporting is disabled by default. LINEDEVSTATE_REINIT notifications
+cannot be masked.
+
+@param hLine Line device handle.
+@param dwLineStates LINEDEVSTATE_* notifications to enable.
+@param dwAddressStates LINEADDRESSSTATE_* notifications to enable.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetTerminal(hLine, dwAddressID, hCall, dwSelect, dwTerminalModes, dwTerminalID, bEnable)
+Routes low-level line events to or from a terminal device.
+
+`dwSelect` chooses line, address or call scope. The terminal ID and
+supported modes are provider-defined; check lineGetDevCaps first. The
+request completes asynchronously.
+
+@param hLine Open line handle.
+@param dwAddressID Address identifier when selecting an address.
+@param hCall Call handle when selecting a call.
+@param dwSelect LINECALLSELECT_* scope.
+@param dwTerminalModes LINETERMMODE_* event classes.
+@param dwTerminalID Provider-defined terminal identifier.
+@param bEnable TRUE to route events, FALSE to disable routing.
+@return Positive request ID, or a negative LINEERR_* code.## lineHandoff(hCall, lpszFileName, dwMediaMode)
+Hands ownership of a call to another application.
+
+Specify the target executable in `lpszFileName`, or set it to NULL to
+select the highest-priority owner for `dwMediaMode`. This does not change
+the call's media mode.
+
+@param hCall Call whose ownership to transfer.
+@param lpszFileName Target application name without a path, or NULL.
+@param dwMediaMode Single LINEMEDIAMODE_* value for indirect handoff.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetTollList(hLineApp, dwDeviceID, lpszAddressIn, dwTollListOption)
+Manipulates the TAPI toll list for a line device.
+
+Use the LINETOLLLISTOPTION_* operation. The archived reference does not
+describe the address string's exact format.
+
+@param hLineApp TAPI application handle, or zero before initialization.
+@param dwDeviceID Line device whose dialing rules apply.
+@param lpszAddressIn Address for the toll-list operation.
+@param dwTollListOption LINETOLLLISTOPTION_* operation.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSetupConference(hCall, hLine, lphConfCall, lphConsultCall, dwNumParties, lpCallParams)
+Starts a conference and creates a consultation call for another party.
+
+Some providers require an existing connected call in `hCall`; others
+allow `hCall` to be NULL and use `hLine`. On success, the output
+parameters receive the conference and consultation handles. The request
+completes asynchronously.
+
+@param hCall Existing connected call, or NULL when starting on a line.
+@param hLine Line handle used when `hCall` is NULL.
+@param lphConfCall Receives the conference call handle.
+@param lphConsultCall Receives the consultation call handle.
+@param dwNumParties Expected number of conference parties.
+@param lpCallParams Optional consultation-call parameters.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineSetupTransfer(hCall, lphConsultCall, lpCallParams)
+Starts a consultation transfer for a connected call.
+
+The call is typically placed on hold and a consultation call is created.
+Complete the transfer with lineCompleteTransfer; pass NULL for default
+consultation-call parameters. The request completes asynchronously.
+
+@param hCall Connected call to transfer; the application must own it.
+@param lphConsultCall Receives the consultation call handle.
+@param lpCallParams Optional consultation-call parameters.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineShutdown(hLineApp)
+Shuts down an application's TAPI session.
+
+The call handles are deleted, open lines are closed and outstanding
+asynchronous requests are canceled. Close lines explicitly first when
+practical.
+
+@param hLineApp TAPI application handle.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineSwapHold(hActiveCall, hHeldCall)
+Swaps an active call with a call on consultation hold.
+
+The application must own both calls. `hActiveCall` must be connected;
+`hHeldCall` must be on hold, on-hold-pending-transfer or
+on-hold-pending-conference. The request completes asynchronously.
+
+@param hActiveCall Connected call.
+@param hHeldCall Held consultation call.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## lineTranslateAddress(hLineApp, dwDeviceID, dwAPIVersion, lpszAddressIn, dwCard, dwTranslateOptions, lpTranslateOutput)
+Translates an address into a dialable string for a line device.
+
+dwCard is unsupported and must be zero. Set dwTotalSize in the output
+LINETRANSLATEOUTPUT before calling. FORCELOCAL can override a toll-list
+classification when translating a local number.
+
+@param hLineApp TAPI application handle, or NULL before initialization.
+@param dwDeviceID Line device identifier.
+@param dwAPIVersion Highest TAPI version supported by the application.
+@param lpszAddressIn Canonical address or dialable digits.
+@param dwCard Unsupported; set to zero.
+@param dwTranslateOptions LINETRANSLATEOPTION_* flags.
+@param lpTranslateOutput Receives the translated address; set dwTotalSize first.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineTranslateDialog(hLineApp, dwDeviceID, dwAPIVersion, hwndOwner, lpszAddressIn)
+Displays a dialog for editing location and calling-card settings.
+
+After the dialog closes, call lineGetTranslateCaps to retrieve changes
+and lineTranslateAddress to translate numbers with the new settings.
+
+@param hLineApp TAPI application handle.
+@param dwDeviceID Line device identifier.
+@param dwAPIVersion Highest TAPI version supported by the application.
+@param hwndOwner Owner window for the dialog, or NULL.
+@param lpszAddressIn Optional canonical number to preview, or NULL.
+@return 0 on success, or a negative LINEERR_* code.
+
+## lineUnhold(hCall)
+Retrieves a call from hold.
+
+The application must own a call that is on hold,
+on-hold-pending-transfer or on-hold-pending-conference. The request
+completes asynchronously.
+
+@param hCall Call to retrieve.
+@return Positive request ID, or a negative LINEERR_* code.
+
+## phoneClose(hPhone)
+Closes an open phone device and invalidates its handle.
+
+@param hPhone Open phone handle.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneConfigDialog(dwDeviceID, hwndOwner, lpszDeviceClass)
+Displays the provider's configuration dialog for a phone device.
+
+Set `lpszDeviceClass` to NULL or an empty string for the top-level
+configuration page.
+
+@param dwDeviceID Phone device identifier.
+@param hwndOwner Owner window for the dialog, or NULL.
+@param lpszDeviceClass Optional device class to configure.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneDevSpecific(hPhone, lpParams, dwSize)
+Passes an opaque, provider-specific request to a phone device.
+
+There is no portable meaning for the parameter block or result. Use this
+only with documentation for the target provider.
+
+@param hPhone Phone handle.
+@param lpParams Provider-specific input/output data.
+@param dwSize Data block size, in bytes.
+@return Positive request ID, or a negative PHONEERR_* code.
+
+## phoneGetDevCaps(hPhoneApp, dwDeviceID, dwAPIVersion, dwExtVersion, lpPhoneCaps)
+Retrieves the capabilities of a phone device.
+
+Negotiate the API version first. Set `lpPhoneCaps->dwTotalSize` to the
+buffer size before calling. Use zero for `dwExtVersion` when not using
+provider-specific extensions.
+
+@param hPhoneApp TAPI phone-application handle.
+@param dwDeviceID Phone device identifier.
+@param dwAPIVersion Negotiated API version.
+@param dwExtVersion Extension version, or zero.
+@param lpPhoneCaps Receives phone capabilities.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneGetGain(hPhone, dwHookSwitchDev, lpdwGain)
+Retrieves the microphone gain for a phone hookswitch device.
+
+Specify exactly one PHONEHOOKSWITCHDEV_* device. Gain ranges from zero
+(silence) to 0xFFFF (maximum); the provider determines the granularity.
+
+@param hPhone Open phone handle.
+@param dwHookSwitchDev Hookswitch device whose microphone gain to query.
+@param lpdwGain Receives the gain value.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneGetHookSwitch(hPhone, lpdwHookSwitchDevs)
+Retrieves which phone hookswitch devices are off-hook.
+
+The returned bit flags identify the handset, speaker or headset devices
+that are off-hook.
+
+@param hPhone Open phone handle.
+@param lpdwHookSwitchDevs Receives the off-hook device flags.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneGetIcon(dwDeviceID, lpszDeviceClass, lphIcon)
+Retrieves a provider-supplied icon for a phone device.
+
+Set `lpszDeviceClass` to NULL or an empty string for the phone icon.
+The returned icon is owned by the provider; copy it if it must outlive
+the provider resource.
+
+@param dwDeviceID Phone device identifier.
+@param lpszDeviceClass Optional device class name.
+@param lphIcon Receives the icon handle.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneGetID(hPhone, lpDeviceID, lpszDeviceClass)
+Retrieves a phone device identifier for a device class.
+
+Set `lpDeviceID->dwTotalSize` to the buffer size before calling. The
+identifier format depends on the requested device class.
+
+@param hPhone Open phone handle.
+@param lpDeviceID Receives the identifier in a VARSTRING.
+@param lpszDeviceClass Device class whose identifier is requested.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneGetRing(hPhone, lpdwRingMode, lpdwVolume)
+Retrieves the current ringer mode and volume.
+
+Ring mode zero indicates that the phone is not ringing. Volume ranges
+from zero (silence) to 0xFFFF (maximum); the provider determines the
+granularity.
+
+@param hPhone Open phone handle.
+@param lpdwRingMode Receives the ring mode.
+@param lpdwVolume Receives the ringer volume.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneGetStatus(hPhone, lpPhoneStatus)
+Retrieves the current status of an open phone device.
+
+Set `lpPhoneStatus->dwTotalSize` to the buffer size before calling.
+The status includes hookswitch devices, ringer, volume, display and lamps.
+
+@param hPhone Open phone handle.
+@param lpPhoneStatus Receives the phone status.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneGetStatusMessages(hPhone, lpdwPhoneStates, lpdwButtonModes, lpdwButtonStates)
+Retrieves which phone and button events are enabled for notification.
+
+@param hPhone Open phone handle.
+@param lpdwPhoneStates Receives enabled PHONESTATE_* flags.
+@param lpdwButtonModes Receives enabled PHONEBUTTONMODE_* flags.
+@param lpdwButtonStates Receives enabled PHONEBUTTONSTATE_* flags.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneGetVolume(hPhone, dwHookSwitchDev, lpdwVolume)
+Retrieves the speaker volume for a phone hookswitch device.
+
+Volume ranges from zero (silence) to 0xFFFF (maximum); the provider
+determines the granularity.
+
+@param hPhone Open phone handle.
+@param dwHookSwitchDev Hookswitch device to query.
+@param lpdwVolume Receives the volume level.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneNegotiateAPIVersion(hPhoneApp, dwDeviceID, dwAPILowVersion, dwAPIHighVersion, lpdwAPIVersion, lpExtensionID)
+Negotiates a TAPI API version supported by a phone device.
+
+The selected version is within the requested range. The extension
+identifier is returned for compatibility; CE TAPI extensions are not
+supported by the current SDK documentation.
+
+@param hPhoneApp TAPI phone-application handle.
+@param dwDeviceID Phone device identifier.
+@param dwAPILowVersion Lowest API version supported by the application.
+@param dwAPIHighVersion Highest API version supported by the application.
+@param lpdwAPIVersion Receives the negotiated version.
+@param lpExtensionID Receives the device extension identifier.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneOpen(hPhoneApp, dwDeviceID, lphPhone, dwAPIVersion, dwExtVersion, dwCallbackInstance, dwPrivilege)
+Opens a phone device for control or status monitoring.
+
+Only one application can open a device with owner privilege at a time;
+multiple applications can monitor it. Set `dwExtVersion` to zero.
+
+@param hPhoneApp TAPI phone-application handle.
+@param dwDeviceID Phone device identifier.
+@param lphPhone Receives the open phone handle.
+@param dwAPIVersion Negotiated API version.
+@param dwExtVersion Set to zero.
+@param dwCallbackInstance Application value passed with phone messages.
+@param dwPrivilege PHONEPRIVILEGE_OWNER or PHONEPRIVILEGE_MONITOR.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneSetGain(hPhone, dwHookSwitchDev, dwGain)
+Sets the microphone gain for a phone hookswitch device.
+
+Specify exactly one PHONEHOOKSWITCHDEV_* device. Gain ranges from zero
+(silence) to 0xFFFF (maximum); out-of-range values are clamped and the
+provider determines the granularity. The request completes asynchronously.
+
+@param hPhone Open phone handle.
+@param dwHookSwitchDev Hookswitch device whose microphone gain to set.
+@param dwGain Gain value from zero to 0xFFFF.
+@return Positive request ID, or a negative PHONEERR_* code.
+
+## phoneSetHookSwitch(hPhone, dwHookSwitchDevs, dwHookSwitchMode)
+Sets the hookswitch mode for one or more phone devices.
+
+The application must own the phone. One hookswitch mode is applied to
+all selected devices; changes are reported in PHONE_STATE messages.
+
+@param hPhone Open phone handle.
+@param dwHookSwitchDevs PHONEHOOKSWITCHDEV_* device flags.
+@param dwHookSwitchMode PHONEHOOKSWITCHMODE_* value.
+@return Positive request ID, or a negative PHONEERR_* code.
+
+## phoneSetRing(hPhone, dwRingMode, dwVolume)
+Sets the ringer mode and volume for an open phone device.
+
+Ring mode must be supported by the device; query `dwNumRingModes` in
+PHONECAPS. Volume ranges from zero (silence) to 0xFFFF (maximum); the
+provider determines the pattern and granularity.
+
+@param hPhone Open phone handle; the application must own it.
+@param dwRingMode Supported ring mode, or zero for silence where allowed.
+@param dwVolume Ringer volume from zero to 0xFFFF.
+@return Positive request ID, or a negative PHONEERR_* code.
+
+## phoneSetStatusMessages(hPhone, dwPhoneStates, dwButtonModes, dwButtonStates)
+Selects phone and button events reported to the application.
+
+All phone status messages are disabled by default. If button modes are
+selected, at least one button state must also be selected.
+
+@param hPhone Open phone handle.
+@param dwPhoneStates PHONESTATE_* events to enable.
+@param dwButtonModes PHONEBUTTONMODE_* events to enable.
+@param dwButtonStates PHONEBUTTONSTATE_* events to enable.
+@return 0 on success, or a negative PHONEERR_* code.
+
+## phoneSetVolume(hPhone, dwHookSwitchDev, dwVolume)
+Sets the speaker volume for a phone hookswitch device.
+
+The application must own the phone. Volume ranges from zero (silence)
+to 0xFFFF (maximum); out-of-range values are clamped and the provider
+determines the granularity. The request completes asynchronously.
+
+@param hPhone Open phone handle.
+@param dwHookSwitchDev Hookswitch device whose speaker volume to set.
+@param dwVolume Volume level from zero to 0xFFFF.
+@return Positive request ID, or a negative PHONEERR_* code.
+
+## phoneShutdown(hPhoneApp)
+Shuts down a phone application's TAPI session.
+
+Any phone devices still open are closed.
+
+@param hPhoneApp TAPI phone-application handle.
+@return 0 on success, or a negative PHONEERR_* code.

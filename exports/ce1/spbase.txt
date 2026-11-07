@@ -1,0 +1,5 @@
+AddUserRandomBytes
+DecryptCiphertext
+DeleteSecureConnection
+EncryptPlaintext
+InitializeSecureConnection

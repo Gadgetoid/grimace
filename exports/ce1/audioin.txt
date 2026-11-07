@@ -1,0 +1,14 @@
+waveInAddBuffer
+waveInClose
+waveInGetDevCaps
+waveInGetErrorText
+waveInGetID
+waveInGetNumDevs
+waveInMessage
+waveInOpen
+waveInPrepareHeader
+waveInProc
+waveInReset
+waveInStart
+waveInStop
+waveInUnprepareHeader

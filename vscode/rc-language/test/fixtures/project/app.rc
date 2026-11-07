@@ -1,0 +1,9 @@
+#include "resource.h"
+#include <outer.h>
+
+IDI_APP ICON "app.ico"
+
+STRINGTABLE
+BEGIN
+    IDS_NAME "Fixture"
+END

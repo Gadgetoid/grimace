@@ -1,0 +1,2300 @@
+## AdjustWindowRectEx(lpRect, dwStyle, bMenu, dwExStyle)
+Converts a desired client rectangle into the window rectangle that
+holds it.
+
+Pass the result's size to CreateWindowExW to get a window with that
+client area.
+
+@param lpRect In: the client rectangle. Out: the window rectangle.
+@param dwStyle The window's WS_* styles.
+@param bMenu Must be FALSE: Windows CE has no menu bars.
+@param dwExStyle The window's WS_EX_* extended styles.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## AppendMenuW(hMenu, fuFlags, idNewItem, lpszNewItem)
+Adds an item to the end of a menu.
+
+Call DrawMenuBar after changing a menu. MF_BITMAP, MF_DISABLED and
+MFS_GRAYED are unsupported; use MF_GRAYED instead.
+
+@param hMenu Menu bar, drop-down menu, submenu or shortcut menu, from
+       CreateMenu or CreatePopupMenu.
+@param fuFlags MF_STRING, MF_OWNERDRAW or MF_SEPARATOR, with MF_CHECKED or
+       MF_UNCHECKED, MF_ENABLED or MF_GRAYED, MF_POPUP for a submenu,
+       and MF_MENUBREAK or MF_MENUBARBREAK. On Windows CE 1.0 an
+       MF_POPUP item can't go in a pop-up menu (no cascading menus),
+       and MF_MENUBREAK and MF_MENUBARBREAK aren't supported; later
+       versions allow MF_POPUP items in a menu bar or another pop-up
+       menu.
+@param idNewItem Command identifier, or with MF_POPUP the submenu's
+       HMENU.
+@param lpszNewItem Text for MF_STRING, or application data for
+       MF_OWNERDRAW. Ignored for MF_SEPARATOR.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## BeginDeferWindowPos(nNumWindows)
+Allocates a structure for batching window-position changes.
+
+Add each change with DeferWindowPos and apply the batch with
+EndDeferWindowPos. If any window entry specifies SWP_HIDEWINDOW or
+SWP_SHOWWINDOW, none of the windows are repositioned. If the structure
+must grow beyond nNumWindows and memory runs out, the whole sequence
+fails, so pass the maximum needed to detect failure early. Available
+from Windows CE 2.10.
+
+@param nNumWindows Initial number of windows to position; the structure
+       may grow as needed.
+@return Position-batch handle, or NULL on failure (see GetLastError).
+
+## BeginPaint(hwnd, lpPaint)
+Starts painting a window in response to WM_PAINT.
+
+Clips the DC to the update region, sends WM_ERASEBKGND if the
+background needs erasing and hides the caret. Only call it when
+handling WM_PAINT, and always pair it with EndPaint.
+
+@param hwnd The window.
+@param lpPaint Receives the DC, update rectangle and erase flag.
+@return A display DC for the window, or NULL if none is available.
+
+## BringWindowToTop(hWnd)
+Moves a window to the top of the z-order and activates it, or its
+top-level parent if it is a child.
+
+Doesn't make the window topmost. To take the foreground from another
+application, use SetForegroundWindow.
+
+@param hWnd The window.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## CallNextHookEx(hhk, nCode, wParam, lParam)
+Passes hook information to the next procedure in the current hook chain.
+
+Call this unless the hook must prevent later hooks from receiving the
+notification. The `hhk` parameter is ignored.
+
+@param hhk Ignored hook handle.
+@param nCode Hook code.
+@param wParam Hook-specific value.
+@param lParam Hook-specific value.
+@return Value returned by the next hook procedure.
+
+## CallWindowProcW(wndprcPrev, hwnd, uMsg, wParam, lParam)
+Calls a window procedure with a message.
+
+Used when subclassing: pass messages you don't handle to the procedure
+that SetWindowLongW with GWL_WNDPROC returned.
+
+@param wndprcPrev The previous window procedure.
+@param hwnd The window the message is for.
+@param uMsg The message.
+@param wParam Message-specific.
+@param lParam Message-specific.
+@return The procedure's result, which depends on the message.
+
+## CharLowerBuffW(lpsz, cchLength)
+Converts a buffer of characters to lowercase in place.
+
+Processes exactly cchLength characters, including any nulls.
+
+@param lpsz The characters.
+@param cchLength Number of characters to convert.
+@return The number of characters processed.
+
+## CharLowerW(lpsz)
+Converts a null-terminated string, or a single character, to lowercase.
+
+Strings are converted in place.
+
+@param lpsz The string, or a single character in the low word with the
+       high word zero, e.g. (LPWSTR)(DWORD)ch.
+@return lpsz for a string, or the converted character in the low word.
+
+## CharNextW(lpsz)
+Returns a pointer to the next character in a string.
+
+@param lpsz Pointer to a character in a null-terminated string.
+@return The next character, or lpsz itself if it points to the
+        terminator.
+
+## CharPrevW(lpszStart, lpszCurrent)
+Returns a pointer to the previous character in a string.
+
+@param lpszStart Start of the string.
+@param lpszCurrent Pointer to a character in the string.
+@return The previous character, or lpszStart if lpszCurrent equals it.
+
+## CharUpperBuffW(lpsz, cchLength)
+Converts a buffer of characters to uppercase in place.
+
+Processes exactly cchLength characters, including any nulls.
+
+@param lpsz The characters.
+@param cchLength Number of characters to convert.
+@return The number of characters processed.
+
+## CharUpperW(lpsz)
+Converts a null-terminated string, or a single character, to uppercase.
+
+Strings are converted in place.
+
+@param lpsz The string, or a single character in the low word with the
+       high word zero, e.g. (LPWSTR)(DWORD)ch.
+@return lpsz for a string, or the converted character in the low word.
+
+## CheckMenuItem(hmenu, uIDCheckItem, uCheck)
+Checks or unchecks a menu item.
+
+A submenu item must be identified by position.
+
+@param hmenu The menu.
+@param uIDCheckItem Command identifier or zero-based position, as
+       uCheck says.
+@param uCheck MF_BYCOMMAND (default) or MF_BYPOSITION, with MF_CHECKED or
+       MF_UNCHECKED.
+@return The previous state (MF_CHECKED or MF_UNCHECKED), or 0xFFFFFFFF
+        if the item doesn't exist.
+
+## CheckMenuRadioItem(hmenu, idFirst, idLast, idCheck, uFlags)
+Checks one item in a range of menu items as a radio item and unchecks
+the rest.
+
+Sets MFT_RADIOCHECK and MFS_CHECKED on the chosen item, so it shows a
+bullet instead of a check mark, and clears both on the others.
+
+@param hmenu The menu holding the group.
+@param idFirst First item in the group.
+@param idLast Last item in the group.
+@param idCheck Item to check.
+@param uFlags MF_BYCOMMAND if the ids are command identifiers, or
+       MF_BYPOSITION if they are zero-based positions.
+@return Nonzero on success, or 0 on failure.
+
+## CheckRadioButton(hDlg, nIDFirstButton, nIDLastButton, nIDCheckButton)
+Checks one radio button in a range of dialog controls and clears the
+rest.
+
+Sends BM_SETCHECK to every button in the range.
+
+@param hDlg The dialog box.
+@param nIDFirstButton Control identifier of the first button in the
+       group.
+@param nIDLastButton Control identifier of the last button in the group.
+@param nIDCheckButton Control identifier of the button to check.
+@return Nonzero on success, or 0 if hDlg isn't a valid dialog box.
+
+## ChildWindowFromPoint(hWndParent, Point)
+Returns the child window that contains a point.
+
+Hidden and disabled children count. If children overlap, the first in
+z-order wins.
+
+@param hWndParent The parent window.
+@param Point The point, in the parent's client coordinates.
+@return The child, hWndParent if the point is in the parent but no
+        child, or NULL if the point is outside the parent.
+
+## ClientToScreen(hWnd, lpPoint)
+Converts a point from a window's client coordinates to screen
+coordinates.
+
+@param hWnd The window.
+@param lpPoint In: client coordinates. Out: screen coordinates.
+@return Nonzero on success, or 0 on failure.
+
+## ClipCursor(lpRect)
+Restricts cursor movement to a screen-coordinate rectangle.
+
+Later cursor positions, from SetCursorPos or the mouse, are adjusted to
+stay inside it. The cursor is shared, so release it before yielding
+control to another application.
+
+@param lpRect Restriction rectangle, or NULL to unclip the cursor.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## CloseClipboard()
+Closes the clipboard so other windows can use it.
+
+Call after OpenClipboard once you have finished reading or writing.
+Don't put data on the clipboard after closing it.
+
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## CopyRect(lprcDst, lprcSrc)
+Copies one rectangle to another.
+
+@param lprcDst Receives the copy.
+@param lprcSrc The rectangle to copy.
+@return Nonzero on success, or 0 on failure.
+
+## CountClipboardFormats()
+Returns the number of data formats on the clipboard.
+
+@return The number of formats, or 0 if none or on failure (see
+        GetLastError).
+
+## CreateAcceleratorTableW(lpaccel, cEntries)
+Creates an accelerator table from an array of ACCEL structures.
+
+Use with TranslateAcceleratorW. Free with DestroyAcceleratorTable before
+the application exits.
+
+@param lpaccel The accelerators.
+@param cEntries Number of entries in lpaccel.
+@return The table, or NULL on failure.
+
+## CreateCaret(hWnd, hBitmap, nWidth, nHeight)
+Creates the system caret and gives it to a window.
+
+Replaces any existing caret, whoever owns it. The caret starts hidden:
+call ShowCaret. Create it on gaining focus (WM_SETFOCUS) and destroy it
+with DestroyCaret on losing it (WM_KILLFOCUS). Windows CE carets are
+always solid.
+
+@param hWnd Window to own the caret.
+@param hBitmap Not supported. Must be NULL.
+@param nWidth Width in pixels, or 0 for the window border width
+       (SM_CXBORDER).
+@param nHeight Height in pixels, or 0 for the window border height
+       (SM_CYBORDER).
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## CreateDialogIndirectParamW(hInstance, lpTemplate, hWndOwner, lpDialogFunc, lParamInit)
+Creates a modeless dialog box from a template in memory.
+
+Sends WM_INITDIALOG with lParamInit before returning, and shows the
+dialog only if the template has WS_VISIBLE: otherwise call ShowWindow.
+Close it with DestroyWindow, not EndDialog, and route messages to it
+with IsDialogMessageW in the message loop. Dialogs off screen aren't
+moved back on screen: use DS_CENTER for default placement. Windows CE
+doesn't support DS_SETFONT, DS_3DLOOK, DS_RECURSE, DS_CONTROL or
+WS_EX_CONTROLPARENT; the last three are implied. Without WS_CHILD,
+WS_POPUP is assumed. ALT+H posts WM_HELP to the dialog procedure.
+
+@param hInstance Module creating the dialog.
+@param lpTemplate A DLGTEMPLATE followed by its DLGITEMTEMPLATE items,
+       DWORD-aligned.
+@param hWndOwner Owner window, or NULL.
+@param lpDialogFunc The dialog procedure.
+@param lParamInit Value passed as lParam with WM_INITDIALOG.
+@return The dialog window, or NULL on failure.
+
+## CreateIconIndirect(piconinfo)
+Creates an icon, or a cursor, from an ICONINFO structure.
+
+The bitmaps are copied: you still own and must delete the originals.
+Free the result with DestroyIcon. With the icon component, only icons
+are supported: set fIcon to TRUE. With iconcurs, monochrome cursors
+can be created too. Windows CE has no colour cursors.
+
+@param piconinfo The icon's mask and colour bitmaps and hotspot.
+@return The icon, or NULL on failure (see GetLastError).
+
+## CreateMenu()
+Creates an empty menu.
+
+Fill it with AppendMenuW or InsertMenuW. Windows CE has no window menu
+bars: use it with a command bar. Free with DestroyMenu unless it is
+attached to a window that is destroyed.
+
+@return The menu, or NULL on failure.
+
+## CreatePopupMenu()
+Creates an empty pop-up menu.
+
+Fill it with AppendMenuW or InsertMenuW, then add it to another menu
+with MF_POPUP or show it with TrackPopupMenu. Free with DestroyMenu if
+it isn't part of another menu.
+
+@return The menu, or NULL on failure.
+
+## CreateWindowExW(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam)
+Creates an overlapped, pop-up or child window, with extended styles.
+
+Sends WM_CREATE to the new window before returning. Windows CE has no
+menu bars on top-level windows: use a command bar instead.
+
+@param dwExStyle Extended styles, WS_EX_*.
+@param lpClassName Class name registered with RegisterClassW, a predefined
+       control class such as L"BUTTON", or a class atom.
+@param lpWindowName Window text: the title, or a control's label.
+@param dwStyle Styles, WS_* and the control's own styles.
+@param x Left edge, in screen coordinates, or relative to the parent's
+       client area for a child. CW_USEDEFAULT for a default position.
+@param y Top edge, as for x.
+@param nWidth Width in pixels, or CW_USEDEFAULT.
+@param nHeight Height in pixels, or CW_USEDEFAULT.
+@param hWndParent Parent or owner window. Required for WS_CHILD.
+@param hMenu NULL, or a child window's control identifier.
+       Windows CE doesn't support menus here.
+@param hInstance The module that owns the window.
+@param lpParam Passed to WM_CREATE in CREATESTRUCT.lpCreateParams.
+@return The new window, or NULL on failure (see GetLastError).
+
+## DefDlgProcW(hDlg, Msg, wParam, lParam)
+Default window procedure for a custom dialog box class.
+
+Forwards messages to the dialog procedure and does default handling of
+those it returns FALSE for. For use as the window procedure of a class
+registered with cbWndExtra of at least DLGWINDOWEXTRA. Never call it
+from a dialog procedure: it recurses.
+
+@param hDlg The dialog box.
+@param Msg The message.
+@param wParam Message-specific.
+@param lParam Message-specific.
+@return The result of processing, which depends on the message.
+
+## DeferWindowPos(hWinPosInfo, hWnd, hWndInsertAfter, x, y, cx, cy, uFlags)
+Adds or updates a window's position in a deferred-position batch.
+
+Pass the returned handle to the next DeferWindowPos or
+EndDeferWindowPos call; it may differ from the input handle. If this
+call fails, abandon the batch and do not call EndDeferWindowPos. Child
+window coordinates are relative to the parent's client area. Windows CE
+2.10 does not support SWP_DRAWFRAME, SWP_NOCOPYBITS, SWP_NOREDRAW,
+SWP_NOREPOSITION, SWP_NOOWNERZORDER or SWP_NOSENDCHANGING.
+
+@param hWinPosInfo Batch from BeginDeferWindowPos or DeferWindowPos.
+@param hWnd Window to position.
+@param hWndInsertAfter Window to place hWnd after, or HWND_TOP,
+       HWND_BOTTOM, HWND_TOPMOST or HWND_NOTOPMOST; ignored with
+       SWP_NOZORDER.
+@param x New left coordinate; ignored with SWP_NOMOVE.
+@param y New top coordinate; ignored with SWP_NOMOVE.
+@param cx New width, in pixels; ignored with SWP_NOSIZE.
+@param cy New height, in pixels; ignored with SWP_NOSIZE.
+@param uFlags SWP_* positioning flags.
+@return Updated batch handle, or NULL on failure (see GetLastError).
+
+## DefWindowProcW(hWnd, Msg, wParam, lParam)
+Default handling for messages a window procedure doesn't process.
+
+Pass on unhandled messages with the same arguments. On Windows CE,
+WM_SETTEXT returns 0, and WM_DESTROY doesn't call PostQuitMessage, so
+the main window must do that itself.
+
+@param hWnd The window.
+@param Msg The message.
+@param wParam Message-specific.
+@param lParam Message-specific.
+@return The result of processing, which depends on the message.
+
+## DeleteMenu(hMenu, uPosition, uFlags)
+Deletes a menu item.
+
+If the item opens a submenu, the submenu is destroyed too: use
+RemoveMenu to keep it.
+
+@param hMenu The menu.
+@param uPosition Command identifier or zero-based position, as uFlags
+       says.
+@param uFlags MF_BYCOMMAND (default) or MF_BYPOSITION.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## DestroyAcceleratorTable(hAccel)
+Destroys an accelerator table made by CreateAcceleratorTableW.
+
+@param hAccel The table.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## DestroyCaret()
+Destroys the caret and removes it from the screen.
+
+Fails if the caret belongs to a window of another thread.
+
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## DestroyIcon(hIcon)
+Destroys an icon and frees its memory.
+
+Works on icons from CreateIconIndirect, ExtractIconExW, LoadImageW or
+LoadIconW. The handle is invalid afterwards.
+
+@param hIcon The icon. Must not be in use.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## DestroyMenu(hMenu)
+Destroys a menu and its submenus, freeing their memory.
+
+Needed for menus not attached to a window.
+
+@param hMenu The menu.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## DialogBoxIndirectParamW(hInstance, hDialogTemplate, hWndParent, lpDialogFunc, dwInitParam)
+Creates and runs a modal dialog box from a template in memory.
+
+Sends WM_INITDIALOG with dwInitParam, shows the dialog, disables the
+owner and runs its own message loop until the dialog procedure calls
+EndDialog. ALT+H posts WM_HELP to the dialog procedure. The template
+restrictions of CreateDialogIndirectParamW apply.
+
+@param hInstance Module creating the dialog.
+@param hDialogTemplate A DLGTEMPLATE followed by its DLGITEMTEMPLATE
+       items, DWORD-aligned.
+@param hWndParent Owner window, or NULL.
+@param lpDialogFunc The dialog procedure.
+@param dwInitParam Value passed as lParam with WM_INITDIALOG.
+@return The value passed to EndDialog, or -1 on failure.
+
+## DispatchMessageW(lpmsg)
+Sends a message to its window's procedure.
+
+Use in the message loop after GetMessageW (and TranslateMessage).
+
+@param lpmsg The message, e.g. from GetMessageW.
+@return The window procedure's result, usually ignored.
+
+## DrawEdge(hdc, qrc, edge, grfFlags)
+Draws 3D edges of a rectangle.
+
+@param hdc The DC.
+@param qrc The rectangle, in logical units.
+@param edge One BDR_*INNER flag with one BDR_*OUTER flag, or
+       EDGE_ETCHED, EDGE_RAISED or EDGE_SUNKEN. Windows CE doesn't
+       support EDGE_BUMP.
+@param grfFlags Sides to draw (BF_LEFT, BF_TOP, BF_RIGHT, BF_BOTTOM,
+       BF_RECT, BF_BOTTOMRIGHT or BF_DIAGONAL*) and modifiers (BF_ADJUST,
+       BF_MIDDLE, BF_FLAT, BF_MONO, BF_SOFT). Windows CE doesn't
+       support BF_BOTTOMLEFT, BF_TOPLEFT or BF_TOPRIGHT.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## DrawFocusRect(hDC, lprc)
+Draws a dotted focus rectangle.
+
+Drawn with XOR: draw it again to remove it. Remove it before scrolling
+the area and redraw it after.
+
+@param hDC The DC.
+@param lprc The rectangle, in logical units.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## DrawFrameControl(hdc, lprc, uType, uState)
+Draws a standard control frame, such as a button, scroll arrow or
+caption button.
+
+@param hdc The DC.
+@param lprc The rectangle to draw in.
+@param uType DFC_BUTTON, DFC_SCROLL or DFC_CAPTION. Windows CE doesn't
+       support DFC_MENU.
+@param uState For DFC_BUTTON: DFCS_BUTTONPUSH, DFCS_BUTTONCHECK,
+       DFCS_BUTTONRADIO or DFCS_BUTTON3STATE. For DFC_CAPTION:
+       DFCS_CAPTIONCLOSE or DFCS_CAPTIONHELP, or the Windows CE-only
+       DFCS_CAPTIONOKBTN. For DFC_SCROLL: DFCS_SCROLLUP,
+       DFCS_SCROLLDOWN, DFCS_SCROLLLEFT, DFCS_SCROLLRIGHT or
+       DFCS_SCROLLCOMBOBOX. Combine with DFCS_CHECKED, DFCS_INACTIVE
+       or DFCS_PUSHED.
+@return Nonzero on success, or 0 on failure.
+
+## DrawIconEx(hdc, xLeft, yTop, hIcon, cxWidth, cyHeight, istepIfAniCur, hbrFlickerFreeDraw, diFlags)
+Draws an icon at a position.
+
+Windows CE can't stretch icons, draw animated icons or cursors, or
+apply mapping modes.
+
+@param hdc The DC.
+@param xLeft X of the icon's top-left corner.
+@param yTop Y of the icon's top-left corner.
+@param hIcon The icon.
+@param cxWidth 0 or the icon's own width.
+@param cyHeight 0 or the icon's own height.
+@param istepIfAniCur Must be 0.
+@param hbrFlickerFreeDraw Must be NULL.
+@param diFlags DI_NORMAL, DI_IMAGE or DI_MASK. Windows CE doesn't
+       support DI_COMPAT or DI_DEFAULTSIZE.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## DrawMenuBar(hWnd)
+Redraws a window's menu bar after it has changed.
+
+On Windows CE the menu bar is part of a command bar.
+CommandBar_DrawMenuBar does the same given the command bar.
+
+@param hWnd The window whose menu bar to redraw.
+@return Nonzero on success, or 0 on failure.
+
+## DrawTextW(hDC, lpString, nCount, lpRect, uFormat)
+Draws text formatted within a rectangle, with wrapping, alignment and tab
+expansion.
+
+Uses the DC's selected font, text colour and background colour. Clips to
+the rectangle unless DT_NOCLIP is given, and never shrinks the font to fit.
+Windows CE doesn't support DT_EXTERNALLEADING. With DT_CALCRECT, set
+lpRect->right and lpRect->bottom before the call; both are updated on
+return.
+
+@param hDC Device context to draw into.
+@param lpString Text to draw.
+@param nCount Number of characters, or -1 if lpString is null-terminated.
+@param lpRect Formatting rectangle, in logical coordinates.
+@param uFormat DT_* flags: DT_LEFT, DT_CENTER, DT_RIGHT, DT_TOP, DT_VCENTER,
+       DT_BOTTOM (DT_VCENTER and DT_BOTTOM need DT_SINGLELINE),
+       DT_WORDBREAK, DT_SINGLELINE, DT_EXPANDTAB, DT_TABSTOP (tab size in
+       bits 8-15), DT_NOPREFIX, DT_NOCLIP, DT_CALCRECT. DT_TABSTOP can't be
+       combined with DT_CALCRECT, DT_NOCLIP or DT_NOPREFIX.
+@return Height of the text, or 0 on failure. With DT_CALCRECT, nothing is
+        drawn and lpRect is adjusted to fit the text.
+
+## EmptyClipboard()
+Empties the clipboard, frees its data and makes the window that opened it
+the owner.
+
+Call OpenClipboard first. If the clipboard was opened with a NULL window,
+the owner becomes NULL.
+
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## EnableMenuItem(hMenu, uIDEnableItem, uEnable)
+Enables or grays a menu item.
+
+Windows CE doesn't support MF_DISABLED: an item can't be disabled without
+also being grayed, so use MF_GRAYED. With MF_BYCOMMAND, submenus of hMenu
+are searched too; with MF_BYPOSITION, pass the handle of the menu that
+directly contains the item.
+
+@param hMenu Menu containing the item.
+@param uIDEnableItem Item identifier or zero-based position, per uEnable.
+@param uEnable MF_BYCOMMAND (default) or MF_BYPOSITION, combined with
+       MF_ENABLED or MF_GRAYED.
+@return The item's previous state (MF_ENABLED or MF_GRAYED), or 0xFFFFFFFF
+        if the item doesn't exist.
+
+## EnableWindow(hWnd, bEnable)
+Enables or disables stylus and keyboard input to a window or control.
+
+Sends WM_ENABLE if the state changes. Children of a disabled window are
+implicitly disabled but get no WM_ENABLE. Re-enable an owner before
+destroying a modeless dialog, or focus moves to another application. Create
+a window disabled with WS_DISABLED.
+
+@param hWnd Window or control.
+@param bEnable TRUE to enable, FALSE to disable.
+@return TRUE if the window was previously disabled, otherwise FALSE.
+
+## EndDeferWindowPos(hWinPosInfo)
+Applies the window positions accumulated in a deferred-position batch.
+
+Moves and sizes all the windows in a single screen refresh. Sends
+WM_WINDOWPOSCHANGED to each window; Windows CE does not send
+WM_WINDOWPOSCHANGING for this operation. Available from Windows CE
+2.10.
+
+@param hWinPosInfo Batch from BeginDeferWindowPos or DeferWindowPos.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## EndDialog(hDlg, nResult)
+Ends a modal dialog box created with DialogBox, DialogBoxParam,
+DialogBoxIndirect or DialogBoxIndirectParam.
+
+Call it from the dialog procedure only. The dialog isn't destroyed straight
+away: it goes once the dialog procedure returns. Calling it during
+WM_INITDIALOG destroys the dialog before it's shown.
+
+@param hDlg The dialog box.
+@param nResult Value returned by the DialogBox* call that created the
+       dialog.
+@return TRUE on success, FALSE on failure.
+
+## EndPaint(hWnd, lpPaint)
+Ends painting started by BeginPaint.
+
+Call once for each BeginPaint, after painting is done. Restores the caret
+if BeginPaint hid it.
+
+@param hWnd The window that was painted.
+@param lpPaint The PAINTSTRUCT filled in by BeginPaint.
+@return Always TRUE.
+
+## EnumClipboardFormats(format)
+Returns the next clipboard format available on the clipboard.
+
+The clipboard must be open (OpenClipboard). Formats come back in the order
+they were placed on the clipboard, so put the most descriptive formats
+first when copying, and take the first one you understand when pasting.
+
+@param format 0 to start the enumeration, otherwise the format returned by
+       the previous call.
+@return The next format, or 0 at the end or on failure. GetLastError
+        returns NO_ERROR at the end of the list.
+
+## EnumWindows(lpEnumFunc, lParam)
+Calls a function for each top-level window.
+
+Stops when the callback returns FALSE. Child windows aren't enumerated.
+Safer than walking the list with GetWindow, which can loop or hit destroyed
+windows.
+
+@param lpEnumFunc Callback, BOOL CALLBACK EnumWindowsProc(HWND hwnd,
+       LPARAM lParam). Return TRUE to continue.
+@param lParam Value passed to the callback.
+@return TRUE on success, FALSE on failure.
+
+## EqualRect(lprc1, lprc2)
+Compares two rectangles' corner coordinates.
+
+@param lprc1 First rectangle.
+@param lprc2 Second rectangle.
+@return TRUE if identical, otherwise FALSE.
+
+## ExitWindowsEx(uFlags, dwReserved)
+Asks the system to shut down or restart.
+
+Not documented in the Windows CE 2.0 or 3.0 SDK. On Windows CE 3.0 it
+isn't exported, so calling it is a compile error. Desktop Win32 takes
+EWX_LOGOFF, EWX_SHUTDOWN, EWX_REBOOT or EWX_POWEROFF, optionally with
+EWX_FORCE; which of these a Windows CE 1.0 or 2.0 ROM honours is
+unknown.
+
+@param uFlags EWX_* shutdown type.
+@param dwReserved Reserved, pass 0.
+@return TRUE if the request was accepted, otherwise FALSE.
+
+## FindWindowW(lpClassName, lpWindowName)
+Finds a top-level window by class name and title.
+
+Child windows aren't searched. On Windows CE, a class atom passed as
+lpClassName must be one returned by RegisterClassW.
+
+@param lpClassName Class name or class atom, or NULL to match any class.
+@param lpWindowName Window title, or NULL to match any title.
+@return The window, or NULL if none matches (see GetLastError).
+
+## GetActiveWindow()
+Returns the calling thread's active window.
+
+@return The active window, or NULL if the thread has none.
+
+## GetAsyncKeyState(vKey)
+Returns whether a key is down at the moment of the call.
+
+Works even when another thread or process has the keyboard focus.
+Reports the physical mouse-button state regardless of logical button
+mapping; use VK_LBUTTON for the stylus tip on the touch screen.
+VK_SHIFT, VK_CONTROL and VK_MENU don't distinguish left and right; on
+Windows CE 2.0 and later the VK_LSHIFT/VK_RSHIFT, VK_LCONTROL/VK_RCONTROL
+and VK_LMENU/VK_RMENU codes can be used.
+
+@param vKey Virtual-key code, VK_*.
+@return Most significant bit set if the key is down. The least
+       significant bit ("pressed since the last call") isn't valid on
+       Windows CE and should be ignored.
+
+## GetCapture()
+Returns the window that has captured stylus input, if it belongs to the
+calling thread.
+
+A NULL result only means the calling thread has no capture; another thread
+may still hold it.
+
+@return The capture window, or NULL.
+
+## GetCaretBlinkTime()
+Returns the caret blink time.
+
+@return Milliseconds between caret inversions, or 0 on failure (see
+        GetLastError).
+
+## GetCaretPos(lpPoint)
+Returns the caret's position.
+
+@param lpPoint Receives the position, in client coordinates of the window
+       that owns the caret.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## GetClassInfoW(hInstance, lpClassName, lpWndClass)
+Returns the WNDCLASSW a window class was registered with.
+
+@param hInstance Instance that registered the class, or NULL for a system
+       class such as L"BUTTON".
+@param lpClassName Class name, or a class atom in the low word (high word
+       zero). On Windows CE, an atom must be one returned by RegisterClassW.
+@param lpWndClass Receives the class information.
+@return TRUE if the class was found, otherwise FALSE (see GetLastError).
+
+## GetClassLongW(hWnd, nIndex)
+Returns a 32-bit value from a window's class.
+
+Windows CE supports only GCL_HICON and GCL_STYLE, plus GCL_HCURSOR on
+platforms with mouse cursor support, and offsets into the extra class
+memory reserved with WNDCLASSW.cbClsExtra.
+
+@param hWnd A window of the class.
+@param nIndex GCL_HICON, GCL_STYLE, or a byte offset into the extra class
+       memory. Offsets must be multiples of 4: Windows CE doesn't support
+       unaligned access.
+@return The value, or 0 on failure (see GetLastError).
+
+## GetClassNameW(hWnd, lpClassName, nMaxCount)
+Copies the class name of a window into a buffer.
+
+@param hWnd The window.
+@param lpClassName Buffer for the name.
+@param nMaxCount Buffer size in characters. Longer names are truncated.
+@return Characters copied, or 0 on failure (see GetLastError).
+
+## GetClientRect(hWnd, lpRect)
+Returns the size of a window's client area.
+
+On Windows CE a command bar lies inside the client area, so subtract its
+height (CommandBar_Height) to get the usable space.
+
+@param hWnd The window.
+@param lpRect Receives the client rectangle: left and top are 0, right and
+       bottom are the width and height.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## GetClipboardData(uFormat)
+Returns the clipboard's data in a given format.
+
+Open the clipboard with OpenClipboard first. The clipboard owns the
+returned handle: copy the data straight away, and don't free it or leave it
+locked. Windows CE doesn't convert between formats, so the data must have
+been placed in exactly that format.
+
+@param uFormat Clipboard format, CF_* or a registered format.
+@return Handle to the data, or NULL on failure (see GetLastError).
+
+## GetClipboardFormatNameW(format, lpszFormatName, cchMaxCount)
+Copies the name of a registered clipboard format into a buffer.
+
+@param format A format from RegisterClipboardFormatW. Predefined CF_*
+       formats have no name.
+@param lpszFormatName Buffer for the name.
+@param cchMaxCount Buffer size in characters. Longer names are truncated.
+@return Characters copied, or 0 if the format doesn't exist or is
+        predefined (see GetLastError).
+
+## GetClipboardOwner()
+Returns the window that owns the clipboard.
+
+The owner is usually the window that last put data there; EmptyClipboard
+sets it. The clipboard can hold data with no owner.
+
+@return The owner window, or NULL if there's none (see GetLastError).
+
+## GetClipCursor(lpRect)
+Retrieves the screen rectangle restricting cursor movement.
+
+If the cursor is not clipped, receives the screen dimensions. The
+calling process needs WINSTA_READATTRIBUTES access to the window
+station.
+
+@param lpRect Receives the clipping rectangle, in screen coordinates.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## GetCursor()
+Retrieves the current cursor handle.
+
+After CreateCursor creates a zero-sized cursor, returns that cursor.
+
+@return Current cursor handle, or NULL if there is no cursor.
+
+## GetCursorPos(lpPoint)
+Retrieves the cursor position in screen coordinates.
+
+Not affected by the mapping mode of the window containing the cursor.
+The calling process needs WINSTA_READATTRIBUTES access to the window
+station.
+
+@param lpPoint Receives the screen-coordinate position.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## GetDC(hWnd)
+Returns a device context for drawing in a window's client area.
+
+The DC gets default attributes each time. Release it with ReleaseDC when
+done. Inside WM_PAINT, use BeginPaint instead.
+
+@param hWnd The window.
+@return The device context, or NULL on failure.
+
+## GetDCEx(hWnd, hrgnClip, flags)
+Retrieves a device context with optional window or clipping-region
+behaviour.
+
+Windows CE supports DCX_WINDOW, DCX_CACHE, DCX_CLIPCHILDREN,
+DCX_CLIPSIBLINGS, DCX_EXCLUDERGN, DCX_INTERSECTRGN, DCX_EXCLUDEUPDATE
+and DCX_INTERSECTUPDATE. The DC is not kept in sync if its window moves
+or resizes. Unless the DC belongs to a window class (CS_CLASSDC,
+CS_OWNDC or CS_PARENTDC), release it promptly with ReleaseDC: only five
+common DCs are available at once.
+
+@param hWnd Window, or NULL for the screen.
+@param hrgnClip Optional clipping region, combined with the DC's visible
+       region by DCX_EXCLUDERGN or DCX_INTERSECTRGN.
+@param flags Supported DCX_* flags.
+@return Device context, or NULL on failure (see GetLastError).
+
+## GetDesktopWindow()
+Retrieves the handle of the desktop window.
+
+@return Desktop window handle.
+
+## GetDialogBaseUnits()
+Returns the dialog base units, derived from the system font.
+
+Convert dialog units to pixels with x = (dlgX * baseX) / 4 and
+y = (dlgY * baseY) / 8, and back with dlgX = (x * 4) / baseX and
+dlgY = (y * 8) / baseY. MapDialogRect does this for a specific dialog's
+font. Windows CE sets no extended error for this function.
+
+@return Horizontal base unit in the low word, vertical in the high word.
+
+## GetDlgCtrlID(hwndCtl)
+Returns a child window's control identifier.
+
+Only child windows have identifiers: a value returned for a top-level
+window is meaningless. Set the identifier through CreateWindowExW's hMenu
+parameter, or with SetWindowLongW and GWL_ID.
+
+@param hwndCtl Control or other child window.
+@return The identifier, or 0 on failure.
+
+## GetDlgItem(hDlg, nIDDlgItem)
+Returns the control with a given identifier in a dialog box.
+
+Works with any parent window, not just dialogs. On Windows CE only
+immediate children are searched, not nested dialogs.
+
+@param hDlg Dialog box or parent window.
+@param nIDDlgItem Control identifier.
+@return The control, or NULL if hDlg is invalid or there's no such control.
+
+## GetDlgItemInt(hDlg, nIDDlgItem, lpTranslated, bSigned)
+Reads a dialog control's text as a decimal integer.
+
+Gets the text with WM_GETTEXT, skips leading spaces and stops at the first
+non-digit. Out-of-range values give 0. On Windows CE, text longer than 48
+characters can't be translated.
+
+@param hDlg Dialog box.
+@param nIDDlgItem Control identifier.
+@param lpTranslated Receives TRUE on success or FALSE on failure, or NULL.
+       Use it to tell a failure from a real 0.
+@param bSigned TRUE to accept a leading minus sign; cast the result to int.
+@return The value, or 0 on failure.
+
+## GetDlgItemTextW(hDlg, nIDDlgItem, lpString, nMaxCount)
+Copies a dialog control's text into a buffer.
+
+Sends WM_GETTEXT to the control.
+
+@param hDlg Dialog box.
+@param nIDDlgItem Control identifier.
+@param lpString Buffer for the text.
+@param nMaxCount Buffer size in characters. Longer text is truncated.
+@return Characters copied, not counting the terminator, or 0 on failure.
+
+## GetDoubleClickTime()
+Returns the double-tap time.
+
+This is the longest gap allowed between the two stylus taps of a double
+tap.
+
+@return The double-tap time in milliseconds.
+
+## GetFocus()
+Returns the calling thread's keyboard focus window.
+
+A NULL result only means the calling thread has no focus window; another
+thread may have one.
+
+@return The focus window, or NULL.
+
+## GetForegroundWindow()
+Returns the foreground window, the one the user is working with.
+
+@return The foreground window.
+
+## GetKeyboardLayout(dwThreadId)
+Retrieves the active keyboard layout handle for the calling thread.
+
+@param dwThreadId Must be 0, for the active thread.
+@return Keyboard layout handle. The low word is the input language ID;
+       the high word is a device handle for the physical keyboard
+       layout.
+
+## GetKeyboardLayoutNameW(pwszKLID)
+Retrieves the active keyboard layout name from the registry.
+
+The buffer must hold at least KL_NAMELENGTH characters, including the
+terminator. Changing the registry entry requires a device reset before
+it takes effect.
+
+@param pwszKLID Receives the null-terminated layout name.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## GetKeyState(nVirtKey)
+Returns a key's state as of the keyboard message being processed.
+
+The state follows the thread's message queue, not the hardware; use
+GetAsyncKeyState for the live state. On Windows CE only the down state of
+VK_SHIFT, VK_CONTROL, VK_MENU and their VK_L* and VK_R* variants, and the
+toggled state of VK_CAPITAL, can be read.
+
+@param nVirtKey Virtual-key code, VK_*.
+@return High bit set if the key is down; low bit set if it's toggled on.
+
+## GetMenuItemInfoW(hmenu, uItem, fByPosition, pmii)
+Returns information about a menu item.
+
+Windows CE doesn't support MIIM_CHECKMARKS in fMask.
+
+@param hmenu Menu containing the item.
+@param uItem Item identifier or zero-based position, per fByPosition.
+@param fByPosition FALSE if uItem is an identifier, TRUE if a position.
+@param pmii MENUITEMINFOW with cbSize and fMask set (and dwTypeData and cch
+       for text), filled in on return.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## GetMessagePos()
+Returns the stylus position at the time of the last message retrieved
+with GetMessageW.
+
+@return Screen coordinates: x in the low word, y in the high word. Use
+        MAKEPOINTS, or LOWORD and HIWORD cast to short.
+
+## GetMessageW(lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax)
+Waits for and removes the next message from the calling thread's queue.
+
+Only gets messages for the calling thread's windows. Returns -1 on error,
+so don't loop on a plain non-zero test: compare with -1 or check > 0.
+
+@param lpMsg Receives the message.
+@param hWnd Window (or its children) to get messages for, or NULL for any
+       of the thread's windows and PostThreadMessageW messages.
+@param wMsgFilterMin Lowest message to get, or 0 with wMsgFilterMax 0 for
+       all. WM_KEYFIRST and WM_MOUSEFIRST select keyboard and stylus
+       messages.
+@param wMsgFilterMax Highest message to get, e.g. WM_KEYLAST or
+       WM_MOUSELAST.
+@return Non-zero for a message other than WM_QUIT, 0 for WM_QUIT, or -1 on
+        error such as an invalid hWnd.
+
+## GetNextDlgGroupItem(hDlg, hCtl, bPrevious)
+Returns the previous or next control in a group of dialog controls.
+
+Searches in template order. A group starts at a control with WS_GROUP and
+runs until the next one; the search wraps within the group and skips
+hidden or disabled controls. Used to move between radio buttons.
+
+@param hDlg Dialog box.
+@param hCtl Control to start from, or NULL to start at the last or first
+       control.
+@param bPrevious TRUE to search backwards, FALSE forwards.
+@return The control found, hCtl if no other qualifies, or NULL on failure.
+
+## GetNextDlgTabItem(hDlg, hCtl, bPrevious)
+Returns the previous or next WS_TABSTOP control in a dialog box.
+
+Searches in template order and skips hidden or disabled controls.
+
+@param hDlg Dialog box.
+@param hCtl Control to start from, or NULL to start at the last or first
+       control.
+@param bPrevious TRUE to search backwards, FALSE forwards.
+@return The control found, hCtl if no other qualifies, or NULL on failure.
+
+## GetOpenClipboardWindow()
+Returns the window that has the clipboard open.
+
+@return The window, or NULL if the clipboard isn't open or was opened with
+        a NULL window (see GetLastError).
+
+## GetParent(hWnd)
+Returns a child window's parent.
+
+Windows CE 1.0 has no owned windows other than dialog boxes.
+
+@param hWnd The window.
+@return The parent, or NULL if there's none (see GetLastError).
+
+## GetPriorityClipboardFormat(paFormatPriorityList, cFormats)
+Returns the first format in a list that the clipboard has data for.
+
+@param paFormatPriorityList Clipboard formats, most preferred first.
+@param cFormats Number of entries in the list.
+@return The first available format, 0 if the clipboard is empty, or -1 if
+        it holds data in none of the listed formats.
+
+## GetQueueStatus(flags)
+Returns status bits for message types in the calling thread's queue.
+
+The high word describes message types currently in the queue; the low
+word describes types added since the last queue-status check or message
+retrieval. Treat the result as a hint, not a guarantee that GetMessage or
+PeekMessage will return a message.
+
+@param flags QS_* message types to check.
+@return High-word current status and low-word changed status.
+
+## GetScrollInfo(hwnd, fnBar, lpsi)
+Returns a scroll bar's range, page size and position.
+
+Gives full 32-bit positions, unlike WM_HSCROLL and WM_VSCROLL. During
+SB_THUMBTRACK, the position returned is the static one, not the thumb being
+dragged.
+
+@param hwnd Scroll bar control, or a window with standard scroll bars.
+@param fnBar SB_CTL (hwnd is a scroll bar control), SB_HORZ or SB_VERT.
+@param lpsi SCROLLINFO with cbSize set and fMask a combination of SIF_RANGE,
+       SIF_PAGE and SIF_POS; filled in on return.
+@return TRUE if any values were retrieved, otherwise FALSE.
+
+## GetSubMenu(hMenu, nPos)
+Returns the pop-up menu opened by a menu item.
+
+@param hMenu Menu containing the item.
+@param nPos Zero-based position of the item.
+@return The pop-up menu, or NULL if the item doesn't open one.
+
+## GetSysColor(nIndex)
+Returns the colour of a display element.
+
+On Windows CE 1.0, which has a 2-bit greyscale palette, the result is a
+palette index rather than an RGB value. GDI functions accept either, but
+don't pick it apart with GetRValue and friends. On Windows CE 2.0 and
+later it's an RGB value.
+
+@param nIndex COLOR_* element, e.g. COLOR_WINDOW, COLOR_WINDOWTEXT,
+       COLOR_BTNFACE, COLOR_HIGHLIGHT or COLOR_3DSHADOW. Windows CE 2.0
+       adds COLOR_STATIC and COLOR_STATICTEXT, for static controls. Use
+       the constants: their values differ from desktop Windows.
+@return The colour, or 0 on failure (see GetLastError).
+
+## GetSysColorBrush(nIndex)
+Returns a brush in a system colour.
+
+The brush belongs to the system: don't delete it, and don't use it as a
+window class background.
+
+@param nIndex COLOR_* element. Use the constants: their values differ from
+       desktop Windows.
+@return The brush, or NULL on failure (see GetLastError).
+
+## GetSystemMetrics(nIndex)
+Returns a system dimension, in pixels, or a configuration setting.
+
+Windows CE supports SM_CXSCREEN, SM_CYSCREEN, SM_CXBORDER, SM_CYBORDER,
+SM_CXEDGE, SM_CYEDGE, SM_CXDLGFRAME, SM_CYDLGFRAME, SM_CXDOUBLECLK,
+SM_CYDOUBLECLK, SM_CXHSCROLL, SM_CYHSCROLL, SM_CXVSCROLL, SM_CYVSCROLL,
+SM_CXICON, SM_CYICON, SM_CXSMICON, SM_CYSMICON, SM_CXICONSPACING,
+SM_CYICONSPACING, SM_CYCAPTION, SM_CYMENU and SM_DEBUG. Most others,
+including the frame, sizing, min/max, cursor and drag metrics, aren't
+supported; SM_CXCURSOR and SM_CYCURSOR work only on platforms with mouse
+cursor support.
+
+@param nIndex SM_* value.
+@return The metric.
+
+## GetUpdateRect(hWnd, lpRect, bErase)
+Returns the bounding rectangle of a window's update region.
+
+BeginPaint validates the update region, so call this before it.
+
+@param hWnd The window.
+@param lpRect Receives the rectangle in client coordinates (all zero if
+       there's no update region), or NULL just to test for one.
+@param bErase TRUE to send WM_ERASEBKGND if the region isn't empty.
+@return Non-zero if the update region isn't empty, otherwise 0.
+
+## GetUpdateRgn(hWnd, hRgn, bErase)
+Copies a window's update region into an existing region.
+
+BeginPaint validates the update region, so call this before it.
+
+@param hWnd The window.
+@param hRgn Region to receive the update region, in client coordinates.
+@param bErase Ignored on Windows CE: the background is never erased.
+@return NULLREGION, SIMPLEREGION, COMPLEXREGION, or ERROR.
+
+## GetWindow(hWnd, uCmd)
+Returns a window related to another: a child, sibling or owner.
+
+Prefer EnumWindows to walking the list in a loop, which can hit
+destroyed windows. On Windows CE 1.0, GW_OWNER works only for dialog
+boxes.
+
+@param hWnd The window to start from.
+@param uCmd GW_CHILD (top immediate child in the z-order), GW_HWNDFIRST,
+       GW_HWNDLAST, GW_HWNDNEXT, GW_HWNDPREV (siblings by z-order) or
+       GW_OWNER (the owner, not the parent).
+@return The window, or NULL if there's none (see GetLastError).
+
+## GetWindowDC(hWnd)
+Returns a device context for a whole window, including its non-client
+area.
+
+The origin is the window's top-left corner, not the client area's.
+Attributes are reset each time. Release it with ReleaseDC.
+
+@param hWnd The window.
+@return The device context, or NULL on failure.
+
+## GetWindowLongW(hWnd, nIndex)
+Returns a window attribute or a value from its extra window memory.
+
+Windows CE doesn't support GWL_HINSTANCE or GWL_HWNDPARENT. The Windows
+CE 3.0 reference lists GWL_ID and GWL_USERDATA as unsupported. Windows
+CE 1.0 also lacks GWL_USERDATA and DWL_DLGPROC; use extra window memory
+(WNDCLASSW.cbWndExtra) instead.
+
+@param hWnd The window.
+@param nIndex GWL_STYLE, GWL_EXSTYLE, GWL_WNDPROC, GWL_ID, GWL_USERDATA,
+       for dialogs DWL_MSGRESULT, DWL_USER or DWL_DLGPROC, or a byte
+       offset into the extra window memory, subject to the limits above.
+       Offsets must be multiples of 4: Windows CE doesn't support
+       unaligned access.
+@return The value, or 0 on failure (see GetLastError).
+
+## GetWindowRect(hWnd, lpRect)
+Returns a window's bounding rectangle in screen coordinates.
+
+@param hWnd The window.
+@param lpRect Receives the rectangle.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## GetWindowRgn(hWnd, hRgn)
+Copies a window's clipping region into a region handle.
+
+Region coordinates are relative to the window's upper-left corner, not
+the client area. Available from Windows CE 2.12.
+
+@param hWnd Window whose region to retrieve.
+@param hRgn Receives the region.
+@return NULLREGION, SIMPLEREGION, COMPLEXREGION, or ERROR.
+
+## GetWindowTextLengthW(hWnd)
+Returns the length of a window's title or a control's text.
+
+Sends WM_GETTEXTLENGTH. Allocate one more character for the terminator.
+
+@param hWnd Window or control.
+@return Length in characters, or 0 if there's no text (see GetLastError).
+
+## GetWindowTextW(hWnd, lpString, nMaxCount)
+Copies a window's title or a control's text into a buffer.
+
+Sends WM_GETTEXT. Can't read the text of an edit control in another
+application.
+
+@param hWnd Window or control.
+@param lpString Buffer for the text.
+@param nMaxCount Buffer size in characters, including the terminator.
+       Longer text is truncated.
+@return Characters copied, not counting the terminator, or 0 if there's no
+        text or hWnd is invalid (see GetLastError).
+
+## HideCaret(hWnd)
+Hides the caret without destroying it.
+
+Calls nest: each HideCaret needs a matching ShowCaret before the caret
+reappears.
+
+@param hWnd Window that owns the caret, or NULL to find it in the current
+       task.
+@return TRUE on success, FALSE if the window doesn't own the caret or on
+        failure (see GetLastError).
+
+## InflateRect(lprc, dx, dy)
+Grows or shrinks a rectangle on all sides.
+
+@param lprc Rectangle to adjust.
+@param dx Amount moved out from both left and right; negative shrinks.
+@param dy Amount moved out from both top and bottom; negative shrinks.
+@return TRUE on success, FALSE on failure.
+
+## InSendMessage()
+Determines whether the current window procedure is handling a sent message.
+
+Returns nonzero when another thread sent the message with SendMessage;
+otherwise returns zero.
+
+@return Nonzero if processing a cross-thread sent message, otherwise 0.
+
+## InsertMenuW(hMenu, uPosition, uFlags, uIDNewItem, lpNewItem)
+Inserts an item into a menu before a given item.
+
+Call DrawMenuBar after changing a menu. Windows CE doesn't support
+MF_BITMAP or MF_DISABLED: use MF_GRAYED to disable an item. On Windows
+CE 1.0, pop-ups can't be inserted into other pop-ups (no cascading
+menus); Windows CE 2.0 and later allow it.
+
+@param hMenu Menu to insert into.
+@param uPosition Item to insert before: an identifier, or with
+       MF_BYPOSITION a zero-based position, 0xFFFFFFFF to append.
+@param uFlags MF_BYCOMMAND or MF_BYPOSITION, plus MF_STRING, MF_SEPARATOR
+       or MF_OWNERDRAW, MF_POPUP, MF_CHECKED or MF_UNCHECKED, and
+       MF_ENABLED or MF_GRAYED.
+@param uIDNewItem Command identifier, or the pop-up menu handle with
+       MF_POPUP.
+@param lpNewItem Item text for MF_STRING, or the application value for
+       MF_OWNERDRAW. Ignored for MF_SEPARATOR.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## IntersectRect(lprcDst, lprcSrc1, lprcSrc2)
+Computes the intersection of two rectangles.
+
+@param lprcDst Receives the intersection, or all zeros if there's none.
+@param lprcSrc1 First rectangle.
+@param lprcSrc2 Second rectangle.
+@return TRUE if the rectangles intersect, otherwise FALSE.
+
+## InvalidateRect(hWnd, lpRect, bErase)
+Adds a rectangle to a window's update region, so it gets WM_PAINT.
+
+Invalid areas accumulate until painted or validated. WM_PAINT arrives once
+the queue has no other messages for the window; call UpdateWindow to paint
+straight away. If any invalidation requested erasing, the whole update
+region is erased.
+
+@param hWnd The window. Can't be NULL on Windows CE.
+@param lpRect Rectangle in client coordinates, or NULL for the whole client
+       area.
+@param bErase TRUE to erase the background when BeginPaint is called.
+@return TRUE on success, FALSE on failure.
+
+## InvertRect(hDC, lprc)
+Inverts the colours of the pixels in a rectangle.
+
+Inverting the same rectangle twice restores it.
+
+@param hDC Device context.
+@param lprc Rectangle in logical coordinates.
+@return TRUE on success, FALSE on failure.
+
+## IsChild(hWndParent, hWnd)
+Tests whether a window is a child or other descendant of another.
+
+@param hWndParent The possible ancestor.
+@param hWnd The window to test.
+@return TRUE if hWnd is a descendant of hWndParent, otherwise FALSE.
+
+## IsClipboardFormatAvailable(format)
+Tests whether the clipboard holds data in a format.
+
+Doesn't need the clipboard open. Handy for enabling a Paste command; use
+GetPriorityClipboardFormat when several formats will do.
+
+@param format CF_* or registered clipboard format.
+@return TRUE if available, otherwise FALSE (see GetLastError).
+
+## IsDialogMessageW(hDlg, lpMsg)
+Handles dialog keyboard navigation for a message if it's meant for a
+dialog.
+
+Call it in the message loop for modeless dialogs, or any window with
+controls, to get TAB and arrow key navigation. If it returns TRUE, don't
+pass the message to TranslateMessage or DispatchMessageW. It sends
+WM_GETDLGCODE, and may send DM_GETDEFID and DM_SETDEFID (WM_USER and
+WM_USER + 1), which can clash with application messages.
+
+@param hDlg Dialog box or parent window.
+@param lpMsg Message from GetMessageW or PeekMessageW.
+@return TRUE if the message was processed, otherwise FALSE.
+
+## IsRectEmpty(lprc)
+Tests whether a rectangle has no area.
+
+@param lprc The rectangle.
+@return TRUE if right <= left or bottom <= top, otherwise FALSE.
+
+## IsWindow(hWnd)
+Tests whether a handle identifies an existing window.
+
+@param hWnd Handle to test.
+@return TRUE if the window exists, otherwise FALSE.
+
+## IsWindowEnabled(hWnd)
+Tests whether a window accepts stylus and keyboard input.
+
+A child window gets input only if it's both enabled and visible.
+
+@param hWnd The window.
+@return TRUE if enabled, otherwise FALSE.
+
+## keybd_event(bVk, bScan, dwFlags, dwExtraInfo)
+Synthesizes a key press or release.
+
+Generates WM_KEYDOWN or WM_KEYUP as if the key had been typed.
+
+@param bVk Virtual-key code, 1 to 254.
+@param bScan Unused; pass 0.
+@param dwFlags 0 for a press, KEYEVENTF_KEYUP for a release. Windows CE
+       2.0 adds KEYEVENTF_SILENT to suppress the key click. Windows CE
+       doesn't support KEYEVENTF_EXTENDEDKEY.
+@param dwExtraInfo Application-defined value attached to the event.
+
+## KillTimer(hWnd, uIDEvent)
+Destroys a timer and removes its pending WM_TIMER messages.
+
+@param hWnd The window passed to SetTimer.
+@param uIDEvent The identifier passed to SetTimer or, if hWnd was NULL, the
+       identifier SetTimer returned.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## LoadAcceleratorsW(hInstance, lpTableName)
+Loads an accelerator table resource.
+
+On Windows CE the resource isn't copied into RAM, so it can't be modified.
+Tables loaded from resources are freed when the application exits. Use
+with TranslateAcceleratorW.
+
+@param hInstance Module containing the resource.
+@param lpTableName Resource name, or MAKEINTRESOURCE(id).
+@return The accelerator table, or NULL on failure.
+
+## LoadBitmapW(hInstance, lpBitmapName)
+Loads a bitmap resource.
+
+Windows CE doesn't support the OBM_* system bitmaps. The bitmap is
+read-only, so a DC it's selected into can't be drawn on. On Windows CE
+1.0 it must be 1 bpp (monochrome) or 2 bpp. Free with DeleteObject.
+
+@param hInstance Module containing the resource.
+@param lpBitmapName Resource name, or MAKEINTRESOURCE(id).
+@return The bitmap, or NULL if it doesn't exist or memory runs out (see
+       GetLastError).
+
+## LoadCursorW(hInstance, lpCursorName)
+Loads a cursor resource or a system cursor.
+
+On platforms without mouse cursor support, only IDC_WAIT is
+supported: SetCursor(LoadCursorW(NULL, IDC_WAIT)) shows the wait cursor.
+Platforms with mouse cursor support load monochrome cursors only; colour
+cursors give unpredictable results.
+
+@param hInstance Module containing the resource, or NULL for a system
+       cursor.
+@param lpCursorName Resource name, MAKEINTRESOURCE(id), or an IDC_* value
+       with hInstance NULL.
+@return The cursor, or NULL on failure.
+
+## LoadIconW(hInstance, lpIconName)
+Loads an icon resource from a module or the system.
+
+The icon must match the system icon dimensions; use LoadImageW for
+other sizes. On Windows CE 3.0, pass NULL for hInstance to load a
+standard icon, and the resource is cached: repeated calls return the
+existing handle. On Windows CE 1.0 and 2.0 the predefined IDI_* icons
+aren't supported and each call returns a new handle, so load once and
+keep it. On Windows CE 1.0 the icon must be monochrome or 2 bpp (.ic2).
+
+@param hInstance Module containing the resource, or NULL for a standard
+       icon on Windows CE 3.0.
+@param lpIconName Resource name, or MAKEINTRESOURCE(id).
+@return The icon, or NULL on failure (see GetLastError).
+
+## LoadImageW(hinst, lpszName, uType, cxDesired, cyDesired, fuLoad)
+Loads an icon or bitmap resource, or a cursor where supported.
+
+Windows CE can't stretch or shrink icons, and has no LR_* options, so it
+can't load from a file. Each call returns a new handle, so load once and
+keep it.
+
+@param hinst Module containing the resource.
+@param lpszName Resource name, or MAKEINTRESOURCE(id).
+@param uType IMAGE_BITMAP or IMAGE_ICON. IMAGE_CURSOR works only on
+       platforms with mouse cursor support.
+@param cxDesired Icon width, or 0 for SM_CXICON. Must be 0 for
+       IMAGE_BITMAP.
+@param cyDesired Icon height, or 0 for SM_CYICON. Must be 0 for
+       IMAGE_BITMAP.
+@param fuLoad Must be 0 (LR_DEFAULTCOLOR).
+@return The image (cast to HBITMAP or HICON), or NULL on failure.
+
+## LoadMenuW(hInstance, lpMenuName)
+Loads a menu resource.
+
+Destroy it with DestroyMenu unless it's attached to a window that's
+destroyed. Windows CE 1.0 doesn't support cascading menus; Windows CE
+2.0 and later do.
+
+@param hInstance Module containing the resource.
+@param lpMenuName Resource name, or MAKEINTRESOURCE(id).
+@return The menu, or NULL on failure (see GetLastError).
+
+## LoadStringW(hInstance, uID, lpBuffer, nBufferMax)
+Loads a string resource into a buffer, null-terminated.
+
+On Windows CE 2.0 and later, passing NULL for lpBuffer returns a pointer
+to the string in the resource itself instead: cast the result to
+LPCWSTR. That string is read-only and not necessarily null-terminated;
+its length is in the WORD just before it. This form needs the resource
+compiler's -n option.
+
+@param hInstance Module containing the resource.
+@param uID String identifier.
+@param lpBuffer Buffer for the string, or NULL (see above).
+@param nBufferMax Buffer size in characters, including the terminator.
+       Longer strings are truncated.
+@return Characters copied, not counting the terminator, or the resource
+       pointer when lpBuffer is NULL; 0 if the string doesn't exist (see
+       GetLastError).
+
+## MapDialogRect(hDlg, lpRect)
+Converts a rectangle from dialog units to pixels for a dialog's font.
+
+Uses x * baseX / 4 and y * baseY / 8, where the base units come from the
+dialog's DS_SETFONT font or, failing that, GetDialogBaseUnits.
+
+@param hDlg A dialog box created by a dialog function; other windows don't
+       work.
+@param lpRect Rectangle in dialog units, converted in place.
+@return TRUE on success, FALSE on failure.
+
+## MapVirtualKeyW(uCode, uMapType)
+Translates a virtual-key code into its unshifted character.
+
+Windows CE supports only map type 2; scan code translations aren't
+available.
+
+@param uCode Virtual-key code.
+@param uMapType Must be 2.
+@return The character in the low word, or 0 if there's no translation.
+
+## MapWindowPoints(hWndFrom, hWndTo, lpPoints, cPoints)
+Converts points from one window's client coordinates to another's.
+
+@param hWndFrom Source window, or NULL or HWND_DESKTOP for screen
+       coordinates.
+@param hWndTo Destination window, or NULL or HWND_DESKTOP for screen
+       coordinates.
+@param lpPoints Points to convert in place. A RECT can be passed with
+       cPoints 2.
+@param cPoints Number of points.
+@return The horizontal offset added, in the low word, and the vertical
+        offset in the high word.
+
+## MessageBeep(uType)
+Plays a system sound asynchronously.
+
+Falls back to the default sound, then to a plain beep, if the requested
+sound can't be played.
+
+@param uType 0xFFFFFFFF or MB_OK for the SystemDefault sound,
+       MB_ICONASTERISK, MB_ICONEXCLAMATION, MB_ICONHAND or MB_ICONQUESTION.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## MessageBoxW(hWnd, lpText, lpCaption, uType)
+Shows a modal message box and waits for the user to close it.
+
+@param hWnd Owner window, or NULL for none.
+@param lpText The message.
+@param lpCaption The title, or NULL for "Error".
+@param uType Buttons (MB_OK, MB_OKCANCEL, MB_YESNO and so on), an icon
+       (MB_ICONINFORMATION and so on), a default button (MB_DEFBUTTON*)
+       and MB_APPLMODAL, MB_SETFOREGROUND or MB_TOPMOST. Windows CE
+       doesn't support MB_SYSTEMMODAL, MB_TASKMODAL, MB_HELP, MB_RIGHT,
+       MB_RTLREADING, MB_DEFAULT_DESKTOP_ONLY, MB_SERVICE_NOTIFICATION
+       or MB_USERICON.
+@return The button pressed (IDOK, IDCANCEL, IDYES, IDNO and so on), or 0
+        on failure. Windows CE never returns IDCLOSE or IDHELP.
+
+## mouse_event(dwFlags, dx, dy, dwData, dwExtraInfo)
+Synthesizes mouse or stylus movement and button clicks.
+
+Windows CE doesn't support MOUSEEVENTF_WHEEL.
+
+@param dwFlags MOUSEEVENTF_* flags: MOVE, LEFTDOWN, LEFTUP, RIGHTDOWN,
+       RIGHTUP, MIDDLEDOWN, MIDDLEUP and ABSOLUTE.
+@param dx Horizontal position or movement. With MOUSEEVENTF_ABSOLUTE,
+       normalised to 0 to 65535 across the screen.
+@param dy Vertical position or movement, as for dx.
+@param dwData Unused without wheel support; pass 0.
+@param dwExtraInfo Application-defined value attached to the event.
+
+## MoveWindow(hWnd, nX, nY, nWidth, nHeight, bRepaint)
+Moves and resizes a window.
+
+Sends WM_WINDOWPOSCHANGED, WM_MOVE and WM_SIZE. On Windows CE bRepaint is
+ignored: nothing is repainted, so invalidate any part of the window or its
+parent that needs redrawing.
+
+@param hWnd The window.
+@param nX New left edge: screen coordinates for a top-level window, parent
+       client coordinates for a child.
+@param nY New top edge.
+@param nWidth New width.
+@param nHeight New height.
+@param bRepaint Ignored on Windows CE.
+@return TRUE on success, FALSE on failure.
+
+## MsgWaitForMultipleObjectsEx(nCount, pHandles, dwMilliseconds, dwWakeMask, dwFlags)
+Waits until any of a set of objects is signalled, new input of a given
+type arrives, or a timeout passes.
+
+Unread input already in the queue doesn't satisfy the wait; only new input
+does. Windows CE doesn't support QS_HOTKEY, MWMO_WAITALL or
+MWMO_ALERTABLE.
+
+@param nCount Number of handles in pHandles.
+@param pHandles Object handles to wait on.
+@param dwMilliseconds Timeout in milliseconds, or INFINITE.
+@param dwWakeMask QS_* input types that end the wait, e.g. QS_ALLINPUT.
+@param dwFlags 0.
+@return WAIT_OBJECT_0 + n when handle n is signalled, WAIT_OBJECT_0 +
+        nCount when input arrives, WAIT_TIMEOUT, or WAIT_FAILED (see
+        GetLastError).
+
+## OffsetRect(lprc, dx, dy)
+Moves a rectangle by an offset.
+
+@param lprc Rectangle to move.
+@param dx Horizontal offset; negative moves left.
+@param dy Vertical offset; negative moves up.
+@return TRUE on success, FALSE on failure.
+
+## OpenClipboard(hWndNewOwner)
+Opens the clipboard, stopping other applications from changing it.
+
+Fails if another window has it open. Call CloseClipboard after each
+successful open. The window becomes the owner only once EmptyClipboard is
+called.
+
+@param hWndNewOwner Window to associate with the open clipboard, or NULL
+       for the current task.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## PeekMessageW(lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax, wRemoveMsg)
+Checks the calling thread's queue for a message without waiting.
+
+WM_PAINT normally stays queued until painted. On Windows CE, unlike desktop
+Windows, a WM_PAINT with an empty update region isn't removed either.
+
+@param lpMsg Receives the message.
+@param hWnd Window (or its children) to check, NULL for any of the
+       thread's windows, or (HWND)-1 for thread messages only.
+@param wMsgFilterMin Lowest message to check, or 0 with wMsgFilterMax 0
+       for all.
+@param wMsgFilterMax Highest message to check.
+@param wRemoveMsg PM_REMOVE or PM_NOREMOVE.
+@return TRUE if a message was available, otherwise FALSE.
+
+## PostMessageW(hWnd, Msg, wParam, lParam)
+Queues a message for a window's thread and returns without waiting.
+
+Don't post system messages (below WM_USER) that carry pointers. The message
+is picked up by GetMessageW or PeekMessageW.
+
+@param hWnd Target window, HWND_BROADCAST for all top-level windows, or
+       NULL to post to the calling thread as PostThreadMessageW does.
+@param Msg The message.
+@param wParam Message-specific value.
+@param lParam Message-specific value.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## PostQuitMessage(nExitCode)
+Posts WM_QUIT to the calling thread's queue and returns straight away.
+
+Usually called from WM_DESTROY of the main window. GetMessageW returns 0
+when it gets WM_QUIT; end the message loop and return its wParam from
+WinMain.
+
+@param nExitCode Exit code, passed as WM_QUIT's wParam.
+
+## PostThreadMessageW(idThread, Msg, wParam, lParam)
+Queues a message for a thread and returns without waiting.
+
+Fails if the thread has no message queue yet; a thread gets one on its
+first call to a message or window creation function. The message arrives
+with a NULL hwnd.
+
+@param idThread Thread identifier, e.g. from GetCurrentThreadId.
+@param Msg The message.
+@param wParam Message-specific value.
+@param lParam Message-specific value.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## PtInRect(lprc, pt)
+Tests whether a point lies in a rectangle.
+
+Points on the left and top edges are inside; points on the right and
+bottom edges are outside.
+
+@param lprc The rectangle.
+@param pt The point, passed by value.
+@return TRUE if the point is inside, otherwise FALSE.
+
+## RegisterClassW(lpWndClass)
+Registers a window class for CreateWindowExW.
+
+Classes are unregistered when the application exits. Windows CE has no
+default menus, so lpszMenuName must be NULL, and hCursor must be NULL
+unless the platform supports mouse cursors.
+
+@param lpWndClass Class attributes. On Windows CE, set hCursor and
+       lpszMenuName to NULL.
+@return Atom identifying the class, or 0 on failure (see GetLastError).
+
+## RegisterClipboardFormatW(lpszFormat)
+Registers a named clipboard format, or returns the existing one with the
+same name.
+
+Applications that register the same name share the format. Windows CE
+supports only the wide-character version.
+
+@param lpszFormat Format name.
+@return The format, or 0 on failure (see GetLastError).
+
+## RegisterHotKey(hWnd, id, fsModifiers, vk)
+Defines a system-wide hot key that posts WM_HOTKEY to a window.
+
+Works across threads. Remove with UnregisterHotKey. Windows CE adds
+MOD_KEYUP, which also sends WM_HOTKEY when the key is released.
+
+@param hWnd Window to receive WM_HOTKEY, or NULL for the calling thread's
+       queue.
+@param id Hot key identifier, passed as WM_HOTKEY's wParam.
+@param fsModifiers MOD_ALT, MOD_CONTROL, MOD_SHIFT, MOD_WIN and MOD_KEYUP,
+       combined.
+@param vk Virtual-key code.
+@return TRUE on success, FALSE on failure, e.g. if the hot key is taken
+        (see GetLastError).
+
+## RegisterWindowMessageW(lpString)
+Returns a message number unique across the system for a name.
+
+Applications that register the same name get the same value, so it can be
+used for messages between applications.
+
+@param lpString Message name.
+@return A message in the range 0xC000 to 0xFFFF, or 0 on failure (see
+        GetLastError).
+
+## ReleaseCapture()
+Releases stylus capture held by a window in the calling thread.
+
+The window losing capture gets WM_CAPTURECHANGED. Pair with SetCapture.
+
+@return TRUE on success, FALSE on failure.
+
+## ReleaseDC(hWnd, hDC)
+Releases a device context from GetDC or GetWindowDC.
+
+Call once for each GetDC and GetWindowDC. Don't use it for DCs from
+CreateDC or BeginPaint.
+
+@param hWnd The window the DC belongs to.
+@param hDC The device context.
+@return 1 if released, otherwise 0.
+
+## RemoveMenu(hMenu, uPosition, uFlags)
+Removes an item from a menu without destroying any pop-up it opens.
+
+Get the pop-up's handle with GetSubMenu first if you want to reuse it;
+DeleteMenu destroys it instead. Call DrawMenuBar after changing a menu.
+On Windows CE 1.0, items can only be removed from pop-up menus.
+
+@param hMenu The menu.
+@param uPosition Item identifier or zero-based position, per uFlags.
+@param uFlags MF_BYCOMMAND (default) or MF_BYPOSITION.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## ScreenToClient(hWnd, lpPoint)
+Converts a point from screen to client coordinates.
+
+@param hWnd Window whose client area to convert to.
+@param lpPoint Point in screen coordinates, converted in place.
+@return TRUE on success, FALSE on failure.
+
+## ScrollDC(hDC, dx, dy, lprcScroll, lprcClip, hrgnUpdate, lprcUpdate)
+Scrolls a rectangle of bits in a device context.
+
+Windows CE scrolls on one axis per call: only one of dx and dy can be
+nonzero.
+
+@param hDC Device context holding the bits to scroll.
+@param dx Horizontal scroll in device units, negative to scroll left.
+@param dy Vertical scroll in device units, negative to scroll up.
+@param lprcScroll The rectangle to scroll.
+@param lprcClip Clipping rectangle. Only bits inside it are affected.
+@param hrgnUpdate Region that receives the area uncovered by scrolling,
+       or NULL.
+@param lprcUpdate Receives the bounding rectangle of the uncovered area,
+       in client coordinates, or NULL.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## ScrollWindowEx(hWnd, dx, dy, prcScroll, prcClip, hrgnUpdate, prcUpdate, flags)
+Scrolls the contents of a window's client area.
+
+Without SW_INVALIDATE or SW_ERASE, the area scrolled away from is not
+invalidated. Windows CE scrolls on one axis per call: only one of dx and
+dy can be nonzero. All coordinates are client coordinates.
+
+@param hWnd Window to scroll.
+@param dx Horizontal scroll in device units, negative to scroll left.
+@param dy Vertical scroll in device units, negative to scroll up.
+@param prcScroll Part of the client area to scroll, or NULL for all of it.
+@param prcClip Clipping rectangle. Only bits inside it are affected.
+@param hrgnUpdate Region that receives the invalidated area, or NULL.
+@param prcUpdate Receives the bounds of the invalidated area, or NULL.
+@param flags 0, or SW_INVALIDATE, optionally with SW_ERASE to send
+       WM_ERASEBKGND. Windows CE doesn't support SW_SCROLLCHILDREN.
+@return SIMPLEREGION, COMPLEXREGION or NULLREGION describing the
+        invalidated area, or ERROR on failure.
+
+## SendDlgItemMessageW(hDlg, nIDDlgItem, Msg, wParam, lParam)
+Sends a message to a control in a dialog box and waits for the result.
+
+Equivalent to SendMessageW on the handle from GetDlgItem.
+
+@param hDlg Dialog box containing the control.
+@param nIDDlgItem Control identifier.
+@param Msg Message to send.
+@param wParam Message-specific value.
+@param lParam Message-specific value.
+@return The message's result, which depends on the message.
+
+## SendInput(nInputs, pInputs, cbSize)
+Injects a sequence of keyboard, stylus or mouse events into the input
+stream.
+
+Windows CE doesn't support INPUT_HARDWARE events.
+
+@param nInputs Number of INPUT structures in pInputs.
+@param pInputs Array of INPUT structures, each INPUT_KEYBOARD or
+       INPUT_MOUSE.
+@param cbSize sizeof(INPUT).
+@return The number of events inserted, or 0 if input was blocked or the
+        call failed (see GetLastError).
+
+## SendMessageW(hWnd, Msg, wParam, lParam)
+Sends a message to a window procedure and waits until it has been
+processed.
+
+For a window owned by the calling thread the window procedure is called
+directly; otherwise the call switches to the owning thread. Use
+PostMessageW to queue a message without waiting. Windows CE doesn't
+implement every desktop message, so check the message is supported.
+
+@param hWnd Target window, or HWND_BROADCAST for all top-level windows.
+@param Msg Message to send.
+@param wParam Message-specific value.
+@param lParam Message-specific value.
+@return The message's result, which depends on the message.
+
+## SendNotifyMessageW(hwnd, uMsg, wParam, lParam)
+Sends a message, waiting only if the window belongs to the calling
+thread.
+
+For a window owned by another thread the message is handed over and the
+call returns at once without waiting for it to be processed.
+
+@param hwnd Target window.
+@param uMsg Message to send.
+@param wParam Message-specific value.
+@param lParam Message-specific value.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## SetActiveWindow(hWnd)
+Activates a top-level window owned by the calling thread.
+
+The window must have been created by the calling thread. To bring
+another application's window to the front, use SetForegroundWindow.
+
+@param hWnd Top-level window to activate.
+@return The previously active window, or NULL.
+
+## SetCapture(hWnd)
+Directs all stylus input to a window owned by the calling thread.
+
+Only one window holds the capture at a time; release it with
+ReleaseCapture. On Windows CE the capture applies whatever the window
+under the stylus, unlike the desktop rule that depends on a mouse button
+being held. Tapping another window can still bring it to the foreground.
+
+@param hWnd Window, owned by the calling thread, to capture input.
+@return The window that previously had the capture, or NULL.
+
+## SetCaretBlinkTime(wMSeconds)
+Sets the caret blink interval.
+
+Intended for applications that let the user change this setting, such
+as a Control Panel applet. Only change it while the window owns the
+caret, and restore the old value before losing focus. On Windows CE 2.0
+and later the change doesn't carry over to applications started
+afterwards.
+
+@param wMSeconds Time between caret inversions, in milliseconds.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## SetCaretPos(X, Y)
+Moves the caret, whether or not it is visible.
+
+@param X New x-coordinate, in the owning window's client coordinates.
+@param Y New y-coordinate, in the owning window's client coordinates.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## SetClassLongW(hWnd, nIndex, dwNewLong)
+Sets a 32-bit value in the extra class memory of a window's class.
+
+Reserve the memory with the cbClsExtra member of WNDCLASS. Changes such
+as class colours don't immediately repaint existing windows. On Windows
+CE 1.0 no GCL_* values are supported. Windows CE 2.0 and later accept
+GCL_HCURSOR, and only on platforms with a mouse cursor.
+
+@param hWnd A window of the class to change.
+@param nIndex Byte offset into the extra class memory, or a supported
+       GCL_* index. Offsets must be a multiple of 4: unaligned access
+       isn't supported.
+@param dwNewLong The new value.
+@return The previous value, or 0 if unset or on failure (see
+       GetLastError).
+
+## SetClipboardData(uFormat, hMem)
+Places data on the clipboard in the given format.
+
+Call OpenClipboard and EmptyClipboard first. Windows CE doesn't convert
+between formats, so put text on as CF_UNICODETEXT and anything else
+readers may need explicitly.
+
+@param uFormat A standard CF_* format or one from
+       RegisterClipboardFormatW. Windows CE doesn't support
+       CF_GDIOBJFIRST to CF_GDIOBJLAST, CF_PRIVATEFIRST to CF_PRIVATELAST,
+       CF_DSPBITMAP, CF_DSPENHMETAFILE, CF_DSPMETAFILEPICT, CF_DSPTEXT,
+       CF_HDROP, CF_LOCALE or CF_OWNERDISPLAY.
+@param hMem The data, allocated with LocalAlloc, or NULL to render it
+       later on WM_RENDERFORMAT. The system owns it after the call: don't
+       free it.
+@return The data handle, or NULL on failure (see GetLastError).
+
+## SetCursor(hcur)
+Sets the cursor shape and returns the previous one.
+
+On devices without a mouse cursor, as on H/PCs, only the wait cursor
+exists: show it with SetCursor(LoadCursor(NULL, IDC_WAIT)) and hide it
+with SetCursor(NULL). The wait cursor is tracked per thread and shown
+only while the requesting thread is in the foreground. Platforms with a
+mouse cursor support other cursors, but not colour ones.
+
+@param hcur The cursor, or NULL for none.
+@return The calling thread's previous cursor.
+
+## SetCursorPos(x, y)
+Moves the cursor to screen coordinates.
+
+A clipped cursor is kept within the ClipCursor rectangle. The cursor is
+shared; move it only while it is in the calling window's client area.
+The process needs WINSTA_WRITEATTRIBUTES access to the window station.
+
+@param x New horizontal screen coordinate.
+@param y New vertical screen coordinate.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## SetDlgItemInt(hDlg, nIDDlgItem, uValue, bSigned)
+Sets a dialog control's text to a decimal number.
+
+Sends WM_SETTEXT to the control.
+
+@param hDlg Dialog box containing the control.
+@param nIDDlgItem Control identifier.
+@param uValue The number. Windows CE always treats it as signed.
+@param bSigned Ignored on Windows CE.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## SetDlgItemTextW(hDlg, nIDDlgItem, lpString)
+Sets the text of a control in a dialog box.
+
+Sends WM_SETTEXT to the control.
+
+@param hDlg Dialog box containing the control.
+@param nIDDlgItem Control identifier.
+@param lpString The new text.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## SetFocus(hWnd)
+Gives a window the keyboard focus.
+
+Sends WM_KILLFOCUS to the window losing focus and WM_SETFOCUS to the one
+gaining it, and may activate the window or its parent. The window must
+belong to the calling thread. Windows CE 2.0 and later also allow a
+child or sibling window owned by another thread when they share a
+parent. Use SetForegroundWindow to bring an application to the front.
+
+@param hWnd Window to receive keyboard input, or NULL to ignore
+       keystrokes.
+@return The window that had the focus, or NULL if none or on failure.
+
+## SetForegroundWindow(hWnd)
+Activates a window and brings its thread to the foreground.
+
+Windows CE doesn't give the thread a priority boost.
+
+@param hWnd Window to activate.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## SetMenuItemInfoW(hmenu, uItem, fByPosition, pmii)
+Changes a menu item's identifier, data or text.
+
+Windows CE accepts only MIIM_DATA, MIIM_ID and MIIM_TYPE in fMask. With
+MIIM_TYPE, fType must be the item's current type: the type can't be
+changed, only the text.
+
+@param hmenu Menu containing the item.
+@param uItem Item identifier or zero-based position, per fByPosition.
+@param fByPosition FALSE if uItem is an identifier, TRUE if a position.
+@param pmii MENUITEMINFOW with cbSize and fMask set.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## SetParent(hWndChild, hWndNewParent)
+Changes a window's parent.
+
+Both windows must belong to the same application. A visible window is
+redrawn.
+
+@param hWndChild Window to move.
+@param hWndNewParent New parent, or NULL for the desktop.
+@return The previous parent, or NULL on failure (see GetLastError).
+
+## SetRect(lprc, xLeft, yTop, xRight, yBottom)
+Fills in the coordinates of a RECT.
+
+@param lprc Rectangle to set.
+@param xLeft Left edge.
+@param yTop Top edge.
+@param xRight Right edge.
+@param yBottom Bottom edge.
+@return TRUE on success, FALSE on failure.
+
+## SetRectEmpty(lprc)
+Sets all of a RECT's coordinates to zero.
+
+@param lprc Rectangle to clear.
+@return TRUE on success, FALSE on failure.
+
+## SetScrollInfo(hwnd, fnBar, lpsi, fRedraw)
+Sets a scroll bar's range, page size and thumb position.
+
+nPage and nPos are clamped to the range. With a NULL lpsi, Windows CE
+2.0 returns 0; Windows CE 2.10 and later return the current position
+and set ERROR_INVALID_PARAMETER.
+
+@param hwnd Scroll bar control, or window owning a standard scroll bar.
+@param fnBar SB_CTL for a scroll bar control, SB_HORZ or SB_VERT for a
+       window's standard scroll bar.
+@param lpsi SCROLLINFO with cbSize set and fMask selecting what to set:
+       SIF_RANGE, SIF_PAGE, SIF_POS and SIF_DISABLENOSCROLL (disable
+       rather than hide an unneeded scroll bar).
+@param fRedraw TRUE to redraw the scroll bar.
+@return The current thumb position.
+
+## SetScrollPos(hWnd, nBar, nPos, bRedraw)
+Sets the thumb position of a scroll bar.
+
+Kept for compatibility; SetScrollInfo does the same and more.
+
+@param hWnd Scroll bar control, or window owning a standard scroll bar.
+@param nBar SB_CTL, SB_HORZ or SB_VERT.
+@param nPos New position, within the scroll range.
+@param bRedraw TRUE to redraw the scroll bar.
+@return The previous position, or 0 on failure (see GetLastError).
+
+## SetScrollRange(hWnd, nBar, nMinPos, nMaxPos, bRedraw)
+Sets the minimum and maximum positions of a scroll bar.
+
+Kept for compatibility; SetScrollInfo does the same and more. Setting
+both limits to 0 hides a standard scroll bar; don't do that while
+handling a scroll message. The range can't exceed MAXLONG.
+
+@param hWnd Scroll bar control, or window owning a standard scroll bar.
+@param nBar SB_CTL, SB_HORZ or SB_VERT.
+@param nMinPos Minimum position.
+@param nMaxPos Maximum position.
+@param bRedraw TRUE to redraw the scroll bar.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## SetSysColors(cElements, lpaElements, lpaRgbValues)
+Changes the colours of one or more display elements.
+
+Sends WM_SYSCOLORCHANGE to top-level windows so they can repaint.
+
+@param cElements Number of entries in both arrays.
+@param lpaElements Array of COLOR_* display element indices.
+@param lpaRgbValues Array of new colours, matching lpaElements.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## SetTimer(hWnd, nIDEvent, uElapse, lpTimerFunc)
+Creates or resets a timer that fires repeatedly.
+
+Each time-out posts WM_TIMER, with the timer identifier in wParam, or
+calls lpTimerFunc. Destroy the timer with KillTimer.
+
+@param hWnd Window to receive WM_TIMER, or NULL for a timer not tied to
+       a window.
+@param nIDEvent Nonzero timer identifier. Ignored if hWnd is NULL.
+       Reusing an identifier for the same window replaces that timer.
+@param uElapse Interval, in milliseconds.
+@param lpTimerFunc TimerProc callback, or NULL to post WM_TIMER.
+@return The timer identifier, or 0 on failure.
+
+## SetWindowLongW(hWnd, nIndex, dwNewLong)
+Changes a window attribute or a 32-bit value in its extra window memory.
+
+GWL_WNDPROC subclasses the window: pass unhandled messages on to the old
+procedure with CallWindowProcW. After changing GWL_STYLE, call
+SetWindowPos with SWP_FRAMECHANGED to redraw the frame. Don't use
+GWL_HWNDPARENT to change a child window's parent; use SetParent. A
+previous value of 0 is indistinguishable from failure, so call
+SetLastError(0) first if it matters.
+
+@param hWnd Window to change.
+@param nIndex Byte offset into extra window memory (a multiple of 4,
+       reserved with cbWndExtra), or GWL_STYLE, GWL_EXSTYLE,
+       GWL_WNDPROC, GWL_ID or GWL_USERDATA. For dialogs, also
+       DWL_MSGRESULT, DWL_USER and DWL_DLGPROC. Windows CE doesn't
+       support GWL_HINSTANCE or GWL_HWNDPARENT. Windows CE 1.0 doesn't
+       support DWL_DLGPROC, and the Windows CE 1.0 and 2.0 references
+       list GWL_USERDATA as unsupported.
+@param dwNewLong The new value.
+@return The previous value, or 0 on failure (see GetLastError).
+
+## SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, uFlags)
+Changes a window's size, position and z-order.
+
+A visible top-level window is activated unless SWP_NOACTIVATE is given.
+Windows CE sends only WM_WINDOWPOSCHANGED, with the flags passed here.
+SWP_FRAMECHANGED is the only way to recalculate and redraw the
+non-client area, e.g. after changing the style with SetWindowLongW.
+SWP_SHOWWINDOW or SWP_HIDEWINDOW prevents moving or resizing in the same
+call.
+
+@param hWnd Window to change.
+@param hWndInsertAfter Window to place it behind, HWND_TOP, HWND_BOTTOM,
+       HWND_TOPMOST or HWND_NOTOPMOST. Windows CE 1.0 doesn't support
+       HWND_TOPMOST or HWND_NOTOPMOST.
+@param X New left edge; client coordinates of the parent for a child.
+@param Y New top edge.
+@param cx New width, in pixels.
+@param cy New height, in pixels.
+@param uFlags SWP_* flags: SWP_NOMOVE, SWP_NOSIZE, SWP_NOZORDER,
+       SWP_NOACTIVATE, SWP_SHOWWINDOW, SWP_HIDEWINDOW, SWP_FRAMECHANGED.
+       Windows CE doesn't support SWP_NOCOPYBITS, and Windows CE 1.0
+       doesn't support SWP_DRAWFRAME.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## SetWindowRgn(hWnd, hRgn, bRedraw)
+Sets a region that limits the portion of a window the system displays.
+
+Coordinates are relative to the window's upper-left corner. After
+success, the system owns hRgn; do not use or delete it. CE rejects
+regions that cover the entire screen or extend beyond it. Available
+from Windows CE 2.12.
+
+@param hWnd Window whose region to set.
+@param hRgn Region to assign, or NULL to remove the region.
+@param bRedraw TRUE to redraw the window after setting the region.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## SetWindowTextW(hWnd, lpString)
+Sets a window's title or a control's text.
+
+Sends WM_SETTEXT. Tab characters aren't expanded.
+
+@param hWnd Window or control.
+@param lpString The new text.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## ShowCaret(hWnd)
+Makes the caret visible and starts it blinking.
+
+Hiding is counted: each HideCaret needs a matching ShowCaret. Fails if
+the window doesn't own the caret or the caret has no shape.
+
+@param hWnd Window owning the caret, or NULL to find it in the current
+       task.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## ShowCursor(bShow)
+Increments or decrements the cursor display counter.
+
+The cursor is displayed while the counter is nonnegative. It starts at
+zero when a mouse is installed and at -1 otherwise.
+
+@param bShow TRUE to increment the counter, FALSE to decrement it.
+@return New display-counter value.
+
+## ShowWindow(hWnd, nCmdShow)
+Shows, hides or activates a window.
+
+@param hWnd The window.
+@param nCmdShow SW_HIDE, SW_SHOW, SW_SHOWNA, SW_SHOWNOACTIVATE or
+       SW_SHOWNORMAL; for the first call, WinMain's nCmdShow. Windows CE
+       doesn't support SW_MAXIMIZE, SW_MINIMIZE, SW_RESTORE,
+       SW_SHOWDEFAULT, SW_SHOWMAXIMIZED, SW_SHOWMINIMIZED or
+       SW_SHOWMINNOACTIVE.
+@return TRUE if the window was visible before, FALSE if it was hidden.
+
+## SubtractRect(lprcDst, lprcSrc1, lprcSrc2)
+Subtracts one rectangle from another.
+
+The result differs from lprcSrc1 only when lprcSrc2 spans it completely
+in one direction, so the remainder is still a rectangle.
+
+@param lprcDst Receives the result.
+@param lprcSrc1 Rectangle to subtract from.
+@param lprcSrc2 Rectangle to subtract.
+@return Nonzero on success, 0 on failure.
+
+## SystemIdleTimerReset()
+Resets the system idle timer, keeping the device from suspending for
+inactivity.
+
+Call it periodically during long operations without user input.
+
+## SystemParametersInfoW(uiAction, uiParam, pvParam, fWinIni)
+Gets or sets a system-wide setting.
+
+For SPI_GETOEMINFO and SPI_GETPLATFORMTYPE, a buffer that is too small
+fails with ERROR_INSUFFICIENT_BUFFER.
+
+@param uiAction One of the few actions Windows CE supports:
+       SPI_GETWORKAREA, SPI_SETWORKAREA, SPI_GETMOUSE, SPI_SETMOUSE,
+       SPI_GETOEMINFO, SPI_GETPLATFORMTYPE, and SPI_GET* or SPI_SET* for
+       BATTERYIDLETIMEOUT, EXTERNALIDLETIMEOUT and WAKEUPIDLETIMEOUT
+       (suspend time-outs on battery, on AC power, and after a wake-up
+       notification).
+@param uiParam For SPI_SET*IDLETIMEOUT, the time-out in seconds (0 is
+       ignored). For SPI_GETOEMINFO and SPI_GETPLATFORMTYPE, the size of
+       the buffer at pvParam. Otherwise usually 0.
+@param pvParam Action-specific: a RECT for the work area, a DWORD that
+       receives a time-out in seconds, a buffer for a string.
+@param fWinIni 0 or SPIF_UPDATEINIFILE. Windows CE doesn't support
+       SPIF_SENDWININICHANGE.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## TrackPopupMenuEx(hMenu, uFlags, x, y, hWnd, lptpm)
+Shows a pop-up menu and tracks the selection until it closes.
+
+The chosen command arrives as WM_COMMAND to hWnd after the function
+returns, unless TPM_RETURNCMD is used. Get the menu from CreatePopupMenu
+or GetSubMenu.
+
+@param hMenu Pop-up menu to show.
+@param uFlags TPM_* alignment flags and TPM_RETURNCMD. Windows CE doesn't
+       support TPM_NONOTIFY, TPM_LEFTBUTTON, TPM_RIGHTBUTTON,
+       TPM_HORIZONTAL or TPM_VERTICAL.
+@param x Horizontal position, in screen coordinates.
+@param y Vertical position, in screen coordinates.
+@param hWnd Window that owns the menu and receives its messages.
+@param lptpm Must be NULL on Windows CE.
+@return Nonzero on success, 0 on failure (see GetLastError). With
+        TPM_RETURNCMD, the chosen item's identifier, or 0 if none.
+
+## TranslateAcceleratorW(hWnd, hAccTable, lpMsg)
+Translates an accelerator keystroke into WM_COMMAND and sends it.
+
+Call it in the message loop before TranslateMessage, and skip
+TranslateMessage and DispatchMessage when it returns nonzero. The
+WM_COMMAND has 1 in the high word of wParam. Windows CE translates every
+accelerator into WM_COMMAND, never WM_SYSCOMMAND.
+
+@param hWnd Window to receive the WM_COMMAND.
+@param hAccTable Table from LoadAcceleratorsW or CreateAcceleratorTableW.
+@param lpMsg Message from GetMessageW or PeekMessageW.
+@return Nonzero if the message was translated, 0 if not.
+
+## TranslateMessage(lpMsg)
+Posts character messages for virtual-key messages.
+
+WM_KEYDOWN and WM_KEYUP produce WM_CHAR or WM_DEADCHAR, and the WM_SYS*
+equivalents produce WM_SYSCHAR or WM_SYSDEADCHAR. Only works on messages
+from GetMessageW or PeekMessageW. Windows CE has no scan codes or
+extended key flag, so bits 16 to 24 of the generated WM_CHAR's lParam
+aren't set.
+
+@param lpMsg Message from GetMessageW or PeekMessageW.
+@return TRUE if a character message was posted, FALSE otherwise.
+
+## UnhookWindowsHookEx(hhk)
+Removes a hook procedure installed with SetWindowsHookEx.
+
+The hook may still be executing on another thread when this call returns.
+
+@param hhk Hook handle to remove.
+@return TRUE on success, FALSE on failure; use GetLastError.
+
+## UnionRect(lprcDst, lprcSrc1, lprcSrc2)
+Computes the smallest rectangle containing two rectangles.
+
+Empty rectangles are ignored.
+
+@param lprcDst Receives the union.
+@param lprcSrc1 First rectangle.
+@param lprcSrc2 Second rectangle.
+@return TRUE if the union is not empty, FALSE if it is.
+
+## UnregisterClassW(lpClassName, hInstance)
+Removes a window class registered by the application.
+
+Destroy every window of the class first. Classes are unregistered
+automatically when the application exits. System classes can't be
+removed.
+
+@param lpClassName Class name, or an atom from RegisterClassW in the low
+       word.
+@param hInstance Module that registered the class.
+@return TRUE on success, FALSE if the class wasn't found or still has
+        windows (see GetLastError).
+
+## UnregisterHotKey(hWnd, id)
+Frees a hot key registered by the calling thread.
+
+@param hWnd Window passed to RegisterHotKey.
+@param id Identifier passed to RegisterHotKey.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## UpdateWindow(hWnd)
+Repaints a window immediately if it has an update region.
+
+Sends WM_PAINT straight to the window procedure, bypassing the queue.
+Does nothing if the update region is empty.
+
+@param hWnd Window to update.
+@return TRUE on success, FALSE on failure.
+
+## ValidateRect(hWnd, lpRect)
+Removes a rectangle from a window's update region.
+
+WM_PAINT keeps arriving until the update region is validated. BeginPaint
+validates the whole client area.
+
+@param hWnd The window. Windows CE doesn't accept NULL.
+@param lpRect Rectangle to validate, in client coordinates.
+@return TRUE on success, FALSE on failure.
+
+## WindowFromPoint(Point)
+Returns the window at a point on the screen.
+
+Hidden and disabled windows are skipped; ChildWindowFromPoint doesn't
+skip them.
+
+@param Point The point, in screen coordinates.
+@return The window, or NULL if there is none at the point.
+
+## wsprintfW(lpOut, lpFmt)
+Formats values into a string buffer, printf style.
+
+Supports %[-][#][0][width][.precision]type with types c, d, i, u, x, X,
+s and S, but not floating point: %f prints f and misreads the values
+after it. Output stops at 1023 characters plus the terminating null, and
+the return value is then 1024. There's no other buffer size check, so
+make lpOut large enough. Only the Unicode version exists on Windows CE.
+
+@param lpOut Buffer that receives the output.
+@param lpFmt Format string, followed by the values to format.
+@return Characters written, not counting the terminating null, or a
+        value less than the format string's length on failure.
+
+## wvsprintfW(lpOut, lpFmt, arglist)
+Formats values from a va_list into a string buffer, printf style.
+
+Same formats and 1023-character limit as wsprintfW. There's no other
+buffer size check. Only the Unicode version exists on Windows CE.
+
+@param lpOut Buffer that receives the output.
+@param lpFmt Format string.
+@param arglist Values to format, from va_start.
+@return Characters written, not counting the terminating null, or a
+        value less than the format string's length on failure.

@@ -1,0 +1,20 @@
+## _isctype(character, type)
+Tests whether a character has the specified classification property.
+
+The result is independent of locale.
+
+@param character Integer character to test.
+@param type Classification property to test.
+@return Nonzero if the character has the property, or 0 otherwise.
+
+## tolower(character)
+Converts a character to lowercase.
+
+@param character Character to convert, as an unsigned char value or EOF.
+@return The lowercase character, or character unchanged if it has none.
+
+## toupper(character)
+Converts a character to uppercase.
+
+@param character Character to convert, as an unsigned char value or EOF.
+@return The uppercase character, or character unchanged if it has none.

@@ -1,0 +1,1122 @@
+## AbnormalTermination
+This function indicates whether the try block of a try-finally statement
+terminated normally. This function can be called only from within the
+finally block of a try-finally statement.
+
+The Excpt.h file has to be explicitly included in order to use this
+function.
+
+The try block terminates normally only if execution leaves the block
+sequentially after executing the last statement in the block. Statements
+(such as return, goto, continue, or break) that cause execution to leave
+the try block result in abnormal termination of the block. This is the
+case even if such a statement is the last statement in the try block.
+
+Abnormal termination of a try block causes the system to search backward
+through all stack frames to determine whether any termination handlers
+must be called. This can result in the execution of hundreds of
+instructions, so it is important to avoid abnormal termination of a try
+block due to a return, goto, continue, or break statement. Note that
+these statements do not generate an exception, even though the
+termination is abnormal.
+
+To avoid abnormal termination of the try-finally block, execution should
+continue to the end of the block. You can also execute the leave
+statement. The leave statement allows for immediate termination of the
+try block without causing abnormal termination and its performance
+penalty. Check your compiler documentation to determine if the leave
+statement is supported.
+
+@return Nonzero indicates that the try block of the try-finally
+       statement terminated abnormally. Zero indicates that the try
+       block of the try-finally statement terminated normally.
+
+## BY_HANDLE_FILE_INFORMATION
+This structure contains information retrieved by the
+GetFileInformationByHandle function.
+
+@member dwFileAttributes Specifies file attributes. It can be one or
+       more of the following values: Value Description
+       FILE_ATTRIBUTE_ARCHIVE The file or directory is an archive file.
+       Applications use this attribute to mark files for backup or
+       removal. FILE_ATTRIBUTE_COMPRESSED The file or directory is
+       compressed. For a file, this means that all of the data in the
+       file is compressed. For a directory, this means that compression
+       is the default for newly created files and subdirectories.
+       FILE_ATTRIBUTE_DIRECTORY The handle identifies a directory.
+       FILE_ATTRIBUTE_ENCRYPTED The file or directory is encrypted. For
+       a file, this means that all of the data streams are encrypted.
+       For a directory, this means that encryption is the default for
+       newly created files and directories. FILE_ATTRIBUTE_HIDDEN The
+       file or directory is hidden. It is not included in an ordinary
+       directory listing. FILE_ATTRIBUTE_INROM This file is an operating
+       system file stored in ROM. These files are read-only; they cannot
+       be modified. FILE_ATTRIBUTE_NORMAL The file has no other
+       attributes. This attribute is valid only if used alone.
+       FILE_ATTRIBUTE_OFFLINE The file data is not immediately
+       available. Indicates that the file data has been physically moved
+       to offline storage. FILE_ATTRIBUTE_READONLY The file or directory
+       is read-only. Applications can read the file but cannot write to
+       it or delete it. In the case of a directory, applications cannot
+       delete it. FILE_ATTRIBUTE_REPARSE_POINT The file has an
+       associated reparse point. FILE_ATTRIBUTE_ROMMODULE This file is
+       an operating system file stored in ROM, designed to execute in
+       place. In other words, code from this file is executed directly
+       from ROM, rather than being first copied to RAM. The CreateFile
+       function cannot be used to access this file, instead the
+       LoadLibrary and CreateProcess functions must be used.
+       FILE_ATTRIBUTE_ROMSTATICREF The DLL module is statically linked
+       to another module in the ROM file system. This prevents the DLL
+       module from being replaced by a RAM version of the DLL.
+       FILE_ATTRIBUTE_SPARSE_FILE The file is a sparse file.
+       FILE_ATTRIBUTE_SYSTEM The file or directory is part of the
+       operating system or is used exclusively by the operating system.
+       FILE_ATTRIBUTE_TEMPORARY The file is being used for temporary
+       storage. File systems attempt to keep all the data in memory for
+       quicker access, rather than flushing the data back to mass
+       storage. A temporary file should be deleted by the application as
+       soon as it is no longer needed.
+@member ftCreationTime Specifies the time the file was created. If the
+       underlying file system does not support this time member,
+       ftCreationTime is zero.
+@member ftLastAccessTime Specifies the time the file was last accessed.
+       If the underlying file system does not support this time member,
+       ftLastAccessTime is zero.
+@member ftLastWriteTime Specifies the last time the file was written to.
+@member dwVolumeSerialNumber Specifies the serial number of the volume
+       that contains the file.
+@member nFileSizeHigh Specifies the high-order word of the file size.
+@member nFileSizeLow Specifies the low-order word of the file size.
+@member nNumberOfLinks Specifies the number of links to this file. For
+       the FAT file system this member is always 1. For NTFS, it may be
+       more than 1.
+@member nFileIndexHigh Specifies the high-order word of a unique
+       identifier associated with the file.
+@member nFileIndexLow Specifies the low-order word of a unique
+       identifier associated with the file. This identifier and the
+       volume serial number uniquely identify a file. This number may
+       change when the system is restarted or when the file is opened.
+       After a process opens a file, the identifier is constant until
+       the file is closed. An application can use this identifier and
+       the volume serial number to determine whether two handles refer
+       to the same file.
+
+## COMMPROP
+This structure is used by the GetCommProperties function to return
+specific communication support driver data.
+
+The contents of the dwProvSpec1, dwProvSpec2, and wcProvChar members
+depend on the provider subtype; this is specified by the dwProvSubType
+member.
+
+If the provider subtype is PST_MODEM, these members are used as follows:
+
+Value Description dwProvSpec1 Not used dwProvSpec2 Not used wcProvChar
+Contains a MODEMDEVCAPS structure
+
+@member wPacketLength Specifies the size, in bytes, of the entire data
+       packet, regardless of the amount of data requested.
+@member wPacketVersion Specifies the version of the structure.
+@member dwServiceMask Specifies a bitmask indicating which services are
+       implemented by this provider. The SP_SERIALCOMM value is always
+       specified for communications providers, including modem
+       providers.
+@member dwReserved1 Reserved; do not use.
+@member dwMaxTxQueue Specifies the maximum size, in bytes, of the
+       driver's internal output buffer. A value of zero indicates that
+       no maximum value is imposed by the serial provider.
+@member dwMaxRxQueue Specifies the maximum size, in bytes, of the
+       driver's internal input buffer. A value of zero indicates that no
+       maximum value is imposed by the serial provider.
+@member dwMaxBaud Specifies the maximum acceptable baud rate, in bits
+       per second (bps). It is one of the following values: Value
+       Description BAUD_075 75 bps BAUD_110 110 bps BAUD_134_5 134.5 bps
+       BAUD_150 150 bps BAUD_300 300 bps BAUD_600 600 bps BAUD_1200 1200
+       bps BAUD_1800 1800 bps BAUD_2400 2400 bps BAUD_4800 4800 bps
+       BAUD_7200 7200 bps BAUD_9600 9600 bps BAUD_14400 14400 bps
+       BAUD_19200 19200 bps BAUD_38400 38400 bps BAUD_56K 56K bps
+       BAUD_57600 57600 bps BAUD_115200 115200 bps BAUD_128K 128K bps
+       BAUD_USER Programmable baud rates available
+@member dwProvSubType Specifies the specific communications provider
+       type. It is one of the following values: Value Description
+       PST_FAX FAX device PST_LAT LAT protocol PST_MODEM Modem device
+       PST_NETWORK_BRIDGE Unspecified network bridge PST_PARALLELPORT
+       Parallel port PST_RS232 RS-232 serial port PST_RS422 RS-422 port
+       PST_RS423 RS-423 port PST_RS449 RS-449 port PST_SCANNER Scanner
+       device PST_TCPIP_TELNET TCP/IP Telnet(R) protocol PST_UNSPECIFIED
+       Unspecified PST_X25 X.25 standards
+@member dwProvCapabilities Indicates the capabilities offered by the
+       provider. It is one of the following values: Value Description
+       PCF_16BITMODE Special 16-bit mode is supported. PCF_DTRDSR DTR
+       (Data Terminal Ready) and DSR (Data Set Ready) are supported.
+       PCF_INTTIMEOUTS Interval time-outs are supported.
+       PCF_PARITY_CHECK Parity checking is supported. PCF_RLSD RLSD
+       (Receive Line Signal Detect) is supported. PCF_RTSCTS RTS
+       (Request to Send) and CTS (Clear to Send) are supported.
+       PCF_SETXCHAR XON and XOFF are supported. PCF_SPECIALCHARS Special
+       character support is provided. PCF_TOTALTIMEOUTS Total, elapsed,
+       time-outs are supported. PCF_XONXOFF XON and XOFF flow control
+       are supported.
+@member dwSettableParams Indicates the communication parameter that can
+       be changed. It is one of the following values: Value Description
+       SP_BAUD Baud rate SP_DATABITS Data bits SP_HANDSHAKING
+       Handshaking (flow control) SP_PARITY Parity SP_PARITY_CHECK
+       Parity checking SP_RLSD Receive Line Signal Detect SP_STOPBITS
+       Stop bits
+@member dwSettableBaud Indicates the baud rates that can be used. For
+       values, see the dwMaxBaud member.
+@member wSettableData Indicates the number of data bits that can be set.
+       It is one of the following values: Value Description DATABITS_5 5
+       data bits DATABITS_6 6 data bits DATABITS_7 7 data bits
+       DATABITS_8 8 data bits DATABITS_16 16 data bits DATABITS_16X
+       Special wide path through serial hardware lines
+@member wSettableStopParity Indicates the stop bit and parity settings
+       that can be selected. It is one of the following values: Value
+       Description PARITY_EVEN Even parity PARITY_MARK Mark parity
+       PARITY_NONE No parity PARITY_ODD Odd parity PARITY_SPACE Space
+       parity STOPBITS_10 1 stop bit STOPBITS_15 1.5 stop bits
+       STOPBITS_20 2 stop bits
+@member dwCurrentTxQueue Specifies the size, in bytes, of the driver's
+       internal output buffer. A value of zero indicates that the value
+       is unavailable.
+@member dwCurrentRxQueue Specifies the size, in bytes, of the driver's
+       internal input buffer. A value of zero indicates that the value
+       is unavailable.
+@member dwProvSpec1 Specifies provider-specific data. Applications
+       should ignore this member unless specific data about the data
+       format required by the provider is available. Set this member to
+       COMMPROP_INITIALIZED before calling the GetCommProperties
+       function to indicate that the wPacketLength member is already
+       valid.
+@member dwProvSpec2 Specifies provider-specific data. Applications
+       should ignore this member unless specific data about the data
+       format required by the provider is available.
+@member wcProvChar Specifies provider-specific data. Applications should
+       ignore this member unless specific data about the data format
+       required by the provider is available.
+
+## COMMTIMEOUTS
+This structure is used in the SetCommTimeouts and GetCommTimeouts
+functions to set and query the time-out parameters for a communication
+device. The parameters determine the behavior of the ReadFile and
+WriteFile function operations on the device.
+
+If an application sets ReadIntervalTimeout and
+ReadTotalTimeoutMultiplier to MAXDWORD and sets ReadTotalTimeoutConstant
+to a value greater than zero and less than MAXDWORD, one of the
+following occurs when the ReadFile function is called:
+
+If there are any characters in the input buffer, ReadFile returns
+immediately with the characters in the buffer.
+
+If there are no characters in the input buffer, ReadFile waits until a
+character arrives and then returns immediately.
+
+If no characters arrive within the time specified by
+ReadTotalTimeoutConstant, ReadFile times out.
+
+@member ReadIntervalTimeout Specifies the maximum acceptable time, in
+       milliseconds, to elapse between the arrival of two characters on
+       the communication line. During a ReadFile operation, the time
+       period begins when the first character is received. If the
+       interval between the arrival of any two characters exceeds this
+       amount, the ReadFile operation is completed and any buffered data
+       is returned. A value of zero indicates that interval time-outs
+       are not used.
+@member ReadTotalTimeoutMultiplier Specifies the multiplier, in
+       milliseconds, used to calculate the total time-out period for
+       read operations. For each read operation, this value is
+       multiplied by the requested number of bytes to be read.
+@member ReadTotalTimeoutConstant Specifies the constant, in
+       milliseconds, used to calculate the total time-out period for
+       read operations. For each read operation, this value is added to
+       the product of the ReadTotalTimeoutMultiplier member and the
+       requested number of bytes. A value of zero for both the
+       ReadTotalTimeoutMultiplier and ReadTotalTimeoutConstant members
+       indicates that total time-outs are not used for read operations.
+@member WriteTotalTimeoutMultiplier Specifies the multiplier, in
+       milliseconds, used to calculate the total time-out period for
+       write operations. For each write operation, this value is
+       multiplied by the number of bytes to be written.
+@member WriteTotalTimeoutConstant Specifies the constant, in
+       milliseconds, used to calculate the total time-out period for
+       write operations. For each write operation, this value is added
+       to the product of the WriteTotalTimeoutMultiplier member and the
+       number of bytes to be written. A value of zero for both the
+       WriteTotalTimeoutMultiplier and WriteTotalTimeoutConstant members
+       indicates that total time-outs are not used for write operations.
+
+## COMSTAT
+This structure contains communication device data. This structure is
+filled by the ClearCommError function.
+
+@member fCtsHold Specifies if the transmission is waiting to receive the
+       CTS (Clear to Send) signal. If this member is TRUE, the
+       transmission is waiting.
+@member fDsrHold Specifies if the transmission is waiting to receive the
+       DSR (Data Set Ready) signal. If this member is TRUE, the
+       transmission is waiting.
+@member fRlsdHold Specifies if the transmission is waiting to receive
+       the RLSD (Receive Line Signal Detect) signal. If this member is
+       TRUE, the transmission is waiting.
+@member fXoffHold Specifies if the transmission is waiting because the
+       XOFF character was received. If this member is TRUE, the
+       transmission is waiting.
+@member fXoffSent Specifies if the transmission is waiting because the
+       XOFF character was transmitted. If this member is TRUE, the
+       transmission is waiting. Transmission halts when the XOFF
+       character is transmitted to a system that takes the next
+       character as XON, regardless of the actual character.
+@member fEof Specifies if the End of File (EOF) character has been
+       received. If this member is TRUE, the EOF character has been
+       received.
+@member fTxim If this member is TRUE, there is a character queued for
+       transmission that has come to the communication device by way of
+       the TransmitCommChar function. The communication device transmits
+       such a character ahead of other characters in the device's output
+       buffer.
+@member fReserved Reserved; do not use.
+@member cbInQue Specifies the number of bytes received by the serial
+       provider, but not yet read by a ReadFile operation.
+@member cbOutQue Specifies the number of bytes of user data remaining to
+       be transmitted for all write operations. This value will be zero
+       for a nonoverlapped write.
+
+## CREATE_PROCESS_DEBUG_INFO
+This structure contains process creation information that can be used by
+a debugger.
+
+The lpImageName member is a pointer into the address space of the
+process that is being debugged. To retrieve the actual image name, use
+the ReadProcessMemory function in the following manner.
+
+    ReadProcessMemory( hProcess, lpImageName, lpBuffer, nSize,
+       &NumberOfBytesRead );
+
+For the DebugActiveProcess function, if the dwDebugEventCode member of
+the DEBUG_EVENT structure has a value of CREATE_PROCESS_DEBUG_EVENT or
+CREATE_THREAD_DEBUG_EVENT, the lpStartAddress member is NULL.
+
+The lpThreadLocalBase member points directly to the Thread Local Storage
+(TLS) data block of the process that is being debugged. To obtain the
+TLS data for a slot, call the ReadProcessMemory function and pass the
+following calculated value for the lpBaseAddress parameter:
+lpThreadLocalBase+4*<slot number>.
+
+@member hFile Handle to the process's image file. In Windows CE, this
+       member is always NULL.
+@member hProcess Handle to the process. If this member is NULL, the
+       handle is not valid. Otherwise, the debugger can use the member
+       to read from and write to the process's memory.
+@member hThread Handle to the initial thread of the process identified
+       by the hProcess member. If hThread is NULL, the handle is not
+       valid. Otherwise, the debugger has THREAD_GET_CONTEXT,
+       THREAD_SET_CONTEXT, and THREAD_SUSPEND_RESUME access to the
+       thread, allowing the debugger to read from and write to the
+       registers of the thread and to control execution of the thread.
+@member lpBaseOfImage Pointer to the base address of the executable
+       image that the process is running.
+@member dwDebugInfoFileOffset Specifies the offset to the debugging
+       information in the file identified by the hFile member. This
+       member is always set to zero.
+@member nDebugInfoSize Specifies the size, in bytes, of the debugging
+       information in the file. This member is always set to zero.
+@member lpThreadLocalBase Pointer to a block of data. At offset 0x2C
+       into this block is another pointer, called
+       ThreadLocalStoragePointer, that points to an array of per-module
+       thread local storage blocks. This gives a debugger access to
+       per-thread data in the threads of the process being debugged
+       using the same algorithms that a compiler would use.
+@member lpStartAddress Pointer to the starting address of the thread.
+       This value may only be an approximation of the thread's starting
+       address, because any application with appropriate access to the
+       thread can change the thread's context by using the
+       SetThreadContext function.
+@member lpImageName Pointer to the file name associated with the hFile
+       member. This member may be NULL, or it may contain the address of
+       a string pointer in the address space of the process being
+       debugged. That address may, in turn, either be NULL or point to
+       the actual filename. If fUnicode is a nonzero value, the name
+       string is Unicode; otherwise, it is ANSI. This member is strictly
+       optional. Debuggers must be prepared to handle the case where
+       lpImageName is NULL or *lpImageName (in the address space of the
+       process being debugged) is NULL. Specifically, the system does
+       not provide an image name for a create process event, and will
+       not likely pass an image name for the first DLL event. The system
+       also does not provide this information in the case of debug
+       events that originate from a call to the DebugActiveProcess
+       function.
+@member fUnicode Indicates whether a file name specified by the
+       lpImageName member is Unicode or ANSI. A nonzero value indicates
+       Unicode; zero indicates ANSI.
+
+## CREATE_THREAD_DEBUG_INFO
+This structure contains thread-creation information that can be used by
+a debugger.
+
+@member hThread Handle to the thread whose creation caused the debugging
+       event. If this member is NULL, the handle is not valid.
+       Otherwise, the debugger has THREAD_GET_CONTEXT,
+       THREAD_SET_CONTEXT, and THREAD_SUSPEND_RESUME access to the
+       thread, allowing the debugger to read from and write to the
+       registers of the thread and control execution of the thread.
+@member lpThreadLocalBase Pointer to a block of data. At offset 0x2C
+       into this block is another pointer, called
+       ThreadLocalStoragePointer, that points to an array of per-module
+       thread local storage blocks. This gives a debugger access to
+       per-thread data in the threads of the process being debugged
+       using the same algorithms that a compiler would use.
+@member lpStartAddress Pointer to the starting address of the thread.
+       This value may only be an approximation of the thread's starting
+       address, because any application with appropriate access to the
+       thread can change the thread's context by using the
+       SetThreadContext function.
+
+## DCB
+This structure defines the control setting for a serial communications
+device.
+
+For device driver developers: the COM_Open function in the sample serial
+port MDD driver does not support the fErrorChar, fNull, and fAbortOnChar
+members of the DCB structure. You are expected to add support for this
+functionality in your PDD layer, if appropriate for your serial port
+hardware.
+
+The sample serial port MDD driver is found in
+Public\Common\Oak\Drivers\Serial.
+
+@member DCBlength Specifies the DCB structure length, in bytes.
+@member BaudRate Specifies the baud rate at which the communication
+       device operates. It is an actual baud rate value, or one of the
+       following baud rate indexes: CBR_110 CBR_19200 CBR_300 CBR_38400
+       CBR_600 CBR_56000 CBR_1200 CBR_57600 CBR_2400 CBR_115200 CBR_4800
+       CBR_128000 CBR_9600 CBR_256000 CBR_14400
+@member fBinary Specifies if binary mode is enabled. The Win32 API does
+       not support nonbinary mode transfers, so this member must be
+       TRUE. Using FALSE will not work.
+@member fParity Specifies if parity checking is enabled. If this member
+       is TRUE, parity checking is performed and errors are reported.
+@member fOutxCtsFlow Specifies if the CTS (clear-to-send) signal is
+       monitored for output flow control. If this member is TRUE and CTS
+       is turned off, output is suspended until CTS is sent again.
+@member fOutxDsrFlow Specifies if the DSR (data-set-ready) signal is
+       monitored for output flow control. If this member is TRUE and DSR
+       is turned off, output is suspended until DSR is sent again.
+@member fDtrControl Specifies the DTR (data-terminal-ready) flow
+       control. This member can be one of the following values: Value
+       Description DTR_CONTROL_DISABLE Disables the DTR line when the
+       device is opened and leaves it disabled. DTR_CONTROL_ENABLE
+       Enables the DTR line when the device is opened and leaves it on.
+       DTR_CONTROL_HANDSHAKE Enables DTR handshaking. If handshaking is
+       enabled, it is an error for the application to adjust the line by
+       using the EscapeCommFunction function.
+@member fDsrSensitivity Specifies if the communications driver is
+       sensitive to the state of the DSR signal. If this member is TRUE,
+       the driver ignores any bytes received, unless the DSR modem input
+       line is high.
+@member fTXContinueOnXoff Specifies if transmission stops when the input
+       buffer is full and the driver has transmitted the XoffChar
+       character. If this member is TRUE, transmission continues after
+       the input buffer has come within XoffLim bytes of being full and
+       the driver has transmitted the XoffChar character to stop
+       receiving bytes. If this member is FALSE, transmission does not
+       continue until the input buffer is within XonLim bytes of being
+       empty and the driver has transmitted the XonChar character to
+       resume reception.
+@member fOutX Specifies if XON/XOFF flow control is used during
+       transmission. If this member is TRUE, transmission stops when the
+       XoffChar character is received and starts again when the XonChar
+       character is received.
+@member fInX Specifies if XON/XOFF flow control is used during
+       reception. If this member is TRUE, the XoffChar character is sent
+       when the input buffer comes within XoffLim bytes of being full,
+       and the XonChar character is sent when the input buffer comes
+       within XonLim bytes of being empty.
+@member fErrorChar Specifies if bytes received with parity errors are
+       replaced with the character specified by the ErrorChar member. If
+       this member is TRUE and the fParity member is TRUE, replacement
+       occurs.
+@member fNull Specifies if null bytes are discarded. If this member is
+       TRUE, null bytes are discarded when received.
+@member fRtsControl Specifies the RTS (request-to-send) flow control. If
+       this value is zero, the default is RTS_CONTROL_HANDSHAKE. This
+       member can be one of the following values: Value Description
+       RTS_CONTROL_DISABLE Disables the RTS line when the device is
+       opened and leaves it disabled. RTS_CONTROL_ENABLE Enables the RTS
+       line when the device is opened and leaves it on.
+       RTS_CONTROL_HANDSHAKE Enables RTS handshaking. The driver raises
+       the RTS line when the "type-ahead" (input) buffer is less than
+       one-half full and lowers the RTS line when the buffer is more
+       than three-quarters full. If handshaking is enabled, it is an
+       error for the application to adjust the line by using the
+       EscapeCommFunction function. RTS_CONTROL_TOGGLE Specifies that
+       the RTS line will be high if bytes are available for
+       transmission. After all buffered bytes have been sent, the RTS
+       line will be low.
+@member fAbortOnError Specifies if read and write operations are
+       terminated if an error occurs. If this member is TRUE, the driver
+       terminates all read and write operations with an error status if
+       an error occurs. The driver will not accept any further
+       communications operations until the application has acknowledged
+       the error by calling the ClearCommError function.
+@member fDummy2 Reserved; do not use.
+@member wReserved Not used; set to zero.
+@member XonLim Specifies the minimum number of bytes accepted in the
+       input buffer before the XON character is sent.
+@member XoffLim Specifies the maximum number of bytes accepted in the
+       input buffer before the XOFF character is sent. The maximum
+       number of bytes accepted is calculated by subtracting this value
+       from the size, in bytes, of the input buffer.
+@member ByteSize Specifies the number of bits in the bytes transmitted
+       and received.
+@member Parity Specifies the parity scheme to be used. It is one of the
+       following values: Value Description EVENPARITY Even MARKPARITY
+       Mark NOPARITY No parity ODDPARITY Odd SPACEPARITY Space
+@member StopBits Specifies the number of stop bits to be used. It is one
+       of the following values: Value Description ONESTOPBIT 1 stop bit
+       ONE5STOPBITS 1.5 stop bits TWOSTOPBITS 2 stop bits
+@member XonChar Specifies the value of the XON character for both
+       transmission and reception.
+@member XoffChar Specifies the value of the XOFF character for both
+       transmission and reception.
+@member ErrorChar Specifies the value of the character used to replace
+       bytes received with a parity error.
+@member EofChar Specifies the value of the character used to signal the
+       end of data.
+@member EvtChar Specifies the value of the character used to signal an
+       event.
+@member wReserved1 Reserved; do not use.
+
+## DEBUG_EVENT
+This structure describes a debugging event.
+
+If the WaitForDebugEvent function succeeds, it fills in the members of a
+DEBUG_EVENT structure.
+
+@member dwDebugEventCode Specifies a debugging event code that
+       identifies the type of debugging event. It is one of the
+       following values: Value Description EXCEPTION_DEBUG_EVENT Reports
+       an exception debugging event. The value of u.Exception specifies
+       an EXCEPTION_DEBUG_INFO structure. CREATE_THREAD_DEBUG_EVENT
+       Reports a create-thread debugging event. The value of
+       u.CreateThread specifies a CREATE_THREAD_DEBUG_INFO structure.
+       CREATE_PROCESS_DEBUG_EVENT Reports a create-process debugging
+       event. The value of u.CreateProcessInfo specifies a
+       CREATE_PROCESS_DEBUG_INFO structure. EXIT_THREAD_DEBUG_EVENT
+       Reports an exit-thread debugging event. The value of u.ExitThread
+       specifies an EXIT_THREAD_DEBUG_INFO structure.
+       EXIT_PROCESS_DEBUG_EVENT Reports an exit-process debugging event.
+       The value of u.ExitProcess specifies an EXIT_PROCESS_DEBUG_INFO
+       structure. LOAD_DLL_DEBUG_EVENT Reports a
+       load-dynamic-link-library (DLL) debugging event. The value of
+       u.LoadDll specifies a LOAD_DLL_DEBUG_INFO structure.
+       UNLOAD_DLL_DEBUG_EVENT Reports an unload-DLL debugging event. The
+       value of u.UnloadDll specifies an UNLOAD_DLL_DEBUG_INFO
+       structure. OUTPUT_DEBUG_STRING_EVENT Reports an
+       output-debugging-string debugging event. The value of
+       u.DebugString specifies an OUTPUT_DEBUG_STRING_INFO structure.
+@member dwProcessId Specifies the identifier of the process in which the
+       debugging event occurred. A debugger uses this value to locate
+       the debugger's per-process structure. These values are not
+       necessarily small integers that can be used as table indices.
+@member dwThreadId Specifies the identifier of the thread in which the
+       debugging event occurred. A debugger uses this value to locate
+       the debugger's per-thread structure. These values are not
+       necessarily small integers that can be used as table indices.
+@member u Specifies additional information relating to the debugging
+       event. This union takes on the type and value appropriate to the
+       type of debugging event, as described in the dwDebugEventCode
+       member.
+
+## EXCEPTION_DEBUG_INFO
+This structure contains exception information that can be used by a
+debugger.
+
+@member ExceptionRecord Contains an EXCEPTION_RECORD structure with
+       information specific to the exception. This includes the
+       exception code, flags, address, a pointer to a related exception,
+       extra parameters, and so on.
+@member dwFirstChance Indicates whether the debugger has previously
+       encountered the exception specified by the ExceptionRecord
+       member. If the dwFirstChance member is nonzero, this is the first
+       time the debugger has encountered the exception. Debuggers
+       typically handle breakpoint and single-step exceptions when they
+       are first encountered. If this member is zero, the debugger has
+       previously encountered the exception. This occurs only if, during
+       the search for structured exception handlers, either no handler
+       was found or the exception was continued.
+
+## EXIT_PROCESS_DEBUG_INFO
+This structure contains an exiting process's exit code.
+
+@member dwExitCode Specifies the exit code for the process.
+
+## EXIT_THREAD_DEBUG_INFO
+This structure contains an exiting thread's exit code.
+
+@member dwExitCode Specifies the exit code for the thread.
+
+## FILETIME
+This structure is a 64-bit value representing the number of
+100-nanosecond intervals since January 1, 1601.
+
+The FILETIME data structure is used in the time conversion functions
+between MS-DOS and Win32.
+
+@member dwLowDateTime Specifies the low 32 bits of the Win32 date/time
+       value.
+@member dwHighDateTime Specifies the upper 32 bits of the Win32
+       date/time value.
+
+## GetCurrentProcess()
+This function returns a pseudohandle for the current process.
+
+A pseudohandle is a special constant that is interpreted as the current
+process handle. The calling process can use this handle to specify its
+own process whenever a process handle is required.
+
+This handle has the maximum possible access to the process object. A
+process can also use the OpenProcess function to open a real handle to
+itself.
+
+The pseudohandle need not be closed when it is no longer needed. Calling
+the CloseHandle function with a pseudohandle has no effect.
+
+@return A pseudohandle to the current process indicates success.
+
+## GetCurrentProcessId()
+This function returns the process identifier of the calling process.
+
+Until the process terminates, the process identifier uniquely identifies
+the process throughout the system. In Windows CE, the processor
+identifier returned from this function is the same as the process
+handle.
+
+@return The identifier of the calling process indicates success.
+
+## GetCurrentThread()
+This function returns a pseudohandle for the current thread.
+
+A pseudohandle is a special constant that is interpreted as the current
+thread handle. The calling thread can use this handle to specify itself
+whenever a thread handle is required.
+
+This handle has the maximum possible access to the thread object.
+
+The function cannot be used by one thread to create a handle that can be
+used by other threads to refer to the first thread. The handle is always
+interpreted as referring to the thread that is using it. A thread can
+create a "real" handle to itself that can be used by other threads, or
+inherited by other processes, by specifying the pseudohandle as the
+source handle in a call to the DuplicateHandle function.
+
+The pseudohandle need not be closed when it is no longer needed. Calling
+the CloseHandle function with this handle has no effect.
+
+@return A pseudohandle for the current thread indicates success.
+
+## GetCurrentThreadId()
+This function returns the thread identifier, which is used as a handle
+of the calling thread.
+
+Until the thread terminates, the thread identifier uniquely identifies
+the thread throughout the system. This identifier is also the handle of
+the thread.
+
+@return The thread identifier of the calling thread indicates success.
+
+## GetModuleHandle(lpModuleName)
+This function returns a module handle for the specified module if the
+file has been mapped into the address space of the calling process.
+
+The returned handle is not global, inheritable, or duplicative, and it
+cannot be used by another process.
+
+The handles returned by GetModuleHandle and LoadLibrary can be used in
+the same functions-for example, GetProcAddress, FreeLibrary, or
+LoadResource. The difference between the two functions involves the
+reference count. LoadLibrary maps the module into the address space of
+the calling process, if necessary, and increments the module's reference
+count, if it is already mapped. GetModuleHandle, however, returns the
+handle to a mapped module without incrementing its reference count.
+
+Note that the reference count is used in FreeLibrary to determine
+whether to unmap the function from the address space of the process. For
+this reason, use care when using a handle returned by GetModuleHandle in
+a call to FreeLibrary because doing so can cause a dynamic-link library
+(DLL) module to be unmapped prematurely.
+
+This function must also be used carefully in a multithreaded
+application. There is no guarantee that the module handle remains valid
+between the time this function returns the handle and the time it is
+used by another function. For example, a thread might retrieve a module
+handle by calling GetModuleHandle. Before the thread uses the handle in
+another function, a second thread could free the module and the system
+could load another module, giving it the same handle as the module that
+was recently freed. The first thread would then be left with a module
+handle that refers to a module different from the one intended.
+
+@param lpModuleName Pointer to a null-terminated string that contains
+       the name of the module, which must be a .DLL file. If the
+       filename extension is omitted, the default library extension .DLL
+       is appended. The filename string can include a trailing point
+       character (.) to indicate that the module name has no extension.
+       If this parameter is NULL, GetModuleHandle returns a handle to
+       the file used to create the calling process. All paths are
+       ignored; only the file name and extension are used. The file
+       extensions .DLL and .CPL are treated as identical when comparing
+       module names.
+@return A handle to the specified module indicates success. NULL
+       indicates failure. To get extended error information, call
+       GetLastError.
+
+## LOAD_DLL_DEBUG_INFO
+This structure contains information about a dynamic-link library (DLL)
+that has just been loaded.
+
+@member hFile Ignored. Set to NULL.
+@member lpBaseOfDll Long pointer to the base address of the DLL in the
+       address space of the process loading the DLL.
+@member dwDebugInfoFileOffset Ignored. Must be 0.
+@member nDebugInfoSize Ignored. Must be 0.
+@member lpImageName Long pointer to the address space of the process
+       that is being debugged. Use the ReadProcessMemory function to
+       retrieve the actual image name. This member is strictly optional.
+       Debuggers must be prepared to handle the case where lpImageName
+       is NULL or *lpImageName (in the address space of the process
+       being debugged) is NULL. Specifically, the system will never
+       provide an image name for a create process event, and it will not
+       likely pass an image name for the first DLL event. The system
+       will also never provide this information in the case of debugging
+       events that originate from a call to the DebugActiveProcess
+       function.
+@member fUnicode Indicates whether a filename specified by lpImageName
+       is Unicode or ANSI. A nonzero value for this member indicates
+       Unicode; zero indicates ANSI.
+
+## MEMORYSTATUS
+This structure contains information about current memory availability.
+The GlobalMemoryStatus function uses this structure.
+
+@member dwLength Specifies the size, in bytes, of the MEMORYSTATUS data
+       structure. You do not need to set this member before calling the
+       GlobalMemoryStatus function; the function sets it.
+@member dwMemoryLoad Specifies a number between 0 and 100 that gives a
+       general idea of current memory utilization, in which 0 indicates
+       no memory use and 100 indicates full memory use.
+@member dwTotalPhys Indicates the total number of bytes of physical
+       memory.
+@member dwAvailPhys Indicates the number of bytes of physical memory
+       available.
+@member dwTotalPageFile Indicates the total number of bytes that can be
+       stored in the paging file. Note that this number does not
+       represent the actual physical size of the paging file on disk.
+@member dwAvailPageFile Indicates the number of bytes available in the
+       paging file.
+@member dwTotalVirtual Indicates the total number of bytes that can be
+       described in the user mode portion of the virtual address space
+       of the calling process.
+@member dwAvailVirtual Indicates the number of bytes of unreserved and
+       uncommitted memory in the user mode portion of the virtual
+       address space of the calling process.
+
+## OUTPUT_DEBUG_STRING_INFO
+This structure contains the address, format, and length, in bytes, of a
+debugging string.
+
+@member lpDebugStringData Pointer to the debugging string in the calling
+       process's address space. The debugger can use the
+       ReadProcessMemory function to retrieve the value of the string.
+@member fUnicode Specifies the format of the debugging string. If this
+       member is zero, the debugging string is 8-bit ASCII; if it is
+       nonzero, the string is 16-bit Unicode(TM).
+@member nDebugStringLength Specifies the length, in bytes, of the
+       debugging string. The length includes the string's terminating
+       null character.
+
+## PROCESS_INFORMATION
+This structure is filled in by the CreateProcess function with
+information about a newly created process and its primary thread.
+
+@member hProcess Returns a handle to the newly created process. The
+       handle is used to specify the process in all functions that
+       perform operations on the process object.
+@member hThread Returns a handle to the primary thread of the newly
+       created process. The handle is used to specify the thread in all
+       functions that perform operations on the thread object.
+@member dwProcessId Returns a global process identifier that can be used
+       to identify a process. The value is valid from the time the
+       process is created until the time the process is terminated.
+@member dwThreadId Returns a global thread identifier that can be used
+       to identify a thread. The value is valid from the time the thread
+       is created until the time the thread is terminated.
+
+## ResetEvent(hEvent)
+This function sets the state of the specified event object to
+nonsignaled.
+
+ResetEvent returns FALSE if the handle to the event object is invalid.
+
+The state of an event object remains nonsignaled until it is explicitly
+set to signaled by the SetEvent or PulseEvent function. This nonsignaled
+state blocks the execution of any threads that have specified the event
+object in a call to one of the wait functions.
+
+The ResetEvent function is used primarily for manual-reset event
+objects, which must be set explicitly to the nonsignaled state.
+Auto-reset event objects automatically change from signaled to
+nonsignaled after a single waiting thread is released.
+
+@param hEvent Handle to the event object. The CreateEvent function
+       returns this handle.
+@return Nonzero indicates success. Zero indicates failure. To get
+       extended error information, call GetLastError.
+
+## SetEvent(hEvent)
+This function sets the state of the specified event object to signaled.
+
+The state of a manual-reset event object remains signaled until it is
+set explicitly to the nonsignaled state by the ResetEvent function. Any
+number of waiting threads, or threads that subsequently begin wait
+operations for the specified event object by calling one of the wait
+functions, can be released while the object's state is signaled.
+
+The state of an auto-reset event object remains signaled until a single
+waiting thread is released, at which time the system automatically sets
+the state to nonsignaled. If no threads are waiting, the event object's
+state remains signaled.
+
+@param hEvent Handle to the event object. The CreateEvent function
+       returns this handle.
+@return Nonzero indicates success. Zero indicates failure. To get
+       extended error information, call GetLastError.
+
+## STORE_INFORMATION
+This structure contains the size of the object store and the amount of
+free space currently in the object store.
+
+@member dwStoreSize Specifies the size, in bytes, of the object store.
+@member dwFreeSize
+
+## SYSTEM_INFO
+This structure contains information about the current computer system.
+This includes the processor type, page size, original equipment
+manufacturer (OEM) identifier, and other such information.
+
+@member dwOemId An obsolete member that is not used by Windows CE.
+@member wProcessorArchitecture Specifies the system's processor
+       architecture. It is no longer relevant. Use the
+       wProcessorArchitecture, wProcessorLevel, and wProcessorRevision
+       members to determine the type of processor.
+       PROCESSOR_ARCHITECTURE_INTEL PROCESSOR_ARCHITECTURE_MIPS
+       PROCESSOR_ARCHITECTURE_ALPHA PROCESSOR_ARCHITECTURE_PPC
+       PROCESSOR_ARCHITECTURE_UNKNOWN
+@member dwReserved Reserved for future use.
+@member dwPageSize Specifies the page size and the granularity of page
+       protection and commitment. This is the page size used by the
+       VirtualAlloc function.
+@member lpMinimumApplicationAddress Pointer to the lowest memory address
+       accessible to applications and dynamic-link libraries (DLLs).
+@member lpMaximumApplicationAddress Pointer to the highest memory
+       address accessible to applications and DLLs.
+@member dwActiveProcessorMask Specifies a mask representing the set of
+       processors configured into the system. Bit 0 is processor 0; bit
+       31 is processor 31.
+@member dwNumberOfProcessors Specifies the number of processors in the
+       system.
+@member dwProcessorType Specifies the type of processor in the system.
+       This member is no longer relevant. Use the
+       wProcessorArchitecture, wProcessorLevel, and wProcessorRevision
+       members to determine the type of processor. This member is one of
+       the following values: PROCESSOR_INTEL_386 PROCESSOR_INTEL_486
+       PROCESSOR_INTEL_PENTIUM PROCESSOR_INTEL_486 PROCESSOR_MIPS_R3000
+       PROCESSOR_MIPS_R4000 PROCESSOR_HITACHI_SH3 PROCESSOR_HITACHI_SH4
+       PROCESSOR_PPC_403 PROCESSOR_PPC_821 PROCESSOR_STRONGARM
+       PROCESSOR_ARM720
+@member dwAllocationGranularity Specifies the granularity with which
+       virtual memory is allocated. For example, a VirtualAlloc request
+       to allocate 1 byte will reserve an address space of
+       dwAllocationGranularity bytes. This value was hard coded as 64K
+       in the past, but other hardware architectures may require
+       different values.
+@member wProcessorLevel Specifies the system's architecture-dependent
+       processor level. If wProcessorArchitecture is
+       PROCESSOR_ARCHITECTURE_INTEL, wProcessorLevel can be one of the
+       following values: 4: Intel 80486 5: Pentium If
+       wProcessorArchitecture is PROCESSOR_ARCHITECTURE_MIPS,
+       wProcessorLevel is of the form 00XX, where XX is an 8-bit
+       implementation number (bits 8-15 of the PRId register). The
+       member can be the following value: 3: MIPS R3000 0004: MIPS R4000
+       If wProcessorArchitecture is PROCESSOR_ARCHITECTURE_PPC,
+       wProcessorLevel is of the form XXXX, where XXXXis a 16-bit
+       processor version number (the high-order 16 bits of the Processor
+       Version Register).
+@member wProcessorRevision Specifies an architecture-dependent processor
+       revision. The following table shows how the revision value is
+       assembled for each type of processor architecture. Intel 80386 or
+       80486: A value of the form xxyz. If xx is equal to 0xFF, y - 0xA
+       is the model number, and z is the stepping identifier. For
+       example, an Intel 80486-D0 system returns 0xFFD0. If xx is not
+       equal to 0xFF, xx + 'A' is the stepping letter and yz is the
+       minor stepping. Intel Pentium, Cyrix, or NextGen 586: A value of
+       the form xxyy, where xx is the model number and yy is the
+       stepping. For example, a value of 0x0201 indicates Model 2,
+       Stepping 1. MIPS: A value of the form 00xx, where xx is the 8-bit
+       revision number of the processor (the low-order 8 bits of the
+       PRId register). ALPHA: A value of the form xxyy, where xxyy is
+       the low-order 16 bits of the processor revision number from the
+       firmware. Display this value as follows: Model 'A'+xx, Pass yy
+       PPC: A value of the form xxyy, where xxyy is the low-order 16
+       bits of the Processor Version Register. Display this value as a
+       fixed point number: xx.yy
+
+## SYSTEM_POWER_STATUS_EX
+This structure contains information about the power status of the
+system.
+
+@member ACLineStatus AC power status. It is one of the following values:
+       0: Offline 1: Online 255: Unknown status All other values are
+       reserved.
+@member BatteryFlag Battery charge status. It can be a combination of
+       the following values: 1: High 2: Low 4: Critical 8: Charging 128:
+       No system battery 255: Unknown status All other values are
+       reserved.
+@member BatteryLifePercent Percentage of full battery charge remaining.
+       This member can be a value in the range 0 to 100, or 255 if
+       status is unknown. All other values are reserved.
+@member Reserved1 Reserved; set to zero.
+@member BatteryLifeTime Number of seconds of battery life remaining, or
+       0xFFFFFFFF if remaining seconds are unknown.
+@member BatteryFullLifeTime Number of seconds of battery life when at
+       full charge, or 0xFFFFFFFF if full lifetime is unknown.
+@member Reserved2 Reserved; set to zero.
+@member BackupBatteryFlag Backup battery charge status. It is one of the
+       following values: BATTERY_FLAG_HIGH BATTERY_FLAG_CRITICAL
+       BATTERY_FLAG_CHARGING BATTERY_FLAG_NO_BATTERY
+       BATTERY_FLAG_UNKNOWN BATTERY_FLAG_LOW
+@member BackupBatteryLifePercent Percentage of full backup battery
+       charge remaining. Must be in the range 0 to 100, or
+       BATTERY_PERCENTAGE_UNKNOWN.
+@member Reserved3 Reserved; set to zero
+@member BackupBatteryLifeTime Number of seconds of backup battery life
+       remaining, or BATTERY_LIFE_UNKNOWN if remaining seconds are
+       unknown.
+@member BackupBatteryFullLifeTime Number of seconds of backup battery
+       life when at full charge, or BATTERY_LIFE_UNKNOWN if full
+       lifetime is unknown.
+
+## SYSTEM_POWER_STATUS_EX2
+This structure contains information about the power status of the
+system.
+
+@member ACLineStatus AC power status. It is one of the following values:
+       AC_LINE_OFFLINE AC_LINE_ONLINE AC_LINE_BACKUP_POWER
+       AC_LINE_UNKNOWN
+@member BatteryFlag Battery charge status. It is one of the following
+       values: BATTERY_FLAG_HIGH BATTERY_FLAG_LOW BATTERY_FLAG_CRITICAL
+       BATTERY_FLAG_CHARGING BATTERY_FLAG_NO_BATTERY
+       BATTERY_FLAG_UNKNOWN
+@member BatteryLifePercent Percentage of full battery charge remaining.
+       Must be in the range 0 to 100, or BATTERY_PERCENTAGE_UNKNOWN if
+       percentage of battery life remaining is unknown.
+@member Reserved1 Must be zero.
+@member BatteryLifeTime Number of seconds of battery life remaining, or
+       BATTERY_LIFE_UNKNOWN if number of seconds of battery life
+       remaining is unknown.
+@member BatteryFullLifeTime Number of seconds of battery life when at
+       full charge, or BATTERY_LIFE_UNKNOWN if full lifetime of battery
+       is unknown.
+@member Reserved2 Must be zero.
+@member BackupBatteryFlag Backup battery charge status. It is one of the
+       following values: BATTERY_FLAG_HIGH BATTERY_FLAG_LOW
+       BATTERY_FLAG_CRITICAL BATTERY_FLAG_CHARGING
+       BATTERY_FLAG_NO_BATTERY BATTERY_FLAG_UNKNOWN
+@member BackupBatteryLifePercent Percentage of full backup battery
+       charge remaining. Must be in the range 0 to 100, or
+       BATTERY_PERCENTAGE_UNKNOWN if percentage of backup battery life
+       remaining is unknown.
+@member Reserved3 Must be zero.
+@member BackupBatteryLifeTime Number of seconds of backup battery life
+       when at full charge, or BATTERY_LIFE_UNKNOWN if number of seconds
+       of backup battery life remaining is unknown.
+@member BackupBatteryFullLifeTime Number of seconds of backup battery
+       life when at full charge, or BATTERY_LIFE_UNKNOWN if full
+       lifetime of backup battery is unknown.
+@member BatteryVoltage Number of millivolts (mV) of battery voltage. It
+       can range from 0 to 65535.
+@member BatteryCurrent Number of milliamps (mA) of instantaneous current
+       drain. It can range from 0 to 32767 for charge and 0 to -32768
+       for discharge.
+@member BatteryAverageCurrent Average number of milliamps of short term
+       device current drain. It can range from 0 to 32767 for charge and
+       0 to -32768 for discharge.
+@member BatteryAverageInterval Number of milliseconds (mS) that is the
+       time constant interval used in reporting BatteryAverageCurrent.
+@member BatterymAHourConsumed Average number of milliamp hours (mAh) of
+       long-term cumulative average discharge. It can range from 0 to
+       -32768. This value is reset when the batteries are charged or
+       changed.
+@member BatteryTemperature Battery temperature reported in 0.1 degree
+       Celsius increments. It can range from -3276.8 to 3276.7.
+@member BackupBatteryVoltage Number of millivolts (mV) of backup battery
+       voltage. It can range from 0 to 65535.
+@member BatteryChemistry Type of battery. It can be one of the following
+       values: BATTERY_CHEMISTRY_ALKALINE BATTERY_CHEMISTRY_NICD
+       BATTERY_CHEMISTRY_NIMH BATTERY_CHEMISTRY_LION
+       BATTERY_CHEMISTRY_LIPOLY BATTERY_CHEMISTRY_UNKNOWN
+
+## SYSTEMTIME
+This structure represents a date and time using individual members for
+the month, day, year, weekday, hour, minute, second, and millisecond.
+
+It is not recommended that you add and subtract values from the
+SYSTEMTIME structure to obtain relative times. Instead, you should
+
+Convert the SYSTEMTIME structure to a FILETIME structure.
+
+Copy the resulting FILETIME structure to a ULARGE_INTEGER structure.
+
+Use normal 64-bit arithmetic on the ULARGE_INTEGER value.
+
+@member wYear Specifies the current year.
+@member wMonth Specifies the current month; January = 1, February = 2,
+       and so on.
+@member wDayOfWeek Specifies the current day of the week; Sunday = 0,
+       Monday = 1, and so on.
+@member wDay Specifies the current day of the month.
+@member wHour Specifies the current hour.
+@member wMinute Specifies the current minute.
+@member wSecond Specifies the current second.
+@member wMilliseconds Specifies the current millisecond.
+
+## TIME_ZONE_INFORMATION
+This structure specifies information specific to the time zone.
+
+@member Bias Specifies the current bias, in minutes, for local time
+       translation on this computer. The bias is the difference, in
+       minutes, between Coordinated Universal Time (UTC) and local time.
+       All translations between UTC and local time are based on the
+       following formula: This member is required.
+@member StandardName Specifies a null-terminated string associated with
+       standard time on this operating system. For example, this member
+       could contain "EST" to indicate Eastern Standard Time. This
+       string is not used by the operating system, so anything stored
+       there by using the SetTimeZoneInformation function is returned
+       unchanged by the GetTimeZoneInformation function. This string can
+       be empty.
+@member StandardDate Specifies a SYSTEMTIME structure that contains a
+       date and local time when the transition from daylight time to
+       standard time occurs on this operating system. If this date is
+       not specified, the wMonth member in the SYSTEMTIME structure must
+       be zero. If this date is specified, the DaylightDate value in the
+       TIME_ZONE_INFORMATION structure must also be specified. This
+       member supports two date formats. Absolute format specifies an
+       exact date and time when standard time begins. In this form, the
+       wYear, wMonth, wDay, wHour, wMinute, wSecond, and wMilliseconds
+       members of the SYSTEMTIME structure are used to specify an exact
+       date. Day-in-month format is specified by setting the wYear
+       member to zero, setting the wDayOfWeek member to an appropriate
+       weekday, and using a wDay value in the range 1 through 5 to
+       select the correct day in the month. Using this notation, the
+       first Sunday in April can be specified, as can the last Thursday
+       in October (5 is equal to "the last").
+@member StandardBias Specifies a bias value to be used during local time
+       translations that occur during standard time. This member is
+       ignored if a value for the StandardDate member is not supplied.
+       This value is added to the value of the Bias member to form the
+       bias used during standard time. In most time zones, the value of
+       this member is zero.
+@member DaylightName Specifies a null-terminated string associated with
+       daylight time on this operating system. For example, this member
+       could contain "PDT" to indicate Pacific Daylight Time. This
+       string is not used by the operating system, so anything stored
+       there by using the SetTimeZoneInformation function is returned
+       unchanged by the GetTimeZoneInformation function. This string can
+       be empty.
+@member DaylightDate Specifies a SYSTEMTIME structure that contains a
+       date and local time when the transition from standard time to
+       daylight time occurs on this operating system. If this date is
+       not specified, the wMonth member in the SYSTEMTIME structure must
+       be zero. If this date is specified, the StandardDate value in the
+       TIME_ZONE_INFORMATION structure must also be specified. This
+       member supports the absolute and day-in-month time formats
+       described for the StandardDate member.
+@member DaylightBias Specifies a bias value to be used during local time
+       translations that occur during daylight time. This member is
+       ignored if a value for the DaylightDate member is not supplied.
+       This value is added to the value of the Bias member to form the
+       bias used during daylight time. In most time zones, the value of
+       this member is -60.
+
+## TlsAlloc()
+This function allocates a thread local storage (TLS) index. Any thread
+of the process can subsequently use this index to store and retrieve
+values that are local to the thread.
+
+The threads of the process can use the TLS index in subsequent calls to
+the TlsFree, TlsSetValue, or TlsGetValue functions.
+
+TLS indexes are typically allocated during process or dynamic-link
+library (DLL) initialization. Once allocated, each thread of the process
+can use a TLS index to access its own TLS storage slot. To store a value
+in its slot, a thread specifies the index in a call to TlsSetValue. The
+thread specifies the same index in a subsequent call to TlsGetValue, to
+retrieve the stored value.
+
+The constant TLS_MINIMUM_AVAILABLE defines the minimum number of TLS
+indexes available in each process. This minimum is guaranteed to be at
+least 64 for all systems.
+
+TLS indexes are not valid across process boundaries. A DLL cannot assume
+that an index assigned in one process is valid in another process.
+
+A DLL might use TlsAlloc, TlsSetValue, TlsGetValue, and TlsFree as
+follows:
+
+When a DLL attaches to a process, the DLL uses TlsAlloc to allocate a
+TLS index. The DLL then allocates some dynamic storage and uses the TLS
+index in a call to TlsSetValue to store the address in the TLS slot.
+This concludes the per-thread initialization for the initial thread of
+the process. The TLS index is stored in a global or static variable of
+the DLL.
+
+Each time the DLL attaches to a new thread of the process, the DLL
+allocates some dynamic storage for the new thread and uses the TLS index
+in a call to TlsSetValue to store the address in the TLS slot. This
+concludes the per-thread initialization for the new thread.
+
+Each time an initialized thread makes a DLL call requiring the data in
+its dynamic storage, the DLL uses the TLS index in a call to TlsGetValue
+to retrieve the address of the dynamic storage for that thread.
+
+For additional information on thread local storage, see Writing
+Memory-Efficient Applications.
+
+@return A TLS index indicates success. 0xFFFFFFFF indicates failure. To
+       get extended error information, call GetLastError.
+
+## TlsFree(dwTlsIndex)
+This function releases a thread local storage (TLS) index, making it
+available for reuse.
+
+If the threads of the process have allocated dynamic storage and used
+the TLS index to store pointers to this storage, they should free the
+storage before calling TlsFree. The TlsFree function does not free any
+dynamic storage that has been associated with the TLS index. It is
+expected that DLLs call this function (if at all) only during their
+process detach routine.
+
+For a brief discussion of typical uses of the TLS functions, see the
+Remarks section of the TlsAlloc function.
+
+@param dwTlsIndex Specifies a TLS index that was allocated by the
+       TlsAlloc function.
+@return Nonzero indicates success. Zero indicates failure. To get
+       extended error information, call GetLastError.
+
+## UNLOAD_DLL_DEBUG_INFO
+This structure contains information about a dynamic-link library (DLL)
+that has just been unloaded.
+
+@member lpBaseOfDll Long pointer to the base address of the DLL in the
+       address space of the process unloading the DLL.

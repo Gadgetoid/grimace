@@ -1,0 +1,156 @@
+## AcceptSecurityContext(phCredential, phContext, pInput, fContextReq, TargetDataRep, phNewContext, pOutput, pfContextAttr, ptsExpiry)
+Accepts a client's security token and establishes or continues a server context.
+
+The client counterpart is InitializeSecurityContextW. Handshakes may
+require multiple calls; SEC_I_CONTINUE_NEEDED asks the server to return
+the output token and continue the exchange.
+
+@param phCredential Server credentials from AcquireCredentialsHandleW.
+@param phContext NULL on the first call; otherwise the partial context.
+@param pInput Client token, or NULL when the package has no initial token.
+@param fContextReq Required context attributes.
+@param TargetDataRep Data representation used by the target.
+@param phNewContext Receives the new or updated context handle.
+@param pOutput Receives the token to send to the client.
+@param pfContextAttr Receives the established context attributes.
+@param ptsExpiry Receives the context expiration time.
+@return SEC_E_OK or a continuation status on success; otherwise a
+        SEC_E_* error code.
+
+## AcquireCredentialsHandleW(pszPrincipal, pszPackage, fCredentialUse, pvLogonId, pAuthData, pGetKeyFn, pvGetKeyArgument, phCredential, ptsExpiry)
+Acquires the current user's credentials for a security package.
+
+The returned handle can be used to establish contexts. Release it with
+FreeCredentialsHandle. A NULL principal requests credentials for the
+current security context; pGetKeyFn may be NULL if the transport has no
+credential callback.
+
+@param pszPrincipal Principal name, or NULL for the current user.
+@param pszPackage Security package name.
+@param fCredentialUse Inbound, outbound or both.
+@param pvLogonId Optional logon identifier.
+@param pAuthData Package-specific credentials, or NULL for defaults.
+@param pGetKeyFn Optional callback for retrieving a key.
+@param pvGetKeyArgument Argument passed to pGetKeyFn.
+@param phCredential Receives the credential handle.
+@param ptsExpiry Receives the credential expiration time.
+@return SEC_E_OK on success, or a SEC_E_* error code.
+
+## ApplyControlToken(phContext, pInput)
+Applies a control token to a security context.
+
+The security package may modify the context in response to the token.
+
+@param phContext Context to update.
+@param pInput Descriptor containing the control token.
+@return SEC_E_OK on success, or a nonzero error code.
+
+## DeleteSecurityContext(phContext)
+Deletes a security context and its local data structures.
+
+Do not use the context after this call.
+
+@param phContext Context handle to delete.
+@return SEC_E_OK on success, or SEC_E_INVALID_HANDLE for an invalid handle.
+
+## EnumerateSecurityPackagesW(pcPackages, ppPackageInfo)
+Retrieves information about the available security packages.
+
+Free the returned package array with FreeContextBuffer. Use a package's
+Name to select it in AcquireCredentialsHandleW.
+
+@param pcPackages Receives the number of packages.
+@param ppPackageInfo Receives the package information array.
+@return SEC_E_OK on success, or a nonzero error code.
+
+## FreeContextBuffer(pvContextBuffer)
+Frees a buffer allocated by a security provider.
+
+@param pvContextBuffer Provider-allocated buffer to free.
+@return SEC_E_OK on success, or a nonzero error code.
+
+## FreeCredentialsHandle(phCredential)
+Releases credentials acquired by AcquireCredentialsHandleW.
+
+@param phCredential Credential handle to release.
+@return SEC_E_OK on success, or SEC_E_INVALID_HANDLE for an invalid handle.
+
+## InitializeSecurityContextW(phCredential, phContext, pszTargetName, fContextReq, Reserved1, TargetDataRep, pInput, Reserved2, phNewContext, pOutput, pfContextAttr, ptsExpiry)
+Creates or continues a client security context with a remote peer.
+
+The returned token is opaque and must be sent to the peer. A handshake
+may require multiple calls. Set both reserved parameters to zero. If
+ISC_REQ_ALLOCATE_MEMORY is requested, free provider-allocated output
+with FreeContextBuffer.
+
+@param phCredential Credentials from AcquireCredentialsHandleW.
+@param phContext NULL for the first call; otherwise the partial context.
+@param pszTargetName Security-package-specific target name.
+@param fContextReq Required context attributes.
+@param Reserved1 Reserved; set to zero.
+@param TargetDataRep Data representation used by the target.
+@param pInput Optional token received from the peer.
+@param Reserved2 Reserved; set to zero.
+@param phNewContext Receives the new or updated context handle.
+@param pOutput Receives the token to send to the peer.
+@param pfContextAttr Receives context attributes.
+@param ptsExpiry Receives the context expiration time.
+@return SEC_E_OK or a continuation status on success; otherwise a
+        SEC_E_* error code.
+
+## InitSecurityInterfaceA()
+Returns the ANSI SSPI dispatch table.
+
+@return Pointer to a SecurityFunctionTableA, or NULL on failure.
+
+## InitSecurityInterfaceW()
+Returns the SSPI dispatch table for calling security services indirectly.
+
+@return Pointer to a SecurityFunctionTable, or NULL on failure.
+
+## MakeSignature(phContext, fQOP, pMessage, MessageSeqNo)
+Creates a signature for a message using the security context.
+
+The message descriptor must include a SECBUFFER_TOKEN buffer for the
+signature. A sequence number is included when sequence detection is
+enabled by the context.
+
+@param phContext Context used to sign the message.
+@param fQOP Package-specific quality-of-protection flags.
+@param pMessage Message buffers and output signature buffer.
+@param MessageSeqNo Transport-assigned sequence number, or zero if unused.
+@return SEC_E_OK on success, or a nonzero error code.
+
+## QueryCredentialsAttributesW(phCredential, ulAttribute, pBuffer)
+Retrieves attributes of a credential.
+
+ulAttribute must be SECPKG_CRED_ATTR_NAMES. The caller allocates the
+SecPkgCredentials_Names structure; free provider-allocated strings in
+it with FreeContextBuffer.
+
+@param phCredential Credential handle to query.
+@param ulAttribute Attribute to retrieve.
+@param pBuffer Receives the requested attribute structure.
+@return SEC_E_OK on success, or a SEC_E_* error code.
+
+## QuerySecurityPackageInfoW(pszPackageName, ppPackageInfo)
+Retrieves information about a security package.
+
+Free the returned package information with FreeContextBuffer.
+
+@param pszPackageName Null-terminated package name.
+@param ppPackageInfo Receives the package information.
+@return SEC_E_OK on success, or a nonzero error code.
+
+## VerifySignature(phContext, pMessage, MessageSeqNo, pfQOP)
+Verifies a message signature using the security context.
+
+The message descriptor contains the message and a SECBUFFER_TOKEN
+signature buffer. Supply the expected sequence number, or zero if the
+transport does not maintain sequence numbers.
+
+@param phContext Context used to verify the signature.
+@param pMessage Message and signature buffers.
+@param MessageSeqNo Expected transport sequence number, or zero.
+@param pfQOP Receives package-specific quality-of-protection flags.
+@return SEC_E_OK on success, or a nonzero error code.

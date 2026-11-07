@@ -1,0 +1,7 @@
+#!/bin/sh
+errors=$(mktemp)
+"$@" 2>"$errors"
+status=$?
+grep -v "MIPS-I support is experimental" "$errors" >&2
+rm -f "$errors"
+exit $status

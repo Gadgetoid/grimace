@@ -1,0 +1,4 @@
+DecompressImageIndirect
+Get332Palette
+GetHalftonePalette
+GetTransparentColor

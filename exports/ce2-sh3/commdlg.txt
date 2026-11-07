@@ -1,0 +1,3 @@
+ChooseColor
+CommDlgExtendedError
+PrintDlg

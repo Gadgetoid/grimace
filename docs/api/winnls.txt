@@ -1,0 +1,374 @@
+## CompareStringW(Locale, dwCmpFlags, lpString1, cchCount1, lpString2, cchCount2)
+Compares two strings using a locale's collation rules.
+
+Windows CE always uses a string sort (SORT_STRINGSORT), so hyphens and
+apostrophes sort with the other symbols. Subtract 2 from a nonzero result
+to get a C-style comparison. "Equal" means equal for sorting, not
+necessarily identical.
+
+@param Locale LOCALE_SYSTEM_DEFAULT, LOCALE_USER_DEFAULT or a MAKELCID
+       value.
+@param dwCmpFlags 0 or NORM_IGNORECASE. Windows CE doesn't support
+       NORM_IGNOREKANATYPE, NORM_IGNORENONSPACE, NORM_IGNORESYMBOLS or
+       NORM_IGNOREWIDTH.
+@param lpString1 First string.
+@param cchCount1 Length of lpString1 in characters, or -1 if
+       null-terminated.
+@param lpString2 Second string.
+@param cchCount2 Length of lpString2 in characters, or -1 if
+       null-terminated.
+@return 1 (less than), 2 (equal) or 3 (greater than), or 0 on failure
+        (see GetLastError).
+
+## ConvertDefaultLocale(Locale)
+Converts a special default locale value into a real locale identifier.
+
+@param Locale LOCALE_SYSTEM_DEFAULT, LOCALE_USER_DEFAULT, 0 (language
+       neutral) or a MAKELCID value with SUBLANG_NEUTRAL.
+@return The locale identifier, or Locale unchanged if it isn't one of the
+        special values.
+
+## EnumCalendarInfoW(lpCalInfoEnumProc, Locale, Calendar, CalType)
+Enumerates one item of calendar information for a locale's calendars.
+
+Calls lpCalInfoEnumProc with each string until it returns FALSE or the
+calendars run out.
+
+@param lpCalInfoEnumProc Callback receiving each string.
+@param Locale LOCALE_SYSTEM_DEFAULT, LOCALE_USER_DEFAULT or a MAKELCID
+       value.
+@param Calendar A calendar identifier (CAL_GREGORIAN and so on), or
+       ENUM_ALL_CALENDARS.
+@param CalType The item to return, a CAL_* value such as CAL_SERASTRING
+       or CAL_SLONGDATE.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## EnumDateFormatsW(lpDateFmtEnumProc, Locale, dwFlags)
+Enumerates a locale's short or long date formats, including those of any
+alternate calendars.
+
+Calls lpDateFmtEnumProc with each format picture until it returns FALSE or
+the formats run out.
+
+@param lpDateFmtEnumProc Callback receiving each format string.
+@param Locale LOCALE_SYSTEM_DEFAULT, LOCALE_USER_DEFAULT or a MAKELCID
+       value.
+@param dwFlags DATE_SHORTDATE or DATE_LONGDATE, not both.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## EnumSystemCodePagesW(lpCodePageEnumProc, dwFlags)
+Enumerates the code pages installed on or supported by the system.
+
+Calls lpCodePageEnumProc with each code page identifier, as a string,
+until it returns FALSE or the code pages run out.
+
+@param lpCodePageEnumProc Callback receiving each code page.
+@param dwFlags CP_INSTALLED or CP_SUPPORTED, not both.
+@return Nonzero on success, zero on failure (see GetLastError).
+
+## EnumSystemLocalesW(lpLocaleEnumProc, dwFlags)
+Enumerates the locales installed on or supported by the system.
+
+Calls lpLocaleEnumProc with each locale identifier, as a hex string, until
+it returns FALSE or the locales run out.
+
+@param lpLocaleEnumProc Callback receiving each locale.
+@param dwFlags LCID_INSTALLED or LCID_SUPPORTED, not both. Windows CE
+       doesn't support LCID_ALTERNATE_SORTS.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## EnumTimeFormatsW(lpTimeFmtEnumProc, Locale, dwFlags)
+Enumerates a locale's time formats.
+
+Calls lpTimeFmtEnumProc with each format picture until it returns FALSE or
+the formats run out.
+
+@param lpTimeFmtEnumProc Callback receiving each format string.
+@param Locale LOCALE_SYSTEM_DEFAULT, LOCALE_USER_DEFAULT or a MAKELCID
+       value.
+@param dwFlags Must be 0.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## FoldStringW(dwMapFlags, lpSrcStr, cchSrc, lpDestStr, cchDest)
+Maps a string to another, folding character variants as requested.
+
+The source and destination buffers must differ. The result is
+null-terminated if the source is.
+
+@param dwMapFlags One or more of MAP_FOLDCZONE (compatibility zone
+       characters to standard Unicode), MAP_FOLDDIGITS (all digits to
+       0-9), MAP_PRECOMPOSED or MAP_COMPOSITE (not both), and
+       MAP_EXPAND_LIGATURES (not with MAP_PRECOMPOSED or MAP_COMPOSITE).
+@param lpSrcStr The source string.
+@param cchSrc Length of lpSrcStr in characters, or -1 if null-terminated.
+@param lpDestStr Receives the mapped string.
+@param cchDest Size of lpDestStr in characters, or 0 to query the size
+       needed.
+@return Characters written, or the size needed if cchDest is 0, or 0 on
+        failure (see GetLastError).
+
+## GetACP()
+Returns the system's ANSI code page identifier, e.g. 1252.
+
+@return The code page identifier.
+
+## GetCPInfo(CodePage, lpCPInfo)
+Gets information about a code page: maximum character size, default
+character and lead byte ranges.
+
+@param CodePage A code page identifier, or CP_ACP or CP_OEMCP.
+@param lpCPInfo Receives the information.
+@return Nonzero on success, zero on failure, with ERROR_INVALID_PARAMETER
+        if the code page isn't available.
+
+## GetCurrencyFormatW(Locale, dwFlags, lpValue, lpFormat, lpCurrencyStr, cchCurrency)
+Formats a number string as currency.
+
+Windows CE ignores Locale and always uses the system locale.
+
+@param Locale Pass LOCALE_SYSTEM_DEFAULT.
+@param dwFlags Must be 0.
+@param lpValue The number: digits, an optional leading minus sign and at
+       most one decimal point.
+@param lpFormat Currency format, with every member set, or NULL for the
+       locale's format.
+@param lpCurrencyStr Receives the formatted string.
+@param cchCurrency Size of lpCurrencyStr in characters, or 0 to query the
+       size needed.
+@return Characters written, or the size needed if cchCurrency is 0, or 0
+        on failure (see GetLastError).
+
+## GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, lpDateStr, cchDate)
+Formats a date as a string.
+
+Windows CE ignores Locale and always uses the system locale. The time
+fields of lpDate are ignored. A wrong wDayOfWeek is corrected; other
+invalid fields fail with ERROR_INVALID_PARAMETER. Bad format pictures
+don't fail: the function does its best.
+
+@param Locale Pass LOCALE_SYSTEM_DEFAULT.
+@param dwFlags DATE_SHORTDATE (default) or DATE_LONGDATE if lpFormat is
+       NULL, otherwise 0. Windows CE doesn't support LOCALE_NOUSEROVERRIDE
+       or DATE_USE_ALT_CALENDAR.
+@param lpDate The date, or NULL for today's local date.
+@param lpFormat Format picture built from d, dd, ddd, dddd, M, MM, MMM,
+       MMMM, y, yy, yyyy and gg, with literal text in single quotes, or
+       NULL for the locale's format.
+@param lpDateStr Receives the formatted date.
+@param cchDate Size of lpDateStr in characters, or 0 to query the size
+       needed.
+@return Characters written, or the size needed if cchDate is 0, or 0 on
+        failure (see GetLastError).
+
+## GetLocaleInfoW(Locale, LCType, lpLCData, cchData)
+Gets one item of information about a locale, as a string.
+
+Numeric values are returned as decimal text.
+
+@param Locale LOCALE_SYSTEM_DEFAULT, LOCALE_USER_DEFAULT or a MAKELCID
+       value.
+@param LCType A LOCALE_* item, e.g. LOCALE_SDECIMAL or LOCALE_SSHORTDATE,
+       optionally OR'd with LOCALE_NOUSEROVERRIDE to ignore user settings.
+@param lpLCData Receives the data.
+@param cchData Size of lpLCData in characters, or 0 to query the size
+       needed.
+@return Characters written, or the size needed if cchData is 0, or 0 on
+        failure (see GetLastError).
+
+## GetNumberFormatW(Locale, dwFlags, lpValue, lpFormat, lpNumberStr, cchNumber)
+Formats a number string with a locale's separators, grouping and decimal
+places.
+
+Windows CE ignores Locale and always uses the system locale.
+
+@param Locale Pass LOCALE_SYSTEM_DEFAULT.
+@param dwFlags Must be 0.
+@param lpValue The number: digits, an optional leading minus sign and at
+       most one decimal point.
+@param lpFormat Number format, with every member set, or NULL for the
+       locale's format.
+@param lpNumberStr Receives the formatted string.
+@param cchNumber Size of lpNumberStr in characters, or 0 to query the size
+       needed.
+@return Characters written, or the size needed if cchNumber is 0, or 0 on
+        failure (see GetLastError).
+
+## GetOEMCP()
+Returns the system's OEM code page identifier, e.g. 437.
+
+@return The code page identifier.
+
+## GetStringTypeExW(Locale, dwInfoType, lpSrcStr, cchSrc, lpCharType)
+Returns character-type flags for each character in a string.
+
+Fills one WORD per character. The types depend only on the Unicode code
+point, not the locale.
+
+@param Locale Ignored on Windows CE. Pass LOCALE_SYSTEM_DEFAULT or
+       LOCALE_USER_DEFAULT.
+@param dwInfoType CT_CTYPE1 (C1_UPPER, C1_DIGIT, C1_ALPHA and so on),
+       CT_CTYPE2 (bidirectional layout, C2_*) or CT_CTYPE3 (text
+       processing, C3_*).
+@param lpSrcStr The string. Must not be the same buffer as lpCharType.
+@param cchSrc Length in characters, or -1 if null-terminated. A count
+       that includes the terminator also returns its type.
+@param lpCharType Receives one WORD of flags per character.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## GetStringTypeW(dwInfoType, lpSrcStr, cchSrc, lpCharType)
+Returns character-type flags for each character in a Unicode string.
+
+This is the Unicode form, with no locale parameter, unlike desktop
+GetStringTypeA. GetStringTypeExW has the same behaviour and a portable
+signature.
+
+@param dwInfoType CT_CTYPE1, CT_CTYPE2 or CT_CTYPE3.
+@param lpSrcStr The string. Must not be the same buffer as lpCharType.
+@param cchSrc Length in characters, or -1 if null-terminated.
+@param lpCharType Receives one WORD of flags per character.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## GetSystemDefaultLangID()
+Returns the system default language identifier.
+
+@return The system default LANGID.
+
+## GetSystemDefaultLCID()
+Returns the system default locale identifier.
+
+@return The system default LCID.
+
+## GetTimeFormatW(Locale, dwFlags, lpTime, lpFormat, lpTimeStr, cchTime)
+Formats a time as a string, using a format picture or the locale's
+default.
+
+The date fields of the SYSTEMTIME are ignored, and milliseconds are
+never shown. An out-of-range time field fails with
+ERROR_INVALID_PARAMETER, but a bad format picture doesn't fail.
+
+@param Locale Ignored: Windows CE always uses the system locale. Pass
+       LOCALE_SYSTEM_DEFAULT.
+@param dwFlags Zero or more of TIME_NOMINUTESORSECONDS, TIME_NOSECONDS,
+       TIME_NOTIMEMARKER and TIME_FORCE24HOURFORMAT. Windows CE doesn't
+       support LOCALE_NOUSEOVERRIDE.
+@param lpTime The time to format, or NULL for the current local time.
+@param lpFormat Format picture built from h, hh, H, HH, m, mm, s, ss, t
+       and tt, with literal text in single quotes, e.g.
+       L"hh':'mm':'ss tt". NULL for the locale's time format.
+@param lpTimeStr Receives the string.
+@param cchTime Buffer size in characters, or 0 to query the size needed.
+@return Characters written including the terminator, or the size needed
+        if cchTime is 0, or 0 on failure (see GetLastError).
+
+## GetUserDefaultLangID()
+Returns the user default language identifier.
+
+@return The user default LANGID.
+
+## GetUserDefaultLCID()
+Returns the user default locale identifier.
+
+@return The user default LCID.
+
+## IsDBCSLeadByte(TestChar)
+Tests whether a byte is a lead byte of a double-byte character in the
+system ANSI code page.
+
+@param TestChar The byte to test.
+@return TRUE if it is a lead byte, otherwise FALSE.
+
+## IsDBCSLeadByteEx(CodePage, TestChar)
+Tests whether a byte is a lead byte of a double-byte character in a given
+code page.
+
+@param CodePage Code page, or 0 or CP_ACP for the system ANSI code page,
+       or CP_OEMCP for the OEM code page.
+@param TestChar The byte to test.
+@return TRUE if it is a lead byte, otherwise FALSE (see GetLastError).
+
+## IsValidCodePage(CodePage)
+Tests whether a code page is installed on the device.
+
+@param CodePage Code page number, e.g. 1252.
+@return Nonzero if the code page is installed, otherwise 0.
+
+## IsValidLocale(Locale, dwFlags)
+Tests whether a locale identifier is supported or installed.
+
+@param Locale The LCID to test, e.g. from MAKELCID.
+@param dwFlags LCID_INSTALLED (supported and installed) or
+       LCID_SUPPORTED (supported, but maybe not installed).
+@return TRUE if the locale passes the test, otherwise FALSE.
+
+## LCMapStringW(Locale, dwMapFlags, lpSrcStr, cchSrc, lpDestStr, cchDest)
+Transforms a string (case, width, kana) or generates a sort key for it.
+
+With LCMAP_SORTKEY, the output is a null-terminated array of bytes, not
+WCHARs, and sizes are in bytes; compare sort keys byte by byte.
+
+@param Locale Locale for the mapping, e.g. LOCALE_USER_DEFAULT.
+@param dwMapFlags LCMAP_LOWERCASE, LCMAP_UPPERCASE, LCMAP_HALFWIDTH,
+       LCMAP_FULLWIDTH, LCMAP_HIRAGANA, LCMAP_KATAKANA, LCMAP_BYTEREV or
+       LCMAP_SORTKEY, plus NORM_* and SORT_STRINGSORT flags for sort
+       keys. Opposing pairs are mutually exclusive, and LCMAP_SORTKEY
+       combines only with LCMAP_BYTEREV among the LCMAP_* flags.
+       Windows CE doesn't support LCMAP_LINGUISTIC_CASING,
+       LCMAP_SIMPLIFIED_CHINESE or LCMAP_TRADITIONAL_CHINESE.
+@param lpSrcStr The source string. Must not be the same buffer as
+       lpDestStr.
+@param cchSrc Length in characters, or -1 if null-terminated.
+@param lpDestStr Receives the mapped string or sort key.
+@param cchDest Buffer size in characters (bytes for a sort key), or 0 to
+       query the size needed.
+@return Characters (or bytes) written including the terminator, or the
+        size needed if cchDest is 0, or 0 on failure (see GetLastError).
+
+## MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cchMultiByte, lpWideCharStr, cchWideChar)
+Converts a multibyte or single-byte string to a WCHAR string.
+
+@param CodePage Code page of the source, or CP_ACP, CP_OEMCP or
+       CP_MACCP. Windows CE doesn't support CP_UTF7 or CP_UTF8.
+@param dwFlags Zero, or MB_PRECOMPOSED or MB_COMPOSITE (mutually
+       exclusive), with MB_USEGLYPHCHARS and MB_ERR_INVALID_CHARS.
+@param lpMultiByteStr The source string. Must not overlap the output.
+@param cchMultiByte Source length in bytes, or -1 if null-terminated
+       (the terminator is then converted and counted too).
+@param lpWideCharStr Receives the converted string.
+@param cchWideChar Buffer size in WCHARs, or 0 to query the size needed.
+@return WCHARs written, or the size needed if cchWideChar is 0, or 0 on
+        failure (see GetLastError; ERROR_NO_UNICODE_TRANSLATION with
+        MB_ERR_INVALID_CHARS).
+
+## SetLocaleInfoW(Locale, LCType, lpLCData)
+Sets one item of the user's locale settings.
+
+Changes the user override, not the system defaults. Numeric items are
+passed as text.
+
+@param Locale Locale to change.
+@param LCType One LOCALE_* item, e.g. LOCALE_SSHORTDATE, LOCALE_STIME,
+       LOCALE_SCURRENCY or LOCALE_ITIME. Windows CE adds
+       LOCALE_SYEARMONTH and doesn't support LOCALE_IPAPERSIZE.
+@param lpLCData The new value as a null-terminated string, in the
+       item's format.
+@return Nonzero on success, or 0 on failure (see GetLastError).
+
+## WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, lpMultiByteStr, cchMultiByte, lpDefaultChar, lpUsedDefaultChar)
+Converts a WCHAR string to a multibyte or single-byte string.
+
+@param CodePage Target code page, or CP_ACP, CP_OEMCP or CP_MACCP.
+       Windows CE doesn't support CP_UTF7 or CP_UTF8.
+@param dwFlags Zero, or WC_COMPOSITECHECK optionally with one of
+       WC_DISCARDNS, WC_SEPCHARS or WC_DEFAULTCHAR. Windows CE doesn't
+       support WC_NO_BEST_FIT_CHARS.
+@param lpWideCharStr The source string. Must not overlap the output.
+@param cchWideChar Source length in WCHARs, or -1 if null-terminated
+       (the terminator is then converted and counted too).
+@param lpMultiByteStr Receives the converted string.
+@param cchMultiByte Buffer size in bytes, or 0 to query the size needed.
+@param lpDefaultChar Character for unmappable input, or NULL for the
+       system default. Faster if this and lpUsedDefaultChar are NULL.
+@param lpUsedDefaultChar Set to TRUE if the default character was used,
+       or NULL.
+@return Bytes written, or the size needed if cchMultiByte is 0, or 0 on
+        failure (see GetLastError).

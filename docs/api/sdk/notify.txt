@@ -1,0 +1,46 @@
+## CE_USER_NOTIFICATION
+This structure contains information used to initialize the user
+notifications settings dialog box, and receives the user's notification
+preferences entered by way of the dialog box. Also used when setting a
+user notification.
+
+The CE_USER_NOTIFICATION structure is passed in the
+CeGetUserNotificationPreferences function. Initial settings are used to
+populate the dialog box. If the function returns TRUE, the returned
+settings should be saved, and considered when calling
+CeSetUserNotification. Settings for hardware not on the current device
+will be ignored.
+
+It is also used when calling CeSetUserNotification, to describe what
+should happen when the notification time is reached.
+
+@member ActionFlags Specifies the action to take when a notification
+       event occurs. It can be a combination of the following flags:
+       Value Description PUN_LED Flashes the LED. PUN_VIBRATE Vibrates
+       the device. PUN_DIALOG Displays the user notification dialog box.
+       When this structure is passed to the CeSetUserNotification
+       function, the pwszDialogTitle and pwszDialogText members must
+       provide the title and text of the dialog box. PUN_SOUND Plays the
+       sound specified by the pwszSound member. When passed to PSVN, the
+       pwszSound member must provide the name of the sound file.
+       PUN_REPEAT Repeats the pwszSound for 10-15 seconds. Only valid if
+       PUN_SOUND is set. Any flag that is not valid on the current
+       hardware platform is ignored.
+@member pwszDialogTitle Pointer to the string that contains the title of
+       the user notification dialog box. If this member is NULL, no
+       dialog is displayed. The CeGetUserNotificationPreferences
+       function ignores this member.
+@member pwszDialogText Pointer to the string that contains the text of
+       the user notification dialog box. If this member is NULL, no
+       dialog is displayed. The CeGetUserNotificationPreferences
+       function ignores this member.
+@member pwszSound Pointer to a buffer that contains the unqualified name
+       of a sound file to play. This member is ignored if the
+       ActionFlags member does not include the PUN_SOUND flag.
+@member nMaxSound Specifies the maximum length of the string that the
+       CeGetUserNotificationPreferences function can copy into the
+       pwszSound buffer. Because the string may be a path name in a
+       future release, the buffer must be at least the length derived by
+       the following expression: PATH_MAX * sizeof(TCHAR). This member
+       is ignored by the CeSetUserNotification function.
+@member dwReserved Reserved; set to zero.

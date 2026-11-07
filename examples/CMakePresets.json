@@ -1,0 +1,119 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "mips-ce1-debug",
+            "displayName": "MIPS CE 1.0 Debug",
+            "binaryDir": "${sourceParentDir}/build/debug-mips-ce1",
+            "toolchainFile": "${sourceParentDir}/cmake/toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "GRIMACE_ARCH": "mips",
+                "GRIMACE_CE_VERSION": "1"
+            }
+        },
+        {
+            "name": "mips-ce2-debug",
+            "displayName": "MIPS CE 2.0 Debug",
+            "binaryDir": "${sourceParentDir}/build/debug-mips-ce2",
+            "toolchainFile": "${sourceParentDir}/cmake/toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "GRIMACE_ARCH": "mips",
+                "GRIMACE_CE_VERSION": "2"
+            }
+        },
+        {
+            "name": "sh3-ce1-debug",
+            "displayName": "SH3 CE 1.0 Debug",
+            "binaryDir": "${sourceParentDir}/build/debug-sh3-ce1",
+            "toolchainFile": "${sourceParentDir}/cmake/toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "GRIMACE_ARCH": "sh3",
+                "GRIMACE_CE_VERSION": "1"
+            }
+        },
+        {
+            "name": "sh3-ce101-debug",
+            "displayName": "SH3 CE 1.01 Debug",
+            "binaryDir": "${sourceParentDir}/build/debug-sh3-ce101",
+            "toolchainFile": "${sourceParentDir}/cmake/toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "GRIMACE_ARCH": "sh3",
+                "GRIMACE_CE_VERSION": "1.01"
+            }
+        },
+        {
+            "name": "sh3-ce2-debug",
+            "displayName": "SH3 CE 2.0 Debug",
+            "binaryDir": "${sourceParentDir}/build/debug-sh3-ce2",
+            "toolchainFile": "${sourceParentDir}/cmake/toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "GRIMACE_ARCH": "sh3",
+                "GRIMACE_CE_VERSION": "2"
+            }
+        },
+        {
+            "name": "x86-ce2-debug",
+            "displayName": "x86 CE 2.0 Debug",
+            "binaryDir": "${sourceParentDir}/build/debug-x86-ce2",
+            "toolchainFile": "${sourceParentDir}/cmake/toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "GRIMACE_ARCH": "x86",
+                "GRIMACE_CE_VERSION": "2"
+            }
+        },
+        {
+            "name": "arm-ce3-debug",
+            "displayName": "ARM CE 3.0 Debug",
+            "binaryDir": "${sourceParentDir}/build/debug-arm-ce3",
+            "toolchainFile": "${sourceParentDir}/cmake/toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "GRIMACE_ARCH": "arm",
+                "GRIMACE_CE_VERSION": "3"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "mips-ce1-debug",
+            "configurePreset": "mips-ce1-debug"
+        },
+        {
+            "name": "mips-ce2-debug",
+            "configurePreset": "mips-ce2-debug"
+        },
+        {
+            "name": "sh3-ce1-debug",
+            "configurePreset": "sh3-ce1-debug"
+        },
+        {
+            "name": "sh3-ce101-debug",
+            "configurePreset": "sh3-ce101-debug"
+        },
+        {
+            "name": "sh3-ce2-debug",
+            "configurePreset": "sh3-ce2-debug"
+        },
+        {
+            "name": "x86-ce2-debug",
+            "configurePreset": "x86-ce2-debug"
+        },
+        {
+            "name": "arm-ce3-debug",
+            "configurePreset": "arm-ce3-debug"
+        }
+    ]
+}

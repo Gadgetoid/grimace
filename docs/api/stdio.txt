@@ -1,0 +1,480 @@
+## _fcloseall()
+Closes all open streams except stdin, stdout and stderr.
+
+It also closes and deletes temporary files created by tmpfile. Stream
+buffers are flushed before closing.
+
+@return Number of streams closed, or EOF on error.
+
+## _fileno(stream)
+Returns the file handle associated with a stream.
+
+The result is undefined if stream is not associated with an open file.
+
+@param stream Stream whose file handle is requested.
+@return The associated file handle.
+
+## _flushall()
+Flushes output streams and clears input-stream buffers.
+
+All streams remain open.
+
+@return Number of open streams.
+
+## _getstdfilex(index)
+Returns the standard stream identified by index.
+
+Index 0 is stdin, 1 is stdout, and 2 is stderr.
+
+@param index Standard stream index: 0, 1 or 2.
+@return The corresponding FILE pointer.
+
+## _getws(buffer)
+Reads a line from stdin into a wide-character buffer.
+
+The newline is replaced with a null terminator. The declaration has no
+buffer-size argument, so the caller must provide enough storage.
+
+@param buffer Receives the input line.
+@return buffer on success, or NULL on error or end of file.
+
+## _putws(string)
+Writes a wide-character string and a newline to stdout.
+
+@param string Null-terminated string to write.
+@return A nonnegative value on success, or WEOF on failure.
+
+## _setmode(stream, mode)
+Sets the text or binary translation mode for a stream.
+
+Use _O_TEXT for CR-LF translation or _O_BINARY to suppress it. Set the
+mode before doing input or output on the stream.
+
+@param stream Stream whose translation mode changes.
+@param mode _O_TEXT or _O_BINARY.
+@return The previous mode, or -1 on error.
+
+## _snprintf(buffer, count, format)
+Formats output into a buffer, storing no more than count bytes.
+
+The terminating null is appended unless count is zero or the formatted
+length is at least count. A truncated result returns a negative value.
+
+@param buffer Receives the formatted output.
+@param count Maximum number of bytes to store.
+@param format Format-control string.
+@return Bytes stored excluding the null terminator, or a negative value
+        if the output does not fit.
+
+## _vsnprintf(buffer, count, format, arguments)
+Formats output into a buffer using a va_list, storing no more than count
+bytes.
+
+The terminating null is appended unless count is zero or the formatted
+length is at least count. A truncated result returns a negative value.
+
+@param buffer Receives the formatted output.
+@param count Maximum number of bytes to store.
+@param format Format-control string.
+@param arguments Argument list.
+@return Bytes stored excluding the null terminator, or a negative value
+        if the output does not fit.
+
+## _wfdopen(handle, mode)
+Associates a wide-mode stream with a file opened for low-level I/O.
+
+@param handle Handle of the already-open file.
+@param mode Wide-character access mode.
+@return The new stream, or NULL on error.
+
+## _wfopen(path, mode)
+Opens a file using wide-character path and mode strings.
+
+@param path Wide-character file name.
+@param mode Wide-character access mode.
+@return The open stream, or NULL on error.
+
+## _wfreopen(path, mode, stream)
+Closes a stream and reassigns it to a file using wide-character strings.
+
+If reopening fails, the original stream is still closed.
+
+@param path Wide-character file name.
+@param mode Wide-character access mode.
+@param stream Stream to close and reassign.
+@return The reopened stream, or NULL on error.
+
+## clearerr(stream)
+Clears a stream's error and end-of-file indicators.
+
+@param stream Stream to clear.
+
+## fclose(stream)
+Flushes and closes a stream.
+
+@param stream Stream to close.
+@return 0 on success, or EOF on error.
+
+## feof(stream)
+Tests whether a read has attempted to pass the end of a stream.
+
+@param stream Stream to test.
+@return Nonzero if the end-of-file indicator is set; otherwise 0.
+
+## ferror(stream)
+Tests whether a stream's error indicator is set.
+
+@param stream Stream to test.
+@return Nonzero if an error occurred; otherwise 0.
+
+## fflush(stream)
+Flushes a stream's output buffer or clears its input buffer.
+
+Pass NULL to flush all open output streams. The stream remains open.
+
+@param stream Stream to flush or clear, or NULL for all output streams.
+@return 0 on success, or EOF on error.
+
+## fgetc(stream)
+Reads one character from a stream and advances its position.
+
+Use feof or ferror to distinguish end of file from a read error.
+
+@param stream Stream to read.
+@return The character as an int, or EOF on error or end of file.
+
+## fgetpos(stream, position)
+Saves the current position indicator of a stream.
+
+The saved value is for use with fsetpos on the same stream.
+
+@param stream Stream whose position is saved.
+@param position Receives the position indicator.
+@return 0 on success, or a nonzero value on failure.
+
+## fgets(buffer, size, stream)
+Reads at most size - 1 characters from a stream into buffer.
+
+Reading stops at a newline, end of file, or the size limit. A newline is
+retained, and the result is null-terminated.
+
+@param buffer Receives the string.
+@param size Buffer capacity in characters.
+@param stream Stream to read.
+@return buffer on success, or NULL on error or end of file.
+
+## fgetwc(stream)
+Reads one wide character from a stream and advances its position.
+
+Use feof or ferror to distinguish end of file from a read error.
+
+@param stream Stream to read.
+@return The character as wint_t, or WEOF on error or end of file.
+
+## fgetws(buffer, size, stream)
+Reads at most size - 1 wide characters into buffer.
+
+Reading stops at a newline, end of file, or the size limit. A newline is
+retained, and the result is null-terminated.
+
+@param buffer Receives the wide-character string.
+@param size Buffer capacity in wide characters.
+@param stream Stream to read.
+@return buffer on success, or NULL on error or end of file.
+
+## fopen(path, mode)
+Opens a file using narrow-character path and mode strings.
+
+@param path File name.
+@param mode Access mode.
+@return The open stream, or NULL on error.
+
+## fprintf(stream, format)
+Writes formatted output to a stream.
+
+The format string controls how each optional argument is converted.
+
+@param stream Destination stream.
+@param format Format-control string.
+@return Number of bytes written, or a negative value on output error.
+
+## fputc(character, stream)
+Writes one character to a stream.
+
+@param character Character to write.
+@param stream Destination stream.
+@return The character written, or EOF on error.
+
+## fputs(string, stream)
+Writes a string to a stream without its terminating null character.
+
+@param string Null-terminated string to write.
+@param stream Destination stream.
+@return A nonnegative value on success, or EOF on error.
+
+## fputwc(character, stream)
+Writes one wide character to a stream.
+
+@param character Wide character to write.
+@param stream Destination stream.
+@return The character written, or WEOF on error.
+
+## fputws(string, stream)
+Writes a wide-character string to a stream without its null terminator.
+
+The stream's text or binary mode determines how wide characters are
+written.
+
+@param string Null-terminated wide-character string.
+@param stream Destination stream.
+@return A nonnegative value on success, or WEOF on error.
+
+## fread(buffer, size, count, stream)
+Reads up to count items of size bytes from a stream.
+
+The return value counts full items only. If size or count is zero, no
+data is read and buffer is unchanged.
+
+@param buffer Receives the data.
+@param size Size of each item in bytes.
+@param count Maximum number of items to read.
+@param stream Stream to read.
+@return Number of full items read; use feof or ferror to identify why
+        fewer than count items were read.
+
+## fscanf(stream, format)
+Reads and converts formatted input from a stream.
+
+Each optional argument must point to a value of the type required by its
+format specifier.
+
+@param stream Source stream.
+@param format Format-control string.
+@return Number of fields assigned, or EOF on error or end of file before
+        the first conversion.
+
+## fseek(stream, offset, origin)
+Moves a stream's position indicator relative to origin.
+
+origin is SEEK_SET, SEEK_CUR or SEEK_END. In text mode, only zero offsets
+or offsets returned by ftell from the start of the file are guaranteed.
+The call clears the end-of-file indicator and cancels ungetc effects.
+
+@param stream Stream to reposition.
+@param offset Offset from origin.
+@param origin SEEK_SET, SEEK_CUR or SEEK_END.
+@return 0 on success, nonzero on failure; the result is undefined on
+        devices that cannot seek.
+
+## fsetpos(stream, position)
+Restores a stream position saved by fgetpos.
+
+The call clears the end-of-file indicator and cancels ungetc effects.
+
+@param stream Stream to reposition.
+@param position Saved position from fgetpos.
+@return 0 on success, or a nonzero value on failure.
+
+## ftell(stream)
+Returns a stream's current position relative to its start.
+
+In text mode, the result may not be a physical byte offset. Use it with
+fseek to restore positions. Its value is undefined on nonseekable devices.
+
+@param stream Stream to query.
+@return Current position, or -1L on error.
+
+## fwprintf(stream, format)
+Writes formatted wide-character output to a stream.
+
+@param stream Destination stream.
+@param format Wide-character format string.
+@return Number of wide characters written, or a negative value on error.
+
+## fwrite(buffer, size, count, stream)
+Writes up to count items of size bytes to a stream.
+
+In text mode, carriage returns are translated to carriage-return and
+line-feed pairs.
+
+@param buffer Data to write.
+@param size Size of each item in bytes.
+@param count Maximum number of items to write.
+@param stream Destination stream.
+@return Number of full items written; the position is indeterminate if
+        an error occurs.
+
+## fwscanf(stream, format)
+Reads and converts formatted wide-character input from a stream.
+
+Each optional argument must point to a value of the type required by its
+format specifier.
+
+@param stream Source stream.
+@param format Wide-character format string.
+@return Number of fields assigned, or EOF on error or end of file before
+        the first conversion.
+
+## getchar()
+Reads one character from stdin.
+
+@return The character as an int, or EOF on error or end of file.
+
+## gets(buffer)
+Reads a line from stdin, replacing the newline with a null terminator.
+
+The declaration has no buffer-size argument, so the caller must provide
+enough storage.
+
+@param buffer Receives the input line.
+@return buffer on success, or NULL on error or end of file.
+
+## getwchar()
+Reads one wide character from stdin.
+
+@return The character as wint_t, or WEOF on error or end of file.
+
+## printf(format)
+Writes formatted output to stdout.
+
+The format string controls how each optional argument is converted.
+
+@param format Format-control string.
+@return Number of characters printed, or a negative value on error.
+
+## putchar(character)
+Writes one character to stdout.
+
+@param character Character to write.
+@return The character written, or EOF on error.
+
+## puts(string)
+Writes a string to stdout and appends a newline.
+
+@param string Null-terminated string to write.
+@return A nonnegative value on success, or EOF on error.
+
+## putwchar(character)
+Writes one wide character to stdout.
+
+@param character Wide character to write.
+@return The character written, or WEOF on error.
+
+## scanf(format)
+Reads and converts formatted input from stdin.
+
+Each optional argument must point to a value of the type required by its
+format specifier.
+
+@param format Format-control string.
+@return Number of fields assigned, 0 if none were assigned, or EOF on
+        error or end of input before the first conversion.
+
+## sprintf(buffer, format)
+Formats output into buffer and appends a null terminator.
+
+The buffer must be large enough for the formatted output and terminator.
+
+@param buffer Receives the formatted string.
+@param format Format-control string.
+@return Number of characters written, excluding the null terminator.
+
+## sscanf(string, format)
+Reads and converts formatted input from a string.
+
+Each optional argument must point to a value of the type required by its
+format specifier.
+
+@param string Input string to scan.
+@param format Format-control string.
+@return Number of fields assigned, 0 if none were assigned, or EOF if
+        input ends before the first conversion.
+
+## ungetc(character, stream)
+Pushes one character back onto a stream and clears its end-of-file flag.
+
+The stream must be open for reading. A later read returns the pushed
+character first. Do not push EOF; only one character of pushback is
+reliable.
+
+@param character Character to push back.
+@param stream Stream to update.
+@return The character on success, or EOF if pushback fails.
+
+## ungetwc(character, stream)
+Pushes one wide character back onto a stream and clears its end-of-file
+flag.
+
+The stream must be open for reading. A later read returns the pushed
+character first.
+
+@param character Wide character to push back.
+@param stream Stream to update.
+@return The character on success, or WEOF if pushback fails.
+
+## vfprintf(stream, format, arguments)
+Writes formatted output to a stream using a va_list.
+
+Initialize arguments with va_start. This function does not call va_end.
+
+@param stream Destination stream.
+@param format Format-control string.
+@param arguments Argument list initialized by va_start.
+@return Number of characters written, or a negative value on error.
+
+## vfwprintf(stream, format, arguments)
+Writes formatted wide-character output to a stream using a va_list.
+
+Initialize arguments with va_start. This function does not call va_end.
+
+@param stream Destination stream.
+@param format Wide-character format string.
+@param arguments Argument list initialized by va_start.
+@return Number of wide characters written, or a negative value on error.
+
+## vprintf(format, arguments)
+Writes formatted output to stdout using a va_list.
+
+Initialize arguments with va_start. This function does not call va_end.
+
+@param format Format-control string.
+@param arguments Argument list initialized by va_start.
+@return Number of characters written, or a negative value on error.
+
+## vsprintf(buffer, format, arguments)
+Formats output into buffer using a va_list and appends a null terminator.
+
+The buffer must be large enough for the output and terminator. Initialize
+arguments with va_start; this function does not call va_end.
+
+@param buffer Receives the formatted string.
+@param format Format-control string.
+@param arguments Argument list initialized by va_start.
+@return Number of characters written, excluding the null terminator, or
+        a negative value on error.
+
+## vwprintf(format, arguments)
+Writes formatted wide-character output to stdout using a va_list.
+
+@param format Wide-character format-control string.
+@param arguments Argument list.
+@return Number of wide characters written, or a negative value on error.
+
+## wprintf(format)
+Writes formatted wide-character output to stdout.
+
+The format string uses the printf format fields and wide-character
+arguments.
+
+@param format Wide-character format-control string.
+@return Number of wide characters written, or a negative value on error.
+
+## wscanf(format)
+Reads and converts formatted wide-character input from stdin.
+
+Each optional argument must point to a value of the type required by its
+format specifier.
+
+@param format Wide-character format-control string.
+@return Number of fields assigned, 0 if none were assigned, or EOF on
+        error or end of input before the first conversion.

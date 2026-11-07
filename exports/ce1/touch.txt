@@ -1,0 +1,9 @@
+TouchPanelCalibrateAPoint
+TouchPanelDisable
+TouchPanelEnable
+TouchPanelGetDeviceCaps
+TouchPanelPowerHandler
+TouchPanelReadCalibrationAbort
+TouchPanelReadCalibrationPoint
+TouchPanelSetCalibration
+TouchPanelSetMode

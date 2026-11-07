@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.20)
+project(grimace_examples C)
+
+include(Grimace)
+
+add_subdirectory(hello)
+add_subdirectory(window)
+if(GRIMACE_WIN32_WCE GREATER_EQUAL 200)
+    add_subdirectory(dialog)
+endif()
+add_subdirectory(maths)
+add_subdirectory(dll)
+add_subdirectory(cxx-basics)
+add_subdirectory(window-cxx)
+if(GRIMACE_LIBCXX)
+    add_subdirectory(stl-text)
+    add_subdirectory(stl-collections)
+endif()

@@ -1,0 +1,26 @@
+## DecompressImageIndirect(pParams)
+Decodes image data described by a DecompressImageInfo structure.
+
+Provide data in `pbBuffer` or through `pfnGetData`; `dwBufferCurrent`
+reports the valid buffered bytes. Request an HBITMAP through `phBM`, an
+IImageRender object through `ppImageRender`, or both. `iScale` is from 1
+to 100. `crTransparentOverride` applies to GIF images when not set to
+(UINT)-1.
+
+@param pParams Image input, output, sizing and callback settings.
+@return HRESULT indicating success or failure.
+
+## Get332Palette()
+Returns the 3-3-2 color palette.
+
+@return Pointer to COLORREF palette entries.
+
+## GetHalftonePalette()
+Returns the halftone color palette.
+
+@return Pointer to COLORREF palette entries.
+
+## GetTransparentColor()
+Returns the image decoder's transparent color.
+
+@return Transparent COLORREF value.

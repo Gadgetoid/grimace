@@ -1,0 +1,223 @@
+## RasDeleteEntryW(lpszPhonebook, lpszEntry)
+Deletes a phone book entry.
+
+@param lpszPhonebook Ignored: must be NULL. Windows CE keeps entries in
+       the registry.
+@param lpszEntry Name of the entry to delete.
+@return 0 on success, or ERROR_CANNOT_OPEN_PHONEBOOK, ERROR_INVALID_NAME
+        or a RegDeleteKey error.
+
+## RasDevConfigDialogEditW(szDeviceName, szDeviceType, hWndOwner, lpDeviceConfigIn, dwSize, lpDeviceConfigOut)
+Displays a RAS device configuration dialog and returns edited settings.
+
+This is the RASCNTL_DEVCONFIGDIALOGEDIT control operation.
+
+@param szDeviceName Device name.
+@param szDeviceType Device type.
+@param hWndOwner Owner window for the dialog.
+@param lpDeviceConfigIn Existing device configuration data.
+@param dwSize Size of the input configuration data, in bytes.
+@param lpDeviceConfigOut Receives the resulting device configuration.
+@return Zero on success, or a RAS error code.
+
+## RasDialW(lpRasDialExtensions, lpszPhonebook, lpRasDialParams, dwNotifierType, lpvNotifier, lphRasConn)
+Starts a RAS connection.
+
+With a notifier window it returns at once and reports progress to the
+window. On Windows CE 3.0, with lpvNotifier NULL it blocks until the
+connection succeeds or fails; on Windows CE 1.0 and 2.0 it is always
+asynchronous. Doesn't prompt for logon details: the application must
+collect them. Paused states such as RASCS_CallbackSetByCaller are not
+supported. Detect later failures with RasGetConnectStatusW.
+
+@param lpRasDialExtensions Ignored: must be NULL.
+@param lpszPhonebook Ignored: must be NULL.
+@param lpRasDialParams RASDIALPARAMS with dwSize set and the entry,
+       user name and password. szPhoneNumber and szCallbackNumber are
+       unused: set them to empty strings.
+@param dwNotifierType 0xFFFFFFFF: lpvNotifier is a window. On Windows
+       CE 3.0, ignored when lpvNotifier is NULL.
+@param lpvNotifier Window that receives WM_RASDIALEVENT (or the message
+       registered as RASDIALEVENT) with the RASCONNSTATE in wParam and
+       an error in lParam, or on Windows CE 3.0 NULL to dial
+       synchronously. Notifications end on RASCS_Connected, on an error
+       or on RasHangUpW.
+@param lphRasConn Receives the connection handle. Set *lphRasConn to
+       NULL first. If a handle is returned, always call RasHangUpW on
+       it, even when RasDialW fails.
+@return 0 on success (with a window, 0 if dialling started), or a RAS
+       error or ERROR_NOT_ENOUGH_MEMORY. ERROR_CANNOT_FIND_PHONEBOOK_ENTRY
+       is never returned.
+
+## RasEnumConnectionsW(lprasconn, lpcb, lpcConnections)
+Lists active RAS connections, with their handles and entry names.
+
+@param lprasconn Buffer for an array of RASCONN. Set the first
+       element's dwSize to sizeof(RASCONN).
+@param lpcb Size of the buffer in bytes. Receives the size needed.
+@param lpcConnections Receives the number of RASCONN written.
+@return 0 on success, or an error such as ERROR_BUFFER_TOO_SMALL.
+
+## RasEnumDevicesW(lpRasDevinfo, lpcb, lpcDevices)
+Retrieves the names and types of RAS-capable devices.
+
+Set `dwSize` in the first RASDEVINFOW structure before calling. On
+return, `lpcb` receives the required buffer size in bytes. OEM support
+may vary.
+
+@param lpRasDevinfo Receives an array of RASDEVINFOW structures.
+@param lpcb Input buffer size and output required size, in bytes.
+@param lpcDevices Receives the number of structures written.
+@return Zero on success, or a RAS error code.
+
+## RasEnumEntriesW(reserved, lpszPhonebook, lprasentryname, lpcb, lpcEntries)
+Lists the phone book entry names.
+
+@param reserved Must be NULL.
+@param lpszPhonebook Ignored: must be NULL.
+@param lprasentryname Buffer for an array of RASENTRYNAME. Set the first
+       element's dwSize to sizeof(RASENTRYNAME).
+@param lpcb Size of the buffer in bytes. Receives the size needed.
+@param lpcEntries Receives the number of entries written.
+@return 0 on success, or an error such as ERROR_BUFFER_TOO_SMALL.
+
+## RasGetConnectStatusW(hRasConn, lpRasConnStatus)
+Returns the state of a RAS connection.
+
+Use it to see whether an asynchronous RasDialW has finished or failed.
+
+@param hRasConn Connection from RasDialW or RasEnumConnectionsW.
+@param lpRasConnStatus RASCONNSTATUS with dwSize set. Receives the
+       state, any error and the device.
+@return 0 on success, or a RAS error or ERROR_INVALID_HANDLE.
+
+## RasGetDispPhoneNumW(szPhonebook, szEntry, szPhoneNum, dwPhoneNumLen)
+Retrieves the display phone number for a RAS phonebook entry.
+
+This is the RASCNTL_GETDISPPHONE control operation.
+
+@param szPhonebook Phonebook name.
+@param szEntry Phonebook entry name.
+@param szPhoneNum Receives the display phone number.
+@param dwPhoneNumLen Output buffer capacity, in characters.
+@return Zero on success, or a RAS error code.
+
+## RasGetEntryDialParamsW(lpszPhonebook, lprasdialparams, lpfPassword)
+Returns the dial parameters saved for a phone book entry.
+
+@param lpszPhonebook Ignored: must be NULL.
+@param lprasdialparams RASDIALPARAMS with dwSize and szEntryName set.
+       Receives the saved parameters. szPhoneNumber and
+       szCallbackNumber aren't used.
+@param lpfPassword Receives TRUE if the saved password was returned in
+       szPassword.
+@return 0 on success, or ERROR_BUFFER_INVALID,
+        ERROR_CANNOT_OPEN_PHONEBOOK or
+        ERROR_CANNOT_FIND_PHONEBOOK_ENTRY.
+
+## RasGetEntryPropertiesW(lpszPhonebook, lpszEntry, lpRasEntry, lpdwEntryInfoSize, lpbDeviceInfo, lpdwDeviceInfoSize)
+Returns the properties of a phone book entry.
+
+Pass lpRasEntry as NULL and *lpdwEntryInfoSize as 0 to get the size
+needed. On Windows CE 3.0 the alternate phone number list is not used.
+
+@param lpszPhonebook Ignored: must be NULL.
+@param lpszEntry Entry name, or L"" for default values.
+@param lpRasEntry RASENTRY with dwSize set, or NULL. On Windows CE 1.0
+       and 2.0, follow it with room for any alternate numbers.
+@param lpdwEntryInfoSize Size of lpRasEntry in bytes. Receives the size
+       needed. May be NULL if lpRasEntry is NULL.
+@param lpbDeviceInfo Receives the opaque TAPI device configuration (see
+       lineGetDevConfig), or NULL. On Windows CE 1.0, ignored: must be
+       NULL (use RasGetEntryDevConfig).
+@param lpdwDeviceInfoSize Size of lpbDeviceInfo in bytes. Receives the
+       size needed. May be NULL if lpbDeviceInfo is NULL. On Windows CE
+       1.0, must be NULL.
+@return 0 on success, or ERROR_INVALID_PARAMETER, ERROR_INVALID_SIZE,
+       ERROR_BUFFER_INVALID, ERROR_BUFFER_TOO_SMALL,
+       ERROR_CANNOT_OPEN_PHONEBOOK or ERROR_CANNOT_FIND_PHONEBOOK_ENTRY.
+
+## RasGetLinkStatistics(hRasConn, dwSubEntry, lpStatistics)
+Retrieves statistics for a RAS connection subentry.
+
+The RAS_STATS structure includes byte and frame counts, error counts,
+compression ratios, bits per second and connection duration.
+
+@param hRasConn RAS connection handle.
+@param dwSubEntry Subentry whose statistics to retrieve.
+@param lpStatistics Receives the RAS_STATS structure.
+@return Zero on success, or a RAS error code.
+
+## RasGetProjectionInfoW(hrasconn, rasprojection, lpprojection, lpcb)
+Retrieves negotiated protocol information for a RAS connection.
+
+For `RASP_PppIp`, the output is a RASPPPIP structure. On return, `lpcb`
+receives the required buffer size. OEM support may vary.
+
+@param hrasconn Connection handle from RasDial or RasEnumConnections.
+@param rasprojection Protocol whose projection information is requested.
+@param lpprojection Receives the protocol-specific information.
+@param lpcb Input buffer size and output required size, in bytes.
+@return Zero on success, or a RAS error code.
+
+## RasHangUpW(hRasConn)
+Ends a RAS connection and frees its resources.
+
+Works even if RasDialW hasn't finished. The handle is invalid
+afterwards. If called from the RasDialW notification handler, the hang
+up happens when the handler returns.
+
+@param hRasConn Connection from RasDialW or RasEnumConnectionsW.
+@return 0 on success, or a RAS error or ERROR_INVALID_HANDLE.
+
+## RasRenameEntryW(lpszPhonebook, lpszOldEntry, lpszNewEntry)
+Renames a phone book entry.
+
+@param lpszPhonebook Ignored: must be NULL.
+@param lpszOldEntry Existing entry name.
+@param lpszNewEntry New name. Check it first with RasValidateEntryNameW.
+@return 0 on success, or ERROR_INVALID_NAME, ERROR_ALREADY_EXISTS or
+        ERROR_CANNOT_FIND_PHONEBOOK_ENTRY.
+
+## RasSetEntryDialParamsW(lpszPhonebook, lprasdialparams, fRemovePassword)
+Saves the dial parameters for a phone book entry.
+
+@param lpszPhonebook Ignored: must be NULL.
+@param lprasdialparams RASDIALPARAMS with dwSize, szEntryName and the
+       parameters to save. szPhoneNumber and szCallbackNumber aren't
+       used.
+@param fRemovePassword TRUE to delete the saved password for
+       szUserName.
+@return 0 on success, or ERROR_BUFFER_INVALID,
+        ERROR_CANNOT_OPEN_PHONEBOOK or
+        ERROR_CANNOT_FIND_PHONEBOOK_ENTRY.
+
+## RasSetEntryPropertiesW(lpszPhonebook, lpszEntry, lpRasEntry, dwEntryInfoSize, lpbDeviceInfo, dwDeviceInfoSize)
+Changes a phone book entry, or creates it if it doesn't exist.
+
+Check new names with RasValidateEntryNameW first. On Windows CE 3.0 the
+alternate phone number list is not used.
+
+@param lpszPhonebook Ignored: must be NULL.
+@param lpszEntry Entry name.
+@param lpRasEntry RASENTRY with the new settings. On Windows CE 1.0 and
+       2.0 it may be followed by double-null-terminated alternate
+       numbers at dwAlternateOffset.
+@param dwEntryInfoSize Size of lpRasEntry in bytes.
+@param lpbDeviceInfo Opaque TAPI device configuration (see
+       lineGetDevConfig), or NULL. On Windows CE 1.0, ignored: must be
+       NULL (use RasSetEntryDevConfig).
+@param dwDeviceInfoSize Size of lpbDeviceInfo in bytes. On Windows CE
+       1.0, must be 0.
+@return 0 on success, or ERROR_BUFFER_INVALID or
+       ERROR_CANNOT_OPEN_PHONEBOOK.
+
+## RasValidateEntryNameW(lpszPhonebook, lpszEntry)
+Checks whether a name is valid for a new phone book entry.
+
+The name must contain at least one alphanumeric character, be a valid
+registry key name and not start with a backslash.
+
+@param lpszPhonebook Ignored: must be NULL.
+@param lpszEntry The name to check.
+@return 0 if valid, ERROR_INVALID_NAME, or ERROR_ALREADY_EXISTS.

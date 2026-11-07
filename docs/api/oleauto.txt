@@ -1,0 +1,1769 @@
+## BstrFromVector(psa, pbstr)
+Creates a BSTR from a one-dimensional byte SAFEARRAY.
+
+@param psa Byte vector to convert.
+@param pbstr Receives the allocated BSTR.
+@return S_OK, E_OUTOFMEMORY, E_INVALIDARG or DISP_E_TYPEMISMATCH.
+
+## CreateErrorInfo(pperrinfo)
+Creates a generic COM error-information object.
+
+Use ICreateErrorInfo to fill it in, then pass it to SetErrorInfo.
+
+@param pperrinfo Receives the ICreateErrorInfo interface pointer.
+@return S_OK, or E_OUTOFMEMORY.
+
+## CreateTypeLib2(syskind, szFile, ppctlib)
+Creates a type library and returns its ICreateTypeLib2 interface.
+
+Windows CE does not implement ICreateTypeLib2::SaveAllChanges.
+
+@param syskind Target system kind.
+@param szFile File path for the type library.
+@param ppctlib Receives the ICreateTypeLib2 interface pointer.
+@return S_OK, or an error code.
+
+## DispCallFunc(pvInstance, oVft, cc, vtReturn, cActuals, prgvt, prgpvarg, pvargResult)
+Calls a function through a vtable entry for a customized IDispatch::Invoke.
+
+The helper provides machine-independent calling conventions for the
+custom invocation.
+
+@param pvInstance Instance whose vtable contains the function.
+@param oVft Vtable offset of the function.
+@param cc Calling convention.
+@param vtReturn Return VARTYPE.
+@param cActuals Number of arguments.
+@param prgvt VARTYPE of each argument.
+@param prgpvarg Pointers to the argument VARIANTARG values.
+@param pvargResult Receives the result VARIANT.
+@return HRESULT indicating success or failure.
+
+## DispGetIDsOfNames(ptinfo, rgszNames, cNames, rgdispid)
+Maps member and parameter names to DISPIDs using interface type information.
+
+When cNames is greater than one, the first name is the member and the
+remaining names are its parameters.
+
+@param ptinfo Type information for the interface and locale.
+@param rgszNames Names to resolve.
+@param cNames Number of names.
+@param rgdispid Receives one DISPID per name.
+@return S_OK, DISP_E_UNKNOWNNAME, E_INVALIDARG, or a type-info error.
+
+## DispGetParam(pdispparams, position, vtTarg, pvarResult, puArgErr)
+Gets an invocation argument and coerces it to the requested VARTYPE.
+
+Position zero selects the last positional argument. Named and
+positional arguments cannot be accessed interchangeably.
+
+@param pdispparams Parameters passed to IDispatch::Invoke.
+@param position Argument position, counted from the end of rgvarg.
+@param vtTarg Target VARTYPE.
+@param pvarResult Receives the converted value; initialize as a valid VARIANT.
+@param puArgErr Receives the argument index on DISP_E_TYPEMISMATCH.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_PARAMNOTFOUND, or another
+        conversion error.
+
+## DispInvoke(_this, ptinfo, dispidMember, wFlags, pparams, pvarResult, pexcepinfo, puArgErr)
+Invokes an interface member using its type information.
+
+The helper maps and coerces DISPPARAMS arguments before calling the
+member. rgvarg stores arguments in reverse order.
+
+@param _this Object implementing the described IDispatch interface.
+@param ptinfo Type information for the interface.
+@param dispidMember Member DISPID to invoke.
+@param wFlags DISPATCH_METHOD, DISPATCH_PROPERTYGET, DISPATCH_PROPERTYPUT
+       or DISPATCH_PROPERTYPUTREF.
+@param pparams Invocation arguments and named DISPIDs.
+@param pvarResult Receives the result, or NULL when unused.
+@param pexcepinfo Receives exception information for DISP_E_EXCEPTION.
+@param puArgErr Receives the index of an invalid argument.
+@return S_OK, DISP_E_MEMBERNOTFOUND, DISP_E_TYPEMISMATCH, or an error.
+
+## GetErrorInfo(dwReserved, pperrinfo)
+Retrieves and clears the current logical thread's COM error information.
+
+The returned IErrorInfo reference belongs to the caller.
+
+@param dwReserved Reserved; set to zero.
+@param pperrinfo Receives the IErrorInfo pointer.
+@return S_OK if error information was present, S_FALSE otherwise.
+
+## LoadRegTypeLib(rguid, wVerMajor, wVerMinor, lcid, pptlib)
+Loads a registered type library by GUID, version and locale.
+
+Only typelib2 libraries are supported. If an exact version is absent,
+the loader may use a higher minor version with the same major version.
+
+@param rguid Type library GUID.
+@param wVerMajor Requested major version.
+@param wVerMinor Requested minor version.
+@param lcid Locale identifier.
+@param pptlib Receives the ITypeLib interface pointer.
+@return S_OK, TYPE_E_CANTLOADLIBRARY, or a registry/storage error.
+
+## LoadTypeLib(szFile, pptlib)
+Loads a typelib2 library from a DLL or executable resource.
+
+Windows CE does not load standalone or foreign type-library files.
+Append a resource index to the file path to select a resource. When no
+path is specified, this function may register the library as a
+backward-compatibility behavior.
+
+@param szFile DLL or executable path, optionally with a resource index.
+@param pptlib Receives the ITypeLib interface pointer.
+@return S_OK, TYPE_E_CANTLOADLIBRARY, or a type-library error.
+
+## RegisterTypeLib(ptlib, szFullPath, szHelpDir)
+Registers a type library and its Automation-compatible interfaces.
+
+This does not register its coclasses.
+
+@param ptlib Type library to register.
+@param szFullPath Fully qualified path to the library.
+@param szHelpDir Help-file directory, or NULL.
+@return S_OK, TYPE_E_REGISTRYACCESS, or a registration error.
+
+## SafeArrayAccessData(psa, ppvData)
+Locks a SAFEARRAY and returns a pointer to its data block.
+
+Call SafeArrayUnaccessData when finished; the pointer is valid only
+while the array remains locked.
+
+@param psa SAFEARRAY descriptor.
+@param ppvData Receives the data pointer.
+@return S_OK, E_INVALIDARG or E_UNEXPECTED.
+
+## SafeArrayAllocData(psa)
+Allocates element storage for a SAFEARRAY descriptor.
+
+@param psa Descriptor created by SafeArrayAllocDescriptor.
+@return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
+
+## SafeArrayAllocDescriptor(cDims, ppsaOut)
+Allocates a SAFEARRAY descriptor without allocating element data.
+
+Set the element size and call SafeArrayAllocData to allocate its data.
+
+@param cDims Number of dimensions.
+@param ppsaOut Receives the descriptor pointer.
+@return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
+
+## SafeArrayCopy(psa, ppsaOut)
+Creates a deep copy of a SAFEARRAY.
+
+String and VARIANT elements are copied using their Automation
+operations; object references are AddRef'd.
+
+@param psa Array to copy.
+@param ppsaOut Receives the copied array.
+@return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
+
+## SafeArrayCopyData(psaSource, psaTarget)
+Copies source elements into an existing SAFEARRAY descriptor.
+
+Releases existing target elements first. The caller supplies the target
+array; this function does not allocate or resize it.
+
+@param psaSource Source array.
+@param psaTarget Existing target array.
+@return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
+
+## SafeArrayCreate(vt, cDims, rgsabound)
+Creates a SAFEARRAY with the specified element type and bounds.
+
+VT_ARRAY, VT_BYREF, VT_EMPTY and VT_NULL are invalid base types. Destroy
+the array with SafeArrayDestroy.
+
+@param vt Element VARTYPE.
+@param cDims Number of dimensions.
+@param rgsabound Bounds for each dimension.
+@return SAFEARRAY descriptor, or NULL on failure.
+
+## SafeArrayCreateVector(vt, lLbound, cElements)
+Creates a fixed-size, one-dimensional SAFEARRAY.
+
+The lower bound may be negative. Destroy the array with
+SafeArrayDestroy.
+
+@param vt Element VARTYPE.
+@param lLbound Lower index bound.
+@param cElements Number of elements.
+@return SAFEARRAY descriptor, or NULL on failure.
+
+## SafeArrayDestroy(psa)
+Destroys a SAFEARRAY and releases its elements.
+
+Object elements are released. The array must not be locked.
+
+@param psa Array to destroy.
+@return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
+
+## SafeArrayDestroyData(psa)
+Releases all element data while preserving the SAFEARRAY descriptor.
+
+Object elements are released. The array must not be locked.
+
+@param psa Array whose data to destroy.
+@return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
+
+## SafeArrayDestroyDescriptor(psa)
+Destroys a SAFEARRAY descriptor without releasing its element data.
+
+Call SafeArrayDestroyData first when the data must also be freed.
+
+@param psa Descriptor to destroy.
+@return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
+
+## SafeArrayGetDim(psa)
+Returns the number of dimensions in a SAFEARRAY.
+
+@param psa SAFEARRAY descriptor.
+@return Number of dimensions.
+
+## SafeArrayGetElement(psa, rgIndices, pv)
+Copies one SAFEARRAY element to caller-provided storage.
+
+Indices are ordered from the rightmost dimension at index zero. The
+function handles BSTR, object and VARIANT element copying.
+
+@param psa Array to read.
+@param rgIndices One index per dimension.
+@param pv Receives an element of the correct size and type.
+@return S_OK, DISP_E_BADINDEX or E_INVALIDARG.
+
+## SafeArrayGetElemsize(psa)
+Returns the size in bytes of each SAFEARRAY element.
+
+@param psa SAFEARRAY descriptor.
+@return Element size in bytes.
+
+## SafeArrayGetLBound(psa, nDim, plLbound)
+Retrieves the lower index bound of one SAFEARRAY dimension.
+
+@param psa SAFEARRAY descriptor.
+@param nDim Dimension to query.
+@param plLbound Receives the lower bound.
+@return S_OK, DISP_E_BADINDEX or E_INVALIDARG.
+
+## SafeArrayGetUBound(psa, nDim, plUbound)
+Retrieves the upper index bound of one SAFEARRAY dimension.
+
+@param psa SAFEARRAY descriptor.
+@param nDim Dimension to query.
+@param plUbound Receives the upper bound.
+@return S_OK, DISP_E_BADINDEX or E_INVALIDARG.
+
+## SafeArrayLock(psa)
+Increments the SAFEARRAY lock count and exposes its data through pvData.
+
+Lock calls may be nested; balance each with SafeArrayUnlock. A locked
+array cannot be destroyed.
+
+@param psa SAFEARRAY descriptor.
+@return S_OK, E_INVALIDARG or E_UNEXPECTED.
+
+## SafeArrayPtrOfIndex(psa, rgIndices, ppvData)
+Returns a pointer to a SAFEARRAY element at the supplied indices.
+
+Lock the array before calling; unlock it after using the pointer.
+
+@param psa SAFEARRAY descriptor.
+@param rgIndices One index per dimension.
+@param ppvData Receives the element pointer.
+@return S_OK, DISP_E_BADINDEX or E_INVALIDARG.
+
+## SafeArrayPutElement(psa, rgIndices, pv)
+Copies a value into one SAFEARRAY element.
+
+Indices are ordered from the rightmost dimension at index zero. BSTR,
+object and VARIANT elements are copied and any existing value is cleared.
+
+@param psa Array to update.
+@param rgIndices One index per dimension.
+@param pv Value to copy; pointer-valued VARTYPEs are passed directly.
+@return S_OK, DISP_E_BADINDEX, E_INVALIDARG or E_OUTOFMEMORY.
+
+## SafeArrayRedim(psa, psaboundNew)
+Changes the bound of the rightmost SAFEARRAY dimension.
+
+Shrinking releases removed elements; growing initializes new ones. The
+array must not be locked.
+
+@param psa Array to resize.
+@param psaboundNew New bound for the rightmost dimension.
+@return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
+
+## SafeArrayUnaccessData(psa)
+Unlocks an array previously accessed with SafeArrayAccessData.
+
+The data pointer returned by SafeArrayAccessData is invalid afterward.
+
+@param psa SAFEARRAY descriptor.
+@return S_OK, E_INVALIDARG or E_UNEXPECTED.
+
+## SafeArrayUnlock(psa)
+Decrements the SAFEARRAY lock count.
+
+Call after finishing direct data access; balance each SafeArrayLock.
+
+@param psa SAFEARRAY descriptor.
+@return S_OK, E_INVALIDARG or E_UNEXPECTED.
+
+## SysAllocString(sz)
+Allocates a BSTR and copies a null-terminated Unicode string.
+
+Free the result with SysFreeString. NULL input returns NULL.
+
+@param sz Unicode string to copy.
+@return Allocated BSTR, or NULL on failure.
+
+## SysAllocStringByteLen(psz, len)
+Allocates a BSTR with a specified byte length without character conversion.
+
+Use for binary data only when the BSTR will not cross an ANSI/Unicode
+translation boundary. Prefer SAFEARRAY(VT_UI1) for binary data.
+
+@param psz Bytes to copy, or NULL for uninitialized storage.
+@param len Number of bytes to allocate and copy.
+@return Allocated BSTR, or NULL on failure.
+
+## SysAllocStringLen(pch, cch)
+Allocates a BSTR with a specified character length.
+
+Embedded NULs are preserved. If pch is NULL, the allocated characters
+are uninitialized. Free the result with SysFreeString.
+
+@param pch Characters to copy, or NULL for uninitialized storage.
+@param cch Number of characters.
+@return Allocated BSTR, or NULL on failure.
+
+## SysFreeString(bstr)
+Frees a BSTR allocated by an Automation string allocator.
+
+Passing NULL has no effect.
+
+@param bstr BSTR to free, or NULL.
+
+## SysReAllocString(pbstr, sz)
+Reallocates a BSTR from a null-terminated Unicode string.
+
+The old BSTR is freed and pbstr is updated to the new string.
+
+@param pbstr Address of the BSTR to replace.
+@param sz Unicode string to copy.
+@return Nonzero on success, zero if allocation fails.
+
+## SysReAllocStringLen(pbstr, pch, cch)
+Reallocates a BSTR to contain a specified number of characters.
+
+Embedded NULs are preserved. The old BSTR is freed and pbstr is updated.
+
+@param pbstr Address of the BSTR to replace.
+@param pch Characters to copy, or NULL for uninitialized storage.
+@param cch Number of characters.
+@return Nonzero on success, zero if allocation fails.
+
+## SysStringByteLen(bstr)
+Returns the byte length stored with a BSTR, excluding its terminator.
+
+The length can include embedded NUL bytes and may differ from a
+null-terminated string length.
+
+@param bstr BSTR to measure.
+@return Stored length in bytes.
+
+## SysStringLen(bstr)
+Returns the character length stored with a BSTR, excluding its terminator.
+
+The length can include embedded NUL characters.
+
+@param bstr BSTR to measure.
+@return Stored length in characters.
+
+## SystemTimeToVariantTime(lpSystemTime, pvtime)
+Converts SYSTEMTIME to an Automation DATE value.
+
+DATE is a double whose integral portion counts days and fractional
+portion represents time of day.
+
+@param lpSystemTime Date and time to convert.
+@param pvtime Receives the Automation DATE.
+@return Nonzero on success, zero on failure.
+
+## VarBoolFromCy(cyIn, pboolOut)
+Converts CY to VARIANT_BOOL.
+
+@param cyIn Currency value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromDate(dateIn, pboolOut)
+Converts DATE to VARIANT_BOOL.
+
+@param dateIn Automation DATE value.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromDec(pdecIn, pboolOut)
+Converts DECIMAL to VARIANT_BOOL.
+
+@param pdecIn Decimal value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromDisp(pdispIn, lcid, pboolOut)
+Converts IDispatch to VARIANT_BOOL using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier for conversion.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromI1(cIn, pboolOut)
+Converts a signed byte to VARIANT_BOOL.
+
+@param cIn Value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromI2(sIn, pboolOut)
+Converts a signed 16-bit integer to VARIANT_BOOL.
+
+@param sIn Value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromI4(lIn, pboolOut)
+Converts a signed 32-bit integer to VARIANT_BOOL.
+
+@param lIn Value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromR4(fltIn, pboolOut)
+Converts a single-precision float to VARIANT_BOOL.
+
+@param fltIn Value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromR8(dblIn, pboolOut)
+Converts a double-precision float to VARIANT_BOOL.
+
+@param dblIn Value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromStr(strIn, lcid, dwFlags, pboolOut)
+Converts a locale-formatted string to VARIANT_BOOL.
+
+@param strIn String value to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale and date-conversion flags.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarBoolFromUI1(bIn, pboolOut)
+Converts an unsigned byte to VARIANT_BOOL.
+
+@param bIn Value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromUI2(uiIn, pboolOut)
+Converts an unsigned 16-bit integer to VARIANT_BOOL.
+
+@param uiIn Value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBoolFromUI4(ulIn, pboolOut)
+Converts an unsigned 32-bit integer to VARIANT_BOOL.
+
+@param ulIn Value to convert.
+@param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarBstrFromBool(boolIn, lcid, dwFlags, pbstrOut)
+Formats VARIANT_BOOL as a locale-aware BSTR.
+
+The caller owns the allocated BSTR and must free it with SysFreeString.
+
+@param boolIn Boolean value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromCy(cyIn, lcid, dwFlags, pbstrOut)
+Formats CY as a locale-aware BSTR.
+
+The caller owns the allocated BSTR and must free it with SysFreeString.
+
+@param cyIn Currency value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromDate(dateIn, lcid, dwFlags, pbstrOut)
+Formats an Automation DATE as a locale-aware BSTR.
+
+VAR_DATEVALUEONLY or VAR_TIMEVALUEONLY can omit the time or date.
+Calendar and locale flags can control formatting. Free the returned
+BSTR with SysFreeString.
+
+@param dateIn Automation DATE value.
+@param lcid Locale identifier.
+@param dwFlags Date, calendar and locale formatting flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromDec(pdecIn, lcid, dwFlags, pbstrOut)
+Formats DECIMAL as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param pdecIn Decimal value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromDisp(pdispIn, lcid, dwFlags, pbstrOut)
+Converts IDispatch to a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromI1(cIn, lcid, dwFlags, pbstrOut)
+Formats a signed byte as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param cIn Value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromI2(iVal, lcid, dwFlags, pbstrOut)
+Formats a signed 16-bit integer as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param iVal Value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromI4(lIn, lcid, dwFlags, pbstrOut)
+Formats a signed 32-bit integer as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param lIn Value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromR4(fltIn, lcid, dwFlags, pbstrOut)
+Formats a single-precision float as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param fltIn Value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromR8(dblIn, lcid, dwFlags, pbstrOut)
+Formats a double-precision float as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param dblIn Value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromUI1(bVal, lcid, dwFlags, pbstrOut)
+Formats an unsigned byte as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param bVal Value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromUI2(uiIn, lcid, dwFlags, pbstrOut)
+Formats an unsigned 16-bit integer as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param uiIn Value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarBstrFromUI4(ulIn, lcid, dwFlags, pbstrOut)
+Formats an unsigned 32-bit integer as a locale-aware BSTR.
+
+Free the returned BSTR with SysFreeString.
+
+@param ulIn Value to format.
+@param lcid Locale identifier.
+@param dwFlags Conversion and locale flags.
+@param pbstrOut Receives the allocated BSTR.
+@return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
+
+## VarCyFromBool(boolIn, pcyOut)
+Converts VARIANT_BOOL to CY.
+
+@param boolIn Boolean value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarCyFromDate(dateIn, pcyOut)
+Converts Automation DATE to CY.
+
+@param dateIn DATE value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarCyFromDec(pdecIn, pcyOut)
+Converts DECIMAL to CY.
+
+@param pdecIn Decimal value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarCyFromDisp(pdispIn, lcid, pcyOut)
+Converts IDispatch to CY using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarCyFromI1(cIn, pcyOut)
+Converts a signed byte to CY.
+
+@param cIn Value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarCyFromI2(sIn, pcyOut)
+Converts a signed 16-bit integer to CY.
+
+@param sIn Value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarCyFromI4(lIn, pcyOut)
+Converts a signed 32-bit integer to CY.
+
+@param lIn Value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarCyFromR4(fltIn, pcyOut)
+Converts a single-precision float to CY.
+
+@param fltIn Value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarCyFromR8(dblIn, pcyOut)
+Converts a double-precision float to CY.
+
+@param dblIn Value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarCyFromStr(strIn, lcid, dwFlags, pcyOut)
+Parses a locale-formatted string as CY.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale and date-conversion flags.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarCyFromUI1(bIn, pcyOut)
+Converts an unsigned byte to CY.
+
+@param bIn Value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarCyFromUI2(uiIn, pcyOut)
+Converts an unsigned 16-bit integer to CY.
+
+@param uiIn Value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarCyFromUI4(ulIn, pcyOut)
+Converts an unsigned 32-bit integer to CY.
+
+@param ulIn Value to convert.
+@param pcyOut Receives the currency value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDateFromBool(boolIn, pdateOut)
+Converts VARIANT_BOOL to an Automation DATE.
+
+@param boolIn Boolean value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarDateFromCy(cyIn, pdateOut)
+Converts CY to an Automation DATE.
+
+@param cyIn Currency value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarDateFromDec(pdecIn, pdateOut)
+Converts DECIMAL to an Automation DATE.
+
+@param pdecIn Decimal value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarDateFromDisp(pdispIn, lcid, pdateOut)
+Converts IDispatch to an Automation DATE using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarDateFromI1(cIn, pdateOut)
+Converts a signed byte to an Automation DATE.
+
+@param cIn Value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDateFromI2(sIn, pdateOut)
+Converts a signed 16-bit integer to an Automation DATE.
+
+@param sIn Value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDateFromI4(lIn, pdateOut)
+Converts a signed 32-bit integer to an Automation DATE.
+
+@param lIn Value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDateFromR4(fltIn, pdateOut)
+Converts a single-precision float to an Automation DATE.
+
+@param fltIn Value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDateFromR8(dblIn, pdateOut)
+Converts a double-precision float to an Automation DATE.
+
+@param dblIn Value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDateFromStr(strIn, lcid, dwFlags, pdateOut)
+Parses a locale-formatted string as an Automation DATE.
+
+VAR_DATEVALUEONLY and VAR_TIMEVALUEONLY control which portion is
+converted; dwFlags also accepts calendar and locale options.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale, calendar and date/time conversion flags.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarDateFromUdate(pudateIn, dwFlags, pdateOut)
+Converts a UDATE structure to a packed Automation DATE.
+
+@param pudateIn Unpacked date to convert.
+@param dwFlags Conversion flags; receives VAR_VALIDDATE when valid.
+@param pdateOut Receives the DATE value.
+@return S_OK, E_OUTOFMEMORY or an error.
+
+## VarDateFromUI1(bIn, pdateOut)
+Converts an unsigned byte to an Automation DATE.
+
+@param bIn Value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDateFromUI2(uiIn, pdateOut)
+Converts an unsigned 16-bit integer to an Automation DATE.
+
+@param uiIn Value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDateFromUI4(ulIn, pdateOut)
+Converts an unsigned 32-bit integer to an Automation DATE.
+
+@param ulIn Value to convert.
+@param pdateOut Receives the DATE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDecFromBool(boolIn, pdecOut)
+Converts VARIANT_BOOL to DECIMAL.
+
+@param boolIn Boolean value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarDecFromCy(cyIn, pdecOut)
+Converts CY to DECIMAL.
+
+@param cyIn Currency value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarDecFromDate(dateIn, pdecOut)
+Converts an Automation DATE to DECIMAL.
+
+@param dateIn DATE value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarDecFromDisp(pdispIn, lcid, pdecOut)
+Converts IDispatch to DECIMAL using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarDecFromI1(cIn, pdecOut)
+Converts a signed byte to DECIMAL.
+
+@param cIn Value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDecFromI2(sIn, pdecOut)
+Converts a signed 16-bit integer to DECIMAL.
+
+@param sIn Value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDecFromI4(lIn, pdecOut)
+Converts a signed 32-bit integer to DECIMAL.
+
+@param lIn Value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDecFromR4(fltIn, pdecOut)
+Converts a single-precision float to DECIMAL.
+
+@param fltIn Value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDecFromR8(dblIn, pdecOut)
+Converts a double-precision float to DECIMAL.
+
+@param dblIn Value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDecFromStr(strIn, lcid, dwFlags, pdecOut)
+Parses a locale-formatted string as DECIMAL.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale conversion flags.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarDecFromUI1(bIn, pdecOut)
+Converts an unsigned byte to DECIMAL.
+
+@param bIn Value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDecFromUI2(uiIn, pdecOut)
+Converts an unsigned 16-bit integer to DECIMAL.
+
+@param uiIn Value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarDecFromUI4(ulIn, pdecOut)
+Converts an unsigned 32-bit integer to DECIMAL.
+
+@param ulIn Value to convert.
+@param pdecOut Receives the DECIMAL value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI1FromBool(boolIn, pcOut)
+Converts VARIANT_BOOL to a signed byte.
+
+@param boolIn Boolean value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI1FromCy(cyIn, pcOut)
+Converts CY to a signed byte.
+
+@param cyIn Currency value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI1FromDate(dateIn, pcOut)
+Converts an Automation DATE to a signed byte.
+
+@param dateIn DATE value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI1FromDec(pdecIn, pcOut)
+Converts DECIMAL to a signed byte.
+
+@param pdecIn Decimal value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI1FromDisp(pdispIn, lcid, pcOut)
+Converts IDispatch to a signed byte using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI1FromI2(uiIn, pcOut)
+Converts a signed 16-bit integer to a signed byte.
+
+@param uiIn Value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI1FromI4(lIn, pcOut)
+Converts a signed 32-bit integer to a signed byte.
+
+@param lIn Value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI1FromR4(fltIn, pcOut)
+Converts a single-precision float to a signed byte.
+
+@param fltIn Value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI1FromR8(dblIn, pcOut)
+Converts a double-precision float to a signed byte.
+
+@param dblIn Value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI1FromStr(strIn, lcid, dwFlags, pcOut)
+Parses a locale-formatted string as a signed byte.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale conversion flags.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarI1FromUI1(bIn, pcOut)
+Converts an unsigned byte to a signed byte.
+
+@param bIn Value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI1FromUI2(uiIn, pcOut)
+Converts an unsigned 16-bit integer to a signed byte.
+
+@param uiIn Value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI1FromUI4(ulIn, pcOut)
+Converts an unsigned 32-bit integer to a signed byte.
+
+@param ulIn Value to convert.
+@param pcOut Receives the signed byte.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI2FromBool(boolIn, psOut)
+Converts VARIANT_BOOL to a signed 16-bit integer.
+
+@param boolIn Boolean value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI2FromCy(cyIn, psOut)
+Converts CY to a signed 16-bit integer.
+
+@param cyIn Currency value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI2FromDate(dateIn, psOut)
+Converts an Automation DATE to a signed 16-bit integer.
+
+@param dateIn DATE value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI2FromDec(pdecIn, psOut)
+Converts DECIMAL to a signed 16-bit integer.
+
+@param pdecIn Decimal value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI2FromDisp(pdispIn, lcid, psOut)
+Converts IDispatch to a signed 16-bit integer using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI2FromI1(cIn, psOut)
+Converts a signed byte to a signed 16-bit integer.
+
+@param cIn Value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI2FromI4(lIn, psOut)
+Converts a signed 32-bit integer to a signed 16-bit integer.
+
+@param lIn Value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI2FromR4(fltIn, psOut)
+Converts a single-precision float to a signed 16-bit integer.
+
+@param fltIn Value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI2FromR8(dblIn, psOut)
+Converts a double-precision float to a signed 16-bit integer.
+
+@param dblIn Value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI2FromStr(strIn, lcid, dwFlags, psOut)
+Parses a locale-formatted string as a signed 16-bit integer.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale and date-conversion flags.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarI2FromUI1(bIn, psOut)
+Converts an unsigned byte to a signed 16-bit integer.
+
+@param bIn Value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI2FromUI2(uiIn, psOut)
+Converts an unsigned 16-bit integer to a signed 16-bit integer.
+
+@param uiIn Value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI2FromUI4(ulIn, psOut)
+Converts an unsigned 32-bit integer to a signed 16-bit integer.
+
+@param ulIn Value to convert.
+@param psOut Receives the SHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI4FromBool(boolIn, plOut)
+Converts VARIANT_BOOL to a signed 32-bit integer.
+
+@param boolIn Boolean value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI4FromCy(cyIn, plOut)
+Converts CY to a signed 32-bit integer.
+
+@param cyIn Currency value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI4FromDate(dateIn, plOut)
+Converts an Automation DATE to a signed 32-bit integer.
+
+@param dateIn DATE value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI4FromDec(pdecIn, plOut)
+Converts DECIMAL to a signed 32-bit integer.
+
+@param pdecIn Decimal value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI4FromDisp(pdispIn, lcid, plOut)
+Converts IDispatch to a signed 32-bit integer using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarI4FromI1(cIn, plOut)
+Converts a signed byte to a signed 32-bit integer.
+
+@param cIn Value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI4FromI2(sIn, plOut)
+Converts a signed 16-bit integer to a signed 32-bit integer.
+
+@param sIn Value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI4FromR4(fltIn, plOut)
+Converts a single-precision float to a signed 32-bit integer.
+
+@param fltIn Value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI4FromR8(dblIn, plOut)
+Converts a double-precision float to a signed 32-bit integer.
+
+@param dblIn Value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI4FromStr(strIn, lcid, dwFlags, plOut)
+Parses a locale-formatted string as a signed 32-bit integer.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale and date-conversion flags.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarI4FromUI1(bIn, plOut)
+Converts an unsigned byte to a signed 32-bit integer.
+
+@param bIn Value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI4FromUI2(uiIn, plOut)
+Converts an unsigned 16-bit integer to a signed 32-bit integer.
+
+@param uiIn Value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarI4FromUI4(ulIn, plOut)
+Converts an unsigned 32-bit integer to a signed 32-bit integer.
+
+@param ulIn Value to convert.
+@param plOut Receives the LONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VariantChangeType(pvargDest, pvarSrc, wFlags, vt)
+Converts a VARIANTARG from one type to another.
+
+@param pvargDest Receives the coerced value.
+@param pvarSrc Source value to coerce.
+@param wFlags Coercion flags.
+@param vt Destination VARTYPE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VariantChangeTypeEx(pvargDest, pvarSrc, lcid, wFlags, vt)
+Converts a VARIANTARG from one type to another using a locale identifier.
+
+@param pvargDest Receives the coerced value.
+@param pvarSrc Source value to coerce.
+@param lcid Locale identifier for string and date conversions.
+@param wFlags Coercion flags.
+@param vt Destination VARTYPE.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VariantClear(pvarg)
+Clears a VARIANTARG and releases any owned data.
+
+@param pvarg Variant to clear.
+@return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
+
+## VariantCopy(pvargDest, pvargSrc)
+Copies one VARIANTARG into another, freeing the destination first.
+
+@param pvargDest Receives the copied value.
+@param pvargSrc Source variant to copy.
+@return S_OK, DISP_E_ARRAYISLOCKED, DISP_E_BADVARTYPE or E_OUTOFMEMORY.
+
+## VariantCopyInd(pvarDest, pvargSrc)
+Copies a VARIANTARG while dereferencing VT_BYREF values as needed.
+
+@param pvarDest Receives the copy.
+@param pvargSrc Source variant to copy.
+@return S_OK, DISP_E_ARRAYISLOCKED, DISP_E_BADVARTYPE or E_OUTOFMEMORY.
+
+## VariantInit(pvarg)
+Initializes a VARIANTARG to VT_EMPTY.
+
+@param pvarg Variant to initialize.
+
+## VariantTimeToSystemTime(vtime, lpSystemTime)
+Converts a variant time value to a Win32 SYSTEMTIME structure.
+
+@param vtime Variant time value to convert.
+@param lpSystemTime Receives the system time.
+@return TRUE on success, FALSE on failure.
+
+## VarNumFromParseNum(pnumprs, rgbDig, dwVtBits, pvar)
+Converts parsed digits to a VARIANT using an allowed numeric type.
+
+Set one VTBIT_* flag per accepted output type. For decimal rounding,
+rgbDig must hold up to 30 digits; octal input may need 11 digits.
+
+@param pnumprs Parsed number description; cDig gives the digit count.
+@param rgbDig Parsed digits.
+@param dwVtBits Bitmask of acceptable VTBIT_* result types.
+@param pvar Receives the converted VARIANT.
+@return S_OK, DISP_E_OVERFLOW or E_OUTOFMEMORY.
+
+## VarParseNumFromStr(strIn, lcid, dwFlags, pnumprs, rgbDig)
+Parses a string into locale-independent numeric digits and metadata.
+
+With dwFlags zero, only decimal digits are accepted. Set NUMPRS_* bits
+to allow other syntax; NUMPRS_STD enables standard Automation parsing.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags NUMPRS_* syntax options.
+@param pnumprs Receives parsed sign, scale, digit count and consumed length.
+@param rgbDig Receives parsed digits; size is specified by pnumprs.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or E_OUTOFMEMORY.
+
+## VarR4FromBool(boolIn, pfltOut)
+Converts VARIANT_BOOL to a single-precision float.
+
+@param boolIn Boolean value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarR4FromCy(cyIn, pfltOut)
+Converts CY to a single-precision float.
+
+@param cyIn Currency value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarR4FromDate(dateIn, pfltOut)
+Converts an Automation DATE to a single-precision float.
+
+@param dateIn DATE value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarR4FromDec(pdecIn, pfltOut)
+Converts DECIMAL to a single-precision float.
+
+@param pdecIn Decimal value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarR4FromDisp(pdispIn, lcid, pfltOut)
+Converts IDispatch to a single-precision float using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarR4FromI1(cIn, pfltOut)
+Converts a signed byte to a single-precision float.
+
+@param cIn Value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR4FromI2(sIn, pfltOut)
+Converts a signed 16-bit integer to a single-precision float.
+
+@param sIn Value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR4FromI4(lIn, pfltOut)
+Converts a signed 32-bit integer to a single-precision float.
+
+@param lIn Value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR4FromR8(dblIn, pfltOut)
+Converts a double-precision float to a single-precision float.
+
+@param dblIn Value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR4FromStr(strIn, lcid, dwFlags, pfltOut)
+Parses a locale-formatted string as a single-precision float.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale conversion flags.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarR4FromUI1(bIn, pfltOut)
+Converts an unsigned byte to a single-precision float.
+
+@param bIn Value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR4FromUI2(uiIn, pfltOut)
+Converts an unsigned 16-bit integer to a single-precision float.
+
+@param uiIn Value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR4FromUI4(ulIn, pfltOut)
+Converts an unsigned 32-bit integer to a single-precision float.
+
+@param ulIn Value to convert.
+@param pfltOut Receives the FLOAT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromBool(boolIn, pdblOut)
+Converts VARIANT_BOOL to a double-precision float.
+
+@param boolIn Boolean value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarR8FromCy(cyIn, pdblOut)
+Converts CY to a double-precision float.
+
+@param cyIn Currency value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromDate(dateIn, pdblOut)
+Converts an Automation DATE to a double-precision float.
+
+@param dateIn DATE value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromDec(pdecIn, pdblOut)
+Converts DECIMAL to a double-precision float.
+
+@param pdecIn Decimal value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromDisp(pdispIn, lcid, pdblOut)
+Converts IDispatch to a double using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarR8FromI1(cIn, pdblOut)
+Converts a signed byte to a double-precision float.
+
+@param cIn Value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromI2(sIn, pdblOut)
+Converts a signed 16-bit integer to a double-precision float.
+
+@param sIn Value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromI4(lIn, pdblOut)
+Converts a signed 32-bit integer to a double-precision float.
+
+@param lIn Value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromR4(fltIn, pdblOut)
+Converts a single-precision float to a double-precision float.
+
+@param fltIn Value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromStr(strIn, lcid, dwFlags, pdblOut)
+Parses a locale-formatted string as a double-precision float.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale conversion flags.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarR8FromUI1(bIn, pdblOut)
+Converts an unsigned byte to a double-precision float.
+
+@param bIn Value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromUI2(uiIn, pdblOut)
+Converts an unsigned 16-bit integer to a double-precision float.
+
+@param uiIn Value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarR8FromUI4(ulIn, pdblOut)
+Converts an unsigned 32-bit integer to a double-precision float.
+
+@param ulIn Value to convert.
+@param pdblOut Receives the DOUBLE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUdateFromDate(dateIn, dwFlags, pudateOut)
+Converts a DATE value into an unpacked date structure.
+
+@param dateIn DATE value to convert.
+@param dwFlags Calendar flags.
+@param pudateOut Receives the unpacked date.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI1FromBool(boolIn, pbOut)
+Converts VARIANT_BOOL to an unsigned byte.
+
+@param boolIn Boolean value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI1FromCy(cyIn, pbOut)
+Converts CY to an unsigned byte.
+
+@param cyIn Currency value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI1FromDate(dateIn, pbOut)
+Converts an Automation DATE to an unsigned byte.
+
+@param dateIn DATE value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI1FromDec(pdecIn, pbOut)
+Converts DECIMAL to an unsigned byte.
+
+@param pdecIn Decimal value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI1FromDisp(pdispIn, lcid, pbOut)
+Converts IDispatch to an unsigned byte using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI1FromI1(cIn, pbOut)
+Converts a signed byte to an unsigned byte.
+
+@param cIn Value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI1FromI2(sIn, pbOut)
+Converts a signed 16-bit integer to an unsigned byte.
+
+@param sIn Value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI1FromI4(lIn, pbOut)
+Converts a signed 32-bit integer to an unsigned byte.
+
+@param lIn Value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI1FromR4(fltIn, pbOut)
+Converts a single-precision float to an unsigned byte.
+
+@param fltIn Value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI1FromR8(dblIn, pbOut)
+Converts a double-precision float to an unsigned byte.
+
+@param dblIn Value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI1FromStr(strIn, lcid, dwFlags, pbOut)
+Parses a locale-formatted string as an unsigned byte.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale conversion flags.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarUI1FromUI2(uiIn, pbOut)
+Converts an unsigned 16-bit integer to an unsigned byte.
+
+@param uiIn Value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI1FromUI4(ulIn, pbOut)
+Converts an unsigned 32-bit integer to an unsigned byte.
+
+@param ulIn Value to convert.
+@param pbOut Receives the BYTE value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI2FromBool(boolIn, puiOut)
+Converts VARIANT_BOOL to an unsigned 16-bit integer.
+
+@param boolIn Boolean value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI2FromCy(cyIn, puiOut)
+Converts CY to an unsigned 16-bit integer.
+
+@param cyIn Currency value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI2FromDate(dateIn, puiOut)
+Converts an Automation DATE to an unsigned 16-bit integer.
+
+@param dateIn DATE value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI2FromDec(pdecIn, puiOut)
+Converts DECIMAL to an unsigned 16-bit integer.
+
+@param pdecIn Decimal value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI2FromDisp(pdispIn, lcid, puiOut)
+Converts IDispatch to an unsigned 16-bit integer using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI2FromI1(cIn, puiOut)
+Converts a signed byte to an unsigned 16-bit integer.
+
+@param cIn Value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI2FromI2(uiIn, puiOut)
+Converts a signed 16-bit integer to an unsigned 16-bit integer.
+
+@param uiIn Value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI2FromI4(lIn, puiOut)
+Converts a signed 32-bit integer to an unsigned 16-bit integer.
+
+@param lIn Value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI2FromR4(fltIn, puiOut)
+Converts a single-precision float to an unsigned 16-bit integer.
+
+@param fltIn Value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI2FromR8(dblIn, puiOut)
+Converts a double-precision float to an unsigned 16-bit integer.
+
+@param dblIn Value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI2FromStr(strIn, lcid, dwFlags, puiOut)
+Parses a locale-formatted string as an unsigned 16-bit integer.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale conversion flags.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarUI2FromUI1(bIn, puiOut)
+Converts an unsigned byte to an unsigned 16-bit integer.
+
+@param bIn Value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI2FromUI4(ulIn, puiOut)
+Converts an unsigned 32-bit integer to an unsigned 16-bit integer.
+
+@param ulIn Value to convert.
+@param puiOut Receives the USHORT value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI4FromBool(boolIn, pulOut)
+Converts VARIANT_BOOL to an unsigned 32-bit integer.
+
+@param boolIn Boolean value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI4FromCy(cyIn, pulOut)
+Converts CY to an unsigned 32-bit integer.
+
+@param cyIn Currency value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI4FromDate(dateIn, pulOut)
+Converts an Automation DATE to an unsigned 32-bit integer.
+
+@param dateIn DATE value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI4FromDec(pdecIn, pulOut)
+Converts DECIMAL to an unsigned 32-bit integer.
+
+@param pdecIn Decimal value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI4FromDisp(pdispIn, lcid, pulOut)
+Converts IDispatch to an unsigned 32-bit integer using the specified locale.
+
+@param pdispIn Value to convert.
+@param lcid Locale identifier.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
+
+## VarUI4FromI1(cIn, pulOut)
+Converts a signed byte to an unsigned 32-bit integer.
+
+@param cIn Value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI4FromI2(uiIn, pulOut)
+Converts a signed 16-bit integer to an unsigned 32-bit integer.
+
+@param uiIn Value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI4FromI4(lIn, pulOut)
+Converts a signed 32-bit integer to an unsigned 32-bit integer.
+
+@param lIn Value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI4FromR4(fltIn, pulOut)
+Converts a single-precision float to an unsigned 32-bit integer.
+
+@param fltIn Value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI4FromR8(dblIn, pulOut)
+Converts a double-precision float to an unsigned 32-bit integer.
+
+@param dblIn Value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI4FromStr(strIn, lcid, dwFlags, pulOut)
+Parses a locale-formatted string as an unsigned 32-bit integer.
+
+@param strIn String to parse.
+@param lcid Locale identifier.
+@param dwFlags Locale conversion flags.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
+
+## VarUI4FromUI1(bIn, pulOut)
+Converts an unsigned byte to an unsigned 32-bit integer.
+
+@param bIn Value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VarUI4FromUI2(uiIn, pulOut)
+Converts an unsigned 16-bit integer to an unsigned 32-bit integer.
+
+@param uiIn Value to convert.
+@param pulOut Receives the ULONG value.
+@return S_OK, DISP_E_OVERFLOW or an error.
+
+## VectorFromBstr(bstr, ppsa)
+Creates a one-dimensional SAFEARRAY from the characters in a BSTR.
+
+@param bstr BSTR to convert.
+@param ppsa Receives the SAFEARRAY pointer.
+@return S_OK, E_OUTOFMEMORY or E_INVALIDARG.

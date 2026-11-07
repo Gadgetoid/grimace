@@ -1,0 +1,21 @@
+## CPINFO
+This structure contains information about a code page.
+
+Lead bytes are unique to double-byte character sets (DBCS). A lead byte
+is the first byte of a 2-byte character in a DBCS. Lead bytes occupy a
+specific range of byte values.
+
+@member MaxCharSize Specifies the maximum length, in bytes, of a
+       character in this code page.
+@member DefaultChar Specifies the default character used in translations
+       into this code page. This character is used by the
+       WideCharToMultiByte function if an explicit default character is
+       not given.
+@member LeadByte Specifies a fixed-length array of lead-byte ranges,
+       where the number of lead-byte ranges is variable. If there are no
+       lead bytes in this code page, then every element of the array is
+       NULL. If there are lead bytes in this code page, a starting value
+       and ending value is given for each range. Ranges are inclusive.
+       The maximum number of lead-byte ranges for any code page is 5.
+       The array uses two bytes to describe each range, with a
+       double-byte terminating null character after the last range.

@@ -1,0 +1,14 @@
+CTECancelEvent
+CTEEnlargedUnsignedDivide
+CTEGetTimerState
+CTEInitialize
+CTEScheduleEvent
+CTEStartTimer
+CTEStopTimer
+GetRegBinaryValue
+GetRegDWORDValue
+GetRegMultiSZValue
+GetRegSZValue
+SetRegBinaryValue
+SetRegDWORDValue
+SetRegMultiSZValue

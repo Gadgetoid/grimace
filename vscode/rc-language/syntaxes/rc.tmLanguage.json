@@ -1,0 +1,331 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Resource Script",
+    "scopeName": "source.rc",
+    "fileTypes": ["rc", "rc2"],
+    "patterns": [
+        { "include": "#comments" },
+        { "include": "#preprocessor" },
+        { "include": "#tokens" }
+    ],
+    "repository": {
+        "tokens": {
+            "patterns": [
+                { "include": "#strings" },
+                { "include": "#numbers" },
+                { "include": "#accelerator-control" },
+                { "include": "#keywords" },
+                { "include": "#constants" },
+                { "include": "#operators" },
+                { "include": "#punctuation" }
+            ]
+        },
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.block.rc",
+                    "begin": "/\\*",
+                    "beginCaptures": { "0": { "name": "punctuation.definition.comment.begin.rc" } },
+                    "end": "\\*/",
+                    "endCaptures": { "0": { "name": "punctuation.definition.comment.end.rc" } }
+                },
+                {
+                    "name": "comment.line.double-slash.rc",
+                    "begin": "//",
+                    "beginCaptures": { "0": { "name": "punctuation.definition.comment.rc" } },
+                    "end": "(?=\\n)"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.wide.rc",
+                    "begin": "\\b([Ll])(\")",
+                    "beginCaptures": {
+                        "1": { "name": "storage.type.string.rc" },
+                        "2": { "name": "punctuation.definition.string.begin.rc" }
+                    },
+                    "end": "(\")(?!\")|(?=\\n)",
+                    "endCaptures": { "1": { "name": "punctuation.definition.string.end.rc" } },
+                    "patterns": [{ "include": "#line-continuation" }, { "include": "#string-escapes" }]
+                },
+                {
+                    "name": "string.quoted.double.rc",
+                    "begin": "\"",
+                    "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.rc" } },
+                    "end": "(\")(?!\")|(?=\\n)",
+                    "endCaptures": { "1": { "name": "punctuation.definition.string.end.rc" } },
+                    "patterns": [{ "include": "#line-continuation" }, { "include": "#string-escapes" }]
+                }
+            ]
+        },
+        "string-escapes": {
+            "patterns": [
+                {
+                    "name": "constant.character.escape.quote.rc",
+                    "match": "\"\""
+                },
+                {
+                    "name": "constant.character.escape.rc",
+                    "match": "\\\\(?:[abfnrtv\\\\\"'?]|[0-7]{1,3}|[xX][0-9A-Fa-f]{1,4})"
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.hex.rc",
+                    "match": "\\b0[xX][0-9A-Fa-f]+(?:[uU]?[lL]|[lL]?[uU])?\\b"
+                },
+                {
+                    "name": "constant.numeric.decimal.rc",
+                    "match": "\\b[0-9]+(?:[uU]?[lL]|[lL]?[uU])?\\b"
+                }
+            ]
+        },
+        "accelerator-control": {
+            "match": "(?i)(,)\\s*(CONTROL)\\b",
+            "captures": {
+                "1": { "name": "punctuation.separator.comma.rc" },
+                "2": { "name": "storage.modifier.accelerator.rc" }
+            }
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.block.begin.rc",
+                    "match": "(?i)\\bBEGIN\\b"
+                },
+                {
+                    "name": "keyword.control.block.end.rc",
+                    "match": "(?i)\\bEND\\b"
+                },
+                {
+                    "name": "storage.type.resource.rc",
+                    "match": "(?i)\\b(?:ACCELERATORS|ANICURSOR|ANIICON|BITMAP|CURSOR|DESIGNINFO|DIALOG|DIALOGEX|DLGINCLUDE|DLGINIT|FONT|FONTDIR|GUIDELINES|HTML|ICON|MENU|MENUEX|MESSAGETABLE|PLUGPLAY|RCDATA|STRINGTABLE|TEXTINCLUDE|TOOLBAR|VERSIONINFO|VXD)\\b"
+                },
+                {
+                    "name": "support.class.control.rc",
+                    "match": "(?i)\\b(?:AUTO3STATE|AUTOCHECKBOX|AUTORADIOBUTTON|CHECKBOX|COMBOBOX|CONTROL|CTEXT|DEFPUSHBUTTON|EDITTEXT|GROUPBOX|LISTBOX|LTEXT|PUSHBOX|PUSHBUTTON|RADIOBUTTON|RTEXT|SCROLLBAR|STATE3)\\b"
+                },
+                {
+                    "name": "keyword.other.statement.rc",
+                    "match": "(?i)\\b(?:BOTTOMMARGIN|BUTTON|CAPTION|CHARACTERISTICS|CLASS|EXSTYLE|LANGUAGE|LEFTMARGIN|MENUITEM|POPUP|RIGHTMARGIN|SEPARATOR|STYLE|TOPMARGIN|VERSION)\\b"
+                },
+                {
+                    "name": "keyword.other.versioninfo.rc",
+                    "match": "(?i)\\b(?:BLOCK|FILEFLAGS|FILEFLAGSMASK|FILEOS|FILESUBTYPE|FILETYPE|FILEVERSION|PRODUCTVERSION|VALUE)\\b"
+                },
+                {
+                    "name": "storage.modifier.memory.rc",
+                    "match": "(?i)\\b(?:DISCARDABLE|FIXED|IMPURE|LOADONCALL|MOVEABLE|NONSHARED|PRELOAD|PURE|SHARED)\\b"
+                },
+                {
+                    "name": "storage.modifier.menu.rc",
+                    "match": "(?i)\\b(?:CHECKED|GRAYED|HELP|INACTIVE|MENUBARBREAK|MENUBREAK)\\b"
+                },
+                {
+                    "name": "storage.modifier.accelerator.rc",
+                    "match": "(?i)\\b(?:ALT|ASCII|NOINVERT|SHIFT|VIRTKEY)\\b"
+                },
+                {
+                    "name": "keyword.operator.logical.rc",
+                    "match": "(?i)\\bNOT\\b"
+                }
+            ]
+        },
+        "constants": {
+            "patterns": [
+                {
+                    "name": "support.constant.style.rc",
+                    "match": "\\b(?:ACS|BS|BTNS|CBS|CCS|DS|DTS|ES|HDS|LBS|LVS|MCS|PBS|RBS|SBARS|SBS|SS|TBS|TBSTYLE|TCS|TTS|TVS|UDS|WS|WS_EX)_[A-Z0-9_]+\\b"
+                },
+                {
+                    "name": "support.constant.vkey.rc",
+                    "match": "\\bVK_[A-Z0-9_]+\\b"
+                },
+                {
+                    "name": "support.constant.version.rc",
+                    "match": "\\b(?:VS|VOS|VFT|VFT2)_[A-Z0-9_]+\\b"
+                },
+                {
+                    "name": "support.constant.language.rc",
+                    "match": "\\b(?:LANG|SUBLANG)_[A-Z0-9_]+\\b"
+                },
+                {
+                    "name": "support.constant.id.rc",
+                    "match": "\\b(?:IDABORT|IDCANCEL|IDCLOSE|IDCONTINUE|IDHELP|IDIGNORE|IDNO|IDOK|IDRETRY|IDTRYAGAIN|IDYES|IDC_STATIC)\\b"
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.rc",
+                    "match": "\\|\\||&&|[|&~^!<>=+\\-*/%]"
+                }
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                { "name": "punctuation.separator.comma.rc", "match": "," },
+                { "name": "punctuation.section.block.begin.bracket.curly.rc", "match": "\\{" },
+                { "name": "punctuation.section.block.end.bracket.curly.rc", "match": "\\}" },
+                { "name": "punctuation.section.parens.begin.bracket.round.rc", "match": "\\(" },
+                { "name": "punctuation.section.parens.end.bracket.round.rc", "match": "\\)" }
+            ]
+        },
+        "line-continuation": {
+            "match": "(\\\\)\\n",
+            "captures": { "1": { "name": "constant.character.escape.line-continuation.rc" } }
+        },
+        "preprocessor": {
+            "patterns": [
+                { "include": "#pp-include" },
+                { "include": "#pp-define" },
+                { "include": "#pp-conditional" },
+                { "include": "#pp-undef" },
+                { "include": "#pp-pragma" },
+                { "include": "#pp-diagnostic" },
+                { "include": "#pp-other" }
+            ]
+        },
+        "pp-include": {
+            "name": "meta.preprocessor.include.rc",
+            "begin": "^\\s*((#)\\s*include)\\b\\s*",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.directive.include.rc" },
+                "2": { "name": "punctuation.definition.directive.rc" }
+            },
+            "end": "(?=(?://|/\\*))|(?<!\\\\)(?=\\n)",
+            "patterns": [
+                { "include": "#line-continuation" },
+                {
+                    "name": "string.quoted.double.include.rc",
+                    "begin": "\"",
+                    "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.rc" } },
+                    "end": "\"|(?=\\n)",
+                    "endCaptures": { "0": { "name": "punctuation.definition.string.end.rc" } }
+                },
+                {
+                    "name": "string.quoted.other.lt-gt.include.rc",
+                    "begin": "<",
+                    "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.rc" } },
+                    "end": ">|(?=\\n)",
+                    "endCaptures": { "0": { "name": "punctuation.definition.string.end.rc" } }
+                }
+            ]
+        },
+        "pp-define": {
+            "name": "meta.preprocessor.macro.rc",
+            "begin": "^\\s*((#)\\s*define)\\b\\s*(?:([A-Za-z_]\\w*)(?:(\\()([^)]*)(\\)))?)?",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.directive.define.rc" },
+                "2": { "name": "punctuation.definition.directive.rc" },
+                "3": { "name": "entity.name.function.preprocessor.rc" },
+                "4": { "name": "punctuation.definition.parameters.begin.rc" },
+                "5": {
+                    "patterns": [
+                        { "name": "variable.parameter.preprocessor.rc", "match": "[A-Za-z_]\\w*" },
+                        { "name": "punctuation.separator.parameters.rc", "match": "," }
+                    ]
+                },
+                "6": { "name": "punctuation.definition.parameters.end.rc" }
+            },
+            "end": "(?<!\\\\)(?=\\n)",
+            "patterns": [
+                { "include": "#line-continuation" },
+                { "include": "#comments" },
+                { "include": "#tokens" }
+            ]
+        },
+        "pp-conditional": {
+            "name": "meta.preprocessor.conditional.rc",
+            "begin": "^\\s*((#)\\s*(?:ifdef|ifndef|if|elif|else|endif))\\b",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.directive.conditional.rc" },
+                "2": { "name": "punctuation.definition.directive.rc" }
+            },
+            "end": "(?=(?://|/\\*))|(?<!\\\\)(?=\\n)",
+            "patterns": [
+                { "include": "#line-continuation" },
+                { "name": "keyword.control.directive.conditional.rc", "match": "\\bdefined\\b" },
+                { "include": "#strings" },
+                { "include": "#numbers" },
+                { "include": "#operators" },
+                { "include": "#punctuation" },
+                { "name": "entity.name.function.preprocessor.rc", "match": "[A-Za-z_]\\w*" }
+            ]
+        },
+        "pp-undef": {
+            "name": "meta.preprocessor.rc",
+            "begin": "^\\s*((#)\\s*undef)\\b",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.directive.undef.rc" },
+                "2": { "name": "punctuation.definition.directive.rc" }
+            },
+            "end": "(?=(?://|/\\*))|(?<!\\\\)(?=\\n)",
+            "patterns": [
+                { "include": "#line-continuation" },
+                { "name": "entity.name.function.preprocessor.rc", "match": "[A-Za-z_]\\w*" }
+            ]
+        },
+        "pp-pragma": {
+            "name": "meta.preprocessor.pragma.rc",
+            "begin": "^\\s*((#)\\s*pragma)\\b",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.directive.pragma.rc" },
+                "2": { "name": "punctuation.definition.directive.rc" }
+            },
+            "end": "(?=(?://|/\\*))|(?<!\\\\)(?=\\n)",
+            "patterns": [
+                { "include": "#line-continuation" },
+                { "include": "#strings" },
+                { "include": "#numbers" },
+                { "include": "#punctuation" },
+                { "name": "entity.other.attribute-name.pragma.preprocessor.rc", "match": "[A-Za-z_]\\w*" }
+            ]
+        },
+        "pp-diagnostic": {
+            "name": "meta.preprocessor.diagnostic.rc",
+            "begin": "^\\s*((#)\\s*(?:error|warning))\\b\\s*",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.directive.diagnostic.rc" },
+                "2": { "name": "punctuation.definition.directive.rc" }
+            },
+            "end": "(?<!\\\\)(?=\\n)",
+            "patterns": [
+                { "include": "#line-continuation" },
+                {
+                    "name": "string.quoted.double.rc",
+                    "begin": "\"",
+                    "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.rc" } },
+                    "end": "\"|(?<!\\\\)(?=\\n)",
+                    "endCaptures": { "0": { "name": "punctuation.definition.string.end.rc" } },
+                    "patterns": [{ "include": "#line-continuation" }]
+                },
+                {
+                    "name": "string.unquoted.rc",
+                    "begin": "[^\"\\s]",
+                    "end": "(?<!\\\\)(?=\\n)",
+                    "patterns": [{ "include": "#line-continuation" }]
+                }
+            ]
+        },
+        "pp-other": {
+            "name": "meta.preprocessor.rc",
+            "begin": "^\\s*((#)\\s*(?:[A-Za-z_]\\w*)?)",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.directive.rc" },
+                "2": { "name": "punctuation.definition.directive.rc" }
+            },
+            "end": "(?=(?://|/\\*))|(?<!\\\\)(?=\\n)",
+            "patterns": [
+                { "include": "#line-continuation" },
+                { "include": "#strings" },
+                { "include": "#numbers" }
+            ]
+        }
+    }
+}

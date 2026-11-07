@@ -1,0 +1,342 @@
+// SYNTAX TEST "source.rc" "resource script constructs"
+
+
+// Comments
+// a line comment with "quotes" and BEGIN
+// <-- comment.line.double-slash.rc punctuation.definition.comment.rc
+//                                  ^^^^^ comment.line.double-slash.rc
+/* a block comment
+// <-- comment.block.rc punctuation.definition.comment.begin.rc
+   spanning END "lines" */ DIALOG
+//          ^^^ comment.block.rc
+//              ^^^^^^^ comment.block.rc
+//                      ^^ comment.block.rc punctuation.definition.comment.end.rc
+//                         ^^^^^^ storage.type.resource.rc
+
+// Preprocessor
+#include <windows.h>
+// <-------- meta.preprocessor.include.rc keyword.control.directive.include.rc
+// <- punctuation.definition.directive.rc
+//       ^^^^^^^^^^^ meta.preprocessor.include.rc string.quoted.other.lt-gt.include.rc
+  #  include "resource.h" // trailing
+//^^^^^^^^^^ keyword.control.directive.include.rc
+//           ^^^^^^^^^^^^ string.quoted.double.include.rc
+//                        ^^^^^^^^^^^ comment.line.double-slash.rc
+#define IDC_TEXT 1001
+// <------- meta.preprocessor.macro.rc keyword.control.directive.define.rc
+//      ^^^^^^^^ meta.preprocessor.macro.rc entity.name.function.preprocessor.rc
+//               ^^^^ meta.preprocessor.macro.rc constant.numeric.decimal.rc
+#define MAKE(a, b) ((a) | (b))
+//      ^^^^ entity.name.function.preprocessor.rc
+//          ^ punctuation.definition.parameters.begin.rc
+//           ^ variable.parameter.preprocessor.rc
+//              ^ variable.parameter.preprocessor.rc
+//                      ^ keyword.operator.rc
+#define STYLE_LONG WS_POPUP | \
+//                 ^^^^^^^^ meta.preprocessor.macro.rc support.constant.style.rc
+//                            ^ constant.character.escape.line-continuation.rc
+    WS_CAPTION
+//  ^^^^^^^^^^ meta.preprocessor.macro.rc support.constant.style.rc
+#ifdef _WIN32_WCE
+// <------ meta.preprocessor.conditional.rc keyword.control.directive.conditional.rc
+//     ^^^^^^^^^^ meta.preprocessor.conditional.rc entity.name.function.preprocessor.rc
+#ifndef APSTUDIO_INVOKED
+// <------- keyword.control.directive.conditional.rc
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+// <--- keyword.control.directive.conditional.rc
+//   ^^^^^^^ meta.preprocessor.conditional.rc keyword.control.directive.conditional.rc
+//                             ^^ keyword.operator.rc
+//                                        ^^^^^^^^^^^^ entity.name.function.preprocessor.rc
+#elif _WIN32_WCE >= 0x200
+// <----- keyword.control.directive.conditional.rc
+//                  ^^^^^ constant.numeric.hex.rc
+#else // comment
+// <----- keyword.control.directive.conditional.rc
+//    ^^^^^^^^^^ comment.line.double-slash.rc
+#endif /* comment */
+// <------ keyword.control.directive.conditional.rc
+//     ^^^^^^^^^^^^^ comment.block.rc
+#undef APSTUDIO_HIDDEN_SYMBOLS
+// <------ keyword.control.directive.undef.rc
+//     ^^^^^^^^^^^^^^^^^^^^^^^ meta.preprocessor.rc entity.name.function.preprocessor.rc
+#pragma code_page(1252)
+// <------- meta.preprocessor.pragma.rc keyword.control.directive.pragma.rc
+//      ^^^^^^^^^ entity.other.attribute-name.pragma.preprocessor.rc
+//                ^^^^ constant.numeric.decimal.rc
+#error "this isn't closed
+// <------ meta.preprocessor.diagnostic.rc keyword.control.directive.diagnostic.rc
+//     ^^^^^ string.quoted.double.rc
+#error Unsupported platform
+//     ^^^^^^^^^^^^^^^^^^^^ meta.preprocessor.diagnostic.rc string.unquoted.rc
+MENU
+// <---- storage.type.resource.rc - meta.preprocessor.conditional.rc meta.preprocessor.diagnostic.rc meta.preprocessor.include.rc meta.preprocessor.macro.rc meta.preprocessor.pragma.rc meta.preprocessor.rc
+
+// Strings and numbers
+    "a ""quoted"" word\tand\n\\ \x41 \101", 1, 0x1F, 65535L, 0xFFL, 3
+//  ^ string.quoted.double.rc punctuation.definition.string.begin.rc
+//     ^^ string.quoted.double.rc constant.character.escape.quote.rc
+//             ^^ string.quoted.double.rc constant.character.escape.quote.rc
+//                    ^^ string.quoted.double.rc constant.character.escape.rc
+//                         ^^ constant.character.escape.rc
+//                           ^^ constant.character.escape.rc
+//                              ^^^^ constant.character.escape.rc
+//                                   ^^^^ constant.character.escape.rc
+//                                       ^ string.quoted.double.rc punctuation.definition.string.end.rc
+//                                        ^ punctuation.separator.comma.rc - string.quoted.double.include.rc string.quoted.double.rc string.quoted.double.wide.rc string.quoted.other.lt-gt.include.rc string.unquoted.rc
+//                                          ^ constant.numeric.decimal.rc - string.quoted.double.rc
+//                                             ^^^^ constant.numeric.hex.rc
+//                                                   ^^^^^^ constant.numeric.decimal.rc
+//                                                           ^^^^^ constant.numeric.hex.rc
+//                                                      ^ constant.numeric.decimal.rc
+    "", L"wide ""q""", """", END
+//  ^^ string.quoted.double.rc
+//      ^ string.quoted.double.wide.rc storage.type.string.rc
+//             ^^ string.quoted.double.wide.rc constant.character.escape.quote.rc
+//                     ^^^^ string.quoted.double.rc
+//                           ^^^ keyword.control.block.end.rc - string.quoted.double.include.rc string.quoted.double.rc string.quoted.double.wide.rc string.quoted.other.lt-gt.include.rc string.unquoted.rc
+    LTEXT "continued \
+//         ^^^^^^^^^ string.quoted.double.rc
+//                   ^ string.quoted.double.rc constant.character.escape.line-continuation.rc
+           across lines", -1, 1, 2, 3, 4
+//         ^^^^^^ string.quoted.double.rc
+//                     ^ string.quoted.double.rc punctuation.definition.string.end.rc
+//                         ^ constant.numeric.decimal.rc - string.quoted.double.rc
+    "unterminated, BEGIN
+//                 ^^^^^ string.quoted.double.rc
+END
+// <--- keyword.control.block.end.rc - string.quoted.double.include.rc string.quoted.double.rc string.quoted.double.wide.rc string.quoted.other.lt-gt.include.rc string.unquoted.rc
+
+// Resource definitions and memory options
+IDI_APP ICON DISCARDABLE "app.ico"
+// <------- source.rc - keyword.control.block.begin.rc keyword.control.block.end.rc keyword.control.directive.conditional.rc keyword.control.directive.define.rc keyword.control.directive.diagnostic.rc keyword.control.directive.include.rc keyword.control.directive.pragma.rc keyword.control.directive.rc keyword.control.directive.undef.rc keyword.operator.logical.rc keyword.operator.rc keyword.other.statement.rc keyword.other.versioninfo.rc storage.modifier.accelerator.rc storage.modifier.memory.rc storage.modifier.menu.rc storage.type.resource.rc storage.type.string.rc support.class.control.rc support.constant.id.rc support.constant.language.rc support.constant.style.rc support.constant.version.rc support.constant.vkey.rc entity.name.function.preprocessor.rc entity.other.attribute-name.pragma.preprocessor.rc variable.parameter.preprocessor.rc constant.character.escape.line-continuation.rc constant.character.escape.quote.rc constant.character.escape.rc constant.numeric.decimal.rc constant.numeric.hex.rc string.quoted.double.include.rc string.quoted.double.rc string.quoted.double.wide.rc string.quoted.other.lt-gt.include.rc string.unquoted.rc comment.block.rc comment.line.double-slash.rc meta.preprocessor.conditional.rc meta.preprocessor.diagnostic.rc meta.preprocessor.include.rc meta.preprocessor.macro.rc meta.preprocessor.pragma.rc meta.preprocessor.rc
+//      ^^^^ storage.type.resource.rc
+//           ^^^^^^^^^^^ storage.modifier.memory.rc
+//                       ^^^^^^^^^ string.quoted.double.rc
+IDB_BMP BITMAP PRELOAD LOADONCALL MOVEABLE FIXED PURE IMPURE "b.bmp"
+//      ^^^^^^ storage.type.resource.rc
+//             ^^^^^^^ storage.modifier.memory.rc
+//                     ^^^^^^^^^^ storage.modifier.memory.rc
+//                                ^^^^^^^^ storage.modifier.memory.rc
+//                                         ^^^^^ storage.modifier.memory.rc
+//                                               ^^^^ storage.modifier.memory.rc
+//                                                    ^^^^^^ storage.modifier.memory.rc
+IDC_HAND CURSOR "hand.cur"
+//       ^^^^^^ storage.type.resource.rc
+IDF_FONT FONT "f.fnt"
+//       ^^^^ storage.type.resource.rc
+1 RCDATA { 1, 2, "three" }
+//^^^^^^ storage.type.resource.rc
+//       ^ punctuation.section.block.begin.bracket.curly.rc
+//                       ^ punctuation.section.block.end.bracket.curly.rc
+1 MESSAGETABLE "msg00001.bin"
+//^^^^^^^^^^^^ storage.type.resource.rc
+IDR_PAGE HTML "page.htm"
+//       ^^^^ storage.type.resource.rc
+1 TEXTINCLUDE DISCARDABLE
+//^^^^^^^^^^^ storage.type.resource.rc
+IDD_DLG DLGINIT
+//      ^^^^^^^ storage.type.resource.rc
+IDR_TB TOOLBAR 16, 15
+//     ^^^^^^^ storage.type.resource.rc
+//             ^^ constant.numeric.decimal.rc
+    BUTTON ID_FILE_NEW
+//  ^^^^^^ keyword.other.statement.rc
+    SEPARATOR
+//  ^^^^^^^^^ keyword.other.statement.rc
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+// <-------- keyword.other.statement.rc
+//       ^^^^^^^^^^^^ support.constant.language.rc
+//                     ^^^^^^^^^^^^^^^^^^ support.constant.language.rc
+STRINGTABLE CHARACTERISTICS 1 VERSION 2
+// <----------- storage.type.resource.rc
+//          ^^^^^^^^^^^^^^^ keyword.other.statement.rc
+//                            ^^^^^^^ keyword.other.statement.rc
+BEGIN
+// <----- keyword.control.block.begin.rc
+    IDS_APPNAME "App"
+//  ^^^^^^^^^^^ source.rc - keyword.control.block.begin.rc keyword.control.block.end.rc keyword.control.directive.conditional.rc keyword.control.directive.define.rc keyword.control.directive.diagnostic.rc keyword.control.directive.include.rc keyword.control.directive.pragma.rc keyword.control.directive.rc keyword.control.directive.undef.rc keyword.operator.logical.rc keyword.operator.rc keyword.other.statement.rc keyword.other.versioninfo.rc storage.modifier.accelerator.rc storage.modifier.memory.rc storage.modifier.menu.rc storage.type.resource.rc storage.type.string.rc support.class.control.rc support.constant.id.rc support.constant.language.rc support.constant.style.rc support.constant.version.rc support.constant.vkey.rc entity.name.function.preprocessor.rc entity.other.attribute-name.pragma.preprocessor.rc variable.parameter.preprocessor.rc constant.character.escape.line-continuation.rc constant.character.escape.quote.rc constant.character.escape.rc constant.numeric.decimal.rc constant.numeric.hex.rc string.quoted.double.include.rc string.quoted.double.rc string.quoted.double.wide.rc string.quoted.other.lt-gt.include.rc string.unquoted.rc comment.block.rc comment.line.double-slash.rc meta.preprocessor.conditional.rc meta.preprocessor.diagnostic.rc meta.preprocessor.include.rc meta.preprocessor.macro.rc meta.preprocessor.pragma.rc meta.preprocessor.rc
+end
+// <--- keyword.control.block.end.rc
+
+// Dialogs and controls
+IDD_ABOUT DIALOGEX 0, 0, 180, 70
+//        ^^^^^^^^ storage.type.resource.rc
+STYLE DS_MODALFRAME | WS_POPUP | NOT WS_VISIBLE
+// <----- keyword.other.statement.rc
+//    ^^^^^^^^^^^^^ support.constant.style.rc
+//                  ^ keyword.operator.rc
+//                               ^^^ keyword.operator.logical.rc
+EXSTYLE WS_EX_CAPTIONOKBTN | WS_EX_NODRAG
+// <------- keyword.other.statement.rc
+//      ^^^^^^^^^^^^^^^^^^ support.constant.style.rc
+//                           ^^^^^^^^^^^^ support.constant.style.rc
+CAPTION "About"
+// <------- keyword.other.statement.rc
+CLASS "MyDlg"
+// <----- keyword.other.statement.rc
+FONT 8, "MS Sans Serif"
+// <---- storage.type.resource.rc
+MENU IDM_MAIN
+// <---- storage.type.resource.rc
+{
+// <- punctuation.section.block.begin.bracket.curly.rc
+    CONTROL "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^ support.class.control.rc
+    LTEXT "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^ support.class.control.rc
+    RTEXT "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^ support.class.control.rc
+    CTEXT "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^ support.class.control.rc
+    EDITTEXT "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^ support.class.control.rc
+    PUSHBUTTON "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^^^ support.class.control.rc
+    DEFPUSHBUTTON "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^^^^^^ support.class.control.rc
+    CHECKBOX "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^ support.class.control.rc
+    AUTOCHECKBOX "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^^^^^ support.class.control.rc
+    RADIOBUTTON "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^^^^ support.class.control.rc
+    AUTORADIOBUTTON "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^^^^^^^^ support.class.control.rc
+    STATE3 "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^ support.class.control.rc
+    AUTO3STATE "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^^^ support.class.control.rc
+    GROUPBOX "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^ support.class.control.rc
+    LISTBOX "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^ support.class.control.rc
+    COMBOBOX "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^ support.class.control.rc
+    SCROLLBAR "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^^^ support.class.control.rc
+    PUSHBOX "x", IDC_X, 1, 2, 3, 4
+//  ^^^^^^^ support.class.control.rc
+    CONTROL "", IDC_C, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 1, 2, 3, 4
+//  ^^^^^^^ support.class.control.rc
+//                               ^^^^^^^^^^^^^^^ support.constant.style.rc
+//                                                 ^^^^^^^^^^ support.constant.style.rc
+    EDITTEXT IDC_E, 1, 2, 3, 4, ES_AUTOHSCROLL | ES_PASSWORD
+//                              ^^^^^^^^^^^^^^ support.constant.style.rc
+    LTEXT "", IDC_STATIC, 1, 2, 3, 4, SS_NOPREFIX
+//            ^^^^^^^^^^ support.constant.id.rc
+//                                    ^^^^^^^^^^^ support.constant.style.rc
+    LISTBOX IDC_L, 1, 2, 3, 4, LBS_NOINTEGRALHEIGHT | WS_VSCROLL
+//                             ^^^^^^^^^^^^^^^^^^^^ support.constant.style.rc
+    COMBOBOX IDC_CB, 1, 2, 3, 4, CBS_DROPDOWNLIST
+//                               ^^^^^^^^^^^^^^^^ support.constant.style.rc
+    SCROLLBAR IDC_SB, 1, 2, 3, 4, SBS_VERT
+//                                ^^^^^^^^ support.constant.style.rc
+    ICON 1, IDC_I, 8, 8, 20, 20
+//  ^^^^ storage.type.resource.rc
+    DEFPUSHBUTTON "OK", IDOK, 1, 2, 3, 4
+//                      ^^^^ support.constant.id.rc
+    PUSHBUTTON "Cancel", IDCANCEL, 1, 2, 3, 4
+//                       ^^^^^^^^ support.constant.id.rc
+}
+// <- punctuation.section.block.end.bracket.curly.rc
+
+// Menus
+IDM_MAIN MENUEX
+//       ^^^^^^ storage.type.resource.rc
+IDM_MAIN menu discardable
+//       ^^^^ storage.type.resource.rc
+//            ^^^^^^^^^^^ storage.modifier.memory.rc
+Begin
+// <----- keyword.control.block.begin.rc
+    POPUP "&File"
+//  ^^^^^ keyword.other.statement.rc
+    MENUITEM "&Open\tCtrl+O", ID_OPEN, CHECKED, GRAYED, HELP, INACTIVE, MENUBARBREAK, MENUBREAK
+//  ^^^^^^^^ keyword.other.statement.rc
+//                 ^^ constant.character.escape.rc
+//                                     ^^^^^^^ storage.modifier.menu.rc
+//                                              ^^^^^^ storage.modifier.menu.rc
+//                                                      ^^^^ storage.modifier.menu.rc
+//                                                            ^^^^^^^^ storage.modifier.menu.rc
+//                                                                      ^^^^^^^^^^^^ storage.modifier.menu.rc
+//                                                                                    ^^^^^^^^^ storage.modifier.menu.rc
+    MENUITEM SEPARATOR
+//           ^^^^^^^^^ keyword.other.statement.rc
+    menuitem "x", ID_X, grayed
+//  ^^^^^^^^ keyword.other.statement.rc
+//                      ^^^^^^ storage.modifier.menu.rc
+END
+// <--- keyword.control.block.end.rc
+IDM_MAIN_MENU_ID_CONTROL WS_POPUPX
+// <------------------------ source.rc - keyword.control.block.begin.rc keyword.control.block.end.rc keyword.control.directive.conditional.rc keyword.control.directive.define.rc keyword.control.directive.diagnostic.rc keyword.control.directive.include.rc keyword.control.directive.pragma.rc keyword.control.directive.rc keyword.control.directive.undef.rc keyword.operator.logical.rc keyword.operator.rc keyword.other.statement.rc keyword.other.versioninfo.rc storage.modifier.accelerator.rc storage.modifier.memory.rc storage.modifier.menu.rc storage.type.resource.rc storage.type.string.rc support.class.control.rc support.constant.id.rc support.constant.language.rc support.constant.style.rc support.constant.version.rc support.constant.vkey.rc entity.name.function.preprocessor.rc entity.other.attribute-name.pragma.preprocessor.rc variable.parameter.preprocessor.rc constant.character.escape.line-continuation.rc constant.character.escape.quote.rc constant.character.escape.rc constant.numeric.decimal.rc constant.numeric.hex.rc string.quoted.double.include.rc string.quoted.double.rc string.quoted.double.wide.rc string.quoted.other.lt-gt.include.rc string.unquoted.rc comment.block.rc comment.line.double-slash.rc meta.preprocessor.conditional.rc meta.preprocessor.diagnostic.rc meta.preprocessor.include.rc meta.preprocessor.macro.rc meta.preprocessor.pragma.rc meta.preprocessor.rc
+
+// Accelerators
+IDA_MAIN ACCELERATORS
+//       ^^^^^^^^^^^^ storage.type.resource.rc
+BEGIN
+// <----- keyword.control.block.begin.rc
+    "N", ID_NEW, VIRTKEY, CONTROL, NOINVERT
+//               ^^^^^^^ storage.modifier.accelerator.rc
+//                        ^^^^^^^ storage.modifier.accelerator.rc
+//                                 ^^^^^^^^ storage.modifier.accelerator.rc
+    VK_F5, ID_REFRESH, VIRTKEY, ALT, SHIFT, Control
+//  ^^^^^ support.constant.vkey.rc
+//                              ^^^ storage.modifier.accelerator.rc
+//                                   ^^^^^ storage.modifier.accelerator.rc
+//                                          ^^^^^^^ storage.modifier.accelerator.rc
+    65, ID_A, ASCII
+//            ^^^^^ storage.modifier.accelerator.rc
+END
+// <--- keyword.control.block.end.rc
+
+// Version information
+VS_VERSION_INFO VERSIONINFO
+// <--------------- support.constant.version.rc
+//              ^^^^^^^^^^^ storage.type.resource.rc
+ FILEVERSION 1,0,0,1
+// <~----------- keyword.other.versioninfo.rc
+ PRODUCTVERSION 1,0,0,1
+// <~-------------- keyword.other.versioninfo.rc
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+// <~------------- keyword.other.versioninfo.rc
+//             ^^^^^^^^^^^^^^^^^^^^ support.constant.version.rc
+ FILEFLAGS 0x0L
+// <~--------- keyword.other.versioninfo.rc
+//         ^^^^ constant.numeric.hex.rc
+ FILEOS VOS_WINDOWSCE
+// <~------ keyword.other.versioninfo.rc
+//      ^^^^^^^^^^^^^ support.constant.version.rc
+ FILETYPE VFT_APP
+// <~-------- keyword.other.versioninfo.rc
+ FILESUBTYPE VFT2_UNKNOWN
+// <~----------- keyword.other.versioninfo.rc
+//           ^^^^^^^^^^^^ support.constant.version.rc
+BEGIN
+// <----- keyword.control.block.begin.rc
+    BLOCK "StringFileInfo"
+//  ^^^^^ keyword.other.versioninfo.rc
+    BEGIN
+//  ^^^^^ keyword.control.block.begin.rc
+        VALUE "FileDescription", "App\0"
+//      ^^^^^ keyword.other.versioninfo.rc
+//                                   ^^ constant.character.escape.rc
+        VALUE "Translation", 0x409, 1200
+//                           ^^^^^ constant.numeric.hex.rc
+    END
+//  ^^^ keyword.control.block.end.rc
+END
+// <--- keyword.control.block.end.rc
+
+// Visual Studio design information
+GUIDELINES DESIGNINFO DISCARDABLE
+// <---------- storage.type.resource.rc
+//         ^^^^^^^^^^ storage.type.resource.rc
+    LEFTMARGIN, 7
+//  ^^^^^^^^^^ keyword.other.statement.rc
+    RIGHTMARGIN, 7
+//  ^^^^^^^^^^^ keyword.other.statement.rc
+    TOPMARGIN, 7
+//  ^^^^^^^^^ keyword.other.statement.rc
+    BOTTOMMARGIN, 7
+//  ^^^^^^^^^^^^ keyword.other.statement.rc
+IDR_X WAVE "x.wav"
+//    ^^^^ source.rc - keyword.control.block.begin.rc keyword.control.block.end.rc keyword.control.directive.conditional.rc keyword.control.directive.define.rc keyword.control.directive.diagnostic.rc keyword.control.directive.include.rc keyword.control.directive.pragma.rc keyword.control.directive.rc keyword.control.directive.undef.rc keyword.operator.logical.rc keyword.operator.rc keyword.other.statement.rc keyword.other.versioninfo.rc storage.modifier.accelerator.rc storage.modifier.memory.rc storage.modifier.menu.rc storage.type.resource.rc storage.type.string.rc support.class.control.rc support.constant.id.rc support.constant.language.rc support.constant.style.rc support.constant.version.rc support.constant.vkey.rc entity.name.function.preprocessor.rc entity.other.attribute-name.pragma.preprocessor.rc variable.parameter.preprocessor.rc constant.character.escape.line-continuation.rc constant.character.escape.quote.rc constant.character.escape.rc constant.numeric.decimal.rc constant.numeric.hex.rc string.quoted.double.include.rc string.quoted.double.rc string.quoted.double.wide.rc string.quoted.other.lt-gt.include.rc string.unquoted.rc comment.block.rc comment.line.double-slash.rc meta.preprocessor.conditional.rc meta.preprocessor.diagnostic.rc meta.preprocessor.include.rc meta.preprocessor.macro.rc meta.preprocessor.pragma.rc meta.preprocessor.rc

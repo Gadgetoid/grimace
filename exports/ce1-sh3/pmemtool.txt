@@ -1,0 +1,15 @@
+PMemToolCloseProcess
+PMemToolDumpMem
+PMemToolDumpModules
+PMemToolDumpThreads
+PMemToolFreeModule
+PMemToolFreeProcess
+PMemToolFreeThread
+PMemToolGetDumpSize
+PMemToolGetKernelSummary
+PMemToolGetModuleDumpSize
+PMemToolGetNumInstancesOf
+PMemToolGetProcessSummary
+PMemToolGetThreadDumpSize
+PMemToolSetThreadPriority
+PMemToolTerminateProcess

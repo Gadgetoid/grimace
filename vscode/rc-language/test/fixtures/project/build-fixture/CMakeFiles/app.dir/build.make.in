@@ -1,0 +1,2 @@
+app.rc: app.res
+	/opt/llvm/bin/llvm-rc -D _WIN32_WCE=200 -D SH3 -I "${ROOT}/include/wrap" -I ${ROOT}/include/real -FO app.res -- ${ROOT}/app.rc

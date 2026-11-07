@@ -1,0 +1,6 @@
+## difftime(end, start)
+Returns the difference between two times in seconds.
+
+@param end The later time.
+@param start The earlier time.
+@return end minus start, in seconds.

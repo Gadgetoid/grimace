@@ -1,0 +1,39 @@
+## RasGetEntryDevConfig(szPhonebook, szEntry, pdwDeviceID, pdwSize, pDeviceConfig)
+Retrieves the TAPI device configuration saved for a phone-book entry
+with RasSetEntryDevConfig.
+
+Call with pDeviceConfig NULL to get the size, allocate, then call again.
+On Windows CE 2.0 and later, prefer RasGetEntryPropertiesW, which
+returns the same configuration with the rest of the entry.
+
+@param szPhonebook Ignored; pass NULL. Entries are kept in the registry.
+@param szEntry Name of an existing entry.
+@param pdwDeviceID Receives the TAPI device identifier.
+@param pdwSize In: size of pDeviceConfig. Out: size needed.
+@param pDeviceConfig Receives the configuration, or NULL to query the
+       size only.
+@return 0 on success, or ERROR_CANNOT_OPEN_PHONEBOOK,
+       ERROR_CANNOT_FIND_PHONEBOOK_ENTRY, ERROR_INVALID_PARAMETER or
+       ERROR_BUFFER_TOO_SMALL.
+
+## RasHangup(Session)
+Ends a RAS connection.
+
+Alias of RasHangUp, kept for compatibility.
+
+@param Session The connection, from RasDial or RasEnumConnections.
+@return 0 on success, or a RAS error code.
+
+## RasSetEntryDevConfig(szPhonebook, szEntry, dwDeviceID, lpDeviceConfig)
+Saves the TAPI device configuration for a phone-book entry.
+
+On Windows CE 2.0 and later, prefer RasSetEntryPropertiesW, which can
+set the same configuration with the rest of the entry.
+
+@param szPhonebook Ignored; pass NULL. Entries are kept in the registry.
+@param szEntry Name of an existing entry.
+@param dwDeviceID TAPI device identifier.
+@param lpDeviceConfig Configuration to save, with dwNeededSize set, or
+       NULL for the device's defaults.
+@return 0 on success, or ERROR_CANNOT_OPEN_PHONEBOOK,
+       ERROR_CANNOT_FIND_PHONEBOOK_ENTRY or ERROR_INVALID_PARAMETER.

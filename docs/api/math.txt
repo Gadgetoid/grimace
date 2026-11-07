@@ -1,0 +1,335 @@
+## _cabs(value)
+Returns the magnitude of a complex number.
+
+The complex value has real and imaginary components. Overflow returns
+HUGE_VAL.
+
+@param value Complex number whose magnitude is calculated.
+@return The magnitude, or HUGE_VAL on overflow.
+
+## _chgsign(value)
+Returns value with its sign reversed.
+
+@param value Double-precision value to change.
+@return The value with the opposite sign.
+
+## _clearfp()
+Returns and clears the floating-point status flags.
+
+The returned bits describe the status before it was cleared.
+
+@return Floating-point status flags.
+
+## _controlfp(value, mask)
+Gets or updates the floating-point control word.
+
+With mask set to 0, the current control word is returned. Otherwise,
+bits set in mask are replaced with the corresponding bits from value.
+Floating-point exceptions are masked by default.
+
+@param value New values for the control bits selected by mask.
+@param mask Bits to read or update.
+@return The floating-point control state.
+
+## _copysign(value, sign)
+Returns value with the sign of sign.
+
+@param value Magnitude and value to return.
+@param sign Value whose sign is copied.
+@return value with the sign of sign.
+
+## _finite(value)
+Tests whether value is finite.
+
+@param value Double-precision value to test.
+@return Nonzero if value is neither infinite nor NaN; otherwise 0.
+
+## _fpclass(value)
+Returns the floating-point classification of value.
+
+The classification distinguishes signed zero, normal and denormal
+values, infinities, and signaling or quiet NaNs.
+
+@param value Double-precision value to classify.
+@return An _FPCLASS_* classification code.
+
+## _fpreset()
+Reinitializes the floating-point math package.
+
+Use it when recovering from a floating-point exception before resuming
+floating-point work.
+
+## _hypot(x, y)
+Returns the hypotenuse for sides x and y.
+
+@param x First side length.
+@param y Second side length.
+@return The hypotenuse, or INF on overflow.
+
+## _isnan(value)
+Tests whether value is a NaN.
+
+@param value Double-precision value to test.
+@return Nonzero if value is NaN; otherwise 0.
+
+## _j0(value)
+Returns the order-zero Bessel function of the first kind.
+
+@param value Argument to the function.
+@return The order-zero Bessel function value.
+
+## _j1(value)
+Returns the order-one Bessel function of the first kind.
+
+@param value Argument to the function.
+@return The order-one Bessel function value.
+
+## _jn(order, value)
+Returns the Bessel function of the first kind for the specified order.
+
+@param order Integer order of the function.
+@param value Argument to the function.
+@return The Bessel function value.
+
+## _logb(value)
+Returns the unbiased exponent of value.
+
+Denormalized values are treated as if they were normalized.
+
+@param value Double-precision value to inspect.
+@return The unbiased exponent.
+
+## _nextafter(value, direction)
+Returns the nearest representable value to value toward direction.
+
+If the inputs are equal, value is returned without raising an
+exception. If either input is a quiet NaN, the result is one of them.
+
+@param value Starting value.
+@param direction Direction toward the neighboring representable value.
+@return The nearest representable neighbor toward direction.
+
+## _scalb(value, exponent)
+Scales value by a power of two.
+
+On overflow, returns HUGE_VAL with the sign of value.
+
+@param value Value to scale.
+@param exponent Power of two to apply.
+@return value multiplied by 2 to the exponent, or signed HUGE_VAL on overflow.
+
+## _statusfp()
+Returns the floating-point status flags.
+
+The status includes pending unmasked exceptions, which are checked
+before the flags are returned.
+
+@return Floating-point status flags.
+
+## _y0(value)
+Returns the order-zero Bessel function of the second kind.
+
+For negative value, the function reports _DOMAIN to stderr and returns
+_HUGE_VAL. Use _matherr to customize error handling.
+
+@param value Argument to the function; must not be negative.
+@return The order-zero Bessel function value, or _HUGE_VAL for negative input.
+
+## _y1(value)
+Returns the order-one Bessel function of the second kind.
+
+For negative value, the function reports _DOMAIN to stderr and returns
+_HUGE_VAL. Use _matherr to customize error handling.
+
+@param value Argument to the function; must not be negative.
+@return The order-one Bessel function value, or _HUGE_VAL for negative input.
+
+## _yn(order, value)
+Returns the Bessel function of the second kind for the specified order.
+
+For negative value, the function reports _DOMAIN to stderr and returns
+_HUGE_VAL. Use _matherr to customize error handling.
+
+@param order Integer order of the function.
+@param value Argument to the function; must not be negative.
+@return The Bessel function value, or _HUGE_VAL for negative input.
+
+## acos(value)
+Returns the arccosine of value in radians, from 0 to pi.
+
+@param value Value in the range -1 through 1.
+@return The arccosine, or an indefinite value (quiet NaN) outside the range.
+
+## asin(value)
+Returns the arcsine of value in radians, from -pi/2 to pi/2.
+
+@param value Value in the range -1 through 1.
+@return The arcsine, or an indefinite value (quiet NaN) outside the range.
+
+## atan(value)
+Returns the arctangent of value in radians, from -pi/2 to pi/2.
+
+@param value Value whose arctangent is calculated.
+@return The arctangent.
+
+## atan2(y, x)
+Returns the arctangent of y/x in radians, from -pi to pi.
+
+The signs of both inputs determine the result's quadrant. If both are
+zero, the result is zero.
+
+@param y Y coordinate of the point.
+@param x X coordinate of the point.
+@return The arctangent of y/x.
+
+## ceil(value)
+Returns the smallest integer value greater than or equal to value.
+
+@param value Floating-point value.
+@return The ceiling as a double.
+
+## cos(value)
+Returns the cosine of an angle in radians.
+
+For value >= 263 or value <= -263, the result loses significance and
+the function raises _TLOSS and returns an indefinite value (quiet NaN).
+
+@param value Angle in radians.
+@return The cosine, or an indefinite value when the angle is out of range.
+
+## cosh(value)
+Returns the hyperbolic cosine of value.
+
+If the result is too large, returns HUGE_VAL.
+
+@param value Input value.
+@return The hyperbolic cosine, or HUGE_VAL if the result is too large.
+
+## exp(value)
+Returns e raised to value.
+
+Overflow returns INF; underflow returns 0.
+
+@param value Exponent.
+@return The exponential, INF on overflow, or 0 on underflow.
+
+## fabs(value)
+Returns the absolute value of value.
+
+@param value Floating-point value.
+@return The absolute value.
+
+## floor(value)
+Returns the largest integer value less than or equal to value.
+
+@param value Floating-point value.
+@return The floor as a double.
+
+## fmod(dividend, divisor)
+Returns the floating-point remainder of dividend divided by divisor.
+
+The remainder has the sign of dividend and a magnitude less than
+divisor's. A zero divisor returns a quiet NaN.
+
+@param dividend Value to divide.
+@param divisor Divisor.
+@return The remainder, or a quiet NaN if divisor is zero.
+
+## frexp(value, exponent)
+Splits value into a mantissa and a power-of-two exponent.
+
+The mantissa's absolute value is at least 0.5 and less than 1, and
+value equals mantissa times 2 to exponent. For zero, both results are 0.
+
+@param value Floating-point value to split.
+@param exponent Receives the integer exponent.
+@return The mantissa.
+
+## ldexp(value, exponent)
+Multiplies value by 2 to the exponent.
+
+Overflow returns HUGE_VAL with the sign of value.
+
+@param value Floating-point value.
+@param exponent Integer power of two.
+@return The scaled value, or signed HUGE_VAL on overflow.
+
+## log(value)
+Returns the natural logarithm of value.
+
+Negative input returns an indefinite value (quiet NaN); zero returns INF.
+
+@param value Positive value whose logarithm is calculated.
+@return The natural logarithm, an indefinite value for negative input,
+        or INF for zero.
+
+## log10(value)
+Returns the base-10 logarithm of value.
+
+Negative input returns an indefinite value (quiet NaN); zero returns INF.
+
+@param value Positive value whose logarithm is calculated.
+@return The base-10 logarithm, an indefinite value for negative input,
+        or INF for zero.
+
+## modf(value, integer)
+Splits value into integer and fractional parts.
+
+Both parts have the sign of value; the integer part is stored as a double.
+
+@param value Floating-point value to split.
+@param integer Receives the integer part.
+@return The signed fractional part.
+
+## pow(base, exponent)
+Raises base to exponent.
+
+Zero to the zero power returns 1. Zero to a negative power returns INF.
+Overflow and underflow do not print an error message.
+
+@param base Base value.
+@param exponent Exponent.
+@return base raised to exponent.
+
+## sin(value)
+Returns the sine of an angle in radians.
+
+For value >= 263 or value <= -263, the result loses significance and
+the function raises _TLOSS and returns an indefinite value (quiet NaN).
+
+@param value Angle in radians.
+@return The sine, or an indefinite value when the angle is out of range.
+
+## sinh(value)
+Returns the hyperbolic sine of value.
+
+If the result is too large, sinh returns HUGE_VAL with the result's sign.
+Use _matherr to customize math error handling.
+
+@param value Input value.
+@return The hyperbolic sine, or signed HUGE_VAL if the result is too large.
+
+## sqrt(value)
+Returns the square root of value.
+
+Negative input produces an indefinite value (a quiet NaN). Use _matherr
+to customize math error handling.
+
+@param value Nonnegative floating-point value.
+@return The square root, or an indefinite value for negative input.
+
+## tan(value)
+Returns the tangent of an angle in radians.
+
+For value >= 263 or value <= -263, the result loses significance and
+the function raises _TLOSS and returns an indefinite value (a quiet NaN).
+Use _matherr to customize math error handling.
+
+@param value Angle in radians.
+@return The tangent, or an indefinite value when the angle is out of range.
+
+## tanh(value)
+Returns the hyperbolic tangent of value. It has no error return.
+
+@param value Input value.
+@return The hyperbolic tangent.
