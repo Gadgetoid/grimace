@@ -1,0 +1,5 @@
+arch: arm
+version: 3
+platform: hpc2000
+device: jornada720
+source: HP Jornada 720 ROM, Handheld PC 2000 (tools/cerom.py)

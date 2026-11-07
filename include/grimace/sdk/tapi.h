@@ -21,7 +21,7 @@ typedef const struct HCALL__ *HCALL;
  * @param dwSize User-user data size in bytes, including the terminator.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineAccept(HCALL hCall, LPCSTR lpsUserUserInfo, DWORD dwSize);
 /**
@@ -35,7 +35,7 @@ LONG lineAccept(HCALL hCall, LPCSTR lpsUserUserInfo, DWORD dwSize);
  * @param lpdwPermanentProviderID Receives the provider ID, or NULL.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LONG lineAddProvider(LPCWSTR lpszProviderFilename, HWND hwndOwner, LPDWORD lpdwPermanentProviderID);
 /**
@@ -49,7 +49,7 @@ LONG lineAddProvider(LPCWSTR lpszProviderFilename, HWND hwndOwner, LPDWORD lpdwP
  * @param hConsultCall Call to add to the conference.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineAddToConference(HCALL hConfCall, HCALL hConsultCall);
 /**
@@ -64,7 +64,7 @@ LONG lineAddToConference(HCALL hConfCall, HCALL hConsultCall);
  * @param dwSize User-user data size in bytes, including the terminator.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineAnswer(HCALL hCall, LPCSTR lpsUserUserInfo, DWORD dwSize);
 /**
@@ -79,7 +79,7 @@ LONG lineAnswer(HCALL hCall, LPCSTR lpsUserUserInfo, DWORD dwSize);
  * @param dwCountryCode Country or region code, or zero for the provider default.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineBlindTransfer(HCALL hCall, LPCWSTR lpszDestAddressW, DWORD dwCountryCode);
 struct HLINE__;
@@ -110,7 +110,7 @@ typedef HCALL *LPHCALL;
  *         LINETRANSFERMODE_CONFERENCE.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineCompleteTransfer(HCALL hCall, HCALL hConsultCall, LPHCALL lphConfCall, DWORD dwTransferMode);
 /**
@@ -154,7 +154,7 @@ LONG lineDeallocateCall(HCALL hCall);
  * @param dwSize Size of the data block in bytes.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineDevSpecific(HLINE hLine, DWORD dwAddressID, HCALL hCall, LPVOID lpParams, DWORD dwSize);
 /**
@@ -170,7 +170,7 @@ LONG lineDevSpecific(HLINE hLine, DWORD dwAddressID, HCALL hCall, LPVOID lpParam
  * @param dwCountryCode Country or region code, or zero for the provider default.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineDial(HCALL hCall, LPCWSTR lpszDestAddress, DWORD dwCountryCode);
 /**
@@ -208,7 +208,7 @@ typedef struct linecallparams_tag *LPLINECALLPARAMS;
  * @param lpCallParams Optional parameters for a consultation call.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineForward(HLINE hLine, DWORD bAllAddresses, DWORD dwAddressID, const LPLINEFORWARDLIST lpForwardList, DWORD dwNumRingsNoAnswer, LPHCALL lphConsultCall, const LPLINECALLPARAMS lpCallParams);
 /**
@@ -225,7 +225,7 @@ LONG lineForward(HLINE hLine, DWORD bAllAddresses, DWORD dwAddressID, const LPLI
  *         for the default.
  * @return 0 when generation starts, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGenerateDigits(HCALL hCall, DWORD dwDigitMode, LPCWSTR lpszDigits, DWORD dwDuration);
 struct linegeneratetone_tag;
@@ -244,7 +244,7 @@ typedef struct linegeneratetone_tag *LPLINEGENERATETONE;
  * @param lpTones Custom tone components, ignored for standard tones.
  * @return 0 when generation starts, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGenerateTone(HCALL hCall, DWORD dwToneMode, DWORD dwDuration, DWORD dwNumTones, const LPLINEGENERATETONE lpTones);
 struct HLINEAPP__;
@@ -266,7 +266,7 @@ typedef struct lineaddresscaps_tag *LPLINEADDRESSCAPS;
  * @param lpAddressCaps Receives address capabilities.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetAddressCaps(HLINEAPP hLineApp, DWORD dwDeviceID, DWORD dwAddressID, DWORD dwAPIVersion, DWORD dwExtVersion, LPLINEADDRESSCAPS lpAddressCaps);
 /**
@@ -282,7 +282,7 @@ LONG lineGetAddressCaps(HLINEAPP hLineApp, DWORD dwDeviceID, DWORD dwAddressID, 
  * @param dwSize Address size in bytes, including the terminator.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetAddressID(HLINE hLine, LPDWORD lpdwAddressID, DWORD dwAddressMode, LPCWSTR lpsAddress, DWORD dwSize);
 struct lineaddressstatus_tag;
@@ -297,7 +297,7 @@ typedef struct lineaddressstatus_tag *LPLINEADDRESSSTATUS;
  * @param lpAddressStatus Receives address status information.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetAddressStatus(HLINE hLine, DWORD dwAddressID, LPLINEADDRESSSTATUS lpAddressStatus);
 struct lineextensionid_tag;
@@ -317,7 +317,7 @@ typedef struct lineextensionid_tag *LPLINEEXTENSIONID;
  * @param lpdwPriority Receives the priority; one is highest.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetAppPriority(LPCWSTR lpszAppFilename, DWORD dwMediaMode, LPLINEEXTENSIONID lpExtensionID, DWORD dwRequestMode, LPVARSTRING lpExtensionName, LPDWORD lpdwPriority);
 struct linecallinfo_tag;
@@ -332,7 +332,7 @@ typedef struct linecallinfo_tag *LPLINECALLINFO;
  * @param lpCallInfo Receives call information.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetCallInfo(HCALL hCall, LPLINECALLINFO lpCallInfo);
 struct linecallstatus_tag;
@@ -348,7 +348,7 @@ typedef struct linecallstatus_tag *LPLINECALLSTATUS;
  * @param lpCallStatus Receives call status information.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetCallStatus(HCALL hCall, LPLINECALLSTATUS lpCallStatus);
 struct linecalllist_tag;
@@ -364,7 +364,7 @@ typedef struct linecalllist_tag *LPLINECALLLIST;
  * @param lpCallList Receives the conference and participant call handles.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetConfRelatedCalls(HCALL hCall, LPLINECALLLIST lpCallList);
 struct linedevcaps_tag;
@@ -425,7 +425,7 @@ typedef HICON *LPHICON;
  * @param lphIcon Receives the icon handle.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetIcon(DWORD dwDeviceID, LPCWSTR lpszDeviceClass, LPHICON lphIcon);
 struct linedevstatus_tag;
@@ -441,7 +441,7 @@ typedef struct linedevstatus_tag *LPLINEDEVSTATUS;
  * @param lpLineDevStatus Receives line status information.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetLineDevStatus(HLINE hLine, LPLINEDEVSTATUS lpLineDevStatus);
 struct linemessage_tag;
@@ -459,7 +459,7 @@ LONG lineGetMessage(HLINEAPP hLineApp, LPLINEMESSAGE lpMessage, DWORD dwTimeout)
  * @param lpCallList Receives the selected call handles.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetNewCalls(HLINE hLine, DWORD dwAddressID, DWORD dwSelect, LPLINECALLLIST lpCallList);
 /**
@@ -473,7 +473,7 @@ LONG lineGetNewCalls(HLINE hLine, DWORD dwAddressID, DWORD dwSelect, LPLINECALLL
  * @param lpdwNumRings Receives the minimum requested ring count.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetNumRings(HLINE hLine, DWORD dwAddressID, LPDWORD lpdwNumRings);
 struct lineproviderlist_tag;
@@ -487,7 +487,7 @@ typedef struct lineproviderlist_tag *LPLINEPROVIDERLIST;
  * @param lpProviderList Receives the provider list.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetProviderList(DWORD dwAPIVersion, LPLINEPROVIDERLIST lpProviderList);
 /**
@@ -501,7 +501,7 @@ LONG lineGetProviderList(DWORD dwAPIVersion, LPLINEPROVIDERLIST lpProviderList);
  * @param lpdwAddressStates Receives enabled LINEADDRESSSTATE_* flags.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineGetStatusMessages(HLINE hLine, LPDWORD lpdwLineStates, LPDWORD lpdwAddressStates);
 struct linetranslatecaps_tag;
@@ -531,7 +531,7 @@ LONG lineGetTranslateCaps(HLINEAPP hLineApp, DWORD dwAPIVersion, LPLINETRANSLATE
  * @param dwMediaMode Single LINEMEDIAMODE_* value for indirect handoff.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineHandoff(HCALL hCall, LPCWSTR lpszFileName, DWORD dwMediaMode);
 /**
@@ -543,7 +543,7 @@ LONG lineHandoff(HCALL hCall, LPCWSTR lpszFileName, DWORD dwMediaMode);
  * @param hCall Call to place on hold. The application must own it.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineHold(HCALL hCall);
 typedef HLINEAPP *LPHLINEAPP;
@@ -594,7 +594,7 @@ LONG lineMakeCall(HLINE hLine, LPHCALL lphCall, LPCWSTR lpszDestAddress, DWORD d
  * @param dwDigitModes LINEDIGITMODE_* flags to monitor.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineMonitorDigits(HCALL hCall, DWORD dwDigitModes);
 /**
@@ -607,7 +607,7 @@ LONG lineMonitorDigits(HCALL hCall, DWORD dwDigitModes);
  * @param dwMediaModes LINEMEDIAMODE_* flags to detect, or zero to cancel.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineMonitorMedia(HCALL hCall, DWORD dwMediaModes);
 /**
@@ -660,7 +660,7 @@ LONG lineOpen(HLINEAPP hLineApp, DWORD dwDeviceID, LPHLINE lphLine, DWORD dwAPIV
  * @param lpszGroupID Optional pickup-group identifier.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG linePickup(HLINE hLine, DWORD dwAddressID, LPHCALL lphCall, LPCWSTR lpszDestAddress, LPCWSTR lpszGroupID);
 /**
@@ -675,7 +675,7 @@ LONG linePickup(HLINE hLine, DWORD dwAddressID, LPHCALL lphCall, LPCWSTR lpszDes
  * @param lpCallParams Optional consultation-call parameters.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG linePrepareAddToConference(HCALL hConfCall, LPHCALL lphConsultCall, const LPLINECALLPARAMS lpCallParams);
 /**
@@ -690,7 +690,7 @@ LONG linePrepareAddToConference(HCALL hConfCall, LPHCALL lphConsultCall, const L
  * @param dwCountryCode Country or region code, or zero for the default.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineRedirect(HCALL hCall, LPCWSTR lpszDestAddress, DWORD dwCountryCode);
 /**
@@ -702,7 +702,7 @@ LONG lineRedirect(HCALL hCall, LPCWSTR lpszDestAddress, DWORD dwCountryCode);
  * @param hCall Call whose user-user information was processed.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineReleaseUserUserInfo(HCALL hCall);
 /**
@@ -715,7 +715,7 @@ LONG lineReleaseUserUserInfo(HCALL hCall);
  * @param hCall Conferenced participant call to remove.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineRemoveFromConference(HCALL hCall);
 /**
@@ -730,7 +730,7 @@ LONG lineRemoveFromConference(HCALL hCall);
  * @param dwSize Data size in bytes.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSendUserUserInfo(HCALL hCall, LPCSTR lpsUserUserInfo, DWORD dwSize);
 /**
@@ -748,7 +748,7 @@ LONG lineSendUserUserInfo(HCALL hCall, LPCSTR lpsUserUserInfo, DWORD dwSize);
  * @param dwPriority One for highest priority, or zero to remove the entry.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetAppPriority(LPCWSTR lpszAppFilename, DWORD dwMediaMode, LPLINEEXTENSIONID lpExtensionID, DWORD dwRequestMode, LPCWSTR lpszExtensionName, DWORD dwPriority);
 struct linedialparams_tag;
@@ -768,7 +768,7 @@ typedef struct linedialparams_tag *LPLINEDIALPARAMS;
  * @param lpDialParams Optional dialing parameters.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetCallParams(HCALL hCall, DWORD dwBearerMode, DWORD dwMinRate, DWORD dwMaxRate, const LPLINEDIALPARAMS lpDialParams);
 /**
@@ -781,7 +781,7 @@ LONG lineSetCallParams(HCALL hCall, DWORD dwBearerMode, DWORD dwMinRate, DWORD d
  * @param dwCallPrivilege LINECALLPRIVILEGE_OWNER or LINECALLPRIVILEGE_MONITOR.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetCallPrivilege(HCALL hCall, DWORD dwCallPrivilege);
 /**
@@ -794,7 +794,7 @@ LONG lineSetCallPrivilege(HCALL hCall, DWORD dwCallPrivilege);
  * @param dwLocation Permanent location ID.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LONG lineSetCurrentLocation(HLINEAPP hLineApp, DWORD dwLocation);
 /**
@@ -820,7 +820,7 @@ LONG lineSetDevConfig(DWORD dwDeviceID, const LPVOID lpDeviceConfig, DWORD dwSiz
  * @param dwMediaModes LINEMEDIAMODE_* value or permitted combination.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetMediaMode(HCALL hCall, DWORD dwMediaModes);
 /**
@@ -834,7 +834,7 @@ LONG lineSetMediaMode(HCALL hCall, DWORD dwMediaModes);
  * @param dwNumRings Requested ring count.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetNumRings(HLINE hLine, DWORD dwAddressID, DWORD dwNumRings);
 /**
@@ -875,7 +875,7 @@ LONG lineSetStatusMessages(HLINE hLine, DWORD dwLineStates, DWORD dwAddressState
  * @param dwMediaMode Single LINEMEDIAMODE_* value for indirect handoff.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetTerminal(HLINE hLine, DWORD dwAddressID, HCALL hCall, DWORD dwSelect, DWORD dwTerminalModes, DWORD dwTerminalID, DWORD bEnable);
 /**
@@ -890,7 +890,7 @@ LONG lineSetTerminal(HLINE hLine, DWORD dwAddressID, HCALL hCall, DWORD dwSelect
  * @param dwTollListOption LINETOLLLISTOPTION_* operation.
  * @return 0 on success, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetTollList(HLINEAPP hLineApp, DWORD dwDeviceID, LPCWSTR lpszAddressIn, DWORD dwTollListOption);
 /**
@@ -909,7 +909,7 @@ LONG lineSetTollList(HLINEAPP hLineApp, DWORD dwDeviceID, LPCWSTR lpszAddressIn,
  * @param lpCallParams Optional consultation-call parameters.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetupConference(HCALL hCall, HLINE hLine, LPHCALL lphConfCall, LPHCALL lphConsultCall, DWORD dwNumParties, const LPLINECALLPARAMS lpCallParams);
 /**
@@ -924,7 +924,7 @@ LONG lineSetupConference(HCALL hCall, HLINE hLine, LPHCALL lphConfCall, LPHCALL 
  * @param lpCallParams Optional consultation-call parameters.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSetupTransfer(HCALL hCall, LPHCALL lphConsultCall, const LPLINECALLPARAMS lpCallParams);
 /**
@@ -949,7 +949,7 @@ LONG lineShutdown(HLINEAPP hLineApp);
  * @param hHeldCall Held consultation call.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineSwapHold(HCALL hActiveCall, HCALL hHeldCall);
 struct linetranslateoutput_tag;
@@ -995,7 +995,7 @@ LONG lineTranslateDialog(HLINEAPP hLineApp, DWORD dwDeviceID, DWORD dwAPIVersion
  * @param hCall Call to retrieve.
  * @return Positive request ID, or a negative LINEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG lineUnhold(HCALL hCall);
 struct HPHONE__;
@@ -1006,7 +1006,7 @@ typedef const struct HPHONE__ *HPHONE;
  * @param hPhone Open phone handle.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneClose(HPHONE hPhone);
 /**
@@ -1020,7 +1020,7 @@ LONG phoneClose(HPHONE hPhone);
  * @param lpszDeviceClass Optional device class to configure.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneConfigDialog(DWORD dwDeviceID, HWND hwndOwner, LPCWSTR lpszDeviceClass);
 /**
@@ -1034,7 +1034,7 @@ LONG phoneConfigDialog(DWORD dwDeviceID, HWND hwndOwner, LPCWSTR lpszDeviceClass
  * @param dwSize Data block size, in bytes.
  * @return Positive request ID, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneDevSpecific(HPHONE hPhone, LPVOID lpParams, DWORD dwSize);
 struct HPHONEAPP__;
@@ -1055,7 +1055,7 @@ typedef struct phonecaps_tag *LPPHONECAPS;
  * @param lpPhoneCaps Receives phone capabilities.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetDevCaps(HPHONEAPP hPhoneApp, DWORD dwDeviceID, DWORD dwAPIVersion, DWORD dwExtVersion, LPPHONECAPS lpPhoneCaps);
 /**
@@ -1069,7 +1069,7 @@ LONG phoneGetDevCaps(HPHONEAPP hPhoneApp, DWORD dwDeviceID, DWORD dwAPIVersion, 
  * @param lpdwGain Receives the gain value.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetGain(HPHONE hPhone, DWORD dwHookSwitchDev, LPDWORD lpdwGain);
 /**
@@ -1082,7 +1082,7 @@ LONG phoneGetGain(HPHONE hPhone, DWORD dwHookSwitchDev, LPDWORD lpdwGain);
  * @param lpdwHookSwitchDevs Receives the off-hook device flags.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetHookSwitch(HPHONE hPhone, LPDWORD lpdwHookSwitchDevs);
 /**
@@ -1096,7 +1096,7 @@ LONG phoneGetHookSwitch(HPHONE hPhone, LPDWORD lpdwHookSwitchDevs);
  * @param lpszDeviceClass Device class whose identifier is requested.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetID(HPHONE hPhone, LPVARSTRING lpDeviceID, LPCWSTR lpszDeviceClass);
 /**
@@ -1111,7 +1111,7 @@ LONG phoneGetID(HPHONE hPhone, LPVARSTRING lpDeviceID, LPCWSTR lpszDeviceClass);
  * @param lphIcon Receives the icon handle.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetIcon(DWORD dwDeviceID, LPCWSTR lpszDeviceClass, LPHICON lphIcon);
 struct phonemessage_tag;
@@ -1129,7 +1129,7 @@ LONG phoneGetMessage(HPHONEAPP hPhoneApp, LPPHONEMESSAGE lpMessage, DWORD dwTime
  * @param lpdwVolume Receives the ringer volume.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetRing(HPHONE hPhone, LPDWORD lpdwRingMode, LPDWORD lpdwVolume);
 struct phonestatus_tag;
@@ -1144,7 +1144,7 @@ typedef struct phonestatus_tag *LPPHONESTATUS;
  * @param lpPhoneStatus Receives the phone status.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetStatus(HPHONE hPhone, LPPHONESTATUS lpPhoneStatus);
 /**
@@ -1156,7 +1156,7 @@ LONG phoneGetStatus(HPHONE hPhone, LPPHONESTATUS lpPhoneStatus);
  * @param lpdwButtonStates Receives enabled PHONEBUTTONSTATE_* flags.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetStatusMessages(HPHONE hPhone, LPDWORD lpdwPhoneStates, LPDWORD lpdwButtonModes, LPDWORD lpdwButtonStates);
 /**
@@ -1170,7 +1170,7 @@ LONG phoneGetStatusMessages(HPHONE hPhone, LPDWORD lpdwPhoneStates, LPDWORD lpdw
  * @param lpdwVolume Receives the volume level.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneGetVolume(HPHONE hPhone, DWORD dwHookSwitchDev, LPDWORD lpdwVolume);
 typedef HPHONEAPP *LPHPHONEAPP;
@@ -1195,7 +1195,7 @@ typedef struct phoneextensionid_tag *LPPHONEEXTENSIONID;
  * @param lpExtensionID Receives the device extension identifier.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneNegotiateAPIVersion(HPHONEAPP hPhoneApp, DWORD dwDeviceID, DWORD dwAPILowVersion, DWORD dwAPIHighVersion, LPDWORD lpdwAPIVersion, LPPHONEEXTENSIONID lpExtensionID);
 LONG phoneNegotiateExtVersion(HPHONEAPP hPhoneApp, DWORD dwDeviceID, DWORD dwAPIVersion, DWORD dwExtLowVersion, DWORD dwExtHighVersion, LPDWORD lpdwExtVersion);
@@ -1215,7 +1215,7 @@ typedef HPHONE *LPHPHONE;
  * @param dwPrivilege PHONEPRIVILEGE_OWNER or PHONEPRIVILEGE_MONITOR.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneOpen(HPHONEAPP hPhoneApp, DWORD dwDeviceID, LPHPHONE lphPhone, DWORD dwAPIVersion, DWORD dwExtVersion, DWORD dwCallbackInstance, DWORD dwPrivilege);
 /**
@@ -1230,7 +1230,7 @@ LONG phoneOpen(HPHONEAPP hPhoneApp, DWORD dwDeviceID, LPHPHONE lphPhone, DWORD d
  * @param dwGain Gain value from zero to 0xFFFF.
  * @return Positive request ID, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneSetGain(HPHONE hPhone, DWORD dwHookSwitchDev, DWORD dwGain);
 /**
@@ -1244,7 +1244,7 @@ LONG phoneSetGain(HPHONE hPhone, DWORD dwHookSwitchDev, DWORD dwGain);
  * @param dwHookSwitchMode PHONEHOOKSWITCHMODE_* value.
  * @return Positive request ID, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneSetHookSwitch(HPHONE hPhone, DWORD dwHookSwitchDevs, DWORD dwHookSwitchMode);
 /**
@@ -1259,7 +1259,7 @@ LONG phoneSetHookSwitch(HPHONE hPhone, DWORD dwHookSwitchDevs, DWORD dwHookSwitc
  * @param dwVolume Ringer volume from zero to 0xFFFF.
  * @return Positive request ID, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneSetRing(HPHONE hPhone, DWORD dwRingMode, DWORD dwVolume);
 /**
@@ -1274,7 +1274,7 @@ LONG phoneSetRing(HPHONE hPhone, DWORD dwRingMode, DWORD dwVolume);
  * @param dwButtonStates PHONEBUTTONSTATE_* events to enable.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneSetStatusMessages(HPHONE hPhone, DWORD dwPhoneStates, DWORD dwButtonModes, DWORD dwButtonStates);
 /**
@@ -1289,7 +1289,7 @@ LONG phoneSetStatusMessages(HPHONE hPhone, DWORD dwPhoneStates, DWORD dwButtonMo
  * @param dwVolume Volume level from zero to 0xFFFF.
  * @return Positive request ID, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneSetVolume(HPHONE hPhone, DWORD dwHookSwitchDev, DWORD dwVolume);
 /**
@@ -1300,7 +1300,7 @@ LONG phoneSetVolume(HPHONE hPhone, DWORD dwHookSwitchDev, DWORD dwVolume);
  * @param hPhoneApp TAPI phone-application handle.
  * @return 0 on success, or a negative PHONEERR_* code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG phoneShutdown(HPHONEAPP hPhoneApp);
 typedef struct lineaddresscaps_tag LINEADDRESSCAPS;

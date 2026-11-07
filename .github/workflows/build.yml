@@ -50,13 +50,21 @@ jobs:
         run: |
           make check-cxx-headers-mips check-cxx-headers-sh3 check-cxx-headers-arm check-abi check-stdlib check-debugmgr \
             examples-mips-ce1 examples-mips-ce2 examples-sh3-ce1 examples-sh3-ce101 examples-sh3-ce2 examples-arm-ce3 \
-            debugmgr-mips-ce1 debugmgr-mips-ce2 debugmgr-sh3-ce1 debugmgr-sh3-ce2 debugmgr-arm-ce3 2>&1 | tee build.log
+            debugmgr-mips-ce1 debugmgr-mips-ce2 debugmgr-sh3-ce1 debugmgr-sh3-ce2 debugmgr-arm-ce3 \
+            check-lazy-mips-ce1 check-lazy-mips-ce2 check-lazy-sh3-ce1 check-lazy-sh3-ce101 check-lazy-sh3-ce2 check-lazy-arm-ce3 2>&1 | tee build.log
           ! grep -i "warning:" build.log
+
+      - name: Build the examples pinned to each device, with no warnings
+        run: |
+          make examples-mips-ce1 examples-mips-ce2 DEVICE=velo1 2>&1 | tee build-devices.log
+          make examples-arm-ce3 DEVICE=jornada720 2>&1 | tee -a build-devices.log
+          ! grep -i "warning:" build-devices.log
 
       - name: Check the x86 headers and build the x86 examples, with no warnings
         if: runner.os == 'Linux'
         run: |
-          make check-cxx-headers-x86 examples-x86-ce2 debugmgr-x86-ce2 CLANG=clang 2>&1 | tee build-x86.log
+          make check-cxx-headers-x86 examples-x86-ce2 debugmgr-x86-ce2 check-lazy-x86-ce2 CLANG=clang 2>&1 | tee build-x86.log
+          make examples-x86-ce2 DEVICE=joyride 2>&1 | tee -a build-x86.log
           ! grep -i "warning:" build-x86.log
 
       - uses: actions/upload-artifact@v7

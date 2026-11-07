@@ -3527,7 +3527,7 @@ typedef DWORD (CALLBACK *LPFNDEVCAPS)(LPSTR,LPSTR,UINT,LPSTR,LPDEVMODEA);
  * @param hdc Printer device context.
  * @return A value greater than 0 on success, or SP_ERROR on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI AbortDoc(HDC hdc);
 WINGDIAPI BOOL WINAPI AbortPath(HDC);
@@ -3593,7 +3593,7 @@ WINGDIAPI int WINAPI ChoosePixelFormat(HDC,CONST PIXELFORMATDESCRIPTOR*);
  * @param hdc Metafile device context from CreateEnhMetaFileW.
  * @return The enhanced metafile, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HENHMETAFILE WINAPI CloseEnhMetaFile(HDC hdc);
 WINGDIAPI BOOL WINAPI CloseFigure(HDC);
@@ -3681,7 +3681,7 @@ WINGDIAPI HDC WINAPI CreateDCA(LPCSTR,LPCSTR,LPCSTR,const DEVMODEA*);
  *        driver unchanged.
  * @return The device context, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HDC WINAPI CreateDCW(LPCWSTR lpszDriver,LPCWSTR lpszDevice,LPCWSTR lpszOutput,const DEVMODEW*lpInitData);
 WINGDIAPI HBITMAP WINAPI CreateDIBitmap(HDC,const BITMAPINFOHEADER*,DWORD,PCVOID,const BITMAPINFO*,UINT);
@@ -3739,7 +3739,7 @@ WINGDIAPI HDC WINAPI CreateEnhMetaFileA(HDC,LPCSTR,LPCRECT,LPCSTR);
  *        the whole doubly terminated, or NULL.
  * @return The metafile device context, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HDC WINAPI CreateEnhMetaFileW(HDC hdcRef,LPCWSTR lpFilename,LPCRECT lpRect,LPCWSTR lpDescription);
 WINGDIAPI HFONT WINAPI CreateFontA(int,int,int,int,int,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,LPCSTR);
@@ -3773,7 +3773,7 @@ WINGDIAPI HDC WINAPI CreateMetaFileW(LPCWSTR);
  * @param lplgpl LOGPALETTE with the colours.
  * @return The palette, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HPALETTE WINAPI CreatePalette(const LOGPALETTE*lplgpl);
 /**
@@ -3785,7 +3785,7 @@ WINGDIAPI HPALETTE WINAPI CreatePalette(const LOGPALETTE*lplgpl);
  * @param hbmp The pattern bitmap.
  * @return The brush, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HBRUSH WINAPI CreatePatternBrush(HBITMAP hbmp);
 /**
@@ -3802,7 +3802,7 @@ WINGDIAPI HBRUSH WINAPI CreatePatternBrush(HBITMAP hbmp);
  * @param crColor Colour, from RGB().
  * @return The pen, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HPEN WINAPI CreatePen(int fnPenStyle,int nWidth,COLORREF crColor);
 /**
@@ -3831,7 +3831,7 @@ WINGDIAPI HRGN WINAPI CreatePolyPolygonRgn(const POINT*,const INT*,int,int);
  * @param nBottomRect Bottom edge (exclusive).
  * @return The new region, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HRGN WINAPI CreateRectRgn(int nLeftRect,int nTopRect,int nRightRect,int nBottomRect);
 /**
@@ -3878,7 +3878,7 @@ WINGDIAPI BOOL WINAPI DeleteDC(HDC hdc);
  * @param hemf The enhanced metafile.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI BOOL WINAPI DeleteEnhMetaFile(HENHMETAFILE hemf);
 WINGDIAPI BOOL WINAPI DeleteMetaFile(HMETAFILE);
@@ -3918,7 +3918,7 @@ WINGDIAPI BOOL WINAPI Ellipse(HDC hdc,int nLeftRect,int nTopRect,int nRightRect,
  * @param hdc Printer device context.
  * @return Greater than zero on success, or zero or less on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI EndDoc(HDC hdc);
 /**
@@ -3930,7 +3930,7 @@ WINGDIAPI int WINAPI EndDoc(HDC hdc);
  * @param hdc Printer device context.
  * @return Greater than zero on success, or zero or less on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI EndPage(HDC hdc);
 WINGDIAPI BOOL WINAPI EndPath(HDC);
@@ -4021,7 +4021,7 @@ WINGDIAPI HRGN WINAPI ExtCreateRegion(const XFORM*,DWORD,const RGNDATA*);
  * @return Positive on success, negative on error (see GetLastError); a
  *        QUERYESCSUPPORT query returns 0 when the escape is unsupported.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI ExtEscape(HDC hdc,int nEscape,int cbInput,LPCSTR lpszInData,int cbOutput,LPSTR lpszOutData);
 WINGDIAPI BOOL WINAPI ExtFloodFill(HDC,int,int,COLORREF,UINT);
@@ -4069,7 +4069,7 @@ WINGDIAPI int WINAPI FillRect(HDC hDC,LPCRECT lprc,HBRUSH hbr);
  * @param hbr Brush to fill with.
  * @return Nonzero on success, zero on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI FillRgn(HDC hdc,HRGN hrgn,HBRUSH hbr);
 WINGDIAPI BOOL WINAPI FixBrushOrgEx(HDC,int,int,LPPOINT);
@@ -4156,7 +4156,7 @@ WINGDIAPI BOOL WINAPI GetCurrentPositionEx(HDC,LPPOINT);
  *
  * @return Current cursor handle, or NULL if there is no cursor.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HCURSOR WINAPI GetCursor(void);
 #if (WINVER >= 0x0500)
@@ -4222,7 +4222,7 @@ WINGDIAPI COLORREF WINAPI GetNearestColor(HDC hdc,COLORREF crColor);
  * @param crColor The color to match.
  * @return The palette index, or CLR_INVALID on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI UINT WINAPI GetNearestPaletteIndex(HPALETTE hpal,COLORREF crColor);
 WINGDIAPI int WINAPI GetObjectA(HGDIOBJ,int,PVOID);
@@ -4269,7 +4269,7 @@ WINGDIAPI UINT WINAPI GetOutlineTextMetricsW(HDC,UINT,LPOUTLINETEXTMETRICW);
  * @return The number of entries copied, or the palette's size if lppe is
  *         NULL, or 0 on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI UINT WINAPI GetPaletteEntries(HPALETTE hpal,UINT iStartIndex,UINT nEntries,LPPALETTEENTRY lppe);
 WINGDIAPI int WINAPI GetPath(HDC,LPPOINT,PBYTE,int);
@@ -4339,7 +4339,7 @@ WINGDIAPI int WINAPI GetStretchBltMode(HDC);
  * @return The number of entries copied, or the palette's size if lppe is
  *         NULL, or 0 on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI UINT WINAPI GetSystemPaletteEntries(HDC hdc,UINT iStartIndex,UINT nEntries,LPPALETTEENTRY lppe);
 WINGDIAPI UINT WINAPI GetSystemPaletteUse(HDC);
@@ -4501,7 +4501,7 @@ WINGDIAPI BOOL WINAPI Pie(HDC,int,int,int,int,int,int,int,int);
  * @param lpRect Bounding rectangle, in logical units.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI BOOL WINAPI PlayEnhMetaFile(HDC hdc,HENHMETAFILE hemf,LPCRECT lpRect);
 WINGDIAPI BOOL WINAPI PlayEnhMetaFileRecord(HDC,LPHANDLETABLE,const ENHMETARECORD*,UINT);
@@ -4562,7 +4562,7 @@ WINGDIAPI BOOL WINAPI PtVisible(HDC,int,int);
  * @param hdc Device context with a palette selected by SelectPalette.
  * @return The number of entries mapped, or GDI_ERROR on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI UINT WINAPI RealizePalette(HDC hdc);
 /**
@@ -4594,7 +4594,7 @@ WINGDIAPI BOOL WINAPI RectInRegion(HRGN hrgn,LPCRECT lprc);
  * @param lprc The rectangle, in logical units.
  * @return TRUE if any part is inside, otherwise FALSE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI BOOL WINAPI RectVisible(HDC hdc,LPCRECT lprc);
 WINGDIAPI BOOL WINAPI RemoveFontResourceA(LPCSTR);
@@ -4691,7 +4691,7 @@ WINGDIAPI HGDIOBJ WINAPI SelectObject(HDC hdc,HGDIOBJ hgdiobj);
  * @param bForceBackground Ignored: Windows CE always treats it as FALSE.
  * @return The previous palette, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI HPALETTE WINAPI SelectPalette(HDC hdc,HPALETTE hpal,BOOL bForceBackground);
 /**
@@ -4704,7 +4704,7 @@ WINGDIAPI HPALETTE WINAPI SelectPalette(HDC hdc,HPALETTE hpal,BOOL bForceBackgro
  * @param lpAbortProc The abort procedure.
  * @return Greater than zero on success, or SP_ERROR on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI SetAbortProc(HDC hdc,ABORTPROC lpAbortProc);
 WINGDIAPI int WINAPI SetArcDirection(HDC,int);
@@ -4778,7 +4778,7 @@ WINGDIAPI BOOL WINAPI SetMiterLimit(HDC,FLOAT,PFLOAT);
  * @param lppe The new entries.
  * @return The number of entries set, or 0 on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI UINT WINAPI SetPaletteEntries(HPALETTE hpal,UINT iStart,UINT cEntries,const PALETTEENTRY*lppe);
 /**
@@ -4809,7 +4809,7 @@ WINGDIAPI int WINAPI SetPolyFillMode(HDC,int);
  * @param nBottomRect Bottom edge (exclusive).
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI BOOL WINAPI SetRectRgn(HRGN hrgn,int nLeftRect,int nTopRect,int nRightRect,int nBottomRect);
 /**
@@ -4822,7 +4822,7 @@ WINGDIAPI BOOL WINAPI SetRectRgn(HRGN hrgn,int nLeftRect,int nTopRect,int nRight
  *        R2_MERGEPEN and so on.
  * @return The previous mode, or 0 on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI SetROP2(HDC hdc,int fnDrawMode);
 WINGDIAPI int WINAPI SetStretchBltMode(HDC,int);
@@ -4854,7 +4854,7 @@ WINGDIAPI BOOL WINAPI SetViewportExtEx(HDC,int,int,LPSIZE);
  * @param lpPoint Receives the previous origin, or NULL.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI BOOL WINAPI SetViewportOrgEx(HDC hdc,int X,int Y,LPPOINT lpPoint);
 WINGDIAPI BOOL WINAPI SetWindowExtEx(HDC,int,int,LPSIZE);
@@ -4873,7 +4873,7 @@ WINGDIAPI int WINAPI StartDocA(HDC,const DOCINFOA*);
  * @return The print job identifier, greater than zero, or zero or less on
  *         failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI StartDocW(HDC hdc,const DOCINFOW*lpdi);
 /**
@@ -4884,7 +4884,7 @@ WINGDIAPI int WINAPI StartDocW(HDC hdc,const DOCINFOW*lpdi);
  * @param hDC Printer device context.
  * @return Greater than zero on success, or zero or less on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINGDIAPI int WINAPI StartPage(HDC hDC);
 /**
@@ -4934,7 +4934,7 @@ WINGDIAPI BOOL WINAPI TextOutW(HDC,int,int,LPCWSTR,int);
  * @param dwFlags TCI_SRCCHARSET, TCI_SRCCODEPAGE or TCI_SRCFONTSIG.
  * @return Nonzero on success, zero on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 WINGDIAPI BOOL WINAPI TranslateCharsetInfo(PDWORD lpSrc,LPCHARSETINFO lpCs,DWORD dwFlags);
 WINGDIAPI BOOL WINAPI UnrealizeObject(HGDIOBJ);
@@ -5032,7 +5032,7 @@ typedef DISPLAY_DEVICEW DISPLAY_DEVICE, *PDISPLAY_DEVICE, *LPDISPLAY_DEVICE;
  *        driver unchanged.
  * @return The device context, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define CreateDC CreateDCW
 /**
@@ -5049,7 +5049,7 @@ typedef DISPLAY_DEVICEW DISPLAY_DEVICE, *PDISPLAY_DEVICE, *LPDISPLAY_DEVICE;
  *        the whole doubly terminated, or NULL.
  * @return The metafile device context, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define CreateEnhMetaFile CreateEnhMetaFileW
 #define CreateFont CreateFontW
@@ -5281,7 +5281,7 @@ typedef DISPLAY_DEVICEW DISPLAY_DEVICE, *PDISPLAY_DEVICE, *LPDISPLAY_DEVICE;
  * @return The print job identifier, greater than zero, or zero or less on
  *         failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define StartDoc StartDocW
 #define TextOut TextOutW

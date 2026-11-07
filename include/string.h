@@ -16,6 +16,8 @@ extern "C" {
  * @param source Block to copy from.
  * @param count Number of bytes to copy.
  * @return destination.
+ *
+ * @note Windows CE 2.0 and later.
  */
 void *memcpy(void *destination, const void *source, size_t count);
 /**
@@ -25,6 +27,8 @@ void *memcpy(void *destination, const void *source, size_t count);
  * @param source Block to copy from.
  * @param count Number of bytes to copy.
  * @return destination.
+ *
+ * @note Windows CE 2.0 and later.
  */
 void *memmove(void *destination, const void *source, size_t count);
 /**
@@ -34,6 +38,8 @@ void *memmove(void *destination, const void *source, size_t count);
  * @param value The byte value, converted to unsigned char.
  * @param count Number of bytes to fill.
  * @return destination.
+ *
+ * @note Windows CE 2.0 and later.
  */
 void *memset(void *destination, int value, size_t count);
 /**
@@ -44,6 +50,8 @@ void *memset(void *destination, int value, size_t count);
  * @param count Number of bytes to compare.
  * @return Less than, equal to or greater than zero as first is less than,
  *         equal to or greater than second.
+ *
+ * @note Windows CE 2.0 and later.
  */
 int memcmp(const void *first, const void *second, size_t count);
 /**
@@ -68,7 +76,7 @@ void *memchr(const void *memory, int value, size_t count);
  * @return Pointer just past value in destination, or NULL if value was
  *         not copied.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void *_memccpy(void *destination, const void *source, int value, unsigned int count);
 /**
@@ -80,7 +88,7 @@ void *_memccpy(void *destination, const void *source, int value, unsigned int co
  * @return Less than, equal to or greater than zero according to the
  *         comparison.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _memicmp(const void *first, const void *second, unsigned int count);
 /**
@@ -89,7 +97,7 @@ int _memicmp(const void *first, const void *second, unsigned int count);
  * @param string Null-terminated string.
  * @return String length.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 size_t strlen(const char *string);
 /**
@@ -102,7 +110,7 @@ size_t strlen(const char *string);
  * @param source Null-terminated string to copy.
  * @return destination.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *strcpy(char *destination, const char *source);
 /**
@@ -117,7 +125,7 @@ char *strcpy(char *destination, const char *source);
  * @param count Maximum number of characters to copy.
  * @return destination.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *strncpy(char *destination, const char *source, size_t count);
 /**
@@ -130,7 +138,7 @@ char *strncpy(char *destination, const char *source, size_t count);
  * @param source Null-terminated string to append.
  * @return destination.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *strcat(char *destination, const char *source);
 /**
@@ -144,7 +152,7 @@ char *strcat(char *destination, const char *source);
  * @param count Maximum number of source characters to append.
  * @return destination.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *strncat(char *destination, const char *source, size_t count);
 /**
@@ -157,7 +165,7 @@ char *strncat(char *destination, const char *source, size_t count);
  * @return Less than, equal to or greater than zero according to the
  *         comparison.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int strcmp(const char *first, const char *second);
 /**
@@ -172,7 +180,7 @@ int strcmp(const char *first, const char *second);
  * @return Less than, equal to or greater than zero according to the
  *         comparison.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int strncmp(const char *first, const char *second, size_t count);
 /**
@@ -185,7 +193,7 @@ int strncmp(const char *first, const char *second, size_t count);
  * @return Less than, equal to or greater than zero according to the
  *         comparison.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int _stricmp(const char *first, const char *second);
 /**
@@ -200,7 +208,7 @@ int _stricmp(const char *first, const char *second);
  * @return Less than, equal to or greater than zero according to the
  *         comparison.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int _strnicmp(const char *first, const char *second, size_t count);
 /**
@@ -212,7 +220,7 @@ int _strnicmp(const char *first, const char *second, size_t count);
  * @param character Character to find, converted to char.
  * @return Pointer to the match, or NULL if none is found.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *strchr(const char *string, int character);
 /**
@@ -224,7 +232,7 @@ char *strchr(const char *string, int character);
  * @param character Character to find, converted to char.
  * @return Pointer to the match, or NULL if none is found.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *strrchr(const char *string, int character);
 /**
@@ -237,7 +245,7 @@ char *strrchr(const char *string, int character);
  * @param substring Null-terminated string to find.
  * @return Pointer to the match, or NULL if none is found.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *strstr(const char *string, const char *substring);
 /**
@@ -249,7 +257,7 @@ char *strstr(const char *string, const char *substring);
  * @param characters Null-terminated set of characters.
  * @return Pointer to the matching character, or NULL if none is found.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *strpbrk(const char *string, const char *characters);
 /**
@@ -262,7 +270,7 @@ char *strpbrk(const char *string, const char *characters);
  * @param characters Null-terminated set of accepted characters.
  * @return Length of the initial segment.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 size_t strspn(const char *string, const char *characters);
 /**
@@ -275,7 +283,7 @@ size_t strspn(const char *string, const char *characters);
  * @param characters Null-terminated set of excluded characters.
  * @return Length of the initial segment.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 size_t strcspn(const char *string, const char *characters);
 /**
@@ -289,7 +297,7 @@ size_t strcspn(const char *string, const char *characters);
  * @param delimiters Null-terminated set of delimiter characters.
  * @return Pointer to the next token, or NULL when no tokens remain.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *strtok(char *string, const char *delimiters);
 /**
@@ -300,7 +308,7 @@ char *strtok(char *string, const char *delimiters);
  * @param string String to duplicate.
  * @return Copy of string, or NULL if allocation fails.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *_strdup(const char *string);
 /**
@@ -311,7 +319,7 @@ char *_strdup(const char *string);
  * @param string String to convert.
  * @return string.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *_strlwr(char *string);
 /**
@@ -322,7 +330,7 @@ char *_strlwr(char *string);
  * @param string String to convert.
  * @return string.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *_strupr(char *string);
 /**
@@ -333,7 +341,7 @@ char *_strupr(char *string);
  * @param string String to reverse.
  * @return string.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *_strrev(char *string);
 /**
@@ -343,7 +351,7 @@ char *_strrev(char *string);
  * @param character Replacement character, converted to char.
  * @return string.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *_strset(char *string, int character);
 /**
@@ -357,7 +365,7 @@ char *_strset(char *string, int character);
  * @param count Maximum number of characters to set.
  * @return string.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *_strnset(char *string, int character, size_t count);
 char *strerror(int number);

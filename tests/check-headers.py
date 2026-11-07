@@ -7,6 +7,9 @@ import subprocess
 import sys
 import tempfile
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tools"))
+import manifests
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORE_HEADERS = ["windows.h", "commctrl.h", "commdlg.h", "winsock.h", "notify.h", "tlhelp32.h", "mmreg.h", "msacm.h", "imm.h", "ras.h", "af_irda.h",
                 "windowsx.h", "winnetwk.h", "mmsystem.h", "lmcons.h", "tchar.h"]
@@ -18,14 +21,13 @@ VERSION_NAMES = {1: "1.0", 101: "1.01", 2: "2.0", 3: "3.0"}
 COMMON_FLAGS = ["-fshort-wchar", "-ffreestanding", "-nostdlibinc", "-w", "-ferror-limit=0"]
 ARCHITECTURES = {
     "mips": {"target": ["--target=mipsel-unknown-none-elf", "-march=mips1", "-msoft-float", "-Wno-unknown-warning-option", "-Wno-experimental-option"],
-             "sdk_defines": ["-DMIPS", "-D_MIPS_=1", "-D_M_MRX000=4000"], "defines": [], "exports": "ce%d"},
+             "sdk_defines": ["-DMIPS", "-D_MIPS_=1", "-D_M_MRX000=4000"], "defines": []},
     "sh3": {"target": ["--target=sh3el-unknown-none-wince"],
-            "sdk_defines": ["-DSHx", "-DSH3", "-D_SH3_", "-D_M_SH=3"], "defines": ["-DSHx", "-DSH3", "-D_SH3_"], "exports": "ce%d-sh3"},
+            "sdk_defines": ["-DSHx", "-DSH3", "-D_SH3_", "-D_M_SH=3"], "defines": ["-DSHx", "-DSH3", "-D_SH3_"]},
     "x86": {"target": ["--target=i486-unknown-none-elf", "-malign-double"],
-            "sdk_defines": ["-D_X86_", "-Dx86", "-D_M_IX86=400", "-D_INTEGRAL_MAX_BITS=64", "-U__asm", "-fasm-blocks"], "defines": ["-D_X86_", "-Dx86"],
-            "exports": "ce%d-x86"},
+            "sdk_defines": ["-D_X86_", "-Dx86", "-D_M_IX86=400", "-D_INTEGRAL_MAX_BITS=64", "-U__asm", "-fasm-blocks"], "defines": ["-D_X86_", "-Dx86"]},
     "arm": {"target": ["--target=armv4-unknown-none-wince", "-mcpu=strongarm", "-marm", "-mfloat-abi=soft"],
-            "sdk_defines": ["-DARM", "-D_ARM_", "-DARMV4", "-D_M_ARM=4", "-D_INTEGRAL_MAX_BITS=64"], "defines": ["-DARM", "-D_ARM_", "-DARMV4"], "exports": "ce%d-arm"},
+            "sdk_defines": ["-DARM", "-D_ARM_", "-DARMV4", "-D_M_ARM=4", "-D_INTEGRAL_MAX_BITS=64"], "defines": ["-DARM", "-D_ARM_", "-DARMV4"]},
 }
 DEFAULT_VERSIONS = {"mips": ["1", "2"], "sh3": ["1", "101", "2"], "x86": ["2"], "arm": ["3"]}
 UNDECLARED_EXPORTS = {"x86": re.compile(r"^(_?[a-z]\w*|GetErrorInfo|GetHGlobalFromStream)$")}
@@ -122,11 +124,7 @@ class Side:
 
 
 def exports(version, arch):
-    names = set()
-    folder = os.path.join(ROOT, "exports", ARCHITECTURES[arch]["exports"] % version)
-    for name in os.listdir(folder):
-        names.update(line.strip() for line in open(os.path.join(folder, name)) if line.strip())
-    return names
+    return manifests.exported_at(arch, WIN32_WCE[version])
 
 
 def sdk_folder(reference, version, work):

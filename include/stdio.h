@@ -35,7 +35,7 @@ typedef unsigned short wctype_t;
  * @param index Standard stream index: 0, 1 or 2.
  * @return The corresponding FILE pointer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 FILE *_getstdfilex(int index);
 #define stdin _getstdfilex(0)
@@ -49,7 +49,7 @@ FILE *_getstdfilex(int index);
  * @param mode Access mode.
  * @return The open stream, or NULL on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 FILE *fopen(const char *path, const char *mode);
 /**
@@ -59,7 +59,7 @@ FILE *fopen(const char *path, const char *mode);
  * @param mode Wide-character access mode.
  * @return The open stream, or NULL on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 FILE *_wfopen(const wchar_t *path, const wchar_t *mode);
 /**
@@ -69,7 +69,7 @@ FILE *_wfopen(const wchar_t *path, const wchar_t *mode);
  * @param mode Wide-character access mode.
  * @return The new stream, or NULL on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 FILE *_wfdopen(void *handle, const wchar_t *mode);
 /**
@@ -82,7 +82,7 @@ FILE *_wfdopen(void *handle, const wchar_t *mode);
  * @param stream Stream to close and reassign.
  * @return The reopened stream, or NULL on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 FILE *_wfreopen(const wchar_t *path, const wchar_t *mode, FILE *stream);
 /**
@@ -91,7 +91,7 @@ FILE *_wfreopen(const wchar_t *path, const wchar_t *mode, FILE *stream);
  * @param stream Stream to close.
  * @return 0 on success, or EOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fclose(FILE *stream);
 /**
@@ -102,7 +102,7 @@ int fclose(FILE *stream);
  *
  * @return Number of streams closed, or EOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int _fcloseall(void);
 /**
@@ -118,7 +118,7 @@ int _fcloseall(void);
  * @return Number of full items read; use feof or ferror to identify why
  *         fewer than count items were read.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 size_t fread(void *buffer, size_t size, size_t count, FILE *stream);
 /**
@@ -134,7 +134,7 @@ size_t fread(void *buffer, size_t size, size_t count, FILE *stream);
  * @return Number of full items written; the position is indeterminate if
  *         an error occurs.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 size_t fwrite(const void *buffer, size_t size, size_t count, FILE *stream);
 /**
@@ -145,7 +145,7 @@ size_t fwrite(const void *buffer, size_t size, size_t count, FILE *stream);
  * @param stream Stream to read.
  * @return The character as an int, or EOF on error or end of file.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fgetc(FILE *stream);
 /**
@@ -155,7 +155,7 @@ int fgetc(FILE *stream);
  * @param stream Destination stream.
  * @return The character written, or EOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fputc(int character, FILE *stream);
 /**
@@ -169,7 +169,7 @@ int fputc(int character, FILE *stream);
  * @param stream Stream to update.
  * @return The character on success, or EOF if pushback fails.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int ungetc(int character, FILE *stream);
 /**
@@ -183,7 +183,7 @@ int ungetc(int character, FILE *stream);
  * @param stream Stream to read.
  * @return buffer on success, or NULL on error or end of file.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *fgets(char *buffer, int size, FILE *stream);
 /**
@@ -193,7 +193,7 @@ char *fgets(char *buffer, int size, FILE *stream);
  * @param stream Destination stream.
  * @return A nonnegative value on success, or EOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fputs(const char *string, FILE *stream);
 /**
@@ -209,7 +209,7 @@ int fputs(const char *string, FILE *stream);
  * @return 0 on success, nonzero on failure; the result is undefined on
  *         devices that cannot seek.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fseek(FILE *stream, long offset, int origin);
 /**
@@ -221,7 +221,7 @@ int fseek(FILE *stream, long offset, int origin);
  * @param stream Stream to query.
  * @return Current position, or -1L on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 long ftell(FILE *stream);
 /**
@@ -233,7 +233,7 @@ long ftell(FILE *stream);
  * @param position Receives the position indicator.
  * @return 0 on success, or a nonzero value on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fgetpos(FILE *stream, fpos_t *position);
 /**
@@ -245,7 +245,7 @@ int fgetpos(FILE *stream, fpos_t *position);
  * @param position Saved position from fgetpos.
  * @return 0 on success, or a nonzero value on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fsetpos(FILE *stream, const fpos_t *position);
 /**
@@ -256,7 +256,7 @@ int fsetpos(FILE *stream, const fpos_t *position);
  * @param stream Stream to flush or clear, or NULL for all output streams.
  * @return 0 on success, or EOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fflush(FILE *stream);
 /**
@@ -266,7 +266,7 @@ int fflush(FILE *stream);
  *
  * @return Number of open streams.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int _flushall(void);
 /**
@@ -275,7 +275,7 @@ int _flushall(void);
  * @param stream Stream to test.
  * @return Nonzero if the end-of-file indicator is set; otherwise 0.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int feof(FILE *stream);
 /**
@@ -284,7 +284,7 @@ int feof(FILE *stream);
  * @param stream Stream to test.
  * @return Nonzero if an error occurred; otherwise 0.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int ferror(FILE *stream);
 /**
@@ -292,7 +292,7 @@ int ferror(FILE *stream);
  *
  * @param stream Stream to clear.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 void clearerr(FILE *stream);
 /**
@@ -303,7 +303,7 @@ void clearerr(FILE *stream);
  * @param stream Stream whose file handle is requested.
  * @return The associated file handle.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 void *_fileno(FILE *stream);
 /**
@@ -316,7 +316,7 @@ void *_fileno(FILE *stream);
  * @param mode _O_TEXT or _O_BINARY.
  * @return The previous mode, or -1 on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int _setmode(FILE *stream, int mode);
 /**
@@ -324,7 +324,7 @@ int _setmode(FILE *stream, int mode);
  *
  * @return The character as an int, or EOF on error or end of file.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int getchar(void);
 /**
@@ -333,7 +333,7 @@ int getchar(void);
  * @param character Character to write.
  * @return The character written, or EOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int putchar(int character);
 /**
@@ -345,7 +345,7 @@ int putchar(int character);
  * @param buffer Receives the input line.
  * @return buffer on success, or NULL on error or end of file.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 char *gets(char *buffer);
 /**
@@ -354,7 +354,7 @@ char *gets(char *buffer);
  * @param string Null-terminated string to write.
  * @return A nonnegative value on success, or EOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int puts(const char *string);
 
@@ -366,7 +366,7 @@ int puts(const char *string);
  * @param format Format-control string.
  * @return Number of characters printed, or a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int printf(const char *format, ...);
 /**
@@ -378,7 +378,7 @@ int printf(const char *format, ...);
  * @param format Format-control string.
  * @return Number of bytes written, or a negative value on output error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fprintf(FILE *stream, const char *format, ...);
 /**
@@ -390,7 +390,7 @@ int fprintf(FILE *stream, const char *format, ...);
  * @param format Format-control string.
  * @return Number of characters written, excluding the null terminator.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int sprintf(char *buffer, const char *format, ...);
 /**
@@ -405,7 +405,7 @@ int sprintf(char *buffer, const char *format, ...);
  * @return Bytes stored excluding the null terminator, or a negative value
  *         if the output does not fit.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _snprintf(char *buffer, size_t count, const char *format, ...);
 /**
@@ -417,7 +417,7 @@ int _snprintf(char *buffer, size_t count, const char *format, ...);
  * @param arguments Argument list initialized by va_start.
  * @return Number of characters written, or a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int vprintf(const char *format, va_list arguments);
 /**
@@ -430,7 +430,7 @@ int vprintf(const char *format, va_list arguments);
  * @param arguments Argument list initialized by va_start.
  * @return Number of characters written, or a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int vfprintf(FILE *stream, const char *format, va_list arguments);
 /**
@@ -445,7 +445,7 @@ int vfprintf(FILE *stream, const char *format, va_list arguments);
  * @return Number of characters written, excluding the null terminator, or
  *         a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int vsprintf(char *buffer, const char *format, va_list arguments);
 /**
@@ -462,7 +462,7 @@ int vsprintf(char *buffer, const char *format, va_list arguments);
  * @return Bytes stored excluding the null terminator, or a negative value
  *         if the output does not fit.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _vsnprintf(char *buffer, size_t count, const char *format, va_list arguments);
 int snprintf(char *buffer, size_t count, const char *format, ...);
@@ -479,7 +479,7 @@ int vsnprintf(char *buffer, size_t count, const char *format, va_list arguments)
  * @return Number of fields assigned, 0 if none were assigned, or EOF on
  *         error or end of input before the first conversion.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int scanf(const char *format, ...);
 /**
@@ -493,7 +493,7 @@ int scanf(const char *format, ...);
  * @return Number of fields assigned, or EOF on error or end of file before
  *         the first conversion.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fscanf(FILE *stream, const char *format, ...);
 /**
@@ -507,7 +507,7 @@ int fscanf(FILE *stream, const char *format, ...);
  * @return Number of fields assigned, 0 if none were assigned, or EOF if
  *         input ends before the first conversion.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int sscanf(const char *string, const char *format, ...);
 
@@ -519,7 +519,7 @@ int sscanf(const char *string, const char *format, ...);
  * @param stream Stream to read.
  * @return The character as wint_t, or WEOF on error or end of file.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 wint_t fgetwc(FILE *stream);
 /**
@@ -529,7 +529,7 @@ wint_t fgetwc(FILE *stream);
  * @param stream Destination stream.
  * @return The character written, or WEOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 wint_t fputwc(wint_t character, FILE *stream);
 /**
@@ -543,7 +543,7 @@ wint_t fputwc(wint_t character, FILE *stream);
  * @param stream Stream to update.
  * @return The character on success, or WEOF if pushback fails.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 wint_t ungetwc(wint_t character, FILE *stream);
 /**
@@ -557,7 +557,7 @@ wint_t ungetwc(wint_t character, FILE *stream);
  * @param stream Stream to read.
  * @return buffer on success, or NULL on error or end of file.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 wchar_t *fgetws(wchar_t *buffer, int size, FILE *stream);
 /**
@@ -570,7 +570,7 @@ wchar_t *fgetws(wchar_t *buffer, int size, FILE *stream);
  * @param stream Destination stream.
  * @return A nonnegative value on success, or WEOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fputws(const wchar_t *string, FILE *stream);
 /**
@@ -578,7 +578,7 @@ int fputws(const wchar_t *string, FILE *stream);
  *
  * @return The character as wint_t, or WEOF on error or end of file.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 wint_t getwchar(void);
 /**
@@ -587,7 +587,7 @@ wint_t getwchar(void);
  * @param character Wide character to write.
  * @return The character written, or WEOF on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 wint_t putwchar(wint_t character);
 /**
@@ -599,7 +599,7 @@ wint_t putwchar(wint_t character);
  * @param buffer Receives the input line.
  * @return buffer on success, or NULL on error or end of file.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 wchar_t *_getws(wchar_t *buffer);
 /**
@@ -608,7 +608,7 @@ wchar_t *_getws(wchar_t *buffer);
  * @param string Null-terminated string to write.
  * @return A nonnegative value on success, or WEOF on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int _putws(const wchar_t *string);
 /**
@@ -620,7 +620,7 @@ int _putws(const wchar_t *string);
  * @param format Wide-character format-control string.
  * @return Number of wide characters written, or a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int wprintf(const wchar_t *format, ...);
 /**
@@ -630,7 +630,7 @@ int wprintf(const wchar_t *format, ...);
  * @param format Wide-character format string.
  * @return Number of wide characters written, or a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fwprintf(FILE *stream, const wchar_t *format, ...);
 /**
@@ -640,7 +640,7 @@ int fwprintf(FILE *stream, const wchar_t *format, ...);
  * @param arguments Argument list.
  * @return Number of wide characters written, or a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int vwprintf(const wchar_t *format, va_list arguments);
 /**
@@ -653,7 +653,7 @@ int vwprintf(const wchar_t *format, va_list arguments);
  * @param arguments Argument list initialized by va_start.
  * @return Number of wide characters written, or a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int vfwprintf(FILE *stream, const wchar_t *format, va_list arguments);
 /**
@@ -666,7 +666,7 @@ int vfwprintf(FILE *stream, const wchar_t *format, va_list arguments);
  * @return Number of fields assigned, 0 if none were assigned, or EOF on
  *         error or end of input before the first conversion.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int wscanf(const wchar_t *format, ...);
 /**
@@ -680,7 +680,7 @@ int wscanf(const wchar_t *format, ...);
  * @return Number of fields assigned, or EOF on error or end of file before
  *         the first conversion.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int fwscanf(FILE *stream, const wchar_t *format, ...);
 

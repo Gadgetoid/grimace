@@ -16,7 +16,7 @@ extern "C" {
  * @param type Classification property to test.
  * @return Nonzero if the character has the property, or 0 otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int _isctype(int character, int type);
 /**
@@ -25,7 +25,7 @@ int _isctype(int character, int type);
  * @param character Character to convert, as an unsigned char value or EOF.
  * @return The lowercase character, or character unchanged if it has none.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int tolower(int character);
 /**
@@ -34,7 +34,7 @@ int tolower(int character);
  * @param character Character to convert, as an unsigned char value or EOF.
  * @return The uppercase character, or character unchanged if it has none.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int toupper(int character);
 int isalnum(int character);

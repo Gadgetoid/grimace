@@ -183,7 +183,7 @@ WINADVAPI LONG WINAPI RegEnumValueW(HKEY hKey,DWORD dwIndex,LPWSTR lpszValueName
  * @param hKey Open key or a predefined HKEY_* root. Validated but ignored.
  * @return ERROR_SUCCESS, or an error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINADVAPI LONG WINAPI RegFlushKey(HKEY hKey);
 WINADVAPI LONG WINAPI RegGetKeySecurity(HKEY,SECURITY_INFORMATION,PSECURITY_DESCRIPTOR,PDWORD);

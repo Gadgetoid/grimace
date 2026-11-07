@@ -103,7 +103,7 @@ int WINAPI SHShowOutOfMemory(HWND hwndOwner, UINT grfFlags);
  * @param fForward TRUE if the clock moved forward, FALSE if back.
  * @param pftDelta Size of the change, as a FILETIME interval.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void WINAPI BatteryNotifyOfTimeChange(BOOL fForward, FILETIME *pftDelta);
 /**
@@ -115,7 +115,7 @@ void WINAPI BatteryNotifyOfTimeChange(BOOL fForward, FILETIME *pftDelta);
  * @param lpszSourceFile The file to copy from and delete. Can't be NULL.
  * @return TRUE on success, FALSE on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI DeleteAndRenameFile(LPCWSTR lpszDestFile, LPCWSTR lpszSourceFile);
 /**
@@ -128,7 +128,7 @@ BOOL WINAPI DeleteAndRenameFile(LPCWSTR lpszDestFile, LPCWSTR lpszSourceFile);
  * @param fEnable TRUE to enable, FALSE to disable.
  * @return Always TRUE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI EnableHardwareKeyboard(BOOL fEnable);
 /**
@@ -139,7 +139,7 @@ BOOL WINAPI EnableHardwareKeyboard(BOOL fEnable);
  *         equivalents) and KBDI_KEYBOARD_ALPHA_NUM (has letter and number
  *         keys).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD WINAPI GetKeyboardStatus(void);
 /**
@@ -153,7 +153,7 @@ DWORD WINAPI GetKeyboardStatus(void);
  * @return MSGSRC_HARDWARE_KEYBOARD, MSGSRC_SOFTWARE_POST or
  *         MSGSRC_UNKNOWN.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 UINT WINAPI GetMessageSource(void);
 /**
@@ -179,7 +179,7 @@ BOOL WINAPI GetMouseMovePoints(PPOINT pptBuf, UINT nBufPoints, UINT *pnPointsRet
  *
  * @return The owning process.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HANDLE WINAPI GetOwnerProcess(void);
 /**
@@ -191,7 +191,7 @@ HANDLE WINAPI GetOwnerProcess(void);
  * @param lpFSDName File name of the file system driver DLL.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI LoadFSD(HANDLE hDevice, LPCWSTR lpFSDName);
 /**
@@ -205,7 +205,7 @@ BOOL WINAPI LoadFSD(HANDLE hDevice, LPCWSTR lpFSDName);
  * @param hProc The process the pointer belongs to.
  * @return The mapped pointer, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LPVOID WINAPI MapPtrToProcess(LPVOID lpv, HANDLE hProc);
 /**
@@ -217,7 +217,7 @@ LPVOID WINAPI MapPtrToProcess(LPVOID lpv, HANDLE hProc);
  * @param pLen Receives the length of the mapping.
  * @return The address of the mapping, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LPVOID WINAPI MapUncompressedFileW(LPCWSTR pwszFileName, LPDWORD pLen);
 /**
@@ -235,7 +235,7 @@ LPVOID WINAPI MapUncompressedFileW(LPCWSTR pwszFileName, LPDWORD pLen);
  * @param pCharacterBuffer The characters.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI PostKeybdMessage(HWND hwnd, UINT VKey, UINT KeyStateFlags, UINT cCharacters, UINT *pShiftStateBuffer, UINT *pCharacterBuffer);
 /**
@@ -246,7 +246,7 @@ BOOL WINAPI PostKeybdMessage(HWND hwnd, UINT VKey, UINT KeyStateFlags, UINT cCha
  * @param uiACP Code page identifier.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI SetACP(UINT uiACP);
 /**
@@ -257,7 +257,7 @@ BOOL WINAPI SetACP(UINT uiACP);
  * @param uiOEMCP Code page identifier.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI SetOEMCP(UINT uiOEMCP);
 /**
@@ -268,7 +268,7 @@ BOOL WINAPI SetOEMCP(UINT uiOEMCP);
  * @param Locale The locale identifier.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI SetSystemDefaultLCID(LCID Locale);
 /**
@@ -279,7 +279,7 @@ BOOL WINAPI SetSystemDefaultLCID(LCID Locale);
  *
  * @param dst 1 for daylight saving time, 0 for standard time.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void WINAPI SetDaylightTime(DWORD dst);
 /**
@@ -291,7 +291,7 @@ void WINAPI SetDaylightTime(DWORD dst);
  * @param dw The sequence number passed to the application on its command
  *        line.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void WINAPI SignalStarted(DWORD dw);
 /**
@@ -316,7 +316,7 @@ void WINAPI SignalStarted(DWORD dw);
  *        PAGE_NOCACHE, and PAGE_PHYSICAL for a physical source.
  * @return TRUE on success, FALSE on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI VirtualCopy(LPVOID lpvDest, LPVOID lpvSrc, DWORD cbSize, DWORD fdwProtect);
 /**
@@ -337,7 +337,7 @@ BOOL WINAPI VirtualCopy(LPVOID lpvDest, LPVOID lpvSrc, DWORD cbSize, DWORD fdwPr
  * @param crTransparentColor Source colour to leave out.
  * @return Nonzero on success, zero on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI TransparentImage(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int nHeightDest, HANDLE hImgSrc, int nXSrc, int nYSrc,
                              int nWidthSrc, int nHeightSrc, COLORREF crTransparentColor);
@@ -361,7 +361,7 @@ BOOL WINAPI TransparentImage(HDC hdcDest, int nXDest, int nYDest, int nWidthDest
  * @param pLen Receives the length of the mapping.
  * @return The address of the mapping, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define MapUncompressedFile MapUncompressedFileW
 #endif

@@ -152,7 +152,7 @@ BOOL CeClearUserNotification (HANDLE hNotification);
  * @param pBuffer Receives the notification information.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeGetUserNotification (HANDLE hNotification,
 		DWORD cBufferSize,
@@ -170,7 +170,7 @@ BOOL CeGetUserNotification (HANDLE hNotification,
  * @param pcHandlesNeeded Receives the number of handles required.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeGetUserNotificationHandles (HANDLE* rghNotifications,
 		DWORD cHandles,
@@ -272,7 +272,7 @@ HANDLE CeSetUserNotification (HANDLE hNotification,
  *        such as showing a dialog or starting an application.
  * @return Notification handle on success, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HANDLE CeSetUserNotificationEx (HANDLE hNotification,
 		CE_NOTIFICATION_TRIGGER *pcnt,

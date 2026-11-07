@@ -33,7 +33,9 @@ def read_entries():
     return entries
 
 
-EXPORTS = {1: mkheaders.exports(1, "mips"), 2: mkheaders.exports(2, "mips"), 3: mkheaders.exports(3, "arm")}
+EXPORTS = {version: set().union(*(manifest.names() for manifest in mkheaders.manifests.manifests() if manifest.version == wce))
+           for version, wce in ((1, 100), (2, 200), (3, 300))}
+EXPORT_VERSIONS = {1: 100, 2: 200, 3: 300}
 
 
 def same_function(name):
@@ -52,7 +54,10 @@ def availability(name):
     versions = [version for version in sorted(EXPORTS) if same_function(name) & EXPORTS[version]]
     if not versions or versions == sorted(EXPORTS):
         return None
-    return "Windows CE %s only." % " and ".join(mkheaders.VERSIONS[version] for version in versions)
+    names = [mkheaders.manifests.VERSION_NAMES[EXPORT_VERSIONS[version]] for version in versions]
+    if versions == sorted(EXPORTS)[-len(versions):]:
+        return "Windows CE %s and later." % names[0]
+    return "Windows CE %s only." % " and ".join(names)
 
 
 def split_members(body):

@@ -203,7 +203,7 @@ typedef BOOL (CALLBACK *ACMDRIVERENUMCB) (
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_NOTENABLED or
  *         MMSYSERR_NOMEM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmDriverOpen(LPHACMDRIVER phad, HACMDRIVERID hadid, DWORD fdwOpen);
 /*msdn.microsoft.com/library/default.asp?url=/library/en-us/multimed/htm/_win32_acmdriverenum.asp*/
@@ -219,7 +219,7 @@ MMRESULT WINAPI acmDriverOpen(LPHACMDRIVER phad, HACMDRIVERID hadid, DWORD fdwOp
  *        drivers and ACM_DRIVERENUMF_NOLOCAL to leave out local ones.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALPARAM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmDriverEnum(ACMDRIVERENUMCB fnCallback, DWORD_PTR dwInstance, DWORD fdwEnum);
 /*msdn.microsoft.com/library/default.asp?url=/library/en-us/multimed/htm/_win32_acmformatenum.asp*/
@@ -241,7 +241,7 @@ MMRESULT WINAPI acmFormatEnumA(HACMDRIVER had, LPACMFORMATDETAILSA pafd, ACMFORM
  *        SUGGEST, INPUT, OUTPUT and so on), or 0 for all.
  * @return MMSYSERR_NOERROR (0), or an MMSYSERR_* or ACMERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmFormatEnumW(HACMDRIVER had, LPACMFORMATDETAILSW pafd, ACMFORMATENUMCBW fnCallback, DWORD_PTR dwInstance, DWORD fdwEnum);
 /*http://msdn.microsoft.com/en-us/library/dd742916(VS.85).aspx*/
@@ -258,7 +258,7 @@ MMRESULT WINAPI acmFormatEnumW(HACMDRIVER had, LPACMFORMATDETAILSW pafd, ACMFORM
  *        or 0.
  * @return MMSYSERR_NOERROR (0), or an error such as ACMERR_NOTPOSSIBLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmFormatSuggest(HACMDRIVER had, LPWAVEFORMATEX pwfxSrc, LPWAVEFORMATEX pwfxDst, DWORD cbwfxDst, DWORD fdwSuggest);
 
@@ -282,7 +282,7 @@ MMRESULT WINAPI acmDriverAddA(LPHACMDRIVERID phadid, HINSTANCE hinstModule, LPAR
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALPARAM or
  *         MMSYSERR_NOMEM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmDriverAddW(LPHACMDRIVERID phadid, HINSTANCE hinstModule, LPARAM lParam, DWORD dwPriority, DWORD fdwAdd);
 
@@ -295,7 +295,7 @@ MMRESULT WINAPI acmDriverAddW(LPHACMDRIVERID phadid, HINSTANCE hinstModule, LPAR
  * @return MMSYSERR_NOERROR, or an error such as ACMERR_BUSY or
  *         MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmDriverRemove(HACMDRIVERID hadid, DWORD fdwRemove);
 
@@ -308,7 +308,7 @@ MMRESULT WINAPI acmDriverRemove(HACMDRIVERID hadid, DWORD fdwRemove);
  * @return MMSYSERR_NOERROR, or an error such as ACMERR_BUSY or
  *         MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmDriverClose(HACMDRIVER had, DWORD fdwClose);
 /*msdn.microsoft.com/library/default.asp?url=/library/en-us/multimed/htm/_win32_acmdriverdetails.asp*/
@@ -321,7 +321,7 @@ MMRESULT WINAPI acmDriverDetailsA(HACMDRIVERID hadid, LPACMDRIVERDETAILSA padd, 
  * @param fdwDetails Reserved. Must be 0.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmDriverDetailsW(HACMDRIVERID hadid, LPACMDRIVERDETAILSW padd, DWORD fdwDetails);
 /*msdn.microsoft.com/library/default.asp?url=/library/en-us/multimed/htm/_win32_acmformattagenum.asp*/
@@ -341,7 +341,7 @@ MMRESULT WINAPI acmFormatTagEnumA(HACMDRIVER had, LPACMFORMATTAGDETAILSA paftd, 
  * @param fdwEnum Must be 0.
  * @return MMSYSERR_NOERROR (0), or an MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmFormatTagEnumW(HACMDRIVER had, LPACMFORMATTAGDETAILSW paftd, ACMFORMATTAGENUMCBW fnCallback, DWORD_PTR dwInstance, DWORD fdwEnum);
 
@@ -357,7 +357,7 @@ MMRESULT WINAPI acmFormatTagEnumW(HACMDRIVER had, LPACMFORMATTAGDETAILSW paftd, 
  * @return MMSYSERR_NOERROR (0), or an error such as
  *         MMSYSERR_NOTSUPPORTED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmMetrics(HACMOBJ hao, UINT uMetric, LPVOID pMetric);
 
@@ -382,7 +382,7 @@ MMRESULT WINAPI acmMetrics(HACMOBJ hao, UINT uMetric, LPVOID pMetric);
  *        CALLBACK_EVENT, or 0.
  * @return MMSYSERR_NOERROR (0), or an error such as ACMERR_NOTPOSSIBLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmStreamOpen(LPHACMSTREAM phas, HACMDRIVER had, LPWAVEFORMATEX pwfxSrc, LPWAVEFORMATEX pwfxDst, LPWAVEFILTER pwfltr, DWORD_PTR dwCallback, DWORD_PTR dwInstance, DWORD fdwOpen);
 
@@ -399,7 +399,7 @@ MMRESULT WINAPI acmStreamOpen(LPHACMSTREAM phas, HACMDRIVER had, LPWAVEFORMATEX 
  *        ACM_STREAMSIZEF_DESTINATION (cbInput is the destination size).
  * @return MMSYSERR_NOERROR (0), or an error such as ACMERR_NOTPOSSIBLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmStreamSize(HACMSTREAM has, DWORD cbInput, LPDWORD pdwOutputBytes, DWORD fdwSize);
 
@@ -415,7 +415,7 @@ MMRESULT WINAPI acmStreamSize(HACMSTREAM has, DWORD cbInput, LPDWORD pdwOutputBy
  * @param fdwPrepare Must be 0.
  * @return MMSYSERR_NOERROR (0), or an error such as MMSYSERR_NOMEM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmStreamPrepareHeader(HACMSTREAM has, LPACMSTREAMHEADER pash, DWORD fdwPrepare);
 
@@ -431,7 +431,7 @@ MMRESULT WINAPI acmStreamPrepareHeader(HACMSTREAM has, LPACMSTREAMHEADER pash, D
  * @param fdwUnprepare Must be 0.
  * @return MMSYSERR_NOERROR (0), or an error such as ACMERR_BUSY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmStreamUnprepareHeader(HACMSTREAM has, LPACMSTREAMHEADER pash, DWORD fdwUnprepare);
 
@@ -445,7 +445,7 @@ MMRESULT WINAPI acmStreamUnprepareHeader(HACMSTREAM has, LPACMSTREAMHEADER pash,
  * @param fdwReset Must be 0.
  * @return MMSYSERR_NOERROR (0), or an MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmStreamReset(HACMSTREAM has, DWORD fdwReset);
 
@@ -459,7 +459,7 @@ MMRESULT WINAPI acmStreamReset(HACMSTREAM has, DWORD fdwReset);
  * @param fdwClose Must be 0.
  * @return MMSYSERR_NOERROR (0), or an error such as ACMERR_BUSY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmStreamClose(HACMSTREAM has, DWORD fdwClose);
 
@@ -478,7 +478,7 @@ MMRESULT WINAPI acmStreamClose(HACMSTREAM has, DWORD fdwClose);
  *        buffer, flushes remaining data), or 0.
  * @return MMSYSERR_NOERROR (0), or an error such as ACMERR_UNPREPARED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmStreamConvert(HACMSTREAM has, LPACMSTREAMHEADER pash, DWORD fdwConvert);
 
@@ -506,7 +506,7 @@ typedef ACMFORMATTAGENUMCBW ACMFORMATTAGENUMCB;
  *        SUGGEST, INPUT, OUTPUT and so on), or 0 for all.
  * @return MMSYSERR_NOERROR (0), or an MMSYSERR_* or ACMERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define acmFormatEnum acmFormatEnumW
 /**
@@ -517,7 +517,7 @@ typedef ACMFORMATTAGENUMCBW ACMFORMATTAGENUMCB;
  * @param fdwDetails Reserved. Must be 0.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define acmDriverDetails acmDriverDetailsW
 /**
@@ -535,7 +535,7 @@ typedef ACMFORMATTAGENUMCBW ACMFORMATTAGENUMCB;
  * @param fdwEnum Must be 0.
  * @return MMSYSERR_NOERROR (0), or an MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define acmFormatTagEnum acmFormatTagEnumW
 /**
@@ -556,7 +556,7 @@ typedef ACMFORMATTAGENUMCBW ACMFORMATTAGENUMCB;
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALPARAM or
  *         MMSYSERR_NOMEM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define acmDriverAdd acmDriverAddW
 

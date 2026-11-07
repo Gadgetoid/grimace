@@ -18,7 +18,7 @@ extern "C" {
  * @param dwFlags IACE_CHILDREN, IACE_DEFAULT or IACE_IGNORENOCONTEXT.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL ImmAssociateContextEx(HWND hWnd, HIMC hIMC, DWORD dwFlags);
 /**
@@ -29,7 +29,7 @@ BOOL ImmAssociateContextEx(HWND hWnd, HIMC hIMC, DWORD dwFlags);
  * @param dwSize Component size, in bytes.
  * @return IMC-component handle, or zero on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HIMCC ImmCreateIMCC(DWORD dwSize);
 /**
@@ -40,7 +40,7 @@ HIMCC ImmCreateIMCC(DWORD dwSize);
  * @param hIMCC IMC-component handle.
  * @return NULL on success, or the handle on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HIMCC ImmDestroyIMCC(HIMCC hIMCC);
 /**
@@ -52,7 +52,7 @@ HIMCC ImmDestroyIMCC(HIMCC hIMCC);
  * @param hIMC Input-context handle containing the messages.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL ImmGenerateMessage(HIMC hIMC);
 /**
@@ -67,7 +67,7 @@ BOOL ImmGenerateMessage(HIMC hIMC);
  * @param lphKL Receives the associated keyboard handle.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL ImmGetHotKey(DWORD dwHotKeyID, LPUINT lpuModifiers, LPUINT lpuVKey, LPHKL lphKL);
 /**
@@ -76,7 +76,7 @@ BOOL ImmGetHotKey(DWORD dwHotKeyID, LPUINT lpuModifiers, LPUINT lpuVKey, LPHKL l
  * @param hIMCC IMC-component handle.
  * @return Component lock count.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD ImmGetIMCCLockCount(HIMCC hIMCC);
 /**
@@ -85,7 +85,7 @@ DWORD ImmGetIMCCLockCount(HIMCC hIMCC);
  * @param hIMCC IMC-component handle.
  * @return Component size, in bytes.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD ImmGetIMCCSize(HIMCC hIMCC);
 /**
@@ -94,7 +94,7 @@ DWORD ImmGetIMCCSize(HIMCC hIMCC);
  * @param hIMC Input-context handle.
  * @return Lock count, or zero if the context is invalid.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD ImmGetIMCLockCount(HIMC hIMC);
 struct tagINPUTCONTEXT;
@@ -108,7 +108,7 @@ typedef struct tagINPUTCONTEXT *LPINPUTCONTEXT;
  * @param hIMC Input-context handle.
  * @return INPUTCONTEXT pointer, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LPINPUTCONTEXT ImmLockIMC(HIMC hIMC);
 /**
@@ -119,7 +119,7 @@ LPINPUTCONTEXT ImmLockIMC(HIMC hIMC);
  * @param hIMCC IMC-component handle.
  * @return Component pointer, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LPVOID ImmLockIMCC(HIMCC hIMCC);
 /**
@@ -132,7 +132,7 @@ LPVOID ImmLockIMCC(HIMCC hIMCC);
  * @param dwSize New component size, in bytes.
  * @return Resized component handle, or zero on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HIMCC ImmReSizeIMCC(HIMCC hIMCC, DWORD dwSize);
 /**
@@ -146,7 +146,7 @@ HIMCC ImmReSizeIMCC(HIMCC hIMCC, DWORD dwSize);
  * @param lParam Operation-specific value.
  * @return Operation-specific result, or zero on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LRESULT ImmRequestMessageW(HIMC hIMC, WPARAM wParam, LPARAM lParam);
 /**
@@ -161,7 +161,7 @@ LRESULT ImmRequestMessageW(HIMC hIMC, WPARAM wParam, LPARAM lParam);
  * @param pValue Command-specific input or output data.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL ImmSIPanelState(UINT dwCmd, LPVOID pValue);
 /**
@@ -176,7 +176,7 @@ BOOL ImmSIPanelState(UINT dwCmd, LPVOID pValue);
  * @param hKL Handle identifying the IME and locale.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL ImmSetHotKey(DWORD dwHotKeyID, UINT uModifiers, UINT uVKey, HKL hKL);
 /**
@@ -187,7 +187,7 @@ BOOL ImmSetHotKey(DWORD dwHotKeyID, UINT uModifiers, UINT uVKey, HKL hKL);
  * @param hIMC Input-context handle.
  * @return FALSE if the count reaches zero, TRUE otherwise.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL ImmUnlockIMC(HIMC hIMC);
 /**
@@ -198,7 +198,7 @@ BOOL ImmUnlockIMC(HIMC hIMC);
  * @param hIMCC IMC-component handle.
  * @return FALSE if the count reaches zero, TRUE otherwise.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL ImmUnlockIMCC(HIMCC hIMCC);
 struct tagCANDIDATEINFO;

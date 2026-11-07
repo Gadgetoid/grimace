@@ -8558,7 +8558,7 @@ WINUSERAPI BOOL WINAPI AttachThreadInput(DWORD,DWORD,BOOL);
  *        may grow as needed.
  * @return Position-batch handle, or NULL on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI HDWP WINAPI BeginDeferWindowPos(int nNumWindows);
 /**
@@ -8607,7 +8607,7 @@ WINUSERAPI BOOL WINAPI CallMsgFilterW(LPMSG,INT);
  * @param lParam Hook-specific value.
  * @return Value returned by the next hook procedure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI LRESULT WINAPI CallNextHookEx(HHOOK hhk,int nCode,WPARAM wParam,LPARAM lParam);
 WINUSERAPI LRESULT WINAPI CallWindowProcA(WNDPROC,HWND,UINT,WPARAM,LPARAM);
@@ -8647,7 +8647,7 @@ WINUSERAPI LPSTR WINAPI CharLowerA(LPSTR);
  *        high word zero, e.g. (LPWSTR)(DWORD)ch.
  * @return lpsz for a string, or the converted character in the low word.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI LPWSTR WINAPI CharLowerW(LPWSTR lpsz);
 WINUSERAPI DWORD WINAPI CharLowerBuffA(LPSTR,DWORD);
@@ -8669,7 +8669,7 @@ WINUSERAPI LPSTR WINAPI CharNextA(LPCSTR);
  * @return The next character, or lpsz itself if it points to the
  *         terminator.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI LPWSTR WINAPI CharNextW(LPCWSTR lpsz);
 WINUSERAPI LPSTR WINAPI CharNextExA(WORD,LPCSTR,DWORD);
@@ -8681,7 +8681,7 @@ WINUSERAPI LPSTR WINAPI CharPrevA(LPCSTR,LPCSTR);
  * @param lpszCurrent Pointer to a character in the string.
  * @return The previous character, or lpszStart if lpszCurrent equals it.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI LPWSTR WINAPI CharPrevW(LPCWSTR lpszStart,LPCWSTR lpszCurrent);
 WINUSERAPI LPSTR WINAPI CharPrevExA(WORD,LPCSTR,LPCSTR,DWORD);
@@ -8699,7 +8699,7 @@ WINUSERAPI LPSTR WINAPI CharUpperA(LPSTR);
  *        high word zero, e.g. (LPWSTR)(DWORD)ch.
  * @return lpsz for a string, or the converted character in the low word.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI LPWSTR WINAPI CharUpperW(LPWSTR lpsz);
 WINUSERAPI DWORD WINAPI CharUpperBuffA(LPSTR,DWORD);
@@ -8727,7 +8727,7 @@ WINUSERAPI LONG WINAPI SendDlgItemMessageA(HWND,int,UINT,WPARAM,LPARAM);
  * @param lParam Message-specific value.
  * @return The message's result, which depends on the message.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI LONG WINAPI SendDlgItemMessageW(HWND hDlg,int nIDDlgItem,UINT Msg,WPARAM wParam,LPARAM lParam);
 
@@ -8814,7 +8814,7 @@ WINUSERAPI BOOL WINAPI ClientToScreen(HWND hWnd,LPPOINT lpPoint);
  * @param lpRect Restriction rectangle, or NULL to unclip the cursor.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI ClipCursor(LPCRECT lpRect);
 /**
@@ -9053,7 +9053,7 @@ WINUSERAPI LRESULT WINAPI DefDlgProcW(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lP
  * @param uFlags SWP_* positioning flags.
  * @return Updated batch handle, or NULL on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI HDWP WINAPI DeferWindowPos(HDWP hWinPosInfo,HWND hWnd,HWND hWndInsertAfter,int x,int y,int cx,int cy,UINT uFlags);
 WINUSERAPI LRESULT WINAPI DefFrameProcA(HWND,HWND,UINT,WPARAM,LPARAM);
@@ -9256,7 +9256,7 @@ WINUSERAPI BOOL WINAPI DrawFocusRect(HDC hDC,LPCRECT lprc);
  *        or DFCS_PUSHED.
  * @return Nonzero on success, or 0 on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI DrawFrameControl(HDC hdc,LPRECT lprc,UINT uType,UINT uState);
 #ifndef _WIN32_WCE
@@ -9313,7 +9313,7 @@ WINUSERAPI BOOL WINAPI DrawIconEx(HDC hdc,int xLeft,int yTop,HICON hIcon,int cxW
  * @param hWnd The window whose menu bar to redraw.
  * @return Nonzero on success, or 0 on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI DrawMenuBar(HWND hWnd);
 WINUSERAPI BOOL WINAPI DrawStateA(HDC,HBRUSH,DRAWSTATEPROC,LPARAM,WPARAM,int,int,int,int,UINT);
@@ -9395,7 +9395,7 @@ WINUSERAPI BOOL WINAPI EnableWindow(HWND hWnd,BOOL bEnable);
  * @param hWinPosInfo Batch from BeginDeferWindowPos or DeferWindowPos.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI EndDeferWindowPos(HDWP hWinPosInfo);
 /**
@@ -9675,7 +9675,7 @@ HWND WINAPI GetClipboardViewer(void);
  * @param lpRect Receives the clipping rectangle, in screen coordinates.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI GetClipCursor(LPRECT lpRect);
 /**
@@ -9688,7 +9688,7 @@ WINUSERAPI BOOL WINAPI GetClipCursor(LPRECT lpRect);
  * @param lpPoint Receives the screen-coordinate position.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI GetCursorPos(LPPOINT lpPoint);
 /**
@@ -9718,7 +9718,7 @@ WINUSERAPI HDC WINAPI GetDC(HWND hWnd);
  * @param flags Supported DCX_* flags.
  * @return Device context, or NULL on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI HDC WINAPI GetDCEx(HWND hWnd,HRGN hrgnClip,DWORD flags);
 /**
@@ -9726,7 +9726,7 @@ WINUSERAPI HDC WINAPI GetDCEx(HWND hWnd,HRGN hrgnClip,DWORD flags);
  *
  * @return Desktop window handle.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI HWND WINAPI GetDesktopWindow(void);
 /**
@@ -9789,7 +9789,7 @@ WINUSERAPI UINT WINAPI GetDlgItemTextA(HWND,int,LPSTR,int);
  * @param nMaxCount Buffer size in characters. Longer text is truncated.
  * @return Characters copied, not counting the terminator, or 0 on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI UINT WINAPI GetDlgItemTextW(HWND hDlg,int nIDDlgItem,LPWSTR lpString,int nMaxCount);
 /**
@@ -9830,7 +9830,7 @@ WINUSERAPI UINT WINAPI GetKBCodePage(void);
  *        the high word is a device handle for the physical keyboard
  *        layout.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 WINUSERAPI HKL WINAPI GetKeyboardLayout(DWORD dwThreadId);
 WINUSERAPI UINT WINAPI GetKeyboardLayoutList(int,HKL*);
@@ -9845,7 +9845,7 @@ WINUSERAPI BOOL WINAPI GetKeyboardLayoutNameA(LPSTR);
  * @param pwszKLID Receives the null-terminated layout name.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI GetKeyboardLayoutNameW(LPWSTR pwszKLID);
 WINUSERAPI BOOL WINAPI GetKeyboardState(PBYTE);
@@ -9996,7 +9996,7 @@ WINUSERAPI UINT WINAPI GetRegisteredRawInputDevices(PRAWINPUTDEVICE,PUINT,UINT);
  * @param flags QS_* message types to check.
  * @return High-word current status and low-word changed status.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 WINUSERAPI DWORD WINAPI GetQueueStatus(UINT flags);
 /**
@@ -10196,7 +10196,7 @@ WINUSERAPI BOOL WINAPI GetWindowRect(HWND hWnd,LPRECT lpRect);
  * @param hRgn Receives the region.
  * @return NULLREGION, SIMPLEREGION, COMPLEXREGION, or ERROR.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI int WINAPI GetWindowRgn(HWND hWnd,HRGN hRgn);
 #define GetWindowTask(hWnd) ((HANDLE)GetWindowThreadProcessId(hWnd, NULL))
@@ -10281,7 +10281,7 @@ WINUSERAPI BOOL WINAPI InflateRect(LPRECT lprc,int dx,int dy);
  *
  * @return Nonzero if processing a cross-thread sent message, otherwise 0.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI InSendMessage(void);
 #if (_WIN32_WINNT >= 0x0500 || _WIN32_WINDOWS >= 0x0410)
@@ -10508,7 +10508,7 @@ WINUSERAPI HCURSOR WINAPI LoadCursorFromFileW(LPCWSTR);
  *        with hInstance NULL.
  * @return The cursor, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI HCURSOR WINAPI LoadCursorW(HINSTANCE hInstance,LPCWSTR lpCursorName);
 WINUSERAPI HICON WINAPI LoadIconA(HINSTANCE,LPCSTR);
@@ -10684,7 +10684,7 @@ WINUSERAPI HMONITOR WINAPI MonitorFromWindow(HWND,DWORD);
  * @param dwData Unused without wheel support; pass 0.
  * @param dwExtraInfo Application-defined value attached to the event.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI void WINAPI mouse_event(DWORD dwFlags,DWORD dx,DWORD dy,DWORD dwData,ULONG_PTR dwExtraInfo);
 /**
@@ -10721,7 +10721,7 @@ WINUSERAPI BOOL WINAPI MoveWindow(HWND hWnd,int nX,int nY,int nWidth,int nHeight
  *         nCount when input arrives, WAIT_TIMEOUT, or WAIT_FAILED (see
  *         GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI DWORD WINAPI MsgWaitForMultipleObjectsEx(DWORD nCount,CONST HANDLE*pHandles,DWORD dwMilliseconds,DWORD dwWakeMask,DWORD dwFlags);
 #ifdef _WIN32_WCE
@@ -10988,7 +10988,7 @@ WINUSERAPI HPOWERNOTIFY WINAPI RegisterPowerSettingNotification(HANDLE,LPCGUID,D
  * @return TRUE on success, FALSE on failure, e.g. if the hot key is taken
  *         (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI RegisterHotKey(HWND hWnd,int id,UINT fsModifiers,UINT vk);
 #if (_WIN32_WINNT >= 0x0501)
@@ -11005,7 +11005,7 @@ WINUSERAPI UINT WINAPI RegisterWindowMessageA(LPCSTR);
  * @return A message in the range 0xC000 to 0xFFFF, or 0 on failure (see
  *         GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI UINT WINAPI RegisterWindowMessageW(LPCWSTR lpString);
 /**
@@ -11104,7 +11104,7 @@ WINUSERAPI int WINAPI ScrollWindowEx(HWND hWnd,int dx,int dy,LPCRECT prcScroll,L
  * @return The number of events inserted, or 0 if input was blocked or the
  *         call failed (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI UINT WINAPI SendInput(UINT nInputs,LPINPUT pInputs,int cbSize);
 #endif
@@ -11256,7 +11256,7 @@ WINUSERAPI HCURSOR WINAPI SetCursor(HCURSOR hcur);
  * @param y New vertical screen coordinate.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI SetCursorPos(int x,int y);
 WINUSERAPI VOID WINAPI SetDebugErrorLevel(DWORD);
@@ -11283,7 +11283,7 @@ WINUSERAPI BOOL WINAPI SetDlgItemTextA(HWND,int,LPCSTR);
  * @param lpString The new text.
  * @return TRUE on success, FALSE on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI SetDlgItemTextW(HWND hDlg,int nIDDlgItem,LPCWSTR lpString);
 WINUSERAPI BOOL WINAPI SetDoubleClickTime(UINT);
@@ -11422,7 +11422,7 @@ WINUSERAPI BOOL WINAPI SetScrollRange(HWND hWnd,int nBar,int nMinPos,int nMaxPos
  * @param lpaRgbValues Array of new colours, matching lpaElements.
  * @return TRUE on success, FALSE on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI SetSysColors(int cElements,const INT *lpaElements,const COLORREF *lpaRgbValues);
 #define SetSysModalWindow(h) (NULL)
@@ -11519,7 +11519,7 @@ WINUSERAPI BOOL WINAPI SetWindowPos(HWND hWnd,HWND hWndInsertAfter,int X,int Y,i
  * @param bRedraw TRUE to redraw the window after setting the region.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI int WINAPI SetWindowRgn(HWND hWnd,HRGN hRgn,BOOL bRedraw);
 WINUSERAPI HHOOK WINAPI SetWindowsHookA(int,HOOKPROC);
@@ -11558,7 +11558,7 @@ WINUSERAPI BOOL WINAPI ShowCaret(HWND hWnd);
  * @param bShow TRUE to increment the counter, FALSE to decrement it.
  * @return New display-counter value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI int WINAPI ShowCursor(BOOL bShow);
 WINUSERAPI BOOL WINAPI ShowOwnedPopups(HWND,BOOL);
@@ -11615,7 +11615,7 @@ WINUSERAPI BOOL WINAPI SystemParametersInfoA(UINT,UINT,PVOID,UINT);
  *        SPIF_SENDWININICHANGE.
  * @return TRUE on success, FALSE on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI SystemParametersInfoW(UINT uiAction,UINT uiParam,PVOID pvParam,UINT fWinIni);
 WINUSERAPI LONG WINAPI TabbedTextOutA(HDC,int,int,LPCSTR,int,int,LPINT,int);
@@ -11743,7 +11743,7 @@ WINUSERAPI BOOL WINAPI UnhookWindowsHook(int,HOOKPROC);
  * @param hhk Hook handle to remove.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI UnhookWindowsHookEx(HHOOK hhk);
 #if (WINVER >= 0x0500)
@@ -11789,7 +11789,7 @@ WINUSERAPI BOOL WINAPI UnregisterPowerSettingNotification(HPOWERNOTIFY);
  * @param id Identifier passed to RegisterHotKey.
  * @return TRUE on success, FALSE on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI BOOL WINAPI UnregisterHotKey(HWND hWnd,int id);
 /**
@@ -11896,7 +11896,7 @@ BOOL WINAPI UnregisterTouchWindow(HWND hWnd);
  *
  * Call it periodically during long operations without user input.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINUSERAPI void WINAPI SystemIdleTimerReset(void);
 #endif
@@ -11987,7 +11987,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  *        high word zero, e.g. (LPWSTR)(DWORD)ch.
  * @return lpsz for a string, or the converted character in the low word.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define CharLower CharLowerW
 /**
@@ -12007,7 +12007,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  * @return The next character, or lpsz itself if it points to the
  *         terminator.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define CharNext CharNextW
 /**
@@ -12017,7 +12017,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  * @param lpszCurrent Pointer to a character in the string.
  * @return The previous character, or lpszStart if lpszCurrent equals it.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define CharPrev CharPrevW
 #define CharToOem CharToOemW
@@ -12031,7 +12031,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  *        high word zero, e.g. (LPWSTR)(DWORD)ch.
  * @return lpsz for a string, or the converted character in the low word.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define CharUpper CharUpperW
 /**
@@ -12813,7 +12813,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  * @param nMaxCount Buffer size in characters. Longer text is truncated.
  * @return Characters copied, not counting the terminator, or 0 on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define GetDlgItemText GetDlgItemTextW
 /**
@@ -12826,7 +12826,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  * @param pwszKLID Receives the null-terminated layout name.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define GetKeyboardLayoutName GetKeyboardLayoutNameW
 #define GetKeyNameText GetKeyNameTextW
@@ -13039,7 +13039,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  *        with hInstance NULL.
  * @return The cursor, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define LoadCursor LoadCursorW
 #define LoadCursorFromFile LoadCursorFromFileW
@@ -13227,7 +13227,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  * @return A message in the range 0xC000 to 0xFFFF, or 0 on failure (see
  *         GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define RegisterWindowMessage RegisterWindowMessageW
 #define RemoveProp _WNAME(RemoveProp)
@@ -13243,7 +13243,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  * @param lParam Message-specific value.
  * @return The message's result, which depends on the message.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define SendDlgItemMessage SendDlgItemMessageW
 /**
@@ -13306,7 +13306,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  * @param lpString The new text.
  * @return TRUE on success, FALSE on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define SetDlgItemText SetDlgItemTextW
 /**
@@ -13381,7 +13381,7 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  *        SPIF_SENDWININICHANGE.
  * @return TRUE on success, FALSE on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define SystemParametersInfo SystemParametersInfoW
 #define TabbedTextOut TabbedTextOutW

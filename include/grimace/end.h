@@ -11,4 +11,5 @@
 #if !defined(RC_INVOKED) && !defined(GRIMACE_ALL_DECLARATIONS)
 #include <grimace/aliases.h>
 #include <grimace/unavailable.h>
+#include <grimace/lazy.h>
 #endif

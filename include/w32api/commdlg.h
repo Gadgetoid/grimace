@@ -651,7 +651,7 @@ BOOL WINAPI ChooseColorA(LPCHOOSECOLORA);
  * @return Nonzero if the user accepts. 0 if cancelled or on error; call
  *        CommDlgExtendedError for the error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI _WNAME(ChooseColor)(LPCHOOSECOLORW lpcc);
 BOOL WINAPI ChooseFontA(LPCHOOSEFONTA);
@@ -667,7 +667,7 @@ BOOL WINAPI ChooseFontW(LPCHOOSEFONTW);
  * @return A CDERR_* or FNERR_* code, such as CDERR_STRUCTSIZE or
  *        FNERR_BUFFERTOOSMALL, or 0 if the user cancelled without error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD WINAPI CommDlgExtendedError(void);
 HWND WINAPI FindTextA(LPFINDREPLACEA);
@@ -720,7 +720,7 @@ BOOL WINAPI PageSetupDlgA(LPPAGESETUPDLGA);
  * @return TRUE if the user accepts. FALSE if canceled or an error occurs;
  *         call CommDlgExtendedError to inspect an error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL WINAPI PageSetupDlgW(LPPAGESETUPDLGW lppsd);
 BOOL WINAPI PrintDlgA(LPPRINTDLGA);
@@ -741,7 +741,7 @@ BOOL WINAPI PrintDlgA(LPPRINTDLGA);
  * @return Nonzero if the user accepts. 0 if cancelled or on error; call
  *        CommDlgExtendedError for the error (0 after a cancel).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI _WNAME(PrintDlg)(LPPRINTDLGW lppd);
 HWND WINAPI ReplaceTextA(LPFINDREPLACEA);
@@ -813,7 +813,7 @@ typedef PRINTDLGW PRINTDLG,*LPPRINTDLG;
  * @return TRUE if the user accepts. FALSE if canceled or an error occurs;
  *         call CommDlgExtendedError to inspect an error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 #define PageSetupDlg PageSetupDlgW
 #define PrintDlg _WNAME(PrintDlg)

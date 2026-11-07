@@ -161,7 +161,7 @@ def declarations(clang):
 
 def exported_names():
     names = set()
-    for path in glob.glob(os.path.join(ROOT, "exports", "ce3", "*.txt")):
+    for path in glob.glob(os.path.join(ROOT, "exports", "jornada720-ce3", "*.txt")):
         names.update(line.strip() for line in open(path) if line.strip())
     return names
 

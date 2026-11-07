@@ -7388,7 +7388,7 @@ HWND WINAPI CreateStatusWindowW(LONG style,LPCWSTR lpszText,HWND hwndParent,UINT
  * @param uStructSize sizeof(TBBUTTON).
  * @return The toolbar, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HWND WINAPI CreateToolbarEx(HWND hwnd,DWORD ws,UINT wID,int nBitmaps,HINSTANCE hBMInst,UINT wBMID,LPCTBBUTTON lpButtons,int iNumButtons,int dxButton,int dyButton,int dxBitmap,int dyBitmap,UINT uStructSize);
 /**
@@ -8369,7 +8369,7 @@ BOOL WINAPI ImageList_Write(HIMAGELIST,LPSTREAM);
  * @param himl The image list to copy.
  * @return The new image list, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HIMAGELIST WINAPI ImageList_Duplicate(HIMAGELIST himl);
 #endif
@@ -8392,7 +8392,7 @@ void WINAPI InitCommonControls(void);
  *        ICC_HOTKEY_CLASS, ICC_INTERNET_CLASSES or ICC_USEREX_CLASSES.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI InitCommonControlsEx(LPINITCOMMONCONTROLSEX lpInitCtrls);
 #endif
@@ -10677,7 +10677,7 @@ BOOL WINAPI _TrackMouseEvent(LPTRACKMOUSEEVENT);
  * @param uNewCount The new number of images.
  * @return Nonzero on success, zero on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBOOL WINAPI ImageList_SetImageCount(HIMAGELIST himl,UINT uNewCount);
 /**
@@ -10691,7 +10691,7 @@ WINBOOL WINAPI ImageList_SetImageCount(HIMAGELIST himl,UINT uNewCount);
  *        ILCF_SWAP to exchange them.
  * @return Nonzero on success, zero on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBOOL WINAPI ImageList_Copy(HIMAGELIST himlDst,int iDst,HIMAGELIST himlSrc,int iSrc,UINT uFlags);
 /**
@@ -12339,7 +12339,7 @@ COMMCTRLAPI BOOL WINAPI CommandBar_InsertMenubar(HWND hwndCB, HINSTANCE hInst, W
  * @param iButton Zero-based index of the button to insert it before.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 COMMCTRLAPI BOOL WINAPI CommandBar_InsertMenubarEx(HWND hwndCB, HINSTANCE hInst, LPTSTR pszMenu, WORD iButton);
 /**
@@ -12353,7 +12353,7 @@ COMMCTRLAPI BOOL WINAPI CommandBar_InsertMenubarEx(HWND hwndCB, HINSTANCE hInst,
  * @param iButton Zero-based index of the menu bar within the command bar.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 COMMCTRLAPI BOOL WINAPI CommandBar_DrawMenuBar(HWND hwndCB, WORD iButton); 
 /**
@@ -12469,7 +12469,7 @@ COMMCTRLAPI int WINAPI CommandBar_Height(HWND hwndCB);
  * @param prbbi Settings for the adornments band, or NULL.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 COMMCTRLAPI BOOL WINAPI CommandBands_AddAdornments(HWND hwndCmdBands,HINSTANCE hinst,DWORD dwFlags,LPREBARBANDINFO prbbi);
 /**
@@ -12485,7 +12485,7 @@ COMMCTRLAPI BOOL WINAPI CommandBands_AddAdornments(HWND hwndCmdBands,HINSTANCE h
  * @param prbbi Array of cBands REBARBANDINFO structures.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 COMMCTRLAPI BOOL WINAPI CommandBands_AddBands(HWND hwndCmdBands,HINSTANCE hinst,UINT cBands,LPREBARBANDINFO prbbi);
 /**
@@ -12500,7 +12500,7 @@ COMMCTRLAPI BOOL WINAPI CommandBands_AddBands(HWND hwndCmdBands,HINSTANCE hinst,
  * @param himl Image list for band images, or NULL.
  * @return The control, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 COMMCTRLAPI HWND WINAPI CommandBands_Create(HINSTANCE hinst,HWND hwndParent,UINT wID,DWORD dwStyles,HIMAGELIST himl);
 /**
@@ -12513,7 +12513,7 @@ COMMCTRLAPI HWND WINAPI CommandBands_Create(HINSTANCE hinst,HWND hwndParent,UINT
  * @param uBand Zero-based index of the band.
  * @return The command bar, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 COMMCTRLAPI HWND WINAPI CommandBands_GetCommandBar(HWND hwndCmdBands,UINT uBand);
 /**
@@ -12530,7 +12530,7 @@ COMMCTRLAPI HWND WINAPI CommandBands_GetCommandBar(HWND hwndCmdBands,UINT uBand)
  * @param pcbr Receives the state. Set cbSize first.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 COMMCTRLAPI BOOL WINAPI CommandBands_GetRestoreInformation(HWND hwndCmdBands,UINT uBand,LPCOMMANDBANDSRESTOREINFO pcbr);
 /**
@@ -12540,7 +12540,7 @@ COMMCTRLAPI BOOL WINAPI CommandBands_GetRestoreInformation(HWND hwndCmdBands,UIN
  * @param fShow TRUE to show, FALSE to hide.
  * @return The previous visibility.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 COMMCTRLAPI BOOL WINAPI CommandBands_Show(HWND hwndCmdBands,BOOL fShow);
 

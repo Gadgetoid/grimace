@@ -30,7 +30,7 @@ extern "C" {
  * @param lpCompletionRoutine Must be NULL.
  * @return 0 on success, or SOCKET_ERROR (see WSAGetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int WINAPI WSAIoctl(SOCKET s, DWORD dwIoControlCode, LPVOID lpvInBuffer, DWORD cbInBuffer, LPVOID lpvOutBuffer, DWORD cbOutBuffer,
                     LPDWORD lpcbBytesReturned, LPVOID lpOverlapped, LPVOID lpCompletionRoutine);

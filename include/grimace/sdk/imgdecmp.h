@@ -21,7 +21,7 @@ typedef struct tagDecompressImageInfo DecompressImageInfo;
  * @param pParams Image input, output, sizing and callback settings.
  * @return HRESULT indicating success or failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HRESULT DecompressImageIndirect(DecompressImageInfo *pParams);
 /**
@@ -29,7 +29,7 @@ HRESULT DecompressImageIndirect(DecompressImageInfo *pParams);
  *
  * @return Pointer to COLORREF palette entries.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 COLORREF * Get332Palette(void);
 /**
@@ -37,7 +37,7 @@ COLORREF * Get332Palette(void);
  *
  * @return Pointer to COLORREF palette entries.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 COLORREF * GetHalftonePalette(void);
 /**
@@ -45,7 +45,7 @@ COLORREF * GetHalftonePalette(void);
  *
  * @return Transparent COLORREF value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 COLORREF GetTransparentColor(void);
 typedef DWORD (*GETDATAFUNC)(LPSTR, DWORD, LPARAM);

@@ -34,7 +34,7 @@ typedef PSECURITY_INTEGER PTimeStamp;
  * @return SEC_E_OK or a continuation status on success; otherwise a
  *         SEC_E_* error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS AcceptSecurityContext(PCredHandle phCredential, PCtxtHandle phContext, PSecBufferDesc pInput, unsigned long fContextReq, unsigned long TargetDataRep, PCtxtHandle phNewContext, PSecBufferDesc pOutput, unsigned long *pfContextAttr, PTimeStamp ptsExpiry);
 typedef WCHAR SEC_WCHAR;
@@ -58,7 +58,7 @@ typedef void (*SEC_GET_KEY_FN)(void *, void *, unsigned long, void **, SECURITY_
  * @param ptsExpiry Receives the credential expiration time.
  * @return SEC_E_OK on success, or a SEC_E_* error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS AcquireCredentialsHandleW(SEC_WCHAR *pszPrincipal, SEC_WCHAR *pszPackage, unsigned long fCredentialUse, void *pvLogonId, void *pAuthData, SEC_GET_KEY_FN pGetKeyFn, void *pvGetKeyArgument, PCredHandle phCredential, PTimeStamp ptsExpiry);
 /**
@@ -70,7 +70,7 @@ SECURITY_STATUS AcquireCredentialsHandleW(SEC_WCHAR *pszPrincipal, SEC_WCHAR *ps
  * @param pInput Descriptor containing the control token.
  * @return SEC_E_OK on success, or a nonzero error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS ApplyControlToken(PCtxtHandle phContext, PSecBufferDesc pInput);
 /**
@@ -81,7 +81,7 @@ SECURITY_STATUS ApplyControlToken(PCtxtHandle phContext, PSecBufferDesc pInput);
  * @param phContext Context handle to delete.
  * @return SEC_E_OK on success, or SEC_E_INVALID_HANDLE for an invalid handle.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS DeleteSecurityContext(PCtxtHandle phContext);
 struct _SecPkgInfoW;
@@ -96,7 +96,7 @@ typedef struct _SecPkgInfoW *PSecPkgInfoW;
  * @param ppPackageInfo Receives the package information array.
  * @return SEC_E_OK on success, or a nonzero error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS EnumerateSecurityPackagesW(unsigned long *pcPackages, PSecPkgInfoW *ppPackageInfo);
 /**
@@ -105,7 +105,7 @@ SECURITY_STATUS EnumerateSecurityPackagesW(unsigned long *pcPackages, PSecPkgInf
  * @param pvContextBuffer Provider-allocated buffer to free.
  * @return SEC_E_OK on success, or a nonzero error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS FreeContextBuffer(void *pvContextBuffer);
 /**
@@ -114,7 +114,7 @@ SECURITY_STATUS FreeContextBuffer(void *pvContextBuffer);
  * @param phCredential Credential handle to release.
  * @return SEC_E_OK on success, or SEC_E_INVALID_HANDLE for an invalid handle.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS FreeCredentialsHandle(PCredHandle phCredential);
 SECURITY_STATUS ImpersonateSecurityContext(PCtxtHandle phContext);
@@ -125,7 +125,7 @@ typedef struct _SECURITY_FUNCTION_TABLE_A *PSecurityFunctionTableA;
  *
  * @return Pointer to a SecurityFunctionTableA, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 PSecurityFunctionTableA InitSecurityInterfaceA(void);
 struct _SECURITY_FUNCTION_TABLE_W;
@@ -135,7 +135,7 @@ typedef struct _SECURITY_FUNCTION_TABLE_W *PSecurityFunctionTableW;
  *
  * @return Pointer to a SecurityFunctionTable, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 PSecurityFunctionTableW InitSecurityInterfaceW(void);
 /**
@@ -161,7 +161,7 @@ PSecurityFunctionTableW InitSecurityInterfaceW(void);
  * @return SEC_E_OK or a continuation status on success; otherwise a
  *         SEC_E_* error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS InitializeSecurityContextW(PCredHandle phCredential, PCtxtHandle phContext, SEC_WCHAR *pszTargetName, unsigned long fContextReq, unsigned long Reserved1, unsigned long TargetDataRep, PSecBufferDesc pInput, unsigned long Reserved2, PCtxtHandle phNewContext, PSecBufferDesc pOutput, unsigned long *pfContextAttr, PTimeStamp ptsExpiry);
 /**
@@ -177,7 +177,7 @@ SECURITY_STATUS InitializeSecurityContextW(PCredHandle phCredential, PCtxtHandle
  * @param MessageSeqNo Transport-assigned sequence number, or zero if unused.
  * @return SEC_E_OK on success, or a nonzero error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS MakeSignature(PCtxtHandle phContext, unsigned long fQOP, PSecBufferDesc pMessage, unsigned long MessageSeqNo);
 /**
@@ -191,7 +191,7 @@ SECURITY_STATUS MakeSignature(PCtxtHandle phContext, unsigned long fQOP, PSecBuf
  * @param pBuffer Receives the corresponding SecPkgContext_* structure.
  * @return SEC_E_OK on success, or a nonzero error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS QueryContextAttributesW(PCtxtHandle phContext, unsigned long ulAttribute, void *pBuffer);
 /**
@@ -206,7 +206,7 @@ SECURITY_STATUS QueryContextAttributesW(PCtxtHandle phContext, unsigned long ulA
  * @param pBuffer Receives the requested attribute structure.
  * @return SEC_E_OK on success, or a SEC_E_* error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS QueryCredentialsAttributesW(PCredHandle phCredential, unsigned long ulAttribute, void *pBuffer);
 /**
@@ -218,7 +218,7 @@ SECURITY_STATUS QueryCredentialsAttributesW(PCredHandle phCredential, unsigned l
  * @param ppPackageInfo Receives the package information.
  * @return SEC_E_OK on success, or a nonzero error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS QuerySecurityPackageInfoW(SEC_WCHAR *pszPackageName, PSecPkgInfoW *ppPackageInfo);
 SECURITY_STATUS RevertSecurityContext(PCtxtHandle phContext);
@@ -235,7 +235,7 @@ SECURITY_STATUS RevertSecurityContext(PCtxtHandle phContext);
  * @param pfQOP Receives package-specific quality-of-protection flags.
  * @return SEC_E_OK on success, or a nonzero error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 SECURITY_STATUS VerifySignature(PCtxtHandle phContext, PSecBufferDesc pMessage, unsigned long MessageSeqNo, unsigned long *pfQOP);
 typedef SECURITY_STATUS (*ACCEPT_SECURITY_CONTEXT_FN)(PCredHandle, PCtxtHandle, PSecBufferDesc, unsigned long, unsigned long, PCtxtHandle, PSecBufferDesc, unsigned long *, PTimeStamp);

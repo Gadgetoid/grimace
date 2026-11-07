@@ -1766,7 +1766,7 @@ BOOL WINAPI PlaySoundA(LPCSTR,HMODULE,DWORD);
  *        SND_ASYNC), SND_NODEFAULT and SND_NOSTOP.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI PlaySoundW(LPCWSTR pszSound,HMODULE hmod,DWORD fdwSound);
 /**
@@ -1774,7 +1774,7 @@ BOOL WINAPI PlaySoundW(LPCWSTR pszSound,HMODULE hmod,DWORD fdwSound);
  *
  * @return The number of devices, 0 if there are none.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 UINT WINAPI waveOutGetNumDevs(void);
 MMRESULT WINAPI waveOutGetDevCapsA(UINT,LPWAVEOUTCAPSA,UINT);
@@ -1791,7 +1791,7 @@ MMRESULT WINAPI waveOutGetDevCapsA(UINT,LPWAVEOUTCAPSA,UINT);
  * @return MMSYSERR_NOERROR, or an MMSYSERR_* error such as
  *        MMSYSERR_INVALHANDLE, MMSYSERR_NODRIVER or MMSYSERR_NOMEM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI _WNAME(waveOutGetDevCaps)(UINT uDeviceID,LPWAVEOUTCAPSW pwoc,UINT cbwoc);
 /**
@@ -1847,7 +1847,7 @@ MMRESULT WINAPI waveOutGetErrorTextA(MMRESULT,LPSTR,UINT);
  * @return MMSYSERR_NOERROR, or an MMSYSERR_* error such as
  *        MMSYSERR_INVALHANDLE, MMSYSERR_NODRIVER or MMSYSERR_NOMEM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI _WNAME(waveOutGetErrorText)(MMRESULT mmrError,LPWSTR pszText,UINT cchText);
 /**
@@ -1872,7 +1872,7 @@ MMRESULT WINAPI _WNAME(waveOutGetErrorText)(MMRESULT mmrError,LPWSTR pszText,UIN
  * @return MMSYSERR_NOERROR, or an error such as WAVERR_BADFORMAT,
  *         MMSYSERR_ALLOCATED or MMSYSERR_BADDEVICEID.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutOpen(LPHWAVEOUT phwo,UINT uDeviceID,LPCWAVEFORMATEX pwfx,DWORD dwCallback,DWORD dwCallbackInstance,DWORD fdwOpen);
 /**
@@ -1885,7 +1885,7 @@ MMRESULT WINAPI waveOutOpen(LPHWAVEOUT phwo,UINT uDeviceID,LPCWAVEFORMATEX pwfx,
  * @return MMSYSERR_NOERROR, or an error such as WAVERR_STILLPLAYING or
  *         MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutClose(HWAVEOUT hwo);
 /**
@@ -1899,7 +1899,7 @@ MMRESULT WINAPI waveOutClose(HWAVEOUT hwo);
  * @param cbwh sizeof(WAVEHDR).
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_NOMEM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutPrepareHeader(HWAVEOUT hwo,LPWAVEHDR pwh,UINT cbwh);
 /**
@@ -1914,7 +1914,7 @@ MMRESULT WINAPI waveOutPrepareHeader(HWAVEOUT hwo,LPWAVEHDR pwh,UINT cbwh);
  * @return MMSYSERR_NOERROR, or WAVERR_STILLPLAYING if the buffer is still
  *         queued.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutUnprepareHeader(HWAVEOUT hwo,LPWAVEHDR pwh,UINT cbwh);
 /**
@@ -1930,7 +1930,7 @@ MMRESULT WINAPI waveOutUnprepareHeader(HWAVEOUT hwo,LPWAVEHDR pwh,UINT cbwh);
  * @return MMSYSERR_NOERROR, or an error such as WAVERR_UNPREPARED or
  *         MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutWrite(HWAVEOUT hwo,LPWAVEHDR pwh,UINT cbwh);
 /**
@@ -1941,7 +1941,7 @@ MMRESULT WINAPI waveOutWrite(HWAVEOUT hwo,LPWAVEHDR pwh,UINT cbwh);
  * @param hwo The output device.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutPause(HWAVEOUT hwo);
 /**
@@ -1950,7 +1950,7 @@ MMRESULT WINAPI waveOutPause(HWAVEOUT hwo);
  * @param hwo The output device.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutRestart(HWAVEOUT hwo);
 /**
@@ -1963,7 +1963,7 @@ MMRESULT WINAPI waveOutRestart(HWAVEOUT hwo);
  * @param hwo The output device.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutReset(HWAVEOUT hwo);
 /**
@@ -1975,7 +1975,7 @@ MMRESULT WINAPI waveOutReset(HWAVEOUT hwo);
  * @param hwo The output device.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutBreakLoop(HWAVEOUT hwo);
 /**
@@ -1990,7 +1990,7 @@ MMRESULT WINAPI waveOutBreakLoop(HWAVEOUT hwo);
  * @param cbmmt sizeof(MMTIME).
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutGetPosition(HWAVEOUT hwo,LPMMTIME pmmt,UINT cbmmt);
 /**
@@ -2003,7 +2003,7 @@ MMRESULT WINAPI waveOutGetPosition(HWAVEOUT hwo,LPMMTIME pmmt,UINT cbmmt);
  *        normal pitch.
  * @return MMSYSERR_NOERROR, or MMSYSERR_NOTSUPPORTED or another error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutGetPitch(HWAVEOUT hwo,PDWORD pdwPitch);
 /**
@@ -2017,7 +2017,7 @@ MMRESULT WINAPI waveOutGetPitch(HWAVEOUT hwo,PDWORD pdwPitch);
  *        0x00008000 is half.
  * @return MMSYSERR_NOERROR, or MMSYSERR_NOTSUPPORTED or another error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutSetPitch(HWAVEOUT hwo,DWORD dwPitch);
 /**
@@ -2030,7 +2030,7 @@ MMRESULT WINAPI waveOutSetPitch(HWAVEOUT hwo,DWORD dwPitch);
  *        normal speed.
  * @return MMSYSERR_NOERROR, or MMSYSERR_NOTSUPPORTED or another error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutGetPlaybackRate(HWAVEOUT hwo,PDWORD pdwRate);
 /**
@@ -2044,7 +2044,7 @@ MMRESULT WINAPI waveOutGetPlaybackRate(HWAVEOUT hwo,PDWORD pdwRate);
  *        0x00020000 is double speed.
  * @return MMSYSERR_NOERROR, or MMSYSERR_NOTSUPPORTED or another error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutSetPlaybackRate(HWAVEOUT hwo,DWORD dwRate);
 /**
@@ -2054,7 +2054,7 @@ MMRESULT WINAPI waveOutSetPlaybackRate(HWAVEOUT hwo,DWORD dwRate);
  * @param puDeviceID Receives the device identifier.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutGetID(HWAVEOUT hwo,LPUINT puDeviceID);
 /**
@@ -2066,7 +2066,7 @@ MMRESULT WINAPI waveOutGetID(HWAVEOUT hwo,LPUINT puDeviceID);
  * @param dw2 Message parameter.
  * @return The driver's result.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveOutMessage(HWAVEOUT hwo,UINT uMsg,DWORD dw1,DWORD dw2);
 /**
@@ -2219,7 +2219,7 @@ MMRESULT WINAPI waveInReset(HWAVEIN hwi);
  * @param cbmmt sizeof(MMTIME).
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI waveInGetPosition(HWAVEIN hwi,LPMMTIME pmmt,UINT cbmmt);
 /**
@@ -2534,7 +2534,7 @@ typedef MCI_OVLY_SAVE_PARMSW MCI_OVLY_SAVE_PARMS,*PMCI_OVLY_SAVE_PARMS,*LPMCI_OV
  *        SND_ASYNC), SND_NODEFAULT and SND_NOSTOP.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define PlaySound PlaySoundW
 #define waveOutGetDevCaps _WNAME(waveOutGetDevCaps)

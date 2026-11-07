@@ -21,7 +21,7 @@ typedef IShellFolder *LPSHELLFOLDER;
  * @param ppshf Receives the desktop IShellFolder interface.
  * @return S_OK on success, or an HRESULT error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SHGetDesktopFolder(LPSHELLFOLDER *ppshf);
 /**
@@ -33,7 +33,7 @@ HRESULT SHGetDesktopFolder(LPSHELLFOLDER *ppshf);
  * @param ppMalloc Receives the IMalloc interface pointer.
  * @return A successful HRESULT, or E_FAIL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SHGetMalloc(LPMALLOC *ppMalloc);
 struct _ITEMIDLIST;
@@ -49,7 +49,7 @@ typedef const ITEMIDLIST *LPCITEMIDLIST;
  * @param pszPath Receives the path.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL SHGetPathFromIDList(LPCITEMIDLIST pidl, LPTSTR pszPath);
 typedef struct _ITEMIDLIST *LPITEMIDLIST;
@@ -64,7 +64,7 @@ typedef struct _ITEMIDLIST *LPITEMIDLIST;
  * @param ppidl Receives the folder's item identifier list.
  * @return NOERROR on success, or an OLE error on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SHGetSpecialFolderLocation(HWND hwndOwner, int nFolder, LPITEMIDLIST *ppidl);
 typedef int (*BFFCALLBACK)(HWND, UINT, LPARAM, LPARAM);

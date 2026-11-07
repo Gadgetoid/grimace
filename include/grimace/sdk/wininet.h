@@ -25,7 +25,7 @@ extern "C" {
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL CommitUrlCacheEntryA(LPCSTR lpszUrlName, LPCSTR lpszLocalFileName, FILETIME ExpireTime, FILETIME LastModifiedTime, DWORD CacheEntryType, LPBYTE lpHeaderInfo, DWORD dwHeaderSize, LPCSTR lpszFileExtension, DWORD dwReserved);
 /**
@@ -46,7 +46,7 @@ BOOL CommitUrlCacheEntryA(LPCSTR lpszUrlName, LPCSTR lpszLocalFileName, FILETIME
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL CommitUrlCacheEntryW(LPCWSTR lpszUrlName, LPCWSTR lpszLocalFileName, FILETIME ExpireTime, FILETIME LastModifiedTime, DWORD CacheEntryType, LPWSTR lpHeaderInfo, DWORD dwHeaderSize, LPCWSTR lpszFileExtension, DWORD dwReserved);
 /**
@@ -64,7 +64,7 @@ BOOL CommitUrlCacheEntryW(LPCWSTR lpszUrlName, LPCWSTR lpszLocalFileName, FILETI
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL CreateUrlCacheEntryA(LPCSTR lpszUrlName, DWORD dwExpectedFileSize, LPCSTR lpszFileExtension, LPSTR lpszFileName, DWORD dwReserved);
 /**
@@ -81,7 +81,7 @@ BOOL CreateUrlCacheEntryA(LPCSTR lpszUrlName, DWORD dwExpectedFileSize, LPCSTR l
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL CreateUrlCacheEntryW(LPCWSTR lpszUrlName, DWORD dwExpectedFileSize, LPCWSTR lpszFileExtension, LPWSTR lpszFileName, DWORD dwReserved);
 typedef LONGLONG GROUPID;
@@ -95,7 +95,7 @@ typedef LONGLONG GROUPID;
  * @param lpReserved Reserved; set to NULL.
  * @return Group ID, or zero on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 GROUPID CreateUrlCacheGroup(DWORD dwFlags, LPVOID lpReserved);
 /**
@@ -105,7 +105,7 @@ GROUPID CreateUrlCacheGroup(DWORD dwFlags, LPVOID lpReserved);
  * @param lpszUrlName Cache entry URL, without escape characters.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL DeleteUrlCacheEntryA(LPCSTR lpszUrlName);
 /**
@@ -114,7 +114,7 @@ BOOL DeleteUrlCacheEntryA(LPCSTR lpszUrlName);
  * @param lpszUrlName Cache entry URL, without escape characters.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL DeleteUrlCacheEntryW(LPCWSTR lpszUrlName);
 /**
@@ -128,7 +128,7 @@ BOOL DeleteUrlCacheEntryW(LPCWSTR lpszUrlName);
  * @param lpReserved Reserved; set to NULL.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL DeleteUrlCacheGroup(GROUPID GroupId, DWORD dwFlags, LPVOID lpReserved);
 /**
@@ -137,7 +137,7 @@ BOOL DeleteUrlCacheGroup(GROUPID GroupId, DWORD dwFlags, LPVOID lpReserved);
  * @param hEnumHandle Handle returned by a cache enumeration function.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FindCloseUrlCache(HANDLE hEnumHandle);
 struct _INTERNET_CACHE_ENTRY_INFOA;
@@ -156,7 +156,7 @@ typedef struct _INTERNET_CACHE_ENTRY_INFOA *LPINTERNET_CACHE_ENTRY_INFOA;
  *        copied or required.
  * @return Enumeration handle, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HANDLE FindFirstUrlCacheEntryA(LPCSTR lpszUrlSearchPattern, LPINTERNET_CACHE_ENTRY_INFOA lpFirstCacheEntryInfo, LPDWORD lpdwFirstCacheEntryInfoBufferSize);
 /**
@@ -179,7 +179,7 @@ HANDLE FindFirstUrlCacheEntryA(LPCSTR lpszUrlSearchPattern, LPINTERNET_CACHE_ENT
  * @param lpReserved Reserved; set to NULL.
  * @return Enumeration handle, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HANDLE FindFirstUrlCacheEntryExA(LPCSTR lpszUrlSearchPattern, DWORD dwFlags, DWORD dwFilter, GROUPID GroupId, LPINTERNET_CACHE_ENTRY_INFOA lpFirstCacheEntryInfo, LPDWORD lpdwFirstCacheEntryInfoBufferSize, LPVOID lpGroupAttributes, LPDWORD pcbGroupAttributes, LPVOID lpReserved);
 struct _INTERNET_CACHE_ENTRY_INFOW;
@@ -203,7 +203,7 @@ typedef struct _INTERNET_CACHE_ENTRY_INFOW *LPINTERNET_CACHE_ENTRY_INFOW;
  * @param lpReserved Reserved; set to NULL.
  * @return Enumeration handle, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HANDLE FindFirstUrlCacheEntryExW(LPCWSTR lpszUrlSearchPattern, DWORD dwFlags, DWORD dwFilter, GROUPID GroupId, LPINTERNET_CACHE_ENTRY_INFOW lpFirstCacheEntryInfo, LPDWORD lpdwFirstCacheEntryInfoBufferSize, LPVOID lpGroupAttributes, LPDWORD pcbGroupAttributes, LPVOID lpReserved);
 /**
@@ -219,7 +219,7 @@ HANDLE FindFirstUrlCacheEntryExW(LPCWSTR lpszUrlSearchPattern, DWORD dwFlags, DW
  *        copied or required.
  * @return Enumeration handle, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HANDLE FindFirstUrlCacheEntryW(LPCWSTR lpszUrlSearchPattern, LPINTERNET_CACHE_ENTRY_INFOW lpFirstCacheEntryInfo, LPDWORD lpdwFirstCacheEntryInfoBufferSize);
 /**
@@ -235,7 +235,7 @@ HANDLE FindFirstUrlCacheEntryW(LPCWSTR lpszUrlSearchPattern, LPINTERNET_CACHE_EN
  *        copied or required.
  * @return TRUE when an entry is retrieved, FALSE otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FindNextUrlCacheEntryA(HANDLE hEnumHandle, LPINTERNET_CACHE_ENTRY_INFOA lpNextCacheEntryInfo, LPDWORD lpdwNextCacheEntryInfoBufferSize);
 /**
@@ -253,7 +253,7 @@ BOOL FindNextUrlCacheEntryA(HANDLE hEnumHandle, LPINTERNET_CACHE_ENTRY_INFOA lpN
  * @param lpReserved Reserved; set to NULL.
  * @return TRUE when an entry is retrieved, FALSE otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FindNextUrlCacheEntryExA(HANDLE hEnumHandle, LPINTERNET_CACHE_ENTRY_INFOA lpFirstCacheEntryInfo, LPDWORD lpdwFirstCacheEntryInfoBufferSize, LPVOID lpGroupAttributes, LPDWORD pcbGroupAttributes, LPVOID lpReserved);
 /**
@@ -270,7 +270,7 @@ BOOL FindNextUrlCacheEntryExA(HANDLE hEnumHandle, LPINTERNET_CACHE_ENTRY_INFOA l
  * @param lpReserved Reserved; set to NULL.
  * @return TRUE when an entry is retrieved, FALSE otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FindNextUrlCacheEntryExW(HANDLE hEnumHandle, LPINTERNET_CACHE_ENTRY_INFOW lpFirstCacheEntryInfo, LPDWORD lpdwFirstCacheEntryInfoBufferSize, LPVOID lpGroupAttributes, LPDWORD pcbGroupAttributes, LPVOID lpReserved);
 /**
@@ -285,7 +285,7 @@ BOOL FindNextUrlCacheEntryExW(HANDLE hEnumHandle, LPINTERNET_CACHE_ENTRY_INFOW l
  *        copied or required.
  * @return TRUE when an entry is retrieved, FALSE otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FindNextUrlCacheEntryW(HANDLE hEnumHandle, LPINTERNET_CACHE_ENTRY_INFOW lpNextCacheEntryInfo, LPDWORD lpdwNextCacheEntryInfoBufferSize);
 typedef LPVOID HINTERNET;
@@ -301,7 +301,7 @@ typedef LPVOID HINTERNET;
  * @param lpszDirectory Remote directory to create.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpCreateDirectoryA(HINTERNET hConnect, LPCSTR lpszDirectory);
 /**
@@ -315,7 +315,7 @@ BOOL FtpCreateDirectoryA(HINTERNET hConnect, LPCSTR lpszDirectory);
  * @param lpszDirectory Remote directory to create.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpCreateDirectoryW(HINTERNET hConnect, LPCWSTR lpszDirectory);
 /**
@@ -329,7 +329,7 @@ BOOL FtpCreateDirectoryW(HINTERNET hConnect, LPCWSTR lpszDirectory);
  * @param lpszFileName Remote file to delete.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpDeleteFileA(HINTERNET hConnect, LPCSTR lpszFileName);
 /**
@@ -342,7 +342,7 @@ BOOL FtpDeleteFileA(HINTERNET hConnect, LPCSTR lpszFileName);
  * @param lpszFileName Remote file to delete.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpDeleteFileW(HINTERNET hConnect, LPCWSTR lpszFileName);
 /**
@@ -360,7 +360,7 @@ BOOL FtpDeleteFileW(HINTERNET hConnect, LPCWSTR lpszFileName);
  * @param dwContext Application context passed to the status callback.
  * @return Enumeration handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HINTERNET FtpFindFirstFileA(HINTERNET hConnect, LPCSTR lpszSearchFile, LPWIN32_FIND_DATAA lpFindFileData, DWORD dwFlags, DWORD dwContext);
 /**
@@ -377,7 +377,7 @@ HINTERNET FtpFindFirstFileA(HINTERNET hConnect, LPCSTR lpszSearchFile, LPWIN32_F
  * @param dwContext Application context passed to the status callback.
  * @return Enumeration handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HINTERNET FtpFindFirstFileW(HINTERNET hConnect, LPCWSTR lpszSearchFile, LPWIN32_FIND_DATAW lpFindFileData, DWORD dwFlags, DWORD dwContext);
 /**
@@ -394,7 +394,7 @@ HINTERNET FtpFindFirstFileW(HINTERNET hConnect, LPCWSTR lpszSearchFile, LPWIN32_
  *        copied or required.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpGetCurrentDirectoryA(HINTERNET hConnect, LPSTR lpszCurrentDirectory, LPDWORD lpdwCurrentDirectory);
 /**
@@ -410,7 +410,7 @@ BOOL FtpGetCurrentDirectoryA(HINTERNET hConnect, LPSTR lpszCurrentDirectory, LPD
  *        copied or required.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpGetCurrentDirectoryW(HINTERNET hConnect, LPWSTR lpszCurrentDirectory, LPDWORD lpdwCurrentDirectory);
 /**
@@ -430,7 +430,7 @@ BOOL FtpGetCurrentDirectoryW(HINTERNET hConnect, LPWSTR lpszCurrentDirectory, LP
  * @param dwContext Application context passed to the status callback.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpGetFileA(HINTERNET hConnect, LPCSTR lpszRemoteFile, LPCSTR lpszNewFile, BOOL fFailIfExists, DWORD dwFlagsAndAttributes, DWORD dwFlags, DWORD dwContext);
 /**
@@ -449,7 +449,7 @@ BOOL FtpGetFileA(HINTERNET hConnect, LPCSTR lpszRemoteFile, LPCSTR lpszNewFile, 
  * @param dwContext Application context passed to the status callback.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpGetFileW(HINTERNET hConnect, LPCWSTR lpszRemoteFile, LPCWSTR lpszNewFile, BOOL fFailIfExists, DWORD dwFlagsAndAttributes, DWORD dwFlags, DWORD dwContext);
 /**
@@ -467,7 +467,7 @@ BOOL FtpGetFileW(HINTERNET hConnect, LPCWSTR lpszRemoteFile, LPCWSTR lpszNewFile
  * @param dwContext Application context passed to the status callback.
  * @return Internet handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HINTERNET FtpOpenFileA(HINTERNET hConnect, LPCSTR lpszFileName, DWORD dwAccess, DWORD dwFlags, DWORD dwContext);
 /**
@@ -484,7 +484,7 @@ HINTERNET FtpOpenFileA(HINTERNET hConnect, LPCSTR lpszFileName, DWORD dwAccess, 
  * @param dwContext Application context passed to the status callback.
  * @return Internet handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HINTERNET FtpOpenFileW(HINTERNET hConnect, LPCWSTR lpszFileName, DWORD dwAccess, DWORD dwFlags, DWORD dwContext);
 /**
@@ -501,7 +501,7 @@ HINTERNET FtpOpenFileW(HINTERNET hConnect, LPCWSTR lpszFileName, DWORD dwAccess,
  * @param dwContext Application context passed to the status callback.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpPutFileA(HINTERNET hConnect, LPCSTR lpszLocalFile, LPCSTR lpszNewRemoteFile, DWORD dwFlags, DWORD dwContext);
 /**
@@ -517,7 +517,7 @@ BOOL FtpPutFileA(HINTERNET hConnect, LPCSTR lpszLocalFile, LPCSTR lpszNewRemoteF
  * @param dwContext Application context passed to the status callback.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpPutFileW(HINTERNET hConnect, LPCWSTR lpszLocalFile, LPCWSTR lpszNewRemoteFile, DWORD dwFlags, DWORD dwContext);
 /**
@@ -531,7 +531,7 @@ BOOL FtpPutFileW(HINTERNET hConnect, LPCWSTR lpszLocalFile, LPCWSTR lpszNewRemot
  * @param lpszDirectory Remote directory to remove.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpRemoveDirectoryA(HINTERNET hConnect, LPCSTR lpszDirectory);
 /**
@@ -544,7 +544,7 @@ BOOL FtpRemoveDirectoryA(HINTERNET hConnect, LPCSTR lpszDirectory);
  * @param lpszDirectory Remote directory to remove.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpRemoveDirectoryW(HINTERNET hConnect, LPCWSTR lpszDirectory);
 /**
@@ -559,7 +559,7 @@ BOOL FtpRemoveDirectoryW(HINTERNET hConnect, LPCWSTR lpszDirectory);
  * @param lpszNew New remote file name.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpRenameFileA(HINTERNET hConnect, LPCSTR lpszExisting, LPCSTR lpszNew);
 /**
@@ -573,7 +573,7 @@ BOOL FtpRenameFileA(HINTERNET hConnect, LPCSTR lpszExisting, LPCSTR lpszNew);
  * @param lpszNew New remote file name.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpRenameFileW(HINTERNET hConnect, LPCWSTR lpszExisting, LPCWSTR lpszNew);
 /**
@@ -587,7 +587,7 @@ BOOL FtpRenameFileW(HINTERNET hConnect, LPCWSTR lpszExisting, LPCWSTR lpszNew);
  * @param lpszDirectory Directory to select.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpSetCurrentDirectoryA(HINTERNET hConnect, LPCSTR lpszDirectory);
 /**
@@ -600,7 +600,7 @@ BOOL FtpSetCurrentDirectoryA(HINTERNET hConnect, LPCSTR lpszDirectory);
  * @param lpszDirectory Directory to select.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL FtpSetCurrentDirectoryW(HINTERNET hConnect, LPCWSTR lpszDirectory);
 /**
@@ -617,7 +617,7 @@ BOOL FtpSetCurrentDirectoryW(HINTERNET hConnect, LPCWSTR lpszDirectory);
  *        bytes copied or required.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL GetUrlCacheEntryInfoA(LPCSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOA lpCacheEntryInfo, LPDWORD lpdwCacheEntryInfoBufferSize);
 /**
@@ -636,7 +636,7 @@ BOOL GetUrlCacheEntryInfoA(LPCSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOA lpCa
  * @param dwFlags Reserved; set to zero.
  * @return TRUE if the URL is found, FALSE otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL GetUrlCacheEntryInfoExA(LPCSTR lpszUrl, LPINTERNET_CACHE_ENTRY_INFOA lpCacheEntryInfo, LPDWORD lpdwCacheEntryInfoBufSize, LPSTR lpszReserved, LPDWORD lpdwReserved, LPVOID lpReserved, DWORD dwFlags);
 /**
@@ -654,7 +654,7 @@ BOOL GetUrlCacheEntryInfoExA(LPCSTR lpszUrl, LPINTERNET_CACHE_ENTRY_INFOA lpCach
  * @param dwFlags Reserved; set to zero.
  * @return TRUE if the URL is found, FALSE otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL GetUrlCacheEntryInfoExW(LPCWSTR lpszUrl, LPINTERNET_CACHE_ENTRY_INFOW lpCacheEntryInfo, LPDWORD lpdwCacheEntryInfoBufSize, LPWSTR lpszReserved, LPDWORD lpdwReserved, LPVOID lpReserved, DWORD dwFlags);
 /**
@@ -670,7 +670,7 @@ BOOL GetUrlCacheEntryInfoExW(LPCWSTR lpszUrl, LPINTERNET_CACHE_ENTRY_INFOW lpCac
  *        bytes copied or required.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL GetUrlCacheEntryInfoW(LPCWSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOW lpCacheEntryInfo, LPDWORD lpdwCacheEntryInfoBufferSize);
 /**
@@ -687,7 +687,7 @@ BOOL GetUrlCacheEntryInfoW(LPCWSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOW lpC
  * @param dwModifiers HTTP_ADDREQ_FLAG_* options.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL HttpAddRequestHeadersA(HINTERNET hRequest, LPCSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwModifiers);
 /**
@@ -703,7 +703,7 @@ BOOL HttpAddRequestHeadersA(HINTERNET hRequest, LPCSTR lpszHeaders, DWORD dwHead
  * @param dwModifiers HTTP_ADDREQ_FLAG_* options.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL HttpAddRequestHeadersW(HINTERNET hRequest, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwModifiers);
 struct _INTERNET_BUFFERSA;
@@ -718,7 +718,7 @@ typedef struct _INTERNET_BUFFERSA *LPINTERNET_BUFFERSA;
  * @param dwContext Application callback context.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL HttpEndRequestA(HINTERNET hRequest, LPINTERNET_BUFFERSA lpBuffersOut, DWORD dwFlags, DWORD dwContext);
 struct _INTERNET_BUFFERSW;
@@ -732,7 +732,7 @@ typedef struct _INTERNET_BUFFERSW *LPINTERNET_BUFFERSW;
  * @param dwContext Application callback context.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL HttpEndRequestW(HINTERNET hRequest, LPINTERNET_BUFFERSW lpBuffersOut, DWORD dwFlags, DWORD dwContext);
 /**
@@ -753,7 +753,7 @@ BOOL HttpEndRequestW(HINTERNET hRequest, LPINTERNET_BUFFERSW lpBuffersOut, DWORD
  * @param dwContext Application callback context.
  * @return Request handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINTERNET HttpOpenRequestA(HINTERNET hConnect, LPCSTR lpszVerb, LPCSTR lpszObjectName, LPCSTR lpszVersion, LPCSTR lpszReferrer, LPCSTR *lplpszAcceptTypes, DWORD dwFlags, DWORD dwContext);
 /**
@@ -773,7 +773,7 @@ HINTERNET HttpOpenRequestA(HINTERNET hConnect, LPCSTR lpszVerb, LPCSTR lpszObjec
  * @param dwContext Application callback context.
  * @return Request handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINTERNET HttpOpenRequestW(HINTERNET hConnect, LPCWSTR lpszVerb, LPCWSTR lpszObjectName, LPCWSTR lpszVersion, LPCWSTR lpszReferrer, LPCWSTR *lplpszAcceptTypes, DWORD dwFlags, DWORD dwContext);
 /**
@@ -793,7 +793,7 @@ HINTERNET HttpOpenRequestW(HINTERNET hConnect, LPCWSTR lpszVerb, LPCWSTR lpszObj
  * @param lpdwIndex Index for repeated headers; receives the next index.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL HttpQueryInfoA(HINTERNET hRequest, DWORD dwInfoLevel, LPVOID lpBuffer, LPDWORD lpdwBufferLength, LPDWORD lpdwIndex);
 /**
@@ -812,7 +812,7 @@ BOOL HttpQueryInfoA(HINTERNET hRequest, DWORD dwInfoLevel, LPVOID lpBuffer, LPDW
  * @param lpdwIndex Index for repeated headers; receives the next index.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL HttpQueryInfoW(HINTERNET hRequest, DWORD dwInfoLevel, LPVOID lpBuffer, LPDWORD lpdwBufferLength, LPDWORD lpdwIndex);
 /**
@@ -831,7 +831,7 @@ BOOL HttpQueryInfoW(HINTERNET hRequest, DWORD dwInfoLevel, LPVOID lpBuffer, LPDW
  * @param dwOptionalLength Body length in bytes.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL HttpSendRequestA(HINTERNET hRequest, LPCSTR lpszHeaders, DWORD dwHeadersLength, LPVOID lpOptional, DWORD dwOptionalLength);
 /**
@@ -847,7 +847,7 @@ BOOL HttpSendRequestA(HINTERNET hRequest, LPCSTR lpszHeaders, DWORD dwHeadersLen
  * @param dwContext Application callback context.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL HttpSendRequestExA(HINTERNET hRequest, LPINTERNET_BUFFERSA lpBuffersIn, LPINTERNET_BUFFERSA lpBuffersOut, DWORD dwFlags, DWORD dwContext);
 /**
@@ -862,7 +862,7 @@ BOOL HttpSendRequestExA(HINTERNET hRequest, LPINTERNET_BUFFERSA lpBuffersIn, LPI
  * @param dwContext Application callback context.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL HttpSendRequestExW(HINTERNET hRequest, LPINTERNET_BUFFERSW lpBuffersIn, LPINTERNET_BUFFERSW lpBuffersOut, DWORD dwFlags, DWORD dwContext);
 /**
@@ -880,7 +880,7 @@ BOOL HttpSendRequestExW(HINTERNET hRequest, LPINTERNET_BUFFERSW lpBuffersIn, LPI
  * @param dwOptionalLength Body length in bytes.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL HttpSendRequestW(HINTERNET hRequest, LPCWSTR lpszHeaders, DWORD dwHeadersLength, LPVOID lpOptional, DWORD dwOptionalLength);
 /**
@@ -898,7 +898,7 @@ BOOL HttpSendRequestW(HINTERNET hRequest, LPCWSTR lpszHeaders, DWORD dwHeadersLe
  * @param dwFlags ICU_* canonicalization options.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCanonicalizeUrlA(LPCSTR lpszUrl, LPSTR lpszBuffer, LPDWORD lpdwBufferLength, DWORD dwFlags);
 /**
@@ -915,7 +915,7 @@ BOOL InternetCanonicalizeUrlA(LPCSTR lpszUrl, LPSTR lpszBuffer, LPDWORD lpdwBuff
  * @param dwFlags ICU_* canonicalization options.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCanonicalizeUrlW(LPCWSTR lpszUrl, LPWSTR lpszBuffer, LPDWORD lpdwBufferLength, DWORD dwFlags);
 /**
@@ -928,7 +928,7 @@ BOOL InternetCanonicalizeUrlW(LPCWSTR lpszUrl, LPWSTR lpszBuffer, LPDWORD lpdwBu
  * @param hInternet Handle to close.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCloseHandle(HINTERNET hInternet);
 /**
@@ -946,7 +946,7 @@ BOOL InternetCloseHandle(HINTERNET hInternet);
  * @param dwFlags ICU_* canonicalization options.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCombineUrlA(LPCSTR lpszBaseUrl, LPCSTR lpszRelativeUrl, LPSTR lpszBuffer, LPDWORD lpdwBufferLength, DWORD dwFlags);
 /**
@@ -963,7 +963,7 @@ BOOL InternetCombineUrlA(LPCSTR lpszBaseUrl, LPCSTR lpszRelativeUrl, LPSTR lpszB
  * @param dwFlags ICU_* canonicalization options.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCombineUrlW(LPCWSTR lpszBaseUrl, LPCWSTR lpszRelativeUrl, LPWSTR lpszBuffer, LPDWORD lpdwBufferLength, DWORD dwFlags);
 typedef WORD INTERNET_PORT;
@@ -986,7 +986,7 @@ typedef WORD INTERNET_PORT;
  * @param dwContext Application callback context.
  * @return Connection handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINTERNET InternetConnectA(HINTERNET hInternet, LPCSTR lpszServerName, INTERNET_PORT nServerPort, LPCSTR lpszUserName, LPCSTR lpszPassword, DWORD dwService, DWORD dwFlags, DWORD dwContext);
 /**
@@ -1007,7 +1007,7 @@ HINTERNET InternetConnectA(HINTERNET hInternet, LPCSTR lpszServerName, INTERNET_
  * @param dwContext Application callback context.
  * @return Connection handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINTERNET InternetConnectW(HINTERNET hInternet, LPCWSTR lpszServerName, INTERNET_PORT nServerPort, LPCWSTR lpszUserName, LPCWSTR lpszPassword, DWORD dwService, DWORD dwFlags, DWORD dwContext);
 typedef enum {
@@ -1062,7 +1062,7 @@ typedef URL_COMPONENTSA *LPURL_COMPONENTSA;
  * @param lpUrlComponents Receives the components; initialize dwStructSize.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCrackUrlA(LPCSTR lpszUrl, DWORD dwUrlLength, DWORD dwFlags, LPURL_COMPONENTSA lpUrlComponents);
 typedef struct {
@@ -1098,7 +1098,7 @@ typedef URL_COMPONENTSW *LPURL_COMPONENTSW;
  * @param lpUrlComponents Receives the components; initialize dwStructSize.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCrackUrlW(LPCWSTR lpszUrl, DWORD dwUrlLength, DWORD dwFlags, LPURL_COMPONENTSW lpUrlComponents);
 /**
@@ -1115,7 +1115,7 @@ BOOL InternetCrackUrlW(LPCWSTR lpszUrl, DWORD dwUrlLength, DWORD dwFlags, LPURL_
  *        or required size.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCreateUrlA(LPURL_COMPONENTSA lpUrlComponents, DWORD dwFlags, LPSTR lpszUrl, LPDWORD lpdwUrlLength);
 /**
@@ -1131,7 +1131,7 @@ BOOL InternetCreateUrlA(LPURL_COMPONENTSA lpUrlComponents, DWORD dwFlags, LPSTR 
  *        or required size.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetCreateUrlW(LPURL_COMPONENTSW lpUrlComponents, DWORD dwFlags, LPWSTR lpszUrl, LPDWORD lpdwUrlLength);
 /**
@@ -1148,7 +1148,7 @@ BOOL InternetCreateUrlW(LPURL_COMPONENTSW lpUrlComponents, DWORD dwFlags, LPWSTR
  * @param lppvData Error-specific data, or NULL when unused.
  * @return ERROR_SUCCESS, ERROR_CANCELLED or ERROR_INTERNET_FORCE_RETRY.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD InternetErrorDlg(HWND hWnd, HINTERNET hRequest, DWORD dwError, DWORD dwFlags, LPVOID *lppvData);
 /**
@@ -1162,7 +1162,7 @@ DWORD InternetErrorDlg(HWND hWnd, HINTERNET hRequest, DWORD dwError, DWORD dwFla
  * @param lpvFindData Receives the next entry.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetFindNextFileA(HINTERNET hFind, LPVOID lpvFindData);
 /**
@@ -1175,7 +1175,7 @@ BOOL InternetFindNextFileA(HINTERNET hFind, LPVOID lpvFindData);
  * @param lpvFindData Receives the next entry.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetFindNextFileW(HINTERNET hFind, LPVOID lpvFindData);
 /**
@@ -1188,7 +1188,7 @@ BOOL InternetFindNextFileW(HINTERNET hFind, LPVOID lpvFindData);
  * @param dwReserved Reserved; set to zero.
  * @return TRUE if connected, FALSE otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetGetConnectedState(LPDWORD lpdwFlags, DWORD dwReserved);
 /**
@@ -1205,7 +1205,7 @@ BOOL InternetGetConnectedState(LPDWORD lpdwFlags, DWORD dwReserved);
  * @param lpdwSize Buffer size and output bytes required or copied.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetGetCookieA(LPCSTR lpszUrl, LPCSTR lpszCookieName, LPSTR lpCookieData, LPDWORD lpdwSize);
 /**
@@ -1221,7 +1221,7 @@ BOOL InternetGetCookieA(LPCSTR lpszUrl, LPCSTR lpszCookieName, LPSTR lpCookieDat
  * @param lpdwSize Buffer size and output bytes required or copied.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetGetCookieW(LPCWSTR lpszUrl, LPCWSTR lpszCookieName, LPWSTR lpCookieData, LPDWORD lpdwSize);
 /**
@@ -1237,7 +1237,7 @@ BOOL InternetGetCookieW(LPCWSTR lpszUrl, LPCWSTR lpszCookieName, LPWSTR lpCookie
  * @param lpdwBufferLength Buffer size and output characters copied.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetGetLastResponseInfoA(LPDWORD lpdwError, LPSTR lpszBuffer, LPDWORD lpdwBufferLength);
 /**
@@ -1252,7 +1252,7 @@ BOOL InternetGetLastResponseInfoA(LPDWORD lpdwError, LPSTR lpszBuffer, LPDWORD l
  * @param lpdwBufferLength Buffer size and output characters copied.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetGetLastResponseInfoW(LPDWORD lpdwError, LPWSTR lpszBuffer, LPDWORD lpdwBufferLength);
 /**
@@ -1265,7 +1265,7 @@ BOOL InternetGetLastResponseInfoW(LPDWORD lpdwError, LPWSTR lpszBuffer, LPDWORD 
  * @param dwFlags Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetGoOnline(LPTSTR lpszURL, HWND hwndParent, DWORD dwFlags);
 /**
@@ -1279,7 +1279,7 @@ BOOL InternetGoOnline(LPTSTR lpszURL, HWND hwndParent, DWORD dwFlags);
  * @param lphLockRequestInfo Receives the lock handle.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetLockRequestFile(HINTERNET hInternet, HANDLE *lphLockRequestInfo);
 /**
@@ -1298,7 +1298,7 @@ BOOL InternetLockRequestFile(HINTERNET hInternet, HANDLE *lphLockRequestInfo);
  * @param dwFlags Internet session flags.
  * @return Internet session handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINTERNET InternetOpenA(LPCSTR lpszAgent, DWORD dwAccessType, LPCSTR lpszProxy, LPCSTR lpszProxyBypass, DWORD dwFlags);
 /**
@@ -1319,7 +1319,7 @@ HINTERNET InternetOpenA(LPCSTR lpszAgent, DWORD dwAccessType, LPCSTR lpszProxy, 
  * @param dwContext Application callback context.
  * @return URL handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINTERNET InternetOpenUrlA(HINTERNET hInternet, LPCSTR lpszUrl, LPCSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags, DWORD dwContext);
 /**
@@ -1339,7 +1339,7 @@ HINTERNET InternetOpenUrlA(HINTERNET hInternet, LPCSTR lpszUrl, LPCSTR lpszHeade
  * @param dwContext Application callback context.
  * @return URL handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINTERNET InternetOpenUrlW(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags, DWORD dwContext);
 /**
@@ -1357,7 +1357,7 @@ HINTERNET InternetOpenUrlW(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHea
  * @param dwFlags Internet session flags.
  * @return Internet session handle, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINTERNET InternetOpenW(LPCWSTR lpszAgent, DWORD dwAccessType, LPCWSTR lpszProxy, LPCWSTR lpszProxyBypass, DWORD dwFlags);
 /**
@@ -1372,7 +1372,7 @@ HINTERNET InternetOpenW(LPCWSTR lpszAgent, DWORD dwAccessType, LPCWSTR lpszProxy
  * @param dwContext Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetQueryDataAvailable(HINTERNET hFile, LPDWORD lpdwNumberOfBytesAvailable, DWORD dwFlags, DWORD dwContext);
 /**
@@ -1388,7 +1388,7 @@ BOOL InternetQueryDataAvailable(HINTERNET hFile, LPDWORD lpdwNumberOfBytesAvaila
  * @param lpdwBufferLength Input buffer size and output length or required size.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetQueryOptionA(HINTERNET hInternet, DWORD dwOption, LPVOID lpBuffer, LPDWORD lpdwBufferLength);
 /**
@@ -1403,7 +1403,7 @@ BOOL InternetQueryOptionA(HINTERNET hInternet, DWORD dwOption, LPVOID lpBuffer, 
  * @param lpdwBufferLength Input buffer size and output length or required size.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetQueryOptionW(HINTERNET hInternet, DWORD dwOption, LPVOID lpBuffer, LPDWORD lpdwBufferLength);
 /**
@@ -1419,7 +1419,7 @@ BOOL InternetQueryOptionW(HINTERNET hInternet, DWORD dwOption, LPVOID lpBuffer, 
  * @param lpdwNumberOfBytesRead Receives bytes read; set to zero on entry.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetReadFile(HINTERNET hFile, LPVOID lpBuffer, DWORD dwNumberOfBytesToRead, LPDWORD lpdwNumberOfBytesRead);
 /**
@@ -1435,7 +1435,7 @@ BOOL InternetReadFile(HINTERNET hFile, LPVOID lpBuffer, DWORD dwNumberOfBytesToR
  * @param dwContext Context value for asynchronous operations.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetReadFileExA(HINTERNET hFile, LPINTERNET_BUFFERSA lpBuffersOut, DWORD dwFlags, DWORD dwContext);
 /**
@@ -1451,7 +1451,7 @@ BOOL InternetReadFileExA(HINTERNET hFile, LPINTERNET_BUFFERSA lpBuffersOut, DWOR
  * @param lpszCookieData Cookie data.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetSetCookieA(LPCSTR lpszUrl, LPCSTR lpszCookieName, LPCSTR lpszCookieData);
 /**
@@ -1466,7 +1466,7 @@ BOOL InternetSetCookieA(LPCSTR lpszUrl, LPCSTR lpszCookieName, LPCSTR lpszCookie
  * @param lpszCookieData Cookie data.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetSetCookieW(LPCWSTR lpszUrl, LPCWSTR lpszCookieName, LPCWSTR lpszCookieData);
 /**
@@ -1483,7 +1483,7 @@ BOOL InternetSetCookieW(LPCWSTR lpszUrl, LPCWSTR lpszCookieName, LPCWSTR lpszCoo
  * @param dwContext Context value.
  * @return New position, or -1 on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD InternetSetFilePointer(HINTERNET hFile, LONG lDistanceToMove, PVOID pReserved, DWORD dwMoveMethod, DWORD dwContext);
 /**
@@ -1499,7 +1499,7 @@ DWORD InternetSetFilePointer(HINTERNET hFile, LONG lDistanceToMove, PVOID pReser
  * @param dwBufferLength Size of lpBuffer in bytes.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetSetOptionA(HINTERNET hInternet, DWORD dwOption, LPVOID lpBuffer, DWORD dwBufferLength);
 /**
@@ -1514,7 +1514,7 @@ BOOL InternetSetOptionA(HINTERNET hInternet, DWORD dwOption, LPVOID lpBuffer, DW
  * @param dwBufferLength Size of lpBuffer in bytes.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetSetOptionW(HINTERNET hInternet, DWORD dwOption, LPVOID lpBuffer, DWORD dwBufferLength);
 typedef void (*INTERNET_STATUS_CALLBACK)(HINTERNET, DWORD, DWORD, LPVOID, DWORD);
@@ -1529,7 +1529,7 @@ typedef void (*INTERNET_STATUS_CALLBACK)(HINTERNET, DWORD, DWORD, LPVOID, DWORD)
  * @param lpfnInternetCallback Callback, or NULL to remove the callback.
  * @return Previous callback, NULL if none, or INTERNET_INVALID_STATUS_CALLBACK.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 INTERNET_STATUS_CALLBACK InternetSetStatusCallback(HINTERNET hInternet, INTERNET_STATUS_CALLBACK lpfnInternetCallback);
 /**
@@ -1545,7 +1545,7 @@ INTERNET_STATUS_CALLBACK InternetSetStatusCallback(HINTERNET hInternet, INTERNET
  * @param cbTime Buffer size in characters.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetTimeFromSystemTimeA(const SYSTEMTIME *pst, DWORD dwRFC, LPSTR lpszTime, DWORD cbTime);
 /**
@@ -1560,7 +1560,7 @@ BOOL InternetTimeFromSystemTimeA(const SYSTEMTIME *pst, DWORD dwRFC, LPSTR lpszT
  * @param cbTime Buffer size in characters.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetTimeFromSystemTimeW(const SYSTEMTIME *pst, DWORD dwRFC, LPWSTR lpszTime, DWORD cbTime);
 /**
@@ -1574,7 +1574,7 @@ BOOL InternetTimeFromSystemTimeW(const SYSTEMTIME *pst, DWORD dwRFC, LPWSTR lpsz
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetTimeToSystemTimeA(LPCSTR lpszTime, SYSTEMTIME *pst, DWORD dwReserved);
 /**
@@ -1587,7 +1587,7 @@ BOOL InternetTimeToSystemTimeA(LPCSTR lpszTime, SYSTEMTIME *pst, DWORD dwReserve
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetTimeToSystemTimeW(LPCWSTR lpszTime, SYSTEMTIME *pst, DWORD dwReserved);
 /**
@@ -1598,7 +1598,7 @@ BOOL InternetTimeToSystemTimeW(LPCWSTR lpszTime, SYSTEMTIME *pst, DWORD dwReserv
  * @param hLockRequestInfo Lock handle returned by InternetLockRequestFile.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL InternetUnlockRequestFile(HANDLE hLockRequestInfo);
 /**
@@ -1612,7 +1612,7 @@ BOOL InternetUnlockRequestFile(HANDLE hLockRequestInfo);
  * @param lpdwNumberOfBytesWritten Receives bytes written; set to zero on entry.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL InternetWriteFile(HINTERNET hFile, LPCVOID lpBuffer, DWORD dwNumberOfBytesToWrite, LPDWORD lpdwNumberOfBytesWritten);
 /**
@@ -1630,7 +1630,7 @@ BOOL InternetWriteFile(HINTERNET hFile, LPCVOID lpBuffer, DWORD dwNumberOfBytesT
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL RetrieveUrlCacheEntryFileA(LPCSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOA lpCacheEntryInfo, LPDWORD lpdwCacheEntryInfoBufferSize, DWORD dwReserved);
 /**
@@ -1647,7 +1647,7 @@ BOOL RetrieveUrlCacheEntryFileA(LPCSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOA
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL RetrieveUrlCacheEntryFileW(LPCWSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOW lpCacheEntryInfo, LPDWORD lpdwCacheEntryInfoBufferSize, DWORD dwReserved);
 /**
@@ -1665,7 +1665,7 @@ BOOL RetrieveUrlCacheEntryFileW(LPCWSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFO
  * @param lpReserved Reserved; set to NULL.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SetUrlCacheEntryGroupA(LPCSTR lpszUrlName, DWORD dwFlags, GROUPID GroupId, LPBYTE pbGroupAttributes, DWORD cbGroupAttributes, LPVOID lpReserved);
 /**
@@ -1682,7 +1682,7 @@ BOOL SetUrlCacheEntryGroupA(LPCSTR lpszUrlName, DWORD dwFlags, GROUPID GroupId, 
  * @param lpReserved Reserved; set to NULL.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SetUrlCacheEntryGroupW(LPCWSTR lpszUrlName, DWORD dwFlags, GROUPID GroupId, LPBYTE pbGroupAttributes, DWORD cbGroupAttributes, LPVOID lpReserved);
 /**
@@ -1698,7 +1698,7 @@ BOOL SetUrlCacheEntryGroupW(LPCWSTR lpszUrlName, DWORD dwFlags, GROUPID GroupId,
  * @param dwFieldControl CACHE_ENTRY_*_FC fields to update.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SetUrlCacheEntryInfoA(LPCSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOA lpCacheEntryInfo, DWORD dwFieldControl);
 /**
@@ -1713,7 +1713,7 @@ BOOL SetUrlCacheEntryInfoA(LPCSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOA lpCa
  * @param dwFieldControl CACHE_ENTRY_*_FC fields to update.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SetUrlCacheEntryInfoW(LPCWSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOW lpCacheEntryInfo, DWORD dwFieldControl);
 /**
@@ -1727,7 +1727,7 @@ BOOL SetUrlCacheEntryInfoW(LPCWSTR lpszUrlName, LPINTERNET_CACHE_ENTRY_INFOW lpC
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL UnlockUrlCacheEntryFileA(LPCSTR lpszUrlName, DWORD dwReserved);
 /**
@@ -1740,7 +1740,7 @@ BOOL UnlockUrlCacheEntryFileA(LPCSTR lpszUrlName, DWORD dwReserved);
  * @param dwReserved Reserved; set to zero.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL UnlockUrlCacheEntryFileW(LPCWSTR lpszUrlName, DWORD dwReserved);
 typedef struct {

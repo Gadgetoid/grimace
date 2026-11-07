@@ -20,7 +20,7 @@ typedef int (*IMENUMPROC)(IMENUMINFO *);
  * @param pEnumIMProc Callback for each input method, or NULL to get the count.
  * @return Number of available input methods, or -1 on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int SipEnumIM(IMENUMPROC pEnumIMProc);
 /**
@@ -29,7 +29,7 @@ int SipEnumIM(IMENUMPROC pEnumIMProc);
  * @param pClsid Receives the CLSID.
  * @return TRUE on success, FALSE on failure; use GetLastError for details.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SipGetCurrentIM(CLSID *pClsid);
 struct tagSIPINFO;
@@ -43,7 +43,7 @@ typedef struct tagSIPINFO SIPINFO;
  * @param pSipInfo Receives input-panel information.
  * @return TRUE on success, FALSE on failure; use GetLastError for details.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SipGetInfo(SIPINFO *pSipInfo);
 /**
@@ -56,7 +56,7 @@ BOOL SipGetInfo(SIPINFO *pSipInfo);
  * @param hWnd Window that receives notifications.
  * @return TRUE on success, FALSE on failure; use GetLastError for details.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SipRegisterNotification(HWND hWnd);
 /**
@@ -69,7 +69,7 @@ BOOL SipRegisterNotification(HWND hWnd);
  * @return TRUE on success; on failure, the reference specifies an HRESULT
  *         error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SipSetCurrentIM(CLSID *pClsid);
 /**
@@ -81,7 +81,7 @@ BOOL SipSetCurrentIM(CLSID *pClsid);
  * @param pRect Default input-panel rectangle.
  * @return TRUE on success, FALSE on failure; use GetLastError for details.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SipSetDefaultRect(RECT *pRect);
 /**
@@ -93,7 +93,7 @@ BOOL SipSetDefaultRect(RECT *pRect);
  * @param pSipInfo Input-panel settings to apply.
  * @return TRUE on success, FALSE on failure; use GetLastError for details.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SipSetInfo(SIPINFO *pSipInfo);
 /**
@@ -105,7 +105,7 @@ BOOL SipSetInfo(SIPINFO *pSipInfo);
  * @return TRUE on success; on failure, the reference specifies an HRESULT
  *         error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL SipShowIM(DWORD dwFlag);
 /**
@@ -115,7 +115,7 @@ BOOL SipShowIM(DWORD dwFlag);
  *
  * @return SIP_STATUS_AVAILABLE or SIP_STATUS_UNAVAILABLE.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD SipStatus(void);
 struct tagIMWINDOWPOS;

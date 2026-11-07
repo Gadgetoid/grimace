@@ -1,0 +1,5 @@
+arch: mips
+version: 1
+platform: hpc
+device: velo1
+source: Philips Velo 1 ROM, Windows CE 1.0 (velo-apps' ROM export tables)

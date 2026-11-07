@@ -14,7 +14,7 @@ static BOOL CALLBACK dialog_procedure(HWND dialog, UINT message, WPARAM wparam, 
         return FALSE;
     case WM_COMMAND:
         if (LOWORD(wparam) == IDOK) {
-            GetDlgItemTextW(dialog, IDC_NAME, name, NAME_LENGTH);
+            GetWindowTextW(GetDlgItem(dialog, IDC_NAME), name, NAME_LENGTH);
             EndDialog(dialog, IDOK);
             return TRUE;
         }

@@ -16,7 +16,7 @@ extern "C" {
  * @param lpclsid Receives the class identifier.
  * @return S_OK, or a COM/registry error such as REGDB_E_CLASSNOTREG.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CLSIDFromProgID(LPCOLESTR lpszProgID, LPCLSID lpclsid);
 /**
@@ -26,7 +26,7 @@ HRESULT CLSIDFromProgID(LPCOLESTR lpszProgID, LPCLSID lpclsid);
  * @param pclsid Receives the parsed CLSID.
  * @return S_OK, or CO_E_CLASSSTRING for malformed text.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CLSIDFromString(LPOLESTR lpsz, LPCLSID pclsid);
 /**
@@ -42,7 +42,7 @@ HRESULT CLSIDFromString(LPOLESTR lpsz, LPCLSID pclsid);
  * @param ppv Receives the requested interface pointer.
  * @return S_OK, or a COM activation error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CoCreateInstance(const CLSID *const rclsid, LPUNKNOWN pUnkOuter, DWORD dwClsContext, const IID *const riid, LPVOID *ppv);
 /**
@@ -52,7 +52,7 @@ HRESULT CoCreateInstance(const CLSID *const rclsid, LPUNKNOWN pUnkOuter, DWORD d
  *
  * @param hInst Library handle.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void CoFreeLibrary(HINSTANCE hInst);
 /**
@@ -61,7 +61,7 @@ void CoFreeLibrary(HINSTANCE hInst);
  * The loader asks each eligible DLL's DllCanUnloadNow export whether it
  * can be unloaded. Call periodically or during idle processing.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void CoFreeUnusedLibraries(void);
 /**
@@ -78,7 +78,7 @@ void CoFreeUnusedLibraries(void);
  * @param ppv Receives the requested interface pointer.
  * @return S_OK, or a COM registration or interface error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CoGetClassObject(const CLSID *const rclsid, DWORD dwClsContext, LPVOID pvReserved, const IID *const riid, LPVOID *ppv);
 /**
@@ -92,7 +92,7 @@ HRESULT CoGetClassObject(const CLSID *const rclsid, DWORD dwClsContext, LPVOID p
  * @return S_OK on initialization, S_FALSE if already initialized, or an
  *         error code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CoInitializeEx(LPVOID pvReserved, DWORD dwCoInit);
 /**
@@ -105,7 +105,7 @@ HRESULT CoInitializeEx(LPVOID pvReserved, DWORD dwCoInit);
  * @param bAutoFree Ignored.
  * @return Module handle, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HINSTANCE CoLoadLibrary(LPOLESTR lpszLibName, BOOL bAutoFree);
 /**
@@ -116,7 +116,7 @@ HINSTANCE CoLoadLibrary(LPOLESTR lpszLibName, BOOL bAutoFree);
  * @param cb Allocation size in bytes.
  * @return Allocated block, or NULL if allocation fails.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LPVOID CoTaskMemAlloc(ULONG cb);
 /**
@@ -126,7 +126,7 @@ LPVOID CoTaskMemAlloc(ULONG cb);
  *
  * @param pv Block to free, or NULL.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void CoTaskMemFree(LPVOID pv);
 /**
@@ -140,7 +140,7 @@ void CoTaskMemFree(LPVOID pv);
  * @param cb New size in bytes.
  * @return Resized block, or NULL on allocation failure or when freeing.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LPVOID CoTaskMemRealloc(LPVOID pv, ULONG cb);
 /**
@@ -149,7 +149,7 @@ LPVOID CoTaskMemRealloc(LPVOID pv, ULONG cb);
  * Call once for every successful initialization. Call during shutdown,
  * after the thread has finished its COM work.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void CoUninitialize(void);
 struct IBindCtx;
@@ -167,7 +167,7 @@ typedef IBindCtx *LPBC;
  * @param ppbc Receives the IBindCtx interface pointer.
  * @return S_OK, or E_OUTOFMEMORY.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CreateBindCtx(DWORD reserved, LPBC *ppbc);
 struct IStream;
@@ -207,7 +207,7 @@ typedef IDataObject *LPDATAOBJECT;
  * @return S_OK, MK_E_CANTOPENFILE, MK_E_INVALIDEXTENSION, or a file
  *         system error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT GetClassFile(LPCOLESTR szFilename, CLSID *pclsid);
 struct tagFORMATETC;
@@ -238,7 +238,7 @@ typedef IMalloc *LPMALLOC;
  * @param ppstgOpen Receives the IStorage interface pointer.
  * @return S_OK, STG_* error, or a wrapped file-system error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT StgCreateDocfile(const OLECHAR *pwcsName, DWORD grfMode, DWORD reserved, IStorage **ppstgOpen);
 struct ILockBytes;
@@ -252,7 +252,7 @@ typedef struct ILockBytes ILockBytes;
  * @param ppstgOpen Receives the IStorage interface pointer.
  * @return S_OK, STG_* error, or an ILockBytes error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT StgCreateDocfileOnILockBytes(ILockBytes *plkbyt, DWORD grfMode, DWORD reserved, IStorage **ppstgOpen);
 typedef OLECHAR **SNB;
@@ -270,7 +270,7 @@ typedef OLECHAR **SNB;
  * @param ppstgOpen Receives the opened IStorage interface pointer.
  * @return S_OK, STG_* error, or a wrapped file-system error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT StgOpenStorage(const OLECHAR *pwcsName, IStorage *pstgPriority, DWORD grfMode, SNB snbExclude, DWORD reserved, IStorage **ppstgOpen);
 /**
@@ -288,7 +288,7 @@ HRESULT StgOpenStorage(const OLECHAR *pwcsName, IStorage *pstgPriority, DWORD gr
  * @param ppstgOpen Receives the opened IStorage interface pointer.
  * @return S_OK, STG_* error, or an ILockBytes error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT StgOpenStorageOnILockBytes(ILockBytes *plkbyt, IStorage *pstgPriority, DWORD grfMode, SNB snbExclude, DWORD reserved, IStorage **ppstgOpen);
 /**
@@ -300,7 +300,7 @@ HRESULT StgOpenStorageOnILockBytes(ILockBytes *plkbyt, IStorage *pstgPriority, D
  * @param lplpsz Receives the allocated null-terminated string.
  * @return S_OK, or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT StringFromCLSID(const CLSID *const rclsid, LPOLESTR *lplpsz);
 /**
@@ -314,7 +314,7 @@ HRESULT StringFromCLSID(const CLSID *const rclsid, LPOLESTR *lplpsz);
  * @param cbMax Buffer capacity in characters.
  * @return Character count including the terminator, or zero if too small.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int StringFromGUID2(const GUID *const rguid, LPOLESTR lpsz, int cbMax);
 /**
@@ -326,7 +326,7 @@ int StringFromGUID2(const GUID *const rguid, LPOLESTR lpsz, int cbMax);
  * @param lplpsz Receives the allocated null-terminated string.
  * @return S_OK, or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT StringFromIID(const IID *const rclsid, LPOLESTR *lplpsz);
 enum tagADVF {

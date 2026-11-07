@@ -21,7 +21,7 @@ HRESULT IsConvertINetStringAvailable(DWORD dwSrcEncoding, DWORD dwDstEncoding);
  * @param nChar Size of pszRfc1766 in characters.
  * @return S_OK on success, or an error HRESULT.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HRESULT LcidToRfc1766W(LCID Locale, LPWSTR pszRfc1766, int nChar);
 /**
@@ -32,7 +32,7 @@ HRESULT LcidToRfc1766W(LCID Locale, LPWSTR pszRfc1766, int nChar);
  * @param pszRfc1766 The tag.
  * @return S_OK on success, or an error HRESULT.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HRESULT Rfc1766ToLcidW(LCID *pLocale, LPCWSTR pszRfc1766);
 typedef struct {

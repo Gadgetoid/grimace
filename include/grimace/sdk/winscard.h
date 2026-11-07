@@ -17,7 +17,7 @@ typedef ULONG SCARDHANDLE;
  * @param hCard Connected card handle.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardBeginTransaction(SCARDHANDLE hCard);
 typedef ULONG SCARDCONTEXT;
@@ -30,7 +30,7 @@ typedef ULONG SCARDCONTEXT;
  * @param hContext Resource-manager context from SCardEstablishContext.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardCancel(SCARDCONTEXT hContext);
 typedef SCARDHANDLE *LPSCARDHANDLE;
@@ -49,7 +49,7 @@ typedef SCARDHANDLE *LPSCARDHANDLE;
  * @param pdwActiveProtocol Receives the negotiated protocol.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardConnectW(SCARDCONTEXT hContext, LPCWSTR szReader, DWORD dwShareMode, DWORD dwPreferredProtocols, LPSCARDHANDLE phCard, LPDWORD pdwActiveProtocol);
 /**
@@ -66,7 +66,7 @@ LONG SCardConnectW(SCARDCONTEXT hContext, LPCWSTR szReader, DWORD dwShareMode, D
  * @param lpBytesReturned Receives the output size in bytes.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardControl(SCARDHANDLE hCard, DWORD dwControlCode, LPCVOID lpInBuffer, DWORD nInBufferSize, LPVOID lpOutBuffer, DWORD nOutBufferSize, LPDWORD lpBytesReturned);
 /**
@@ -79,7 +79,7 @@ LONG SCardControl(SCARDHANDLE hCard, DWORD dwControlCode, LPCVOID lpInBuffer, DW
  *        SCARD_UNPOWER_CARD or SCARD_EJECT_CARD.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardDisconnect(SCARDHANDLE hCard, DWORD dwDisposition);
 /**
@@ -92,7 +92,7 @@ LONG SCardDisconnect(SCARDHANDLE hCard, DWORD dwDisposition);
  *        SCARD_UNPOWER_CARD or SCARD_EJECT_CARD.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardEndTransaction(SCARDHANDLE hCard, DWORD dwDisposition);
 typedef SCARDCONTEXT *LPSCARDCONTEXT;
@@ -109,7 +109,7 @@ typedef SCARDCONTEXT *LPSCARDCONTEXT;
  * @param phContext Receives the resource-manager context.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardEstablishContext(DWORD dwScope, LPCVOID pvReserved1, LPCVOID pvReserved2, LPSCARDCONTEXT phContext);
 /**
@@ -119,7 +119,7 @@ LONG SCardEstablishContext(DWORD dwScope, LPCVOID pvReserved1, LPCVOID pvReserve
  * @param szCardName Friendly card name previously introduced.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardForgetCardTypeW(SCARDCONTEXT hContext, LPCWSTR szCardName);
 /**
@@ -131,7 +131,7 @@ LONG SCardForgetCardTypeW(SCARDCONTEXT hContext, LPCWSTR szCardName);
  * @param szReaderName Friendly reader name.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardForgetReaderW(SCARDCONTEXT hContext, LPCWSTR szReaderName);
 /**
@@ -145,7 +145,7 @@ LONG SCardForgetReaderW(SCARDCONTEXT hContext, LPCWSTR szReaderName);
  * @param pcbAttrLen Input buffer size and output length in bytes.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardGetAttrib(SCARDHANDLE hCard, DWORD dwAttrId, LPBYTE pbAttr, LPDWORD pcbAttrLen);
 /**
@@ -161,7 +161,7 @@ LONG SCardGetAttrib(SCARDHANDLE hCard, DWORD dwAttrId, LPBYTE pbAttr, LPDWORD pc
  * @param pcchProvider Input capacity and output character count.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardGetCardTypeProviderNameW(SCARDCONTEXT hContext, LPCWSTR szCardName, DWORD dwProviderId, LPWSTR szProvider, LPDWORD pcchProvider);
 /**
@@ -172,7 +172,7 @@ LONG SCardGetCardTypeProviderNameW(SCARDCONTEXT hContext, LPCWSTR szCardName, DW
  * @param pguidProviderId Receives the provider GUID.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardGetProviderIdW(SCARDCONTEXT hContext, LPCWSTR szCard, LPGUID pguidProviderId);
 typedef struct {
@@ -198,7 +198,7 @@ typedef SCARD_READERSTATEW *LPSCARD_READERSTATEW;
  * @param cReaders Number of entries in rgReaderStates.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardGetStatusChangeW(SCARDCONTEXT hContext, DWORD dwTimeout, LPSCARD_READERSTATEW rgReaderStates, DWORD cReaders);
 typedef const BYTE *LPCBYTE;
@@ -218,7 +218,7 @@ typedef const BYTE *LPCBYTE;
  * @param cbAtrLen ATR and mask length in bytes, or zero for automatic length.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardIntroduceCardTypeW(SCARDCONTEXT hContext, LPCWSTR szCardName, LPCGUID pguidPrimaryProvider, LPCGUID rgguidInterfaces, DWORD dwInterfaceCount, LPCBYTE pbAtr, LPCBYTE pbAtrMask, DWORD cbAtrLen);
 /**
@@ -231,7 +231,7 @@ LONG SCardIntroduceCardTypeW(SCARDCONTEXT hContext, LPCWSTR szCardName, LPCGUID 
  * @param szDeviceName System reader device name, such as "SCReader0".
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardIntroduceReaderW(SCARDCONTEXT hContext, LPCWSTR szReaderName, LPCWSTR szDeviceName);
 /**
@@ -250,7 +250,7 @@ LONG SCardIntroduceReaderW(SCARDCONTEXT hContext, LPCWSTR szReaderName, LPCWSTR 
  *        terminating NUL characters.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardListCardsW(SCARDCONTEXT hContext, LPCBYTE pbAtr, LPCGUID rgquidInterfaces, DWORD cguidInterfaceCount, LPWSTR mszCards, LPDWORD pcchCards);
 /**
@@ -264,7 +264,7 @@ LONG SCardListCardsW(SCARDCONTEXT hContext, LPCBYTE pbAtr, LPCGUID rgquidInterfa
  * @param pcguidInterfaces Input capacity and output number of GUIDs.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardListInterfacesW(SCARDCONTEXT hContext, LPCWSTR szCard, LPGUID pguidInterfaces, LPDWORD pcguidInterfaces);
 /**
@@ -279,7 +279,7 @@ LONG SCardListInterfacesW(SCARDCONTEXT hContext, LPCWSTR szCard, LPGUID pguidInt
  * @param pcchReaders Input capacity and output character count.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardListReadersW(SCARDCONTEXT hContext, LPCWSTR mszGroups, LPWSTR mszReaders, LPDWORD pcchReaders);
 /**
@@ -294,7 +294,7 @@ LONG SCardListReadersW(SCARDCONTEXT hContext, LPCWSTR mszGroups, LPWSTR mszReade
  * @param cReaders Number of reader-state entries.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardLocateCardsW(SCARDCONTEXT hContext, LPCWSTR mszCards, LPSCARD_READERSTATEW rgReaderStates, DWORD cReaders);
 /**
@@ -310,7 +310,7 @@ LONG SCardLocateCardsW(SCARDCONTEXT hContext, LPCWSTR mszCards, LPSCARD_READERST
  * @param pdwActiveProtocol Receives the active protocol.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardReconnect(SCARDHANDLE hCard, DWORD dwShareMode, DWORD dwPreferredProtocols, DWORD dwInitialization, LPDWORD pdwActiveProtocol);
 /**
@@ -322,7 +322,7 @@ LONG SCardReconnect(SCARDHANDLE hCard, DWORD dwShareMode, DWORD dwPreferredProto
  * @param hContext Context from SCardEstablishContext.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardReleaseContext(SCARDCONTEXT hContext);
 /**
@@ -337,7 +337,7 @@ LONG SCardReleaseContext(SCARDCONTEXT hContext);
  * @param cbAttrLen Attribute length in bytes.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardSetAttrib(SCARDHANDLE hCard, DWORD dwAttrId, LPCBYTE pbAttr, DWORD cbAttrLen);
 /**
@@ -352,7 +352,7 @@ LONG SCardSetAttrib(SCARDHANDLE hCard, DWORD dwAttrId, LPCBYTE pbAttr, DWORD cbA
  * @param szProvider Provider module name.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardSetCardTypeProviderNameW(SCARDCONTEXT hContext, LPCWSTR szCardName, DWORD dwProviderId, LPCWSTR szProvider);
 /**
@@ -371,7 +371,7 @@ LONG SCardSetCardTypeProviderNameW(SCARDCONTEXT hContext, LPCWSTR szCardName, DW
  * @param pcbAtrLen Receives the ATR length in bytes.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardStatusW(SCARDHANDLE hCard, LPWSTR szReaderName, LPDWORD pcchReaderLen, LPDWORD pdwState, LPDWORD pdwProtocol, LPBYTE pbAtr, LPDWORD pcbAtrLen);
 /**
@@ -390,7 +390,7 @@ LONG SCardStatusW(SCARDHANDLE hCard, LPWSTR szReaderName, LPDWORD pcchReaderLen,
  * @param pcbRecvLength Input receive-buffer capacity and output bytes received.
  * @return SCARD_S_SUCCESS, or a smart-card error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LONG SCardTransmit(SCARDHANDLE hCard, LPCSCARD_IO_REQUEST pioSendPci, LPCBYTE pbSendBuffer, DWORD cbSendLength, LPSCARD_IO_REQUEST pioRecvPci, LPBYTE pbRecvBuffer, LPDWORD pcbRecvLength);
 typedef BOOL (*LPOCNCHKPROC)(SCARDCONTEXT, SCARDHANDLE, PVOID);

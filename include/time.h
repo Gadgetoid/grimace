@@ -23,7 +23,7 @@ typedef long time_t;
  * @param start The earlier time.
  * @return end minus start, in seconds.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double difftime(time_t end, time_t start);
 

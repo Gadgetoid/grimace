@@ -18,7 +18,7 @@ extern "C" {
  * @param ppOAHolder Receives the IOleAdviseHolder interface pointer.
  * @return S_OK, or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CreateOleAdviseHolder(LPOLEADVISEHOLDER *ppOAHolder);
 /**
@@ -34,7 +34,7 @@ HRESULT CreateOleAdviseHolder(LPOLEADVISEHOLDER *ppOAHolder);
  * @param ppstm Receives the IStream interface pointer.
  * @return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CreateStreamOnHGlobal(HGLOBAL hGlobal, BOOL fDeleteOnRelease, LPSTREAM *ppstm);
 /**
@@ -51,7 +51,7 @@ HRESULT CreateStreamOnHGlobal(HGLOBAL hGlobal, BOOL fDeleteOnRelease, LPSTREAM *
  * @param pdwEffect Receives the effect selected by the target.
  * @return DRAGDROP_S_DROP, DRAGDROP_S_CANCEL or an HRESULT error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT DoDragDrop(LPDATAOBJECT pDataObj, LPDROPSOURCE pDropSource, DWORD dwOKEffects, LPDWORD pdwEffect);
 /**
@@ -64,7 +64,7 @@ HRESULT DoDragDrop(LPDATAOBJECT pDataObj, LPDROPSOURCE pDropSource, DWORD dwOKEf
  * @param phglobal Receives the current memory handle.
  * @return S_OK, or E_INVALIDARG for an unsupported stream.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT GetHGlobalFromStream(LPSTREAM pstm, HGLOBAL *phglobal);
 /**
@@ -83,7 +83,7 @@ HRESULT GetHGlobalFromStream(LPSTREAM pstm, HGLOBAL *phglobal);
  * @param ppvObj Receives the requested interface pointer.
  * @return S_OK, E_OUTOFMEMORY, or an object-creation error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT OleCreate(const CLSID *const rclsid, const IID *const riid, DWORD renderopt, LPFORMATETC pFormatEtc, LPOLECLIENTSITE pClientSite, LPSTORAGE pStg, LPVOID *ppvObj);
 /**
@@ -98,7 +98,7 @@ HRESULT OleCreate(const CLSID *const rclsid, const IID *const riid, DWORD render
  * @param lprcBounds Destination rectangle.
  * @return S_OK, OLE_E_BLANK, VIEW_E_DRAW, or a drawing error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT OleDraw(LPUNKNOWN pUnknown, DWORD dwAspect, HDC hdcDraw, LPCRECT lprcBounds);
 /**
@@ -109,7 +109,7 @@ HRESULT OleDraw(LPUNKNOWN pUnknown, DWORD dwAspect, HDC hdcDraw, LPCRECT lprcBou
  * @param pObject Object to check.
  * @return TRUE if running, otherwise FALSE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL OleIsRunning(LPOLEOBJECT pObject);
 /**
@@ -120,7 +120,7 @@ BOOL OleIsRunning(LPOLEOBJECT pObject);
  * @param pUnknown Object to run.
  * @return S_OK, OLE_E_CLASSDIFF, or an error from IRunnableObject::Run.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT OleRun(LPUNKNOWN pUnknown);
 /**
@@ -134,7 +134,7 @@ HRESULT OleRun(LPUNKNOWN pUnknown);
  * @param fSameAsLoad TRUE when pStg is the storage from which it was loaded.
  * @return S_OK, STG_E_MEDIUMFULL, or an IPersistStorage error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT OleSave(LPPERSISTSTORAGE pPS, LPSTORAGE pStg, BOOL fSameAsLoad);
 /**
@@ -146,7 +146,7 @@ HRESULT OleSave(LPPERSISTSTORAGE pPS, LPSTORAGE pStg, BOOL fSameAsLoad);
  * @param fContained TRUE for a contained object, FALSE otherwise.
  * @return S_OK, or an error from IRunnableObject::SetContainedObject.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT OleSetContainedObject(LPUNKNOWN pUnknown, BOOL fContained);
 /**
@@ -162,7 +162,7 @@ HRESULT OleSetContainedObject(LPUNKNOWN pUnknown, BOOL fContained);
  * @param lpActiveObj Unsupported; set to NULL.
  * @return S_OK, or an OLE error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT OleSetMenuDescriptor(HOLEMENU holemenu, HWND hwndFrame, HWND hwndActiveObject, LPOLEINPLACEFRAME lpFrame, LPOLEINPLACEACTIVEOBJECT lpActiveObj);
 /**
@@ -174,7 +174,7 @@ HRESULT OleSetMenuDescriptor(HOLEMENU holemenu, HWND hwndFrame, HWND hwndActiveO
  * @param pclsid Receives the CLSID; may receive CLSID_NULL.
  * @return S_OK, E_OUTOFMEMORY, or an IStorage error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT ReadClassStg(LPSTORAGE pStg, CLSID *pclsid);
 /**
@@ -184,7 +184,7 @@ HRESULT ReadClassStg(LPSTORAGE pStg, CLSID *pclsid);
  * @param pclsid Receives the CLSID.
  * @return S_OK, or STG_E_READFAULT if the stream ends before the CLSID.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT ReadClassStm(LPSTREAM pStm, CLSID *pclsid);
 /**
@@ -197,7 +197,7 @@ HRESULT ReadClassStm(LPSTREAM pStm, CLSID *pclsid);
  * @param pDropTarget IDropTarget implementation for the window.
  * @return S_OK, DRAGDROP_E_INVALIDHWND, DRAGDROP_E_ALREADYREGISTERED or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT RegisterDragDrop(HWND hwnd, LPDROPTARGET pDropTarget);
 /**
@@ -208,7 +208,7 @@ HRESULT RegisterDragDrop(HWND hwnd, LPDROPTARGET pDropTarget);
  *
  * @param pmedium Storage medium to release.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void ReleaseStgMedium(LPSTGMEDIUM pmedium);
 /**
@@ -219,7 +219,7 @@ void ReleaseStgMedium(LPSTGMEDIUM pmedium);
  * @param hwnd Window previously registered as a drop target.
  * @return S_OK, DRAGDROP_E_NOTREGISTERED, DRAGDROP_E_INVALIDHWND or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT RevokeDragDrop(HWND hwnd);
 /**
@@ -229,7 +229,7 @@ HRESULT RevokeDragDrop(HWND hwnd);
  * @param rclsid Class identifier to store.
  * @return S_OK, STG_E_MEDIUMFULL, or an IStorage::SetClass error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT WriteClassStg(LPSTORAGE pStg, const CLSID *const rclsid);
 /**
@@ -241,7 +241,7 @@ HRESULT WriteClassStg(LPSTORAGE pStg, const CLSID *const rclsid);
  * @param rclsid Class identifier to write.
  * @return S_OK, STG_E_MEDIUMFULL, or a stream error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT WriteClassStm(LPSTREAM pStm, const CLSID *const rclsid);
 struct _OLESTREAM;

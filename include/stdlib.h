@@ -80,7 +80,7 @@ typedef struct {
  * @param size Number of bytes to allocate.
  * @return Pointer to the block, or NULL if allocation fails.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void *malloc(size_t size);
 /**
@@ -91,7 +91,7 @@ void *malloc(size_t size);
  * @return Pointer to the allocated, suitably aligned block, or NULL if
  *         allocation fails.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 void *calloc(size_t count, size_t size);
 /**
@@ -105,7 +105,7 @@ void *calloc(size_t count, size_t size);
  * @param size New size in bytes.
  * @return Pointer to the resized block, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void *realloc(void *memory, size_t size);
 /**
@@ -116,7 +116,7 @@ void *realloc(void *memory, size_t size);
  *
  * @param memory Block to free, or NULL.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void free(void *memory);
 /**
@@ -125,7 +125,7 @@ void free(void *memory);
  * @param memory Pointer to the allocated block.
  * @return Block size in bytes.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 size_t _msize(void *memory);
 /**
@@ -134,7 +134,7 @@ size_t _msize(void *memory);
  * @param value Integer to convert.
  * @return Absolute value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int abs(int value);
 /**
@@ -143,7 +143,7 @@ int abs(int value);
  * @param value Long integer to convert.
  * @return Absolute value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 long labs(long value);
 /**
@@ -156,7 +156,7 @@ long labs(long value);
  * @param divisor Denominator.
  * @return div_t containing quot and rem.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 div_t div(int dividend, int divisor);
 /**
@@ -169,7 +169,7 @@ div_t div(int dividend, int divisor);
  * @param divisor Denominator.
  * @return ldiv_t containing quot and rem.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 ldiv_t ldiv(long dividend, long divisor);
 /**
@@ -182,7 +182,7 @@ ldiv_t ldiv(long dividend, long divisor);
  * @return Converted value, or 0 if no conversion is possible. Overflow is
  *         undefined.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int atoi(const char *string);
 /**
@@ -195,7 +195,7 @@ int atoi(const char *string);
  * @return Converted value, or 0L if no conversion is possible. Overflow is
  *         undefined.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 long atol(const char *string);
 /**
@@ -209,7 +209,7 @@ long atol(const char *string);
  * @return Converted value, or 0.0 if it cannot be converted. Overflow is
  *         undefined.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double atof(const char *string);
 /**
@@ -222,7 +222,7 @@ double atof(const char *string);
  * @return Converted value, or 0 if no conversion is possible. Overflow is
  *         undefined.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 long long _atoi64(const char *string);
 /**
@@ -236,7 +236,7 @@ long long _atoi64(const char *string);
  * @return Converted value, signed HUGE_VAL on overflow, or 0 if no
  *         conversion is possible or underflow occurs.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 double strtod(const char *string, char **end);
 /**
@@ -251,7 +251,7 @@ double strtod(const char *string, char **end);
  * @return Converted value, LONG_MAX or LONG_MIN on overflow, or 0 if no
  *         conversion is possible.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 long strtol(const char *string, char **end, int base);
 /**
@@ -265,7 +265,7 @@ long strtol(const char *string, char **end, int base);
  * @param base Number base; 0 selects it from the input prefix.
  * @return Converted value, or 0 if no conversion is possible.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 unsigned long strtoul(const char *string, char **end, int base);
 /**
@@ -280,7 +280,7 @@ unsigned long strtoul(const char *string, char **end, int base);
  * @param size Size of each element in bytes.
  * @param compare Comparator for two elements.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void qsort(void *base, size_t count, size_t size, int (*compare)(const void *, const void *));
 /**
@@ -291,7 +291,7 @@ void qsort(void *base, size_t count, size_t size, int (*compare)(const void *, c
  *
  * @return Pseudorandom integer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int rand(void);
 /**
@@ -301,7 +301,7 @@ int rand(void);
  *
  * @param seed Seed for the generator.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void srand(unsigned int seed);
 /**
@@ -315,7 +315,7 @@ void srand(unsigned int seed);
  * @param radix Number base.
  * @return buffer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *_itoa(int value, char *buffer, int radix);
 /**
@@ -329,7 +329,7 @@ char *_itoa(int value, char *buffer, int radix);
  * @param radix Number base.
  * @return buffer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *_ltoa(long value, char *buffer, int radix);
 /**
@@ -342,7 +342,7 @@ char *_ltoa(long value, char *buffer, int radix);
  * @param radix Number base.
  * @return buffer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *_ultoa(unsigned long value, char *buffer, int radix);
 /**
@@ -358,7 +358,7 @@ char *_ultoa(unsigned long value, char *buffer, int radix);
  * @param sign Receives the sign indicator.
  * @return Pointer to the digit string.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *_ecvt(double value, int digits, int *decimal, int *sign);
 /**
@@ -374,7 +374,7 @@ char *_ecvt(double value, int digits, int *decimal, int *sign);
  * @param sign Receives the sign indicator.
  * @return Pointer to the digit string.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *_fcvt(double value, int digits, int *decimal, int *sign);
 /**
@@ -388,7 +388,7 @@ char *_fcvt(double value, int digits, int *decimal, int *sign);
  * @param buffer Receives the null-terminated result.
  * @return buffer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 char *_gcvt(double value, int digits, char *buffer);
 /**
@@ -398,7 +398,7 @@ char *_gcvt(double value, int digits, char *buffer);
  * @param shift Number of bit positions.
  * @return Rotated value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 unsigned int _rotl(unsigned int value, int shift);
 /**
@@ -408,7 +408,7 @@ unsigned int _rotl(unsigned int value, int shift);
  * @param shift Number of bit positions.
  * @return Rotated value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 unsigned int _rotr(unsigned int value, int shift);
 /**
@@ -418,7 +418,7 @@ unsigned int _rotr(unsigned int value, int shift);
  * @param shift Number of bit positions.
  * @return Rotated value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 unsigned long _lrotl(unsigned long value, int shift);
 /**
@@ -428,7 +428,7 @@ unsigned long _lrotl(unsigned long value, int shift);
  * @param shift Number of bit positions.
  * @return Rotated value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 unsigned long _lrotr(unsigned long value, int shift);
 /**
@@ -440,7 +440,7 @@ unsigned long _lrotr(unsigned long value, int shift);
  * @param destination Receives the swapped bytes.
  * @param count Number of bytes to process.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void _swab(char *source, char *destination, int count);
 long long llabs(long long value);

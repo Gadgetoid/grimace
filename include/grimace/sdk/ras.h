@@ -19,7 +19,7 @@ extern "C" {
  * @param lpDeviceConfigOut Receives the resulting device configuration.
  * @return Zero on success, or a RAS error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD RasDevConfigDialogEditW(LPCWSTR szDeviceName, LPCWSTR szDeviceType, HWND hWndOwner, LPVOID lpDeviceConfigIn, DWORD dwSize, LPVARSTRING lpDeviceConfigOut);
 /**
@@ -33,7 +33,7 @@ DWORD RasDevConfigDialogEditW(LPCWSTR szDeviceName, LPCWSTR szDeviceType, HWND h
  * @param dwPhoneNumLen Output buffer capacity, in characters.
  * @return Zero on success, or a RAS error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD RasGetDispPhoneNumW(LPCWSTR szPhonebook, LPCWSTR szEntry, LPWSTR szPhoneNum, DWORD dwPhoneNumLen);
 struct _RAS_STATS;

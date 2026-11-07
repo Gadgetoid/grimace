@@ -19,7 +19,7 @@ typedef int jmp_buf[_JBLEN];
  * @param environment Receives the saved stack environment.
  * @return 0 when called directly, or the value passed to longjmp.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int setjmp(jmp_buf environment);
 #define _setjmp setjmp
@@ -33,7 +33,7 @@ int setjmp(jmp_buf environment);
  * @param environment Stack environment previously saved by setjmp.
  * @param value Value returned by setjmp after control resumes.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void longjmp(jmp_buf environment, int value);
 

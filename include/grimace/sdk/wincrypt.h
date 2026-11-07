@@ -20,7 +20,7 @@ typedef unsigned long HCRYPTPROV;
  * @param dwFlags Context and key-container options.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptAcquireContextW(HCRYPTPROV *phProv, LPCWSTR pszContainer, LPCWSTR pszProvider, DWORD dwProvType, DWORD dwFlags);
 /**
@@ -34,7 +34,7 @@ BOOL CryptAcquireContextW(HCRYPTPROV *phProv, LPCWSTR pszContainer, LPCWSTR pszP
  * @param dwFlags Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptContextAddRef(HCRYPTPROV hProv, DWORD *pdwReserved, DWORD dwFlags);
 typedef unsigned int ALG_ID;
@@ -54,7 +54,7 @@ typedef unsigned long HCRYPTHASH;
  * @param phHash Receives the hash handle.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptCreateHash(HCRYPTPROV hProv, ALG_ID Algid, HCRYPTKEY hKey, DWORD dwFlags, HCRYPTHASH *phHash);
 /**
@@ -72,7 +72,7 @@ BOOL CryptCreateHash(HCRYPTPROV hProv, ALG_ID Algid, HCRYPTKEY hKey, DWORD dwFla
  * @param pdwDataLen Input byte count; receives plaintext byte count.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptDecrypt(HCRYPTKEY hKey, HCRYPTHASH hHash, BOOL Final, DWORD dwFlags, BYTE *pbData, DWORD *pdwDataLen);
 /**
@@ -89,7 +89,7 @@ BOOL CryptDecrypt(HCRYPTKEY hKey, HCRYPTHASH hHash, BOOL Final, DWORD dwFlags, B
  * @param phKey Receives the derived key handle.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptDeriveKey(HCRYPTPROV hProv, ALG_ID Algid, HCRYPTHASH hBaseData, DWORD dwFlags, HCRYPTKEY *phKey);
 /**
@@ -98,7 +98,7 @@ BOOL CryptDeriveKey(HCRYPTPROV hProv, ALG_ID Algid, HCRYPTHASH hBaseData, DWORD 
  * @param hHash Hash handle to destroy.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptDestroyHash(HCRYPTHASH hHash);
 /**
@@ -110,7 +110,7 @@ BOOL CryptDestroyHash(HCRYPTHASH hHash);
  * @param hKey Key handle to destroy.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptDestroyKey(HCRYPTKEY hKey);
 /**
@@ -125,7 +125,7 @@ BOOL CryptDestroyKey(HCRYPTKEY hKey);
  * @param phHash Receives the duplicate handle.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptDuplicateHash(HCRYPTHASH hHash, DWORD *pdwReserved, DWORD dwFlags, HCRYPTHASH *phHash);
 /**
@@ -140,7 +140,7 @@ BOOL CryptDuplicateHash(HCRYPTHASH hHash, DWORD *pdwReserved, DWORD dwFlags, HCR
  * @param phKey Receives the duplicate handle.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptDuplicateKey(HCRYPTKEY hKey, DWORD *pdwReserved, DWORD dwFlags, HCRYPTKEY *phKey);
 /**
@@ -159,7 +159,7 @@ BOOL CryptDuplicateKey(HCRYPTKEY hKey, DWORD *pdwReserved, DWORD dwFlags, HCRYPT
  * @param dwBufLen Size of pbData in bytes.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptEncrypt(HCRYPTKEY hKey, HCRYPTHASH hHash, BOOL Final, DWORD dwFlags, BYTE *pbData, DWORD *pdwDataLen, DWORD dwBufLen);
 /**
@@ -176,7 +176,7 @@ BOOL CryptEncrypt(HCRYPTKEY hKey, HCRYPTHASH hHash, BOOL Final, DWORD dwFlags, B
  * @param pcbTypeName Input buffer size and output bytes written.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptEnumProviderTypesW(DWORD dwIndex, DWORD *pdwReserved, DWORD dwFlags, DWORD *pdwProvType, LPWSTR pszTypeName, DWORD *pcbTypeName);
 /**
@@ -193,7 +193,7 @@ BOOL CryptEnumProviderTypesW(DWORD dwIndex, DWORD *pdwReserved, DWORD dwFlags, D
  * @param pcbProvName Input buffer size and output bytes written.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptEnumProvidersW(DWORD dwIndex, DWORD *pdwReserved, DWORD dwFlags, DWORD *pdwProvType, LPWSTR pszProvName, DWORD *pcbProvName);
 /**
@@ -211,7 +211,7 @@ BOOL CryptEnumProvidersW(DWORD dwIndex, DWORD *pdwReserved, DWORD dwFlags, DWORD
  * @param pdwDataLen Input buffer size and output bytes written or required.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptExportKey(HCRYPTKEY hKey, HCRYPTKEY hExpKey, DWORD dwBlobType, DWORD dwFlags, BYTE *pbData, DWORD *pdwDataLen);
 /**
@@ -226,7 +226,7 @@ BOOL CryptExportKey(HCRYPTKEY hKey, HCRYPTKEY hExpKey, DWORD dwBlobType, DWORD d
  * @param phKey Receives the key handle.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptGenKey(HCRYPTPROV hProv, ALG_ID Algid, DWORD dwFlags, HCRYPTKEY *phKey);
 /**
@@ -240,7 +240,7 @@ BOOL CryptGenKey(HCRYPTPROV hProv, ALG_ID Algid, DWORD dwFlags, HCRYPTKEY *phKey
  * @param pbBuffer Buffer that receives the bytes and may contain seed data.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptGenRandom(HCRYPTPROV hProv, DWORD dwLen, BYTE *pbBuffer);
 /**
@@ -256,7 +256,7 @@ BOOL CryptGenRandom(HCRYPTPROV hProv, DWORD dwLen, BYTE *pbBuffer);
  * @param pcbProvName Input buffer size and output bytes written.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptGetDefaultProviderW(DWORD dwProvType, DWORD *pdwReserved, DWORD dwFlags, LPWSTR pszProvName, DWORD *pcbProvName);
 /**
@@ -272,7 +272,7 @@ BOOL CryptGetDefaultProviderW(DWORD dwProvType, DWORD *pdwReserved, DWORD dwFlag
  * @param dwFlags Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptGetHashParam(HCRYPTHASH hHash, DWORD dwParam, BYTE *pbData, DWORD *pdwDataLen, DWORD dwFlags);
 /**
@@ -288,7 +288,7 @@ BOOL CryptGetHashParam(HCRYPTHASH hHash, DWORD dwParam, BYTE *pbData, DWORD *pdw
  * @param dwFlags Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptGetKeyParam(HCRYPTKEY hKey, DWORD dwParam, BYTE *pbData, DWORD *pdwDataLen, DWORD dwFlags);
 /**
@@ -305,7 +305,7 @@ BOOL CryptGetKeyParam(HCRYPTKEY hKey, DWORD dwParam, BYTE *pbData, DWORD *pdwDat
  * @param dwFlags Enumeration or security-information flags.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptGetProvParam(HCRYPTPROV hProv, DWORD dwParam, BYTE *pbData, DWORD *pdwDataLen, DWORD dwFlags);
 /**
@@ -319,7 +319,7 @@ BOOL CryptGetProvParam(HCRYPTPROV hProv, DWORD dwParam, BYTE *pbData, DWORD *pdw
  * @param phUserKey Receives the key handle.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptGetUserKey(HCRYPTPROV hProv, DWORD dwKeySpec, HCRYPTKEY *phUserKey);
 /**
@@ -334,7 +334,7 @@ BOOL CryptGetUserKey(HCRYPTPROV hProv, DWORD dwKeySpec, HCRYPTKEY *phUserKey);
  * @param dwFlags Hash options.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptHashData(HCRYPTHASH hHash, const BYTE *pbData, DWORD dwDataLen, DWORD dwFlags);
 /**
@@ -347,7 +347,7 @@ BOOL CryptHashData(HCRYPTHASH hHash, const BYTE *pbData, DWORD dwDataLen, DWORD 
  * @param dwFlags Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptHashSessionKey(HCRYPTHASH hHash, HCRYPTKEY hKey, DWORD dwFlags);
 /**
@@ -365,7 +365,7 @@ BOOL CryptHashSessionKey(HCRYPTHASH hHash, HCRYPTKEY hKey, DWORD dwFlags);
  * @param phKey Receives the imported key handle.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptImportKey(HCRYPTPROV hProv, const BYTE *pbData, DWORD dwDataLen, HCRYPTKEY hPubKey, DWORD dwFlags, HCRYPTKEY *phKey);
 /**
@@ -378,7 +378,7 @@ BOOL CryptImportKey(HCRYPTPROV hProv, const BYTE *pbData, DWORD dwDataLen, HCRYP
  * @param dwFlags Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptReleaseContext(HCRYPTPROV hProv, DWORD dwFlags);
 /**
@@ -393,7 +393,7 @@ BOOL CryptReleaseContext(HCRYPTPROV hProv, DWORD dwFlags);
  * @param dwFlags Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptSetHashParam(HCRYPTHASH hHash, DWORD dwParam, BYTE *pbData, DWORD dwFlags);
 /**
@@ -407,7 +407,7 @@ BOOL CryptSetHashParam(HCRYPTHASH hHash, DWORD dwParam, BYTE *pbData, DWORD dwFl
  * @param dwFlags Reserved; set to zero.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptSetKeyParam(HCRYPTKEY hKey, DWORD dwParam, BYTE *pbData, DWORD dwFlags);
 /**
@@ -422,7 +422,7 @@ BOOL CryptSetKeyParam(HCRYPTKEY hKey, DWORD dwParam, BYTE *pbData, DWORD dwFlags
  * @param dwFlags Security-information flags when applicable.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptSetProvParam(HCRYPTPROV hProv, DWORD dwParam, BYTE *pbData, DWORD dwFlags);
 /**
@@ -438,7 +438,7 @@ BOOL CryptSetProvParam(HCRYPTPROV hProv, DWORD dwParam, BYTE *pbData, DWORD dwFl
  *                 with CRYPT_DELETE_DEFAULT.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptSetProviderExW(LPCWSTR pszProvName, DWORD dwProvType, DWORD *pdwReserved, DWORD dwFlags);
 /**
@@ -452,7 +452,7 @@ BOOL CryptSetProviderExW(LPCWSTR pszProvName, DWORD dwProvType, DWORD *pdwReserv
  * @param dwProvType Provider type.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptSetProviderW(LPCWSTR pszProvName, DWORD dwProvType);
 /**
@@ -470,7 +470,7 @@ BOOL CryptSetProviderW(LPCWSTR pszProvName, DWORD dwProvType);
  * @param pdwSigLen Input buffer size and output bytes written or required.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptSignHashW(HCRYPTHASH hHash, DWORD dwKeySpec, LPCWSTR sDescription, DWORD dwFlags, BYTE *pbSignature, DWORD *pdwSigLen);
 /**
@@ -488,7 +488,7 @@ BOOL CryptSignHashW(HCRYPTHASH hHash, DWORD dwKeySpec, LPCWSTR sDescription, DWO
  * @param dwFlags Reserved; set to zero.
  * @return TRUE if verified, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CryptVerifySignatureW(HCRYPTHASH hHash, const BYTE *pbSignature, DWORD dwSigLen, HCRYPTKEY hPubKey, LPCWSTR sDescription, DWORD dwFlags);
 struct _PUBLICKEYSTRUC;

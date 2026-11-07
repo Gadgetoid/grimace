@@ -27,7 +27,7 @@ struct _complex {
  * @param value Value in the range -1 through 1.
  * @return The arccosine, or an indefinite value (quiet NaN) outside the range.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double acos(double value);
 /**
@@ -36,7 +36,7 @@ double acos(double value);
  * @param value Value in the range -1 through 1.
  * @return The arcsine, or an indefinite value (quiet NaN) outside the range.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double asin(double value);
 /**
@@ -45,7 +45,7 @@ double asin(double value);
  * @param value Value whose arctangent is calculated.
  * @return The arctangent.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double atan(double value);
 /**
@@ -58,7 +58,7 @@ double atan(double value);
  * @param x X coordinate of the point.
  * @return The arctangent of y/x.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double atan2(double y, double x);
 /**
@@ -70,7 +70,7 @@ double atan2(double y, double x);
  * @param value Angle in radians.
  * @return The cosine, or an indefinite value when the angle is out of range.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double cos(double value);
 /**
@@ -82,7 +82,7 @@ double cos(double value);
  * @param value Angle in radians.
  * @return The sine, or an indefinite value when the angle is out of range.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double sin(double value);
 /**
@@ -95,7 +95,7 @@ double sin(double value);
  * @param value Angle in radians.
  * @return The tangent, or an indefinite value when the angle is out of range.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double tan(double value);
 /**
@@ -106,7 +106,7 @@ double tan(double value);
  * @param value Input value.
  * @return The hyperbolic cosine, or HUGE_VAL if the result is too large.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double cosh(double value);
 /**
@@ -118,7 +118,7 @@ double cosh(double value);
  * @param value Input value.
  * @return The hyperbolic sine, or signed HUGE_VAL if the result is too large.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double sinh(double value);
 /**
@@ -127,7 +127,7 @@ double sinh(double value);
  * @param value Input value.
  * @return The hyperbolic tangent.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double tanh(double value);
 /**
@@ -138,7 +138,7 @@ double tanh(double value);
  * @param value Exponent.
  * @return The exponential, INF on overflow, or 0 on underflow.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double exp(double value);
 /**
@@ -150,7 +150,7 @@ double exp(double value);
  * @return The natural logarithm, an indefinite value for negative input,
  *         or INF for zero.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double log(double value);
 /**
@@ -162,7 +162,7 @@ double log(double value);
  * @return The base-10 logarithm, an indefinite value for negative input,
  *         or INF for zero.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double log10(double value);
 /**
@@ -175,7 +175,7 @@ double log10(double value);
  * @param exponent Exponent.
  * @return base raised to exponent.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double pow(double base, double exponent);
 /**
@@ -187,7 +187,7 @@ double pow(double base, double exponent);
  * @param value Nonnegative floating-point value.
  * @return The square root, or an indefinite value for negative input.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double sqrt(double value);
 /**
@@ -196,7 +196,7 @@ double sqrt(double value);
  * @param value Floating-point value.
  * @return The ceiling as a double.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double ceil(double value);
 /**
@@ -205,7 +205,7 @@ double ceil(double value);
  * @param value Floating-point value.
  * @return The floor as a double.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double floor(double value);
 /**
@@ -214,7 +214,7 @@ double floor(double value);
  * @param value Floating-point value.
  * @return The absolute value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double fabs(double value);
 /**
@@ -227,7 +227,7 @@ double fabs(double value);
  * @param divisor Divisor.
  * @return The remainder, or a quiet NaN if divisor is zero.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double fmod(double dividend, double divisor);
 /**
@@ -240,7 +240,7 @@ double fmod(double dividend, double divisor);
  * @param exponent Receives the integer exponent.
  * @return The mantissa.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double frexp(double value, int *exponent);
 /**
@@ -252,7 +252,7 @@ double frexp(double value, int *exponent);
  * @param exponent Integer power of two.
  * @return The scaled value, or signed HUGE_VAL on overflow.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double ldexp(double value, int exponent);
 /**
@@ -264,7 +264,7 @@ double ldexp(double value, int exponent);
  * @param integer Receives the integer part.
  * @return The signed fractional part.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double modf(double value, double *integer);
 /**
@@ -276,7 +276,7 @@ double modf(double value, double *integer);
  * @param value Complex number whose magnitude is calculated.
  * @return The magnitude, or HUGE_VAL on overflow.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _cabs(struct _complex value);
 /**
@@ -286,7 +286,7 @@ double _cabs(struct _complex value);
  * @param y Second side length.
  * @return The hypotenuse, or INF on overflow.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _hypot(double x, double y);
 /**
@@ -295,7 +295,7 @@ double _hypot(double x, double y);
  * @param value Double-precision value to change.
  * @return The value with the opposite sign.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _chgsign(double value);
 /**
@@ -305,7 +305,7 @@ double _chgsign(double value);
  * @param sign Value whose sign is copied.
  * @return value with the sign of sign.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _copysign(double value, double sign);
 /**
@@ -314,7 +314,7 @@ double _copysign(double value, double sign);
  * @param value Double-precision value to test.
  * @return Nonzero if value is neither infinite nor NaN; otherwise 0.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _finite(double value);
 /**
@@ -323,7 +323,7 @@ int _finite(double value);
  * @param value Double-precision value to test.
  * @return Nonzero if value is NaN; otherwise 0.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _isnan(double value);
 /**
@@ -335,7 +335,7 @@ int _isnan(double value);
  * @param value Double-precision value to classify.
  * @return An _FPCLASS_* classification code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _fpclass(double value);
 /**
@@ -346,7 +346,7 @@ int _fpclass(double value);
  * @param value Double-precision value to inspect.
  * @return The unbiased exponent.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _logb(double value);
 /**
@@ -359,7 +359,7 @@ double _logb(double value);
  * @param direction Direction toward the neighboring representable value.
  * @return The nearest representable neighbor toward direction.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _nextafter(double value, double direction);
 /**
@@ -371,7 +371,7 @@ double _nextafter(double value, double direction);
  * @param exponent Power of two to apply.
  * @return value multiplied by 2 to the exponent, or signed HUGE_VAL on overflow.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _scalb(double value, long exponent);
 double _frnd(double value);
@@ -382,7 +382,7 @@ double _fsqrt(double value);
  * @param value Argument to the function.
  * @return The order-zero Bessel function value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _j0(double value);
 /**
@@ -391,7 +391,7 @@ double _j0(double value);
  * @param value Argument to the function.
  * @return The order-one Bessel function value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _j1(double value);
 /**
@@ -401,7 +401,7 @@ double _j1(double value);
  * @param value Argument to the function.
  * @return The Bessel function value.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _jn(int order, double value);
 /**
@@ -413,7 +413,7 @@ double _jn(int order, double value);
  * @param value Argument to the function; must not be negative.
  * @return The order-zero Bessel function value, or _HUGE_VAL for negative input.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _y0(double value);
 /**
@@ -425,7 +425,7 @@ double _y0(double value);
  * @param value Argument to the function; must not be negative.
  * @return The order-one Bessel function value, or _HUGE_VAL for negative input.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _y1(double value);
 /**
@@ -438,7 +438,7 @@ double _y1(double value);
  * @param value Argument to the function; must not be negative.
  * @return The Bessel function value, or _HUGE_VAL for negative input.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double _yn(int order, double value);
 /**
@@ -448,7 +448,7 @@ double _yn(int order, double value);
  *
  * @return Floating-point status flags.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 unsigned int _clearfp(void);
 /**
@@ -462,7 +462,7 @@ unsigned int _clearfp(void);
  * @param mask Bits to read or update.
  * @return The floating-point control state.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 unsigned int _controlfp(unsigned int value, unsigned int mask);
 /**
@@ -473,7 +473,7 @@ unsigned int _controlfp(unsigned int value, unsigned int mask);
  *
  * @return Floating-point status flags.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 unsigned int _statusfp(void);
 /**
@@ -482,7 +482,7 @@ unsigned int _statusfp(void);
  * Use it when recovering from a floating-point exception before resuming
  * floating-point work.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void _fpreset(void);
 double trunc(double value);

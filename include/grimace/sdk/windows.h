@@ -21,7 +21,7 @@ typedef CEGUID *PCEGUID;
  * @param pInfo Database name, type, sort orders and characteristics.
  * @return New database object ID, or NULL on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 CEOID CeCreateDatabaseEx(PCEGUID pguid, CEDBASEINFO *pInfo);
 /**
@@ -31,7 +31,7 @@ CEOID CeCreateDatabaseEx(PCEGUID pguid, CEDBASEINFO *pInfo);
  * @param oid Object ID of the database to delete.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeDeleteDatabaseEx(PCEGUID pguid, CEOID oid);
 /**
@@ -46,7 +46,7 @@ BOOL CeDeleteDatabaseEx(PCEGUID pguid, CEOID oid);
  * @param dwSize Buffer size in characters.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeEnumDBVolumes(PCEGUID pguid, LPWSTR lpBuf, DWORD dwSize);
 /**
@@ -60,7 +60,7 @@ BOOL CeEnumDBVolumes(PCEGUID pguid, LPWSTR lpBuf, DWORD dwSize);
  * @param dwClassID Database type, or zero for all types.
  * @return Enumeration handle, or INVALID_HANDLE_VALUE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HANDLE CeFindFirstDatabaseEx(PCEGUID pguid, DWORD dwClassID);
 /**
@@ -74,7 +74,7 @@ HANDLE CeFindFirstDatabaseEx(PCEGUID pguid, DWORD dwClassID);
  * @return Database object ID, or zero at the end or on failure; use
  *         GetLastError for details.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 CEOID CeFindNextDatabaseEx(HANDLE hEnum, PCEGUID pguid);
 /**
@@ -85,7 +85,7 @@ CEOID CeFindNextDatabaseEx(HANDLE hEnum, PCEGUID pguid);
  * @param pguid GUID of the mounted volume to flush.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeFlushDBVol(PCEGUID pguid);
 struct _CENOTIFYREQUEST;
@@ -104,7 +104,7 @@ typedef CENOTIFICATION *PCENOTIFICATION;
  * @param pNotify Notification structure to free.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeFreeNotification(PCENOTIFYREQUEST pRequest, PCENOTIFICATION pNotify);
 /**
@@ -115,7 +115,7 @@ BOOL CeFreeNotification(PCENOTIFYREQUEST pRequest, PCENOTIFICATION pNotify);
  *
  * @return OEM_CERTIFY_TRUST, OEM_CERTIFY_RUN, or 0 if untrusted.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD CeGetCallerTrust(void);
 /**
@@ -126,7 +126,7 @@ DWORD CeGetCallerTrust(void);
  *
  * @return OEM_CERTIFY_TRUST or OEM_CERTIFY_RUN.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD CeGetCurrentTrust(void);
 int CeGetThreadPriority(HANDLE hThread);
@@ -136,7 +136,7 @@ int CeGetThreadPriority(HANDLE hThread);
  * @param hThread Thread handle.
  * @return Quantum in milliseconds, or MAXDWORD on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD CeGetThreadQuantum(HANDLE hThread);
 /**
@@ -152,7 +152,7 @@ DWORD CeGetThreadQuantum(HANDLE hThread);
  *                 TRUNCATE_EXISTING.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeMountDBVol(PCEGUID pguid, LPWSTR lpszVol, DWORD dwFlags);
 /**
@@ -166,7 +166,7 @@ BOOL CeMountDBVol(PCEGUID pguid, LPWSTR lpszVol, DWORD dwFlags);
  * @param oidInfo Receives object information.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeOidGetInfoEx(PCEGUID pguid, CEOID oid, CEOIDINFO *oidInfo);
 /**
@@ -184,7 +184,7 @@ BOOL CeOidGetInfoEx(PCEGUID pguid, CEOID oid, CEOIDINFO *oidInfo);
  * @param pReq Optional notification request.
  * @return Database handle, or INVALID_HANDLE_VALUE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HANDLE CeOpenDatabaseEx(PCEGUID pguid, PCEOID poid, LPWSTR lpszName, CEPROPID propid, DWORD dwFlags, CENOTIFYREQUEST *pReq);
 /**
@@ -203,7 +203,7 @@ HANDLE CeOpenDatabaseEx(PCEGUID pguid, PCEOID poid, LPWSTR lpszName, CEPROPID pr
  * @param hHeap Heap used for reallocation when CEDB_ALLOWREALLOC is set.
  * @return Record object ID, or zero on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 CEOID CeReadRecordPropsEx(HANDLE hDbase, DWORD dwFlags, LPWORD lpcPropID, CEPROPID *rgPropID, LPBYTE *lplpBuffer, LPDWORD lpcbBuffer, HANDLE hHeap);
 /**
@@ -216,7 +216,7 @@ CEOID CeReadRecordPropsEx(HANDLE hDbase, DWORD dwFlags, LPWORD lpcPropID, CEPROP
  * This API is part of the complete Windows CE OS package; OEM platform
  * configurations may not support it.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL CeResyncFilesys(HANDLE hDevice);
 /**
@@ -231,7 +231,7 @@ BOOL CeResyncFilesys(HANDLE hDevice);
  * @param pNewInfo New database settings; wNumRecords is ignored.
  * @return TRUE on success, FALSE on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeSetDatabaseInfoEx(PCEGUID pguid, CEOID oidDbase, CEDBASEINFO *pNewInfo);
 BOOL CeSetThreadPriority(HANDLE hThread, int nPriority);
@@ -244,7 +244,7 @@ BOOL CeSetThreadPriority(HANDLE hThread, int nPriority);
  * @param pguid GUID of the mounted volume.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL CeUnmountDBVol(PCEGUID pguid);
 /**
@@ -258,7 +258,7 @@ BOOL CeUnmountDBVol(PCEGUID pguid);
  * @param dwFlag LOADFSD_ASYNCH or LOADFSD_SYNCH.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL LoadFSDEx(HANDLE hDevice, LPCWSTR lpFSDName, DWORD dwFlag);
 /**
@@ -271,7 +271,7 @@ BOOL LoadFSDEx(HANDLE hDevice, LPCWSTR lpFSDName, DWORD dwFlag);
  * @param lpszFmt Wide-character printf-style format string, followed by
  *        its arguments.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void NKDbgPrintfW(LPCWSTR lpszFmt, ...);
 BOOL SHRemoveFontResource(LPCTSTR szFileName);
@@ -285,7 +285,7 @@ BOOL SHRemoveFontResource(LPCTSTR szFileName);
  *               MAX_OEM_LEDINDEX.
  * @param dwPattern Pattern to send to the LED.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void WriteDebugLED(WORD wIndex, DWORD dwPattern);
 typedef struct {
@@ -371,7 +371,7 @@ typedef struct {
  * @param handler IEEE exception handler.
  * @return The value returned by handler.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _fpieee_flt(unsigned long exc_code, PEXCEPTION_POINTERS p, int (*handler)(_FPIEEE_RECORD *));
 enum _AUDIT_EVENT_TYPE {

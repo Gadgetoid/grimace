@@ -287,7 +287,7 @@ int iswctype(wint_t character, wctype_t type);
  * @param character Character to convert.
  * @return The lowercase character, or character unchanged if it has none.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 wchar_t towlower(wchar_t character);
 /**
@@ -296,7 +296,7 @@ wchar_t towlower(wchar_t character);
  * @param character Character to convert.
  * @return The uppercase character, or character unchanged if it has none.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 wchar_t towupper(wchar_t character);
 #ifdef GRIMACE_C99_SWPRINTF
@@ -316,6 +316,8 @@ int __grimace_c99_swprintf(wchar_t *buffer, size_t count, const wchar_t *format,
  * @param buffer Buffer that receives the output. Must be large enough.
  * @param format Format string, followed by the values to format.
  * @return Characters written, not counting the terminating null.
+ *
+ * @note Windows CE 2.0 and later.
  */
 int swprintf(wchar_t *buffer, const wchar_t *format, ...);
 #endif
@@ -330,6 +332,8 @@ int swprintf(wchar_t *buffer, const wchar_t *format, ...);
  * @param format Format string.
  * @param arguments Values to format, from va_start.
  * @return Characters written, not counting the terminating null.
+ *
+ * @note Windows CE 2.0 and later.
  */
 int vswprintf(wchar_t *buffer, const wchar_t *format, va_list arguments);
 /**
@@ -345,7 +349,7 @@ int vswprintf(wchar_t *buffer, const wchar_t *format, va_list arguments);
  * @return Characters stored excluding the null terminator, or a negative
  *         value if the output does not fit.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _snwprintf(wchar_t *buffer, size_t count, const wchar_t *format, ...);
 /**
@@ -358,7 +362,7 @@ int _snwprintf(wchar_t *buffer, size_t count, const wchar_t *format, ...);
  * @return Number of wide characters written excluding the terminator, or
  *         a negative value on error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int _vsnwprintf(wchar_t *buffer, size_t count, const wchar_t *format, va_list arguments);
 /**
@@ -373,7 +377,7 @@ int _vsnwprintf(wchar_t *buffer, size_t count, const wchar_t *format, va_list ar
  * @return Number of fields assigned, 0 if none were assigned, or EOF if
  *         an error or end of string occurs before the first conversion.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int swscanf(const wchar_t *string, const wchar_t *format, ...);
 /**
@@ -387,7 +391,7 @@ int swscanf(const wchar_t *string, const wchar_t *format, ...);
  * @return Converted value, signed HUGE_VAL on overflow, or 0 if no
  *         conversion is possible or underflow occurs.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 double wcstod(const wchar_t *string, wchar_t **end);
 /**
@@ -403,7 +407,7 @@ double wcstod(const wchar_t *string, wchar_t **end);
  * @return Converted value, LONG_MAX or LONG_MIN on overflow, or 0 if no
  *         conversion is possible.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 long wcstol(const wchar_t *string, wchar_t **end, int base);
 /**
@@ -418,7 +422,7 @@ long wcstol(const wchar_t *string, wchar_t **end, int base);
  * @return Converted value, ULONG_MAX on overflow, or 0 if no conversion
  *         is possible.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 unsigned long wcstoul(const wchar_t *string, wchar_t **end, int base);
 /**
@@ -432,7 +436,7 @@ unsigned long wcstoul(const wchar_t *string, wchar_t **end, int base);
  * @param radix Number base.
  * @return buffer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 wchar_t *_itow(int value, wchar_t *buffer, int radix);
 /**
@@ -446,7 +450,7 @@ wchar_t *_itow(int value, wchar_t *buffer, int radix);
  * @param radix Number base.
  * @return buffer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 wchar_t *_ltow(long value, wchar_t *buffer, int radix);
 /**
@@ -459,7 +463,7 @@ wchar_t *_ltow(long value, wchar_t *buffer, int radix);
  * @param radix Number base.
  * @return buffer.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 wchar_t *_ultow(unsigned long value, wchar_t *buffer, int radix);
 wchar_t *wmemchr(const wchar_t *memory, wchar_t value, size_t count);

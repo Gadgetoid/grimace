@@ -1,0 +1,5 @@
+arch: sh3
+version: 2
+platform: hpc
+device: 
+source: Windows CE 2.0 SDK SH3 import libraries (tools/mkexports.py)

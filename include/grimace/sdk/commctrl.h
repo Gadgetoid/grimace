@@ -12,7 +12,7 @@ extern "C" {
  *
  * @param hwndCB The command bar.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 void CommandBar_AlignAdornments(HWND hwndCB);
 typedef struct _HD_HITTESTINFO HDHITTESTINFO;

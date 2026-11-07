@@ -365,7 +365,7 @@ int WINAPI SHFileOperationA(LPSHFILEOPSTRUCTA);
  * @return 0 on success, or nonzero on failure. fAnyOperationsAborted is
  *         set if the user cancelled.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int WINAPI SHFileOperationW(LPSHFILEOPSTRUCTW lpFileOp);
 void WINAPI SHFreeNameMappings(HANDLE);
@@ -447,7 +447,7 @@ HBITMAP WINAPI SHLoadDIBitmap(LPCTSTR szFileName);
  * @return FALSE, including on success; the return value does not indicate
  *         whether the path was retrieved.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI SHGetSpecialFolderPath(HWND hwndOwner,LPWSTR lpszPath,int nFolder,BOOL fCreate);
 #endif
@@ -506,7 +506,7 @@ typedef SHFILEINFOW SHFILEINFO;
  * @return 0 on success, or nonzero on failure. fAnyOperationsAborted is
  *         set if the user cancelled.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define SHFileOperation SHFileOperationW
 #define SHGetFileInfo _WNAME(SHGetFileInfo)

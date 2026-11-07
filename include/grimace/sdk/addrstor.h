@@ -16,14 +16,10 @@ typedef struct _AddressCard AddressCard;
  * @param poidCard Receives the new card's object identifier.
  * @param pindex Receives the card's index.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL AddAddressCard(AddressCard *pac, CEOID *poidCard, int *pindex);
 /**
  * Closes the address book.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 void CloseAddressBook(void);
 /**
@@ -32,8 +28,6 @@ void CloseAddressBook(void);
  * @param rghhProps Property tags to include.
  * @param numProps Number of property tags.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL CreateAddressBook(HHPRTAG *rghhProps, int numProps);
 /**
@@ -41,8 +35,6 @@ BOOL CreateAddressBook(HHPRTAG *rghhProps, int numProps);
  *
  * @param oidCard Object identifier of the card to delete.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL DeleteAddressCard(CEOID oidCard);
 /**
@@ -55,8 +47,6 @@ BOOL DeleteAddressCard(CEOID oidCard);
  * @param pindex Receives the matching card's index.
  * @param dwFlags Search flags.
  * @return Object identifier of the matching card.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 CEOID FindFirstEntry(TCHAR *szFind, HHPRTAG hhProp, int *pindex, DWORD dwFlags);
 /**
@@ -66,8 +56,6 @@ CEOID FindFirstEntry(TCHAR *szFind, HHPRTAG hhProp, int *pindex, DWORD dwFlags);
  * functions.
  *
  * @param pac Address card to free.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 void FreeAddressCard(AddressCard *pac);
 /**
@@ -75,8 +63,6 @@ void FreeAddressCard(AddressCard *pac);
  *
  * @param oidCard Card object identifier.
  * @return Card index.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 int GetAddressCardIndex(CEOID oidCard);
 /**
@@ -84,8 +70,6 @@ int GetAddressCardIndex(CEOID oidCard);
  *
  * @param nCard Card index.
  * @return Card object identifier.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 CEOID GetAddressCardOid(int nCard);
 /**
@@ -96,8 +80,6 @@ CEOID GetAddressCardOid(int nCard);
  * @param numRequestedProps Number of properties to retrieve.
  * @param rghhProp Property tags to retrieve.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL GetAddressCardProperties(CEOID oidCard, AddressCard *pac, int numRequestedProps, HHPRTAG *rghhProp);
 /**
@@ -106,8 +88,6 @@ BOOL GetAddressCardProperties(CEOID oidCard, AddressCard *pac, int numRequestedP
  * @param propList Receives the column property tags.
  * @param pColumns Receives the number of columns.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL GetColumnProperties(HHPRTAG *propList, int *pColumns);
 /**
@@ -119,16 +99,12 @@ BOOL GetColumnProperties(HHPRTAG *propList, int *pColumns);
  * @param poidMatch Receives the matching card's object identifier.
  * @param phhMatch Receives the matching property tag.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL GetMatchingEntry(TCHAR *szMatch, int *pBufSize, TCHAR *szField, CEOID *poidMatch, HHPRTAG *phhMatch);
 /**
  * Returns the number of address cards in the store.
  *
  * @return Number of cards.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 int GetNumberOfAddressCards(void);
 struct _PropertyDataStruct;
@@ -142,8 +118,6 @@ typedef struct _PropertyDataStruct PropertyDataStruct;
  * @param fFlag GPDS_PROPERTY, GPDS_INDEX or GPDS_NAME.
  * @param uValue Property identifier, index or name value selected by `fFlag`.
  * @param ppds Receives the property metadata.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 int GetPropertyDataStruct(int fFlag, ULONG uValue, PropertyDataStruct *ppds);
 /**
@@ -151,8 +125,6 @@ int GetPropertyDataStruct(int fFlag, ULONG uValue, PropertyDataStruct *ppds);
  *
  * @param fDatabaseSort Selects whether to retrieve the database sort order.
  * @return Sort-order property tag.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 HHPRTAG GetSortOrder(BOOL fDatabaseSort);
 /**
@@ -162,8 +134,6 @@ HHPRTAG GetSortOrder(BOOL fDatabaseSort);
  * @param oidCard Object identifier of the card to update.
  * @param pindex Receives the card's index.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL ModifyAddressCard(AddressCard *pac, CEOID oidCard, int *pindex);
 /**
@@ -172,8 +142,6 @@ BOOL ModifyAddressCard(AddressCard *pac, CEOID oidCard, int *pindex);
  * @param hwnd Window associated with the address book.
  * @param hhProp Property tag used to open the address book.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL OpenAddressBook(HWND hwnd, HHPRTAG hhProp);
 /**
@@ -186,14 +154,10 @@ BOOL OpenAddressBook(HWND hwnd, HHPRTAG hhProp);
  * @param pac Receives the address-card data.
  * @param uFlags OpenAddressCard flags.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL OpenAddressCard(CEOID oidCard, AddressCard *pac, ULONG uFlags);
 /**
  * Recounts address cards during replication.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 void RecountCards(void);
 /**
@@ -202,8 +166,6 @@ void RecountCards(void);
  * @param propList Column property tags.
  * @param nColumns Number of column properties.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL SetColumnProperties(HHPRTAG *propList, int nColumns);
 void SetMask(AddressCard *pac, HHPRTAG hhProp);
@@ -212,8 +174,6 @@ void SetMask(AddressCard *pac, HHPRTAG hhProp);
  *
  * @param hhProp Property tag to use for sorting.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL SetSortOrder(HHPRTAG hhProp);
 struct _AddressCard {

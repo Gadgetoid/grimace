@@ -112,7 +112,7 @@ DWORD WINAPI GetFileVersionInfoSizeA(LPCSTR,PDWORD);
  * @param lpdwHandle Receives zero.
  * @return Required buffer size, or zero if unavailable.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD WINAPI GetFileVersionInfoSizeW(LPCWSTR lptstrFilename,PDWORD lpdwHandle);
 BOOL WINAPI GetFileVersionInfoA(LPCSTR,DWORD,DWORD,PVOID);
@@ -129,7 +129,7 @@ BOOL WINAPI GetFileVersionInfoA(LPCSTR,DWORD,DWORD,PVOID);
  * @param lpData Receives the version information.
  * @return Nonzero on success, zero on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL WINAPI GetFileVersionInfoW(LPCWSTR lptstrFilename,DWORD dwHandle,DWORD dwLen,PVOID lpData);
 DWORD WINAPI VerLanguageNameA(DWORD,LPSTR,DWORD);
@@ -148,7 +148,7 @@ BOOL WINAPI VerQueryValueA(const LPVOID,LPCSTR,LPVOID*,PUINT);
  * @param puLen Receives its length in characters.
  * @return Nonzero if the value exists, zero otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL WINAPI VerQueryValueW(const LPVOID pBlock,LPCWSTR lpSubBlock,LPVOID*lplpBuffer,PUINT puLen);
 #ifdef UNICODE
@@ -166,7 +166,7 @@ BOOL WINAPI VerQueryValueW(const LPVOID pBlock,LPCWSTR lpSubBlock,LPVOID*lplpBuf
  * @param puLen Receives its length in characters.
  * @return Nonzero if the value exists, zero otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 #define VerQueryValue VerQueryValueW
 #define VerInstallFile VerInstallFileW
@@ -180,7 +180,7 @@ BOOL WINAPI VerQueryValueW(const LPVOID pBlock,LPCWSTR lpSubBlock,LPVOID*lplpBuf
  * @param lpdwHandle Receives zero.
  * @return Required buffer size, or zero if unavailable.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 #define GetFileVersionInfoSize GetFileVersionInfoSizeW
 /**
@@ -196,7 +196,7 @@ BOOL WINAPI VerQueryValueW(const LPVOID pBlock,LPCWSTR lpSubBlock,LPVOID*lplpBuf
  * @param lpData Receives the version information.
  * @return Nonzero on success, zero on failure; use GetLastError.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 #define GetFileVersionInfo GetFileVersionInfoW
 #define VerLanguageName VerLanguageNameW

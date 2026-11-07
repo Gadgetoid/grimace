@@ -26,7 +26,7 @@ typedef struct IInternetSecurityManager IInternetSecurityManager;
  * @param dwReserved Reserved; set to zero.
  * @return S_OK on success, or an HRESULT error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HRESULT CoInternetCreateSecurityManager(IServiceProvider *pSP, IInternetSecurityManager **ppSM, DWORD dwReserved);
 struct IInternetZoneManager;
@@ -42,7 +42,7 @@ typedef struct IInternetZoneManager IInternetZoneManager;
  * @param dwReserved Reserved; set to zero.
  * @return S_OK on success, or an HRESULT error.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HRESULT CoInternetCreateZoneManager(IServiceProvider *pSP, IInternetZoneManager **ppZM, DWORD dwReserved);
 enum _tagPSUACTION {

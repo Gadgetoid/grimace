@@ -19,7 +19,7 @@ typedef struct tACMFILTERCHOOSE *LPACMFILTERCHOOSE;
  * @return MMSYSERR_NOERROR, ACMERR_CANCELED, ACMERR_NOTPOSSIBLE or an
  *        MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT acmFilterChoose(LPACMFILTERCHOOSE pafltrc);
 struct tACMFILTERDETAILS;
@@ -38,7 +38,7 @@ typedef struct tACMFILTERDETAILS *LPACMFILTERDETAILS;
  * @param fdwDetails ACM_FILTERDETAILSF_FILTER or ACM_FILTERDETAILSF_INDEX.
  * @return MMSYSERR_NOERROR, ACMERR_NOTPOSSIBLE or an MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT acmFilterDetails(HACMDRIVER had, LPACMFILTERDETAILS pafd, DWORD fdwDetails);
 typedef BOOL (*ACMFILTERENUMCB)(HACMDRIVERID, LPACMFILTERDETAILS, DWORD, DWORD);
@@ -58,7 +58,7 @@ typedef BOOL (*ACMFILTERENUMCB)(HACMDRIVERID, LPACMFILTERDETAILS, DWORD, DWORD);
  * @param fdwEnum ACM_FILTERENUMF_DWFILTERTAG, or zero for all filters.
  * @return MMSYSERR_NOERROR, ACMERR_NOTPOSSIBLE or an MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT acmFilterEnum(HACMDRIVER had, LPACMFILTERDETAILS pafd, ACMFILTERENUMCB fnCallback, DWORD dwInstance, DWORD fdwEnum);
 struct tACMFILTERTAGDETAILS;
@@ -77,7 +77,7 @@ typedef struct tACMFILTERTAGDETAILS *LPACMFILTERTAGDETAILS;
  * @param fdwDetails ACM_FILTERTAGDETAILSF_* query type.
  * @return MMSYSERR_NOERROR, ACMERR_NOTPOSSIBLE or an MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT acmFilterTagDetails(HACMDRIVER had, LPACMFILTERTAGDETAILS paftd, DWORD fdwDetails);
 typedef BOOL (*ACMFILTERTAGENUMCB)(HACMDRIVERID, LPACMFILTERTAGDETAILS, DWORD, DWORD);
@@ -95,7 +95,7 @@ typedef BOOL (*ACMFILTERTAGENUMCB)(HACMDRIVERID, LPACMFILTERTAGDETAILS, DWORD, D
  * @param fdwEnum Reserved; set to zero.
  * @return MMSYSERR_NOERROR or an MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT acmFilterTagEnum(HACMDRIVER had, LPACMFILTERTAGDETAILS paftd, ACMFILTERTAGENUMCB fnCallback, DWORD dwInstance, DWORD fdwEnum);
 struct tACMFORMATCHOOSE;
@@ -111,7 +111,7 @@ typedef struct tACMFORMATCHOOSE *LPACMFORMATCHOOSE;
  * @return MMSYSERR_NOERROR, ACMERR_CANCELED, ACMERR_NOTPOSSIBLE or an
  *        MMSYSERR_* error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT acmFormatChoose(LPACMFORMATCHOOSE pafmtc);
 typedef LRESULT (*ACMDRIVERPROC)(DWORD, HACMDRIVERID, UINT, LPARAM, LPARAM);

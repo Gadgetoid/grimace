@@ -161,3 +161,7 @@ int use_everything(HINSTANCE instance) {
     }
     return grimace::run_message_loop() + (file ? 1 : 0) + (moved ? 1 : 0);
 }
+
+bool has_imports() {
+    return ce_has(MessageBoxW) && ce_has(GetModuleFileNameW);
+}

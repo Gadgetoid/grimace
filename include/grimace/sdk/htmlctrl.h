@@ -14,8 +14,6 @@ extern "C" {
  *
  * @param hinst Application instance used to create the DISPLAYCLASS window.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 3.0 only.
  */
 BOOL InitHTMLControl(HINSTANCE hinst);
 struct tagINLINEIMAGEINFO;

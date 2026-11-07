@@ -5,20 +5,26 @@ EXPORT_DLLS = addrstor asform ceshell commctrl commdlg coredll cxport htmlview i
 TARGETS = mips-ce1 mips-ce2 sh3-ce1 sh3-ce101 sh3-ce2 x86-ce2 arm-ce3
 
 llvm = $(if $(GRIMACE_$(1)_LLVM),-DGRIMACE_LLVM_ROOT=$(GRIMACE_$(1)_LLVM))
+selection = -DGRIMACE_PLATFORM=$(PLATFORM) -DGRIMACE_DEVICE=$(DEVICE)
+variant = $(if $(PLATFORM),-$(PLATFORM))$(if $(DEVICE),-$(DEVICE))
 llvm_clang = $(if $(GRIMACE_$(1)_LLVM),--clang $(GRIMACE_$(1)_LLVM)/bin/clang,--clang $(CLANG))
 
-.PHONY: check examples debugmgr headers docstrings exports check-headers check-cxx-headers check-abi check-stdlib check-debugmgr clean
+.PHONY: check examples debugmgr check-lazy headers docstrings exports check-headers check-cxx-headers check-abi check-stdlib check-debugmgr clean
 
 define target
-.PHONY: examples-$(1) debugmgr-$(1)
+.PHONY: examples-$(1) debugmgr-$(1) check-lazy-$(1)
 
 examples-$(1):
-	cmake -S examples -B build/$(1) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(call llvm,$(4))
-	cmake --build build/$(1)
+	cmake -S examples -B build/$(1)$(variant) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(selection) $(call llvm,$(4))
+	cmake --build build/$(1)$(variant)
 
 debugmgr-$(1):
-	cmake -S debugmgr -B build/debugmgr/$(1) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(call llvm,$(4))
-	cmake --build build/debugmgr/$(1)
+	cmake -S debugmgr -B build/debugmgr/$(1)$(variant) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(selection) $(call llvm,$(4))
+	cmake --build build/debugmgr/$(1)$(variant)
+
+check-lazy-$(1):
+	cmake -S tests/lazy -B build/lazy/$(1)$(variant) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(selection) $(call llvm,$(4))
+	cmake --build build/lazy/$(1)$(variant)
 endef
 
 $(eval $(call target,mips-ce1,mips,1,MIPS))
@@ -29,11 +35,13 @@ $(eval $(call target,sh3-ce2,sh3,2,SH3))
 $(eval $(call target,x86-ce2,x86,2,X86))
 $(eval $(call target,arm-ce3,arm,3,ARM))
 
-check: check-abi check-cxx-headers check-stdlib check-debugmgr examples debugmgr
+check: check-abi check-cxx-headers check-stdlib check-debugmgr check-lazy examples debugmgr
 
 examples: $(addprefix examples-,$(TARGETS))
 
 debugmgr: $(addprefix debugmgr-,$(TARGETS))
+
+check-lazy: $(addprefix check-lazy-,$(TARGETS))
 
 check-cxx-headers: check-cxx-headers-mips check-cxx-headers-sh3 check-cxx-headers-x86 check-cxx-headers-arm
 
@@ -66,7 +74,7 @@ check-debugmgr:
 	python3 tests/check-debugmgr.py
 
 exports:
-	python3 tools/cerom.py $(ROM) --exports exports/ce3-arm $(foreach dll,$(EXPORT_DLLS),--dll $(dll).dll)
+	python3 tools/cerom.py $(ROM) --exports exports/jornada720-ce3 $(foreach dll,$(EXPORT_DLLS),--dll $(dll).dll)
 
 headers:
 	python3 tools/vendor-w32api.py $(GRIMACE_W32API)

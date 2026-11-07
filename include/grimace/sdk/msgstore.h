@@ -11,8 +11,6 @@ extern "C" {
  *
  * @param hMail Message-store context.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailClose(HANDLE hMail);
 struct MailMsg_s;
@@ -23,8 +21,6 @@ typedef struct MailMsg_s MailMsg;
  * @param hMail Message-store context.
  * @param pmm Message to delete.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailDelete(HANDLE hMail, MailMsg *pmm);
 struct MailAtt_s;
@@ -38,7 +34,7 @@ typedef struct MailAtt_s MailAtt;
  * @param fFullDelete Whether to delete the attachment header as well.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL MailDeleteAttachment(HANDLE hMail, MailMsg *pmm, MailAtt *pma, BOOL fFullDelete);
 /**
@@ -49,8 +45,6 @@ BOOL MailDeleteAttachment(HANDLE hMail, MailMsg *pmm, MailAtt *pma, BOOL fFullDe
  *
  * @param hMail Message-store context.
  * @return Last message-store error or warning value.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 int MailError(HANDLE hMail);
 /**
@@ -61,8 +55,6 @@ int MailError(HANDLE hMail);
  * @param iBufLen Buffer capacity, in characters.
  * @param piSrcLine Optionally receives the source line of the error.
  * @return Last message-store error value.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 int MailErrorMsg(HANDLE hMail, LPWSTR szBuf, int iBufLen, int *piSrcLine);
 /**
@@ -71,8 +63,6 @@ int MailErrorMsg(HANDLE hMail, LPWSTR szBuf, int iBufLen, int *piSrcLine);
  * @param hMail Message-store context.
  * @param pmm Receives the message.
  * @return TRUE on success, FALSE when no message is available or on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailFirst(HANDLE hMail, MailMsg *pmm);
 /**
@@ -80,8 +70,6 @@ BOOL MailFirst(HANDLE hMail, MailMsg *pmm);
  *
  * @param pmm Message whose storage to release.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailFree(MailMsg *pmm);
 /**
@@ -90,8 +78,6 @@ BOOL MailFree(MailMsg *pmm);
  * @param hMail Message-store context.
  * @param pmm Receives the message.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailGet(HANDLE hMail, MailMsg *pmm);
 /**
@@ -101,7 +87,7 @@ BOOL MailGet(HANDLE hMail, MailMsg *pmm);
  * @param pmm Message containing the attachment.
  * @param pma Receives the attachment data.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 INT MailGetAttachment(HANDLE hMail, MailMsg *pmm, MailAtt *pma);
 /**
@@ -113,8 +99,6 @@ INT MailGetAttachment(HANDLE hMail, MailMsg *pmm, MailAtt *pma);
  * @param szName Header field name.
  * @param fGetName Selects the field-name position instead of its value.
  * @return Pointer to the requested header field.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 LPWSTR MailGetField(MailMsg *pmm, LPWSTR szName, BOOL fGetName);
 /**
@@ -124,8 +108,6 @@ LPWSTR MailGetField(MailMsg *pmm, LPWSTR szName, BOOL fGetName);
  * @param pbId Receives the folder ID.
  * @param szName Folder name to match.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailGetFolderId(HANDLE hMail, BYTE *pbId, LPWSTR szName);
 /**
@@ -140,8 +122,6 @@ BOOL MailGetFolderId(HANDLE hMail, BYTE *pbId, LPWSTR szName);
  * @param piLen Input capacity and output required count.
  * @param szName Receives the folder name, or NULL to query its size.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailGetFolderName(HANDLE hMail, int *piId, int *piLen, LPWSTR szName);
 struct _MAILSORTINFO;
@@ -153,7 +133,7 @@ typedef struct _MAILSORTINFO *PMAILSORTINFO;
  * @param pInfo Receives sort field, direction and message count.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL MailGetSort(HANDLE hMail, PMAILSORTINFO pInfo);
 /**
@@ -164,8 +144,6 @@ BOOL MailGetSort(HANDLE hMail, PMAILSORTINFO pInfo);
  * @param hMail Message-store context.
  * @param pmm Message whose service identifiers are used and object ID is set.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailGetSvcId(HANDLE hMail, MailMsg *pmm);
 /**
@@ -173,8 +151,6 @@ BOOL MailGetSvcId(HANDLE hMail, MailMsg *pmm);
  *
  * @param pmm Message whose headers to measure.
  * @return Header length in characters.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 DWORD MailHeaderLen(MailMsg *pmm);
 /**
@@ -184,7 +160,7 @@ DWORD MailHeaderLen(MailMsg *pmm);
  * @param pmm Message whose attachment length to retrieve.
  * @return Local attachment length.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD MailLocalAttachmentLen(HANDLE hMail, MailMsg *pmm);
 /**
@@ -193,8 +169,6 @@ DWORD MailLocalAttachmentLen(HANDLE hMail, MailMsg *pmm);
  * @param hMail Message-store context.
  * @param pmm Previous message on input; receives the next message.
  * @return TRUE on success, FALSE when no message is available or on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailNext(HANDLE hMail, MailMsg *pmm);
 /**
@@ -203,8 +177,6 @@ BOOL MailNext(HANDLE hMail, MailMsg *pmm);
  * @param phMail Receives the message-store context.
  * @param fAllowCreate Allows creation of the message-store directory and database.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailOpen(HANDLE *phMail, BOOL fAllowCreate);
 /**
@@ -215,7 +187,7 @@ BOOL MailOpen(HANDLE *phMail, BOOL fAllowCreate);
  * @param hwndNotify Window that receives database notifications.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL MailOpenNotify(HANDLE *phMail, BOOL fAllowCreate, HWND hwndNotify);
 /**
@@ -226,8 +198,6 @@ BOOL MailOpenNotify(HANDLE *phMail, BOOL fAllowCreate, HWND hwndNotify);
  * @param hMail Message-store context.
  * @param pmm Message data to store.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailPut(HANDLE hMail, MailMsg *pmm);
 /**
@@ -238,7 +208,7 @@ BOOL MailPut(HANDLE hMail, MailMsg *pmm);
  * @param pma Attachment data to store.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL MailPutAttachment(HANDLE hMail, MailMsg *pmm, MailAtt *pma);
 /**
@@ -248,8 +218,6 @@ BOOL MailPutAttachment(HANDLE hMail, MailMsg *pmm, MailAtt *pma);
  * @param bId Folder ID.
  * @param szName New folder name, or NULL to delete the folder.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailPutFolder(HANDLE hMail, BYTE bId, LPWSTR szName);
 /**
@@ -263,7 +231,7 @@ BOOL MailPutFolder(HANDLE hMail, BYTE bId, LPWSTR szName);
  * @param pcPropVal Receives the number of properties.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL MailReadNonIPMProperties(HANDLE hMail, MailMsg *pmm, CEPROPVAL **ppPropVal, WORD *pcPropVal);
 /**
@@ -271,8 +239,6 @@ BOOL MailReadNonIPMProperties(HANDLE hMail, MailMsg *pmm, CEPROPVAL **ppPropVal,
  *
  * @param hKey Registry key handle.
  * @return Zero on success, or a registry error code.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 LONG MailRegCloseKey(HKEY hKey);
 /**
@@ -287,8 +253,6 @@ LONG MailRegCloseKey(HKEY hKey);
  * @param lpcbClass Input class-buffer size and output class length.
  * @param lpftLastWriteTime Optionally receives the last-write time.
  * @return Zero on success, or a registry error code.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 LONG MailRegEnumKeyExW(HKEY hKey, DWORD dwIndex, LPWSTR lpName, LPDWORD lpcbName, LPDWORD lpReserved, LPWSTR lpClass, LPDWORD lpcbClass, PFILETIME lpftLastWriteTime);
 /**
@@ -300,8 +264,6 @@ LONG MailRegEnumKeyExW(HKEY hKey, DWORD dwIndex, LPWSTR lpName, LPDWORD lpcbName
  * @param samDesired Requested access mask.
  * @param phkResult Receives the opened key handle.
  * @return Zero on success, or a registry error code.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 LONG MailRegOpenKeyExW(HKEY hKey, LPCWSTR lpSubKey, DWORD ulOptions, REGSAM samDesired, PHKEY phkResult);
 /**
@@ -313,7 +275,7 @@ LONG MailRegOpenKeyExW(HKEY hKey, LPCWSTR lpSubKey, DWORD ulOptions, REGSAM samD
  * @param bRetrieve TRUE to request retrieval, FALSE to cancel it.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL MailRequestAttachment(HANDLE hMail, MailMsg *pmm, MailAtt *pma, BOOL bRetrieve);
 /**
@@ -324,7 +286,7 @@ BOOL MailRequestAttachment(HANDLE hMail, MailMsg *pmm, MailAtt *pma, BOOL bRetri
  * @param dwFlags Attachment option flags.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL MailSetAttachmentOptions(HANDLE hMail, MailMsg *pmm, DWORD dwFlags);
 /**
@@ -334,8 +296,6 @@ BOOL MailSetAttachmentOptions(HANDLE hMail, MailMsg *pmm, DWORD dwFlags);
  * @param szName Header field name.
  * @param szVal New field value, or NULL to delete the field.
  * @return TRUE on success, FALSE on allocation failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailSetField(MailMsg *pmm, LPWSTR szName, LPCWSTR szVal);
 typedef enum {
@@ -353,7 +313,7 @@ typedef enum {
  * @param fAscending TRUE for ascending order, FALSE for descending.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL MailSetSort(HANDLE hMail, MAILSORTFIELD iSort, BOOL fAscending);
 /**
@@ -365,8 +325,6 @@ BOOL MailSetSort(HANDLE hMail, MAILSORTFIELD iSort, BOOL fAscending);
  * @param pmm Message with updated flags or fields.
  * @param fDoAll Whether to update all other fields.
  * @return TRUE on success, FALSE on failure.
- *
- * @note Windows CE 1.0 and 3.0 only.
  */
 BOOL MailUpdate(HANDLE hMail, MailMsg *pmm, BOOL fDoAll);
 /**
@@ -378,7 +336,7 @@ BOOL MailUpdate(HANDLE hMail, MailMsg *pmm, BOOL fDoAll);
  * @param cPropVal Number of properties in the array.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL MailWriteNonIPMProperties(HANDLE hMail, MailMsg *pmm, CEPROPVAL *pPropVal, UINT cPropVal);
 struct MailNonIpmInfo_s;

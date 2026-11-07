@@ -15,7 +15,7 @@ extern "C" {
  *
  * @return S_OK on success, or an error HRESULT.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT DllRegisterServer(void);
 /**
@@ -24,7 +24,7 @@ HRESULT DllRegisterServer(void);
  *
  * @return S_OK on success, or an error HRESULT.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT DllUnregisterServer(void);
 struct tagFONTDESC;

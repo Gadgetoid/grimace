@@ -15,7 +15,7 @@ extern "C" {
  * @param pbstr Receives the allocated BSTR.
  * @return S_OK, E_OUTOFMEMORY, E_INVALIDARG or DISP_E_TYPEMISMATCH.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT BstrFromVector(SAFEARRAY *psa, BSTR *pbstr);
 /**
@@ -26,7 +26,7 @@ HRESULT BstrFromVector(SAFEARRAY *psa, BSTR *pbstr);
  * @param pperrinfo Receives the ICreateErrorInfo interface pointer.
  * @return S_OK, or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CreateErrorInfo(ICreateErrorInfo **pperrinfo);
 /**
@@ -39,7 +39,7 @@ HRESULT CreateErrorInfo(ICreateErrorInfo **pperrinfo);
  * @param ppctlib Receives the ICreateTypeLib2 interface pointer.
  * @return S_OK, or an error code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT CreateTypeLib2(SYSKIND syskind, LPCOLESTR szFile, ICreateTypeLib2 **ppctlib);
 /**
@@ -58,7 +58,7 @@ HRESULT CreateTypeLib2(SYSKIND syskind, LPCOLESTR szFile, ICreateTypeLib2 **ppct
  * @param pvargResult Receives the result VARIANT.
  * @return HRESULT indicating success or failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 HRESULT DispCallFunc(void *pvInstance, ULONG oVft, CALLCONV cc, VARTYPE vtReturn, UINT cActuals, VARTYPE *prgvt, VARIANTARG **prgpvarg, VARIANT *pvargResult);
 /**
@@ -73,7 +73,7 @@ HRESULT DispCallFunc(void *pvInstance, ULONG oVft, CALLCONV cc, VARTYPE vtReturn
  * @param rgdispid Receives one DISPID per name.
  * @return S_OK, DISP_E_UNKNOWNNAME, E_INVALIDARG, or a type-info error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT DispGetIDsOfNames(ITypeInfo *ptinfo, OLECHAR **rgszNames, UINT cNames, DISPID *rgdispid);
 /**
@@ -90,7 +90,7 @@ HRESULT DispGetIDsOfNames(ITypeInfo *ptinfo, OLECHAR **rgszNames, UINT cNames, D
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_PARAMNOTFOUND, or another
  *         conversion error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT DispGetParam(DISPPARAMS *pdispparams, UINT position, VARTYPE vtTarg, VARIANT *pvarResult, UINT *puArgErr);
 /**
@@ -110,7 +110,7 @@ HRESULT DispGetParam(DISPPARAMS *pdispparams, UINT position, VARTYPE vtTarg, VAR
  * @param puArgErr Receives the index of an invalid argument.
  * @return S_OK, DISP_E_MEMBERNOTFOUND, DISP_E_TYPEMISMATCH, or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT DispInvoke(void *_this, ITypeInfo *ptinfo, DISPID dispidMember, WORD wFlags, DISPPARAMS *pparams, VARIANT *pvarResult, EXCEPINFO *pexcepinfo, UINT *puArgErr);
 /**
@@ -122,7 +122,7 @@ HRESULT DispInvoke(void *_this, ITypeInfo *ptinfo, DISPID dispidMember, WORD wFl
  * @param pperrinfo Receives the IErrorInfo pointer.
  * @return S_OK if error information was present, S_FALSE otherwise.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT GetErrorInfo(ULONG dwReserved, IErrorInfo **pperrinfo);
 /**
@@ -138,7 +138,7 @@ HRESULT GetErrorInfo(ULONG dwReserved, IErrorInfo **pperrinfo);
  * @param pptlib Receives the ITypeLib interface pointer.
  * @return S_OK, TYPE_E_CANTLOADLIBRARY, or a registry/storage error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT LoadRegTypeLib(const GUID *const rguid, WORD wVerMajor, WORD wVerMinor, LCID lcid, ITypeLib **pptlib);
 /**
@@ -153,7 +153,7 @@ HRESULT LoadRegTypeLib(const GUID *const rguid, WORD wVerMajor, WORD wVerMinor, 
  * @param pptlib Receives the ITypeLib interface pointer.
  * @return S_OK, TYPE_E_CANTLOADLIBRARY, or a type-library error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT LoadTypeLib(const OLECHAR *szFile, ITypeLib **pptlib);
 /**
@@ -166,7 +166,7 @@ HRESULT LoadTypeLib(const OLECHAR *szFile, ITypeLib **pptlib);
  * @param szHelpDir Help-file directory, or NULL.
  * @return S_OK, TYPE_E_REGISTRYACCESS, or a registration error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT RegisterTypeLib(ITypeLib *ptlib, OLECHAR *szFullPath, OLECHAR *szHelpDir);
 /**
@@ -179,7 +179,7 @@ HRESULT RegisterTypeLib(ITypeLib *ptlib, OLECHAR *szFullPath, OLECHAR *szHelpDir
  * @param ppvData Receives the data pointer.
  * @return S_OK, E_INVALIDARG or E_UNEXPECTED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayAccessData(SAFEARRAY *psa, void **ppvData);
 /**
@@ -188,7 +188,7 @@ HRESULT SafeArrayAccessData(SAFEARRAY *psa, void **ppvData);
  * @param psa Descriptor created by SafeArrayAllocDescriptor.
  * @return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayAllocData(SAFEARRAY *psa);
 /**
@@ -200,7 +200,7 @@ HRESULT SafeArrayAllocData(SAFEARRAY *psa);
  * @param ppsaOut Receives the descriptor pointer.
  * @return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayAllocDescriptor(UINT cDims, SAFEARRAY **ppsaOut);
 /**
@@ -213,7 +213,7 @@ HRESULT SafeArrayAllocDescriptor(UINT cDims, SAFEARRAY **ppsaOut);
  * @param ppsaOut Receives the copied array.
  * @return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayCopy(SAFEARRAY *psa, SAFEARRAY **ppsaOut);
 /**
@@ -226,7 +226,7 @@ HRESULT SafeArrayCopy(SAFEARRAY *psa, SAFEARRAY **ppsaOut);
  * @param psaTarget Existing target array.
  * @return S_OK, E_INVALIDARG or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayCopyData(SAFEARRAY *psaSource, SAFEARRAY *psaTarget);
 /**
@@ -240,7 +240,7 @@ HRESULT SafeArrayCopyData(SAFEARRAY *psaSource, SAFEARRAY *psaTarget);
  * @param rgsabound Bounds for each dimension.
  * @return SAFEARRAY descriptor, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 SAFEARRAY * SafeArrayCreate(VARTYPE vt, UINT cDims, SAFEARRAYBOUND *rgsabound);
 /**
@@ -254,7 +254,7 @@ SAFEARRAY * SafeArrayCreate(VARTYPE vt, UINT cDims, SAFEARRAYBOUND *rgsabound);
  * @param cElements Number of elements.
  * @return SAFEARRAY descriptor, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 SAFEARRAY * SafeArrayCreateVector(VARTYPE vt, LONG lLbound, ULONG cElements);
 /**
@@ -265,7 +265,7 @@ SAFEARRAY * SafeArrayCreateVector(VARTYPE vt, LONG lLbound, ULONG cElements);
  * @param psa Array to destroy.
  * @return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayDestroy(SAFEARRAY *psa);
 /**
@@ -276,7 +276,7 @@ HRESULT SafeArrayDestroy(SAFEARRAY *psa);
  * @param psa Array whose data to destroy.
  * @return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayDestroyData(SAFEARRAY *psa);
 /**
@@ -287,7 +287,7 @@ HRESULT SafeArrayDestroyData(SAFEARRAY *psa);
  * @param psa Descriptor to destroy.
  * @return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayDestroyDescriptor(SAFEARRAY *psa);
 /**
@@ -296,7 +296,7 @@ HRESULT SafeArrayDestroyDescriptor(SAFEARRAY *psa);
  * @param psa SAFEARRAY descriptor.
  * @return Number of dimensions.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 UINT SafeArrayGetDim(SAFEARRAY *psa);
 /**
@@ -310,7 +310,7 @@ UINT SafeArrayGetDim(SAFEARRAY *psa);
  * @param pv Receives an element of the correct size and type.
  * @return S_OK, DISP_E_BADINDEX or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayGetElement(SAFEARRAY *psa, LONG *rgIndices, void *pv);
 /**
@@ -319,7 +319,7 @@ HRESULT SafeArrayGetElement(SAFEARRAY *psa, LONG *rgIndices, void *pv);
  * @param psa SAFEARRAY descriptor.
  * @return Element size in bytes.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 UINT SafeArrayGetElemsize(SAFEARRAY *psa);
 /**
@@ -330,7 +330,7 @@ UINT SafeArrayGetElemsize(SAFEARRAY *psa);
  * @param plLbound Receives the lower bound.
  * @return S_OK, DISP_E_BADINDEX or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayGetLBound(SAFEARRAY *psa, UINT nDim, LONG *plLbound);
 /**
@@ -341,7 +341,7 @@ HRESULT SafeArrayGetLBound(SAFEARRAY *psa, UINT nDim, LONG *plLbound);
  * @param plUbound Receives the upper bound.
  * @return S_OK, DISP_E_BADINDEX or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayGetUBound(SAFEARRAY *psa, UINT nDim, LONG *plUbound);
 /**
@@ -353,7 +353,7 @@ HRESULT SafeArrayGetUBound(SAFEARRAY *psa, UINT nDim, LONG *plUbound);
  * @param psa SAFEARRAY descriptor.
  * @return S_OK, E_INVALIDARG or E_UNEXPECTED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayLock(SAFEARRAY *psa);
 /**
@@ -366,7 +366,7 @@ HRESULT SafeArrayLock(SAFEARRAY *psa);
  * @param ppvData Receives the element pointer.
  * @return S_OK, DISP_E_BADINDEX or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayPtrOfIndex(SAFEARRAY *psa, LONG *rgIndices, void **ppvData);
 /**
@@ -380,7 +380,7 @@ HRESULT SafeArrayPtrOfIndex(SAFEARRAY *psa, LONG *rgIndices, void **ppvData);
  * @param pv Value to copy; pointer-valued VARTYPEs are passed directly.
  * @return S_OK, DISP_E_BADINDEX, E_INVALIDARG or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayPutElement(SAFEARRAY *psa, LONG *rgIndices, void *pv);
 /**
@@ -393,7 +393,7 @@ HRESULT SafeArrayPutElement(SAFEARRAY *psa, LONG *rgIndices, void *pv);
  * @param psaboundNew New bound for the rightmost dimension.
  * @return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayRedim(SAFEARRAY *psa, SAFEARRAYBOUND *psaboundNew);
 /**
@@ -404,7 +404,7 @@ HRESULT SafeArrayRedim(SAFEARRAY *psa, SAFEARRAYBOUND *psaboundNew);
  * @param psa SAFEARRAY descriptor.
  * @return S_OK, E_INVALIDARG or E_UNEXPECTED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayUnaccessData(SAFEARRAY *psa);
 /**
@@ -415,7 +415,7 @@ HRESULT SafeArrayUnaccessData(SAFEARRAY *psa);
  * @param psa SAFEARRAY descriptor.
  * @return S_OK, E_INVALIDARG or E_UNEXPECTED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SafeArrayUnlock(SAFEARRAY *psa);
 /**
@@ -427,7 +427,7 @@ HRESULT SafeArrayUnlock(SAFEARRAY *psa);
  * @param perrinfo Error information object to associate with the thread.
  * @return S_OK on success.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT SetErrorInfo(ULONG dwReserved, IErrorInfo *perrinfo);
 /**
@@ -438,7 +438,7 @@ HRESULT SetErrorInfo(ULONG dwReserved, IErrorInfo *perrinfo);
  * @param sz Unicode string to copy.
  * @return Allocated BSTR, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BSTR SysAllocString(const OLECHAR *sz);
 /**
@@ -451,7 +451,7 @@ BSTR SysAllocString(const OLECHAR *sz);
  * @param len Number of bytes to allocate and copy.
  * @return Allocated BSTR, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BSTR SysAllocStringByteLen(LPCSTR psz, UINT len);
 /**
@@ -464,7 +464,7 @@ BSTR SysAllocStringByteLen(LPCSTR psz, UINT len);
  * @param cch Number of characters.
  * @return Allocated BSTR, or NULL on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BSTR SysAllocStringLen(const OLECHAR *pch, UINT cch);
 /**
@@ -474,7 +474,7 @@ BSTR SysAllocStringLen(const OLECHAR *pch, UINT cch);
  *
  * @param bstr BSTR to free, or NULL.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void SysFreeString(BSTR bstr);
 /**
@@ -486,7 +486,7 @@ void SysFreeString(BSTR bstr);
  * @param sz Unicode string to copy.
  * @return Nonzero on success, zero if allocation fails.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 INT SysReAllocString(BSTR *pbstr, const OLECHAR *sz);
 /**
@@ -499,7 +499,7 @@ INT SysReAllocString(BSTR *pbstr, const OLECHAR *sz);
  * @param cch Number of characters.
  * @return Nonzero on success, zero if allocation fails.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 INT SysReAllocStringLen(BSTR *pbstr, const OLECHAR *pch, UINT cch);
 /**
@@ -511,7 +511,7 @@ INT SysReAllocStringLen(BSTR *pbstr, const OLECHAR *pch, UINT cch);
  * @param bstr BSTR to measure.
  * @return Stored length in bytes.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 UINT SysStringByteLen(BSTR bstr);
 /**
@@ -522,7 +522,7 @@ UINT SysStringByteLen(BSTR bstr);
  * @param bstr BSTR to measure.
  * @return Stored length in characters.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 UINT SysStringLen(BSTR bstr);
 /**
@@ -535,7 +535,7 @@ UINT SysStringLen(BSTR bstr);
  * @param pvtime Receives the Automation DATE.
  * @return Nonzero on success, zero on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 INT SystemTimeToVariantTime(LPSYSTEMTIME lpSystemTime, DOUBLE *pvtime);
 /**
@@ -545,7 +545,7 @@ INT SystemTimeToVariantTime(LPSYSTEMTIME lpSystemTime, DOUBLE *pvtime);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromCy(CY cyIn, VARIANT_BOOL *pboolOut);
 /**
@@ -555,7 +555,7 @@ HRESULT VarBoolFromCy(CY cyIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromDate(DATE dateIn, VARIANT_BOOL *pboolOut);
 /**
@@ -565,7 +565,7 @@ HRESULT VarBoolFromDate(DATE dateIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromDec(DECIMAL *pdecIn, VARIANT_BOOL *pboolOut);
 /**
@@ -576,7 +576,7 @@ HRESULT VarBoolFromDec(DECIMAL *pdecIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromDisp(IDispatch *pdispIn, LCID lcid, VARIANT_BOOL *pboolOut);
 /**
@@ -586,7 +586,7 @@ HRESULT VarBoolFromDisp(IDispatch *pdispIn, LCID lcid, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromI1(CHAR cIn, VARIANT_BOOL *pboolOut);
 /**
@@ -596,7 +596,7 @@ HRESULT VarBoolFromI1(CHAR cIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromI2(SHORT sIn, VARIANT_BOOL *pboolOut);
 /**
@@ -606,7 +606,7 @@ HRESULT VarBoolFromI2(SHORT sIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromI4(LONG lIn, VARIANT_BOOL *pboolOut);
 /**
@@ -616,7 +616,7 @@ HRESULT VarBoolFromI4(LONG lIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromR4(FLOAT fltIn, VARIANT_BOOL *pboolOut);
 /**
@@ -626,7 +626,7 @@ HRESULT VarBoolFromR4(FLOAT fltIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromR8(DOUBLE dblIn, VARIANT_BOOL *pboolOut);
 /**
@@ -638,7 +638,7 @@ HRESULT VarBoolFromR8(DOUBLE dblIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, VARIANT_BOOL *pboolOut);
 /**
@@ -648,7 +648,7 @@ HRESULT VarBoolFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, VARIANT_BOOL *p
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromUI1(BYTE bIn, VARIANT_BOOL *pboolOut);
 /**
@@ -658,7 +658,7 @@ HRESULT VarBoolFromUI1(BYTE bIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromUI2(USHORT uiIn, VARIANT_BOOL *pboolOut);
 /**
@@ -668,7 +668,7 @@ HRESULT VarBoolFromUI2(USHORT uiIn, VARIANT_BOOL *pboolOut);
  * @param pboolOut Receives VARIANT_TRUE or VARIANT_FALSE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBoolFromUI4(ULONG ulIn, VARIANT_BOOL *pboolOut);
 /**
@@ -682,7 +682,7 @@ HRESULT VarBoolFromUI4(ULONG ulIn, VARIANT_BOOL *pboolOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromBool(VARIANT_BOOL boolIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -696,7 +696,7 @@ HRESULT VarBstrFromBool(VARIANT_BOOL boolIn, LCID lcid, ULONG dwFlags, BSTR *pbs
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromCy(CY cyIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -712,7 +712,7 @@ HRESULT VarBstrFromCy(CY cyIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromDate(DATE dateIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -726,7 +726,7 @@ HRESULT VarBstrFromDate(DATE dateIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromDec(DECIMAL *pdecIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -740,7 +740,7 @@ HRESULT VarBstrFromDec(DECIMAL *pdecIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromDisp(IDispatch *pdispIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -754,7 +754,7 @@ HRESULT VarBstrFromDisp(IDispatch *pdispIn, LCID lcid, ULONG dwFlags, BSTR *pbst
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromI1(CHAR cIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -768,7 +768,7 @@ HRESULT VarBstrFromI1(CHAR cIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromI2(SHORT iVal, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -782,7 +782,7 @@ HRESULT VarBstrFromI2(SHORT iVal, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromI4(LONG lIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -796,7 +796,7 @@ HRESULT VarBstrFromI4(LONG lIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromR4(FLOAT fltIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -810,7 +810,7 @@ HRESULT VarBstrFromR4(FLOAT fltIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromR8(DOUBLE dblIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -824,7 +824,7 @@ HRESULT VarBstrFromR8(DOUBLE dblIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromUI1(BYTE bVal, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -838,7 +838,7 @@ HRESULT VarBstrFromUI1(BYTE bVal, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromUI2(USHORT uiIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -852,7 +852,7 @@ HRESULT VarBstrFromUI2(USHORT uiIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pbstrOut Receives the allocated BSTR.
  * @return S_OK, DISP_E_TYPEMISMATCH, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarBstrFromUI4(ULONG ulIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
 /**
@@ -862,7 +862,7 @@ HRESULT VarBstrFromUI4(ULONG ulIn, LCID lcid, ULONG dwFlags, BSTR *pbstrOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromBool(VARIANT_BOOL boolIn, CY *pcyOut);
 /**
@@ -872,7 +872,7 @@ HRESULT VarCyFromBool(VARIANT_BOOL boolIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromDate(DATE dateIn, CY *pcyOut);
 /**
@@ -882,7 +882,7 @@ HRESULT VarCyFromDate(DATE dateIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromDec(DECIMAL *pdecIn, CY *pcyOut);
 /**
@@ -893,7 +893,7 @@ HRESULT VarCyFromDec(DECIMAL *pdecIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromDisp(IDispatch *pdispIn, LCID lcid, CY *pcyOut);
 /**
@@ -903,7 +903,7 @@ HRESULT VarCyFromDisp(IDispatch *pdispIn, LCID lcid, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromI1(CHAR cIn, CY *pcyOut);
 /**
@@ -913,7 +913,7 @@ HRESULT VarCyFromI1(CHAR cIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromI2(SHORT sIn, CY *pcyOut);
 /**
@@ -923,7 +923,7 @@ HRESULT VarCyFromI2(SHORT sIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromI4(LONG lIn, CY *pcyOut);
 /**
@@ -933,7 +933,7 @@ HRESULT VarCyFromI4(LONG lIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromR4(FLOAT fltIn, CY *pcyOut);
 /**
@@ -943,7 +943,7 @@ HRESULT VarCyFromR4(FLOAT fltIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromR8(DOUBLE dblIn, CY *pcyOut);
 /**
@@ -955,7 +955,7 @@ HRESULT VarCyFromR8(DOUBLE dblIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, CY *pcyOut);
 /**
@@ -965,7 +965,7 @@ HRESULT VarCyFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromUI1(BYTE bIn, CY *pcyOut);
 /**
@@ -975,7 +975,7 @@ HRESULT VarCyFromUI1(BYTE bIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromUI2(USHORT uiIn, CY *pcyOut);
 /**
@@ -985,7 +985,7 @@ HRESULT VarCyFromUI2(USHORT uiIn, CY *pcyOut);
  * @param pcyOut Receives the currency value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarCyFromUI4(ULONG ulIn, CY *pcyOut);
 /**
@@ -995,7 +995,7 @@ HRESULT VarCyFromUI4(ULONG ulIn, CY *pcyOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromBool(VARIANT_BOOL boolIn, DATE *pdateOut);
 /**
@@ -1005,7 +1005,7 @@ HRESULT VarDateFromBool(VARIANT_BOOL boolIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromCy(CY cyIn, DATE *pdateOut);
 /**
@@ -1015,7 +1015,7 @@ HRESULT VarDateFromCy(CY cyIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromDec(DECIMAL *pdecIn, DATE *pdateOut);
 /**
@@ -1026,7 +1026,7 @@ HRESULT VarDateFromDec(DECIMAL *pdecIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromDisp(IDispatch *pdispIn, LCID lcid, DATE *pdateOut);
 /**
@@ -1036,7 +1036,7 @@ HRESULT VarDateFromDisp(IDispatch *pdispIn, LCID lcid, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromI1(CHAR cIn, DATE *pdateOut);
 /**
@@ -1046,7 +1046,7 @@ HRESULT VarDateFromI1(CHAR cIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromI2(SHORT sIn, DATE *pdateOut);
 /**
@@ -1056,7 +1056,7 @@ HRESULT VarDateFromI2(SHORT sIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromI4(LONG lIn, DATE *pdateOut);
 /**
@@ -1066,7 +1066,7 @@ HRESULT VarDateFromI4(LONG lIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromR4(FLOAT fltIn, DATE *pdateOut);
 /**
@@ -1076,7 +1076,7 @@ HRESULT VarDateFromR4(FLOAT fltIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromR8(DOUBLE dblIn, DATE *pdateOut);
 /**
@@ -1091,7 +1091,7 @@ HRESULT VarDateFromR8(DOUBLE dblIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, DATE *pdateOut);
 /**
@@ -1101,7 +1101,7 @@ HRESULT VarDateFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, DATE *pdateOut)
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromUI1(BYTE bIn, DATE *pdateOut);
 /**
@@ -1111,7 +1111,7 @@ HRESULT VarDateFromUI1(BYTE bIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromUI2(USHORT uiIn, DATE *pdateOut);
 /**
@@ -1121,7 +1121,7 @@ HRESULT VarDateFromUI2(USHORT uiIn, DATE *pdateOut);
  * @param pdateOut Receives the DATE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromUI4(ULONG ulIn, DATE *pdateOut);
 typedef struct {
@@ -1137,7 +1137,7 @@ typedef struct {
  * @param pdateOut Receives the DATE value.
  * @return S_OK, E_OUTOFMEMORY or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDateFromUdate(UDATE *pudateIn, ULONG dwFlags, DATE *pdateOut);
 /**
@@ -1147,7 +1147,7 @@ HRESULT VarDateFromUdate(UDATE *pudateIn, ULONG dwFlags, DATE *pdateOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromBool(VARIANT_BOOL boolIn, DECIMAL *pdecOut);
 /**
@@ -1157,7 +1157,7 @@ HRESULT VarDecFromBool(VARIANT_BOOL boolIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromCy(CY cyIn, DECIMAL *pdecOut);
 /**
@@ -1167,7 +1167,7 @@ HRESULT VarDecFromCy(CY cyIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromDate(DATE dateIn, DECIMAL *pdecOut);
 /**
@@ -1178,7 +1178,7 @@ HRESULT VarDecFromDate(DATE dateIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromDisp(IDispatch *pdispIn, LCID lcid, DECIMAL *pdecOut);
 /**
@@ -1188,7 +1188,7 @@ HRESULT VarDecFromDisp(IDispatch *pdispIn, LCID lcid, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromI1(CHAR cIn, DECIMAL *pdecOut);
 /**
@@ -1198,7 +1198,7 @@ HRESULT VarDecFromI1(CHAR cIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromI2(SHORT uiIn, DECIMAL *pdecOut);
 /**
@@ -1208,7 +1208,7 @@ HRESULT VarDecFromI2(SHORT uiIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromI4(LONG lIn, DECIMAL *pdecOut);
 /**
@@ -1218,7 +1218,7 @@ HRESULT VarDecFromI4(LONG lIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromR4(FLOAT fltIn, DECIMAL *pdecOut);
 /**
@@ -1228,7 +1228,7 @@ HRESULT VarDecFromR4(FLOAT fltIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromR8(DOUBLE dblIn, DECIMAL *pdecOut);
 /**
@@ -1240,7 +1240,7 @@ HRESULT VarDecFromR8(DOUBLE dblIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, DECIMAL *pdecOut);
 /**
@@ -1250,7 +1250,7 @@ HRESULT VarDecFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, DECIMAL *pdecOut
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromUI1(BYTE bIn, DECIMAL *pdecOut);
 /**
@@ -1260,7 +1260,7 @@ HRESULT VarDecFromUI1(BYTE bIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromUI2(USHORT uiIn, DECIMAL *pdecOut);
 /**
@@ -1270,7 +1270,7 @@ HRESULT VarDecFromUI2(USHORT uiIn, DECIMAL *pdecOut);
  * @param pdecOut Receives the DECIMAL value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarDecFromUI4(ULONG ulIn, DECIMAL *pdecOut);
 /**
@@ -1280,7 +1280,7 @@ HRESULT VarDecFromUI4(ULONG ulIn, DECIMAL *pdecOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromBool(VARIANT_BOOL boolIn, CHAR *pcOut);
 /**
@@ -1290,7 +1290,7 @@ HRESULT VarI1FromBool(VARIANT_BOOL boolIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromCy(CY cyIn, CHAR *pcOut);
 /**
@@ -1300,7 +1300,7 @@ HRESULT VarI1FromCy(CY cyIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromDate(DATE dateIn, CHAR *pcOut);
 /**
@@ -1310,7 +1310,7 @@ HRESULT VarI1FromDate(DATE dateIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromDec(DECIMAL *pdecIn, CHAR *pcOut);
 /**
@@ -1321,7 +1321,7 @@ HRESULT VarI1FromDec(DECIMAL *pdecIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromDisp(IDispatch *pdispIn, LCID lcid, CHAR *pcOut);
 /**
@@ -1331,7 +1331,7 @@ HRESULT VarI1FromDisp(IDispatch *pdispIn, LCID lcid, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromI2(SHORT uiIn, CHAR *pcOut);
 /**
@@ -1341,7 +1341,7 @@ HRESULT VarI1FromI2(SHORT uiIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromI4(LONG lIn, CHAR *pcOut);
 /**
@@ -1351,7 +1351,7 @@ HRESULT VarI1FromI4(LONG lIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromR4(FLOAT fltIn, CHAR *pcOut);
 /**
@@ -1361,7 +1361,7 @@ HRESULT VarI1FromR4(FLOAT fltIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromR8(DOUBLE dblIn, CHAR *pcOut);
 /**
@@ -1373,7 +1373,7 @@ HRESULT VarI1FromR8(DOUBLE dblIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, CHAR *pcOut);
 /**
@@ -1383,7 +1383,7 @@ HRESULT VarI1FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromUI1(BYTE bIn, CHAR *pcOut);
 /**
@@ -1393,7 +1393,7 @@ HRESULT VarI1FromUI1(BYTE bIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromUI2(USHORT uiIn, CHAR *pcOut);
 /**
@@ -1403,7 +1403,7 @@ HRESULT VarI1FromUI2(USHORT uiIn, CHAR *pcOut);
  * @param pcOut Receives the signed byte.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI1FromUI4(ULONG ulIn, CHAR *pcOut);
 /**
@@ -1413,7 +1413,7 @@ HRESULT VarI1FromUI4(ULONG ulIn, CHAR *pcOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromBool(VARIANT_BOOL boolIn, SHORT *psOut);
 /**
@@ -1423,7 +1423,7 @@ HRESULT VarI2FromBool(VARIANT_BOOL boolIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromCy(CY cyIn, SHORT *psOut);
 /**
@@ -1433,7 +1433,7 @@ HRESULT VarI2FromCy(CY cyIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromDate(DATE dateIn, SHORT *psOut);
 /**
@@ -1443,7 +1443,7 @@ HRESULT VarI2FromDate(DATE dateIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromDec(DECIMAL *pdecIn, SHORT *psOut);
 /**
@@ -1454,7 +1454,7 @@ HRESULT VarI2FromDec(DECIMAL *pdecIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromDisp(IDispatch *pdispIn, LCID lcid, SHORT *psOut);
 /**
@@ -1464,7 +1464,7 @@ HRESULT VarI2FromDisp(IDispatch *pdispIn, LCID lcid, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromI1(CHAR cIn, SHORT *psOut);
 /**
@@ -1474,7 +1474,7 @@ HRESULT VarI2FromI1(CHAR cIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromI4(LONG lIn, SHORT *psOut);
 /**
@@ -1484,7 +1484,7 @@ HRESULT VarI2FromI4(LONG lIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromR4(FLOAT fltIn, SHORT *psOut);
 /**
@@ -1494,7 +1494,7 @@ HRESULT VarI2FromR4(FLOAT fltIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromR8(DOUBLE dblIn, SHORT *psOut);
 /**
@@ -1506,7 +1506,7 @@ HRESULT VarI2FromR8(DOUBLE dblIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, SHORT *psOut);
 /**
@@ -1516,7 +1516,7 @@ HRESULT VarI2FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromUI1(BYTE bIn, SHORT *psOut);
 /**
@@ -1526,7 +1526,7 @@ HRESULT VarI2FromUI1(BYTE bIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromUI2(USHORT uiIn, SHORT *psOut);
 /**
@@ -1536,7 +1536,7 @@ HRESULT VarI2FromUI2(USHORT uiIn, SHORT *psOut);
  * @param psOut Receives the SHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI2FromUI4(ULONG ulIn, SHORT *psOut);
 /**
@@ -1546,7 +1546,7 @@ HRESULT VarI2FromUI4(ULONG ulIn, SHORT *psOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromBool(VARIANT_BOOL boolIn, LONG *plOut);
 /**
@@ -1556,7 +1556,7 @@ HRESULT VarI4FromBool(VARIANT_BOOL boolIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromCy(CY cyIn, LONG *plOut);
 /**
@@ -1566,7 +1566,7 @@ HRESULT VarI4FromCy(CY cyIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromDate(DATE dateIn, LONG *plOut);
 /**
@@ -1576,7 +1576,7 @@ HRESULT VarI4FromDate(DATE dateIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromDec(DECIMAL *pdecIn, LONG *plOut);
 /**
@@ -1587,7 +1587,7 @@ HRESULT VarI4FromDec(DECIMAL *pdecIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromDisp(IDispatch *pdispIn, LCID lcid, LONG *plOut);
 /**
@@ -1597,7 +1597,7 @@ HRESULT VarI4FromDisp(IDispatch *pdispIn, LCID lcid, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromI1(CHAR cIn, LONG *plOut);
 /**
@@ -1607,7 +1607,7 @@ HRESULT VarI4FromI1(CHAR cIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromI2(SHORT sIn, LONG *plOut);
 /**
@@ -1617,7 +1617,7 @@ HRESULT VarI4FromI2(SHORT sIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromR4(FLOAT fltIn, LONG *plOut);
 /**
@@ -1627,7 +1627,7 @@ HRESULT VarI4FromR4(FLOAT fltIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromR8(DOUBLE dblIn, LONG *plOut);
 /**
@@ -1639,7 +1639,7 @@ HRESULT VarI4FromR8(DOUBLE dblIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, LONG *plOut);
 /**
@@ -1649,7 +1649,7 @@ HRESULT VarI4FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromUI1(BYTE bIn, LONG *plOut);
 /**
@@ -1659,7 +1659,7 @@ HRESULT VarI4FromUI1(BYTE bIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromUI2(USHORT uiIn, LONG *plOut);
 /**
@@ -1669,7 +1669,7 @@ HRESULT VarI4FromUI2(USHORT uiIn, LONG *plOut);
  * @param plOut Receives the LONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarI4FromUI4(ULONG ulIn, LONG *plOut);
 typedef struct {
@@ -1693,7 +1693,7 @@ typedef struct {
  * @param pvar Receives the converted VARIANT.
  * @return S_OK, DISP_E_OVERFLOW or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarNumFromParseNum(NUMPARSE *pnumprs, BYTE *rgbDig, ULONG dwVtBits, VARIANT *pvar);
 /**
@@ -1709,7 +1709,7 @@ HRESULT VarNumFromParseNum(NUMPARSE *pnumprs, BYTE *rgbDig, ULONG dwVtBits, VARI
  * @param rgbDig Receives parsed digits; size is specified by pnumprs.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarParseNumFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, NUMPARSE *pnumprs, BYTE *rgbDig);
 /**
@@ -1719,7 +1719,7 @@ HRESULT VarParseNumFromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, NUMPARSE *p
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromBool(VARIANT_BOOL boolIn, FLOAT *pfltOut);
 /**
@@ -1729,7 +1729,7 @@ HRESULT VarR4FromBool(VARIANT_BOOL boolIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromCy(CY cyIn, FLOAT *pfltOut);
 /**
@@ -1739,7 +1739,7 @@ HRESULT VarR4FromCy(CY cyIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromDate(DATE dateIn, FLOAT *pfltOut);
 /**
@@ -1749,7 +1749,7 @@ HRESULT VarR4FromDate(DATE dateIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromDec(DECIMAL *pdecIn, FLOAT *pfltOut);
 /**
@@ -1760,7 +1760,7 @@ HRESULT VarR4FromDec(DECIMAL *pdecIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromDisp(IDispatch *pdispIn, LCID lcid, FLOAT *pfltOut);
 /**
@@ -1770,7 +1770,7 @@ HRESULT VarR4FromDisp(IDispatch *pdispIn, LCID lcid, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromI1(CHAR cIn, FLOAT *pfltOut);
 /**
@@ -1780,7 +1780,7 @@ HRESULT VarR4FromI1(CHAR cIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromI2(SHORT sIn, FLOAT *pfltOut);
 /**
@@ -1790,7 +1790,7 @@ HRESULT VarR4FromI2(SHORT sIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromI4(LONG lIn, FLOAT *pfltOut);
 /**
@@ -1800,7 +1800,7 @@ HRESULT VarR4FromI4(LONG lIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromR8(DOUBLE dblIn, FLOAT *pfltOut);
 /**
@@ -1812,7 +1812,7 @@ HRESULT VarR4FromR8(DOUBLE dblIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, FLOAT *pfltOut);
 /**
@@ -1822,7 +1822,7 @@ HRESULT VarR4FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromUI1(BYTE bIn, FLOAT *pfltOut);
 /**
@@ -1832,7 +1832,7 @@ HRESULT VarR4FromUI1(BYTE bIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromUI2(USHORT uiIn, FLOAT *pfltOut);
 /**
@@ -1842,7 +1842,7 @@ HRESULT VarR4FromUI2(USHORT uiIn, FLOAT *pfltOut);
  * @param pfltOut Receives the FLOAT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR4FromUI4(ULONG ulIn, FLOAT *pfltOut);
 /**
@@ -1852,7 +1852,7 @@ HRESULT VarR4FromUI4(ULONG ulIn, FLOAT *pfltOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromBool(VARIANT_BOOL boolIn, DOUBLE *pdblOut);
 /**
@@ -1862,7 +1862,7 @@ HRESULT VarR8FromBool(VARIANT_BOOL boolIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromCy(CY cyIn, DOUBLE *pdblOut);
 /**
@@ -1872,7 +1872,7 @@ HRESULT VarR8FromCy(CY cyIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromDate(DATE dateIn, DOUBLE *pdblOut);
 /**
@@ -1882,7 +1882,7 @@ HRESULT VarR8FromDate(DATE dateIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromDec(DECIMAL *pdecIn, DOUBLE *pdblOut);
 /**
@@ -1893,7 +1893,7 @@ HRESULT VarR8FromDec(DECIMAL *pdecIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromDisp(IDispatch *pdispIn, LCID lcid, DOUBLE *pdblOut);
 /**
@@ -1903,7 +1903,7 @@ HRESULT VarR8FromDisp(IDispatch *pdispIn, LCID lcid, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromI1(CHAR cIn, DOUBLE *pdblOut);
 /**
@@ -1913,7 +1913,7 @@ HRESULT VarR8FromI1(CHAR cIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromI2(SHORT sIn, DOUBLE *pdblOut);
 /**
@@ -1923,7 +1923,7 @@ HRESULT VarR8FromI2(SHORT sIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromI4(LONG lIn, DOUBLE *pdblOut);
 /**
@@ -1933,7 +1933,7 @@ HRESULT VarR8FromI4(LONG lIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromR4(FLOAT fltIn, DOUBLE *pdblOut);
 /**
@@ -1945,7 +1945,7 @@ HRESULT VarR8FromR4(FLOAT fltIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, DOUBLE *pdblOut);
 /**
@@ -1955,7 +1955,7 @@ HRESULT VarR8FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromUI1(BYTE bIn, DOUBLE *pdblOut);
 /**
@@ -1965,7 +1965,7 @@ HRESULT VarR8FromUI1(BYTE bIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromUI2(USHORT uiIn, DOUBLE *pdblOut);
 /**
@@ -1975,7 +1975,7 @@ HRESULT VarR8FromUI2(USHORT uiIn, DOUBLE *pdblOut);
  * @param pdblOut Receives the DOUBLE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarR8FromUI4(ULONG ulIn, DOUBLE *pdblOut);
 /**
@@ -1985,7 +1985,7 @@ HRESULT VarR8FromUI4(ULONG ulIn, DOUBLE *pdblOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromBool(VARIANT_BOOL boolIn, BYTE *pbOut);
 /**
@@ -1995,7 +1995,7 @@ HRESULT VarUI1FromBool(VARIANT_BOOL boolIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromCy(CY cyIn, BYTE *pbOut);
 /**
@@ -2005,7 +2005,7 @@ HRESULT VarUI1FromCy(CY cyIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromDate(DATE dateIn, BYTE *pbOut);
 /**
@@ -2015,7 +2015,7 @@ HRESULT VarUI1FromDate(DATE dateIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromDec(DECIMAL *pdecIn, BYTE *pbOut);
 /**
@@ -2026,7 +2026,7 @@ HRESULT VarUI1FromDec(DECIMAL *pdecIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromDisp(IDispatch *pdispIn, LCID lcid, BYTE *pbOut);
 /**
@@ -2036,7 +2036,7 @@ HRESULT VarUI1FromDisp(IDispatch *pdispIn, LCID lcid, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromI1(CHAR cIn, BYTE *pbOut);
 /**
@@ -2046,7 +2046,7 @@ HRESULT VarUI1FromI1(CHAR cIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromI2(SHORT sIn, BYTE *pbOut);
 /**
@@ -2056,7 +2056,7 @@ HRESULT VarUI1FromI2(SHORT sIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromI4(LONG lIn, BYTE *pbOut);
 /**
@@ -2066,7 +2066,7 @@ HRESULT VarUI1FromI4(LONG lIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromR4(FLOAT fltIn, BYTE *pbOut);
 /**
@@ -2076,7 +2076,7 @@ HRESULT VarUI1FromR4(FLOAT fltIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromR8(DOUBLE dblIn, BYTE *pbOut);
 /**
@@ -2088,7 +2088,7 @@ HRESULT VarUI1FromR8(DOUBLE dblIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, BYTE *pbOut);
 /**
@@ -2098,7 +2098,7 @@ HRESULT VarUI1FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromUI2(USHORT uiIn, BYTE *pbOut);
 /**
@@ -2108,7 +2108,7 @@ HRESULT VarUI1FromUI2(USHORT uiIn, BYTE *pbOut);
  * @param pbOut Receives the BYTE value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI1FromUI4(ULONG ulIn, BYTE *pbOut);
 /**
@@ -2118,7 +2118,7 @@ HRESULT VarUI1FromUI4(ULONG ulIn, BYTE *pbOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromBool(VARIANT_BOOL boolIn, USHORT *puiOut);
 /**
@@ -2128,7 +2128,7 @@ HRESULT VarUI2FromBool(VARIANT_BOOL boolIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromCy(CY cyIn, USHORT *puiOut);
 /**
@@ -2138,7 +2138,7 @@ HRESULT VarUI2FromCy(CY cyIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromDate(DATE dateIn, USHORT *puiOut);
 /**
@@ -2148,7 +2148,7 @@ HRESULT VarUI2FromDate(DATE dateIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromDec(DECIMAL *pdecIn, USHORT *puiOut);
 /**
@@ -2159,7 +2159,7 @@ HRESULT VarUI2FromDec(DECIMAL *pdecIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromDisp(IDispatch *pdispIn, LCID lcid, USHORT *puiOut);
 /**
@@ -2169,7 +2169,7 @@ HRESULT VarUI2FromDisp(IDispatch *pdispIn, LCID lcid, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromI1(CHAR cIn, USHORT *puiOut);
 /**
@@ -2179,7 +2179,7 @@ HRESULT VarUI2FromI1(CHAR cIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromI2(SHORT uiIn, USHORT *puiOut);
 /**
@@ -2189,7 +2189,7 @@ HRESULT VarUI2FromI2(SHORT uiIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromI4(LONG lIn, USHORT *puiOut);
 /**
@@ -2199,7 +2199,7 @@ HRESULT VarUI2FromI4(LONG lIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromR4(FLOAT fltIn, USHORT *puiOut);
 /**
@@ -2209,7 +2209,7 @@ HRESULT VarUI2FromR4(FLOAT fltIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromR8(DOUBLE dblIn, USHORT *puiOut);
 /**
@@ -2221,7 +2221,7 @@ HRESULT VarUI2FromR8(DOUBLE dblIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, USHORT *puiOut);
 /**
@@ -2231,7 +2231,7 @@ HRESULT VarUI2FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromUI1(BYTE bIn, USHORT *puiOut);
 /**
@@ -2241,7 +2241,7 @@ HRESULT VarUI2FromUI1(BYTE bIn, USHORT *puiOut);
  * @param puiOut Receives the USHORT value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI2FromUI4(ULONG ulIn, USHORT *puiOut);
 /**
@@ -2251,7 +2251,7 @@ HRESULT VarUI2FromUI4(ULONG ulIn, USHORT *puiOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromBool(VARIANT_BOOL boolIn, ULONG *pulOut);
 /**
@@ -2261,7 +2261,7 @@ HRESULT VarUI4FromBool(VARIANT_BOOL boolIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromCy(CY cyIn, ULONG *pulOut);
 /**
@@ -2271,7 +2271,7 @@ HRESULT VarUI4FromCy(CY cyIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromDate(DATE dateIn, ULONG *pulOut);
 /**
@@ -2281,7 +2281,7 @@ HRESULT VarUI4FromDate(DATE dateIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromDec(DECIMAL *pdecIn, ULONG *pulOut);
 /**
@@ -2292,7 +2292,7 @@ HRESULT VarUI4FromDec(DECIMAL *pdecIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromDisp(IDispatch *pdispIn, LCID lcid, ULONG *pulOut);
 /**
@@ -2302,7 +2302,7 @@ HRESULT VarUI4FromDisp(IDispatch *pdispIn, LCID lcid, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromI1(CHAR cIn, ULONG *pulOut);
 /**
@@ -2312,7 +2312,7 @@ HRESULT VarUI4FromI1(CHAR cIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromI2(SHORT uiIn, ULONG *pulOut);
 /**
@@ -2322,7 +2322,7 @@ HRESULT VarUI4FromI2(SHORT uiIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromI4(LONG lIn, ULONG *pulOut);
 /**
@@ -2332,7 +2332,7 @@ HRESULT VarUI4FromI4(LONG lIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromR4(FLOAT fltIn, ULONG *pulOut);
 /**
@@ -2342,7 +2342,7 @@ HRESULT VarUI4FromR4(FLOAT fltIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromR8(DOUBLE dblIn, ULONG *pulOut);
 /**
@@ -2354,7 +2354,7 @@ HRESULT VarUI4FromR8(DOUBLE dblIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_TYPEMISMATCH, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, ULONG *pulOut);
 /**
@@ -2364,7 +2364,7 @@ HRESULT VarUI4FromStr(OLECHAR *strIn, LCID lcid, ULONG dwFlags, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromUI1(BYTE bIn, ULONG *pulOut);
 /**
@@ -2374,7 +2374,7 @@ HRESULT VarUI4FromUI1(BYTE bIn, ULONG *pulOut);
  * @param pulOut Receives the ULONG value.
  * @return S_OK, DISP_E_OVERFLOW or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUI4FromUI2(USHORT uiIn, ULONG *pulOut);
 /**
@@ -2385,7 +2385,7 @@ HRESULT VarUI4FromUI2(USHORT uiIn, ULONG *pulOut);
  * @param pudateOut Receives the unpacked date.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VarUdateFromDate(DATE dateIn, ULONG dwFlags, UDATE *pudateOut);
 /**
@@ -2397,7 +2397,7 @@ HRESULT VarUdateFromDate(DATE dateIn, ULONG dwFlags, UDATE *pudateOut);
  * @param vt Destination VARTYPE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VariantChangeType(VARIANTARG *pvargDest, VARIANTARG *pvarSrc, USHORT wFlags, VARTYPE vt);
 /**
@@ -2410,7 +2410,7 @@ HRESULT VariantChangeType(VARIANTARG *pvargDest, VARIANTARG *pvarSrc, USHORT wFl
  * @param vt Destination VARTYPE.
  * @return S_OK, DISP_E_OVERFLOW, DISP_E_TYPEMISMATCH or an error.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VariantChangeTypeEx(VARIANTARG *pvargDest, VARIANTARG *pvarSrc, LCID lcid, USHORT wFlags, VARTYPE vt);
 /**
@@ -2419,7 +2419,7 @@ HRESULT VariantChangeTypeEx(VARIANTARG *pvargDest, VARIANTARG *pvarSrc, LCID lci
  * @param pvarg Variant to clear.
  * @return S_OK, DISP_E_ARRAYISLOCKED or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VariantClear(VARIANTARG *pvarg);
 /**
@@ -2429,7 +2429,7 @@ HRESULT VariantClear(VARIANTARG *pvarg);
  * @param pvargSrc Source variant to copy.
  * @return S_OK, DISP_E_ARRAYISLOCKED, DISP_E_BADVARTYPE or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VariantCopy(VARIANTARG *pvargDest, VARIANTARG *pvargSrc);
 /**
@@ -2439,7 +2439,7 @@ HRESULT VariantCopy(VARIANTARG *pvargDest, VARIANTARG *pvargSrc);
  * @param pvargSrc Source variant to copy.
  * @return S_OK, DISP_E_ARRAYISLOCKED, DISP_E_BADVARTYPE or E_OUTOFMEMORY.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VariantCopyInd(VARIANT *pvarDest, VARIANTARG *pvargSrc);
 /**
@@ -2447,7 +2447,7 @@ HRESULT VariantCopyInd(VARIANT *pvarDest, VARIANTARG *pvargSrc);
  *
  * @param pvarg Variant to initialize.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 void VariantInit(VARIANTARG *pvarg);
 /**
@@ -2457,7 +2457,7 @@ void VariantInit(VARIANTARG *pvarg);
  * @param lpSystemTime Receives the system time.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 INT VariantTimeToSystemTime(DOUBLE vtime, LPSYSTEMTIME lpSystemTime);
 /**
@@ -2467,7 +2467,7 @@ INT VariantTimeToSystemTime(DOUBLE vtime, LPSYSTEMTIME lpSystemTime);
  * @param ppsa Receives the SAFEARRAY pointer.
  * @return S_OK, E_OUTOFMEMORY or E_INVALIDARG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HRESULT VectorFromBstr(BSTR bstr, SAFEARRAY **ppsa);
 struct tagINTERFACEDATA;

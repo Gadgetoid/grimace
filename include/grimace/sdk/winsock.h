@@ -15,7 +15,7 @@ extern "C" {
  * @param cName Length of pName in bytes.
  * @return 0 on success, or SOCKET_ERROR (see WSAGetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int sethostname(char *pName, int cName);
 

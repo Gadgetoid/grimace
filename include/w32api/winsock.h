@@ -936,7 +936,7 @@ DECLARE_STDCALL_P(struct protoent *) getprotobyname(const char*name);
  * @return 0 on success, or WSASYSNOTREADY, WSAVERNOTSUPPORTED,
  *        WSAEINPROGRESS, WSAEPROCLIM or WSAEFAULT.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int PASCAL WSAStartup(WORD wVersionRequested,LPWSADATA lpWSAData);
 /**
@@ -953,7 +953,7 @@ int PASCAL WSAStartup(WORD wVersionRequested,LPWSADATA lpWSAData);
  *
  * @return 0 on success, or SOCKET_ERROR (see WSAGetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 int PASCAL WSACleanup(void);
 #ifdef _WIN32_WCE

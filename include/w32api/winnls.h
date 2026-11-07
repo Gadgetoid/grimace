@@ -679,7 +679,7 @@ WINBASEAPI BOOL WINAPI EnumSystemCodePagesA(CODEPAGE_ENUMPROCA,DWORD);
  * @param dwFlags CP_INSTALLED or CP_SUPPORTED, not both.
  * @return Nonzero on success, zero on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI BOOL WINAPI EnumSystemCodePagesW(CODEPAGE_ENUMPROCW lpCodePageEnumProc,DWORD dwFlags);
 WINBASEAPI BOOL WINAPI EnumSystemGeoID(GEOCLASS,GEOID,GEO_ENUMPROC);
@@ -729,7 +729,7 @@ WINBASEAPI int WINAPI FoldStringA(DWORD,LPCSTR,int,LPSTR,int);
  * @return Characters written, or the size needed if cchDest is 0, or 0 on
  *         failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI int WINAPI FoldStringW(DWORD dwMapFlags,LPCWSTR lpSrcStr,int cchSrc,LPWSTR lpDestStr,int cchDest);
 /**
@@ -737,7 +737,7 @@ WINBASEAPI int WINAPI FoldStringW(DWORD dwMapFlags,LPCWSTR lpSrcStr,int cchSrc,L
  *
  * @return The code page identifier.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI UINT WINAPI GetACP(void);
 WINBASEAPI int WINAPI GetCalendarInfoA(LCID,CALID,CALTYPE,LPSTR,int,LPDWORD);
@@ -751,7 +751,7 @@ WINBASEAPI int WINAPI GetCalendarInfoW(LCID,CALID,CALTYPE,LPWSTR,int,LPDWORD);
  * @return Nonzero on success, zero on failure, with ERROR_INVALID_PARAMETER
  *         if the code page isn't available.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI BOOL WINAPI GetCPInfo(UINT CodePage,LPCPINFO lpCPInfo);
 WINBASEAPI BOOL WINAPI GetCPInfoExA(UINT,DWORD,LPCPINFOEXA);
@@ -844,7 +844,7 @@ WINBASEAPI int WINAPI GetNumberFormatW(LCID Locale,DWORD dwFlags,LPCWSTR lpValue
  *
  * @return The code page identifier.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI UINT WINAPI GetOEMCP(void);
 WINBASEAPI BOOL WINAPI GetStringTypeA(LCID,DWORD,LPCSTR,int,LPWORD);
@@ -861,7 +861,7 @@ WINBASEAPI BOOL WINAPI GetStringTypeA(LCID,DWORD,LPCSTR,int,LPWORD);
  * @param lpCharType Receives one WORD of flags per character.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI BOOL WINAPI GetStringTypeW(DWORD dwInfoType,LPCWSTR lpSrcStr,int cchSrc,LPWORD lpCharType);
 WINBASEAPI BOOL WINAPI GetStringTypeExA(LCID,DWORD,LPCSTR,int,LPWORD);
@@ -882,7 +882,7 @@ WINBASEAPI BOOL WINAPI GetStringTypeExA(LCID,DWORD,LPCSTR,int,LPWORD);
  * @param lpCharType Receives one WORD of flags per character.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI BOOL WINAPI GetStringTypeExW(LCID Locale,DWORD dwInfoType,LPCWSTR lpSrcStr,int cchSrc,LPWORD lpCharType);
 /**
@@ -927,7 +927,7 @@ WINBASEAPI int WINAPI GetTimeFormatW(LCID Locale,DWORD dwFlags,const SYSTEMTIME*
  *
  * @return The user default LANGID.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI LANGID WINAPI GetUserDefaultLangID(void);
 /**
@@ -935,7 +935,7 @@ WINBASEAPI LANGID WINAPI GetUserDefaultLangID(void);
  *
  * @return The user default LCID.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI LCID WINAPI GetUserDefaultLCID(void);
 WINBASEAPI GEOID WINAPI GetUserGeoID(GEOCLASS);
@@ -946,7 +946,7 @@ WINBASEAPI GEOID WINAPI GetUserGeoID(GEOCLASS);
  * @param TestChar The byte to test.
  * @return TRUE if it is a lead byte, otherwise FALSE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI BOOL WINAPI IsDBCSLeadByte(BYTE TestChar);
 /**
@@ -958,7 +958,7 @@ WINBASEAPI BOOL WINAPI IsDBCSLeadByte(BYTE TestChar);
  * @param TestChar The byte to test.
  * @return TRUE if it is a lead byte, otherwise FALSE (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI BOOL WINAPI IsDBCSLeadByteEx(UINT CodePage,BYTE TestChar);
 WINBASEAPI BOOL WINAPI IsNLSDefinedString(NLS_FUNCTION,DWORD,LPNLSVERSIONINFO,LPCWSTR,int);
@@ -968,7 +968,7 @@ WINBASEAPI BOOL WINAPI IsNLSDefinedString(NLS_FUNCTION,DWORD,LPNLSVERSIONINFO,LP
  * @param CodePage Code page number, e.g. 1252.
  * @return Nonzero if the code page is installed, otherwise 0.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI BOOL WINAPI IsValidCodePage(UINT CodePage);
 /**
@@ -1004,7 +1004,7 @@ WINBASEAPI int WINAPI LCMapStringA(LCID,DWORD,LPCSTR,int,LPSTR,int);
  * @return Characters (or bytes) written including the terminator, or the
  *         size needed if cchDest is 0, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI int WINAPI LCMapStringW(LCID Locale,DWORD dwMapFlags,LPCWSTR lpSrcStr,int cchSrc,LPWSTR lpDestStr,int cchDest);
 /**
@@ -1023,7 +1023,7 @@ WINBASEAPI int WINAPI LCMapStringW(LCID Locale,DWORD dwMapFlags,LPCWSTR lpSrcStr
  *         failure (see GetLastError; ERROR_NO_UNICODE_TRANSLATION with
  *         MB_ERR_INVALID_CHARS).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI int WINAPI MultiByteToWideChar(UINT CodePage,DWORD dwFlags,LPCSTR lpMultiByteStr,int cchMultiByte,LPWSTR lpWideCharStr,int cchWideChar);
 WINBASEAPI int WINAPI SetCalendarInfoA(LCID,CALID,CALTYPE,LPCSTR);
@@ -1043,7 +1043,7 @@ WINBASEAPI BOOL WINAPI SetLocaleInfoA(LCID,LCTYPE,LPCSTR);
  *        item's format.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI BOOL WINAPI SetLocaleInfoW(LCID Locale,LCTYPE LCType,LPCWSTR lpLCData);
 WINBASEAPI BOOL WINAPI SetThreadLocale(LCID);
@@ -1068,7 +1068,7 @@ WINBASEAPI BOOL WINAPI SetUserGeoID(GEOID);
  * @return Bytes written, or the size needed if cchMultiByte is 0, or 0 on
  *         failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 WINBASEAPI int WINAPI WideCharToMultiByte(UINT CodePage,DWORD dwFlags,LPCWSTR lpWideCharStr,int cchWideChar,LPSTR lpMultiByteStr,int cchMultiByte,LPCSTR lpDefaultChar,LPBOOL lpUsedDefaultChar);
 #if (WINVER >= 0x0500)
@@ -1153,7 +1153,7 @@ typedef LPNUMBERFMTW LPNUMBERFMT;
  * @param dwFlags CP_INSTALLED or CP_SUPPORTED, not both.
  * @return Nonzero on success, zero on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define EnumSystemCodePages EnumSystemCodePagesW
 /**
@@ -1199,7 +1199,7 @@ typedef LPNUMBERFMTW LPNUMBERFMT;
  * @return Characters written, or the size needed if cchDest is 0, or 0 on
  *         failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define FoldString FoldStringW
 #define GetCalendarInfo GetCalendarInfoW
@@ -1298,7 +1298,7 @@ typedef LPNUMBERFMTW LPNUMBERFMT;
  * @param lpCharType Receives one WORD of flags per character.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define GetStringTypeEx GetStringTypeExW
 /**
@@ -1347,7 +1347,7 @@ typedef LPNUMBERFMTW LPNUMBERFMT;
  * @return Characters (or bytes) written including the terminator, or the
  *         size needed if cchDest is 0, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define LCMapString LCMapStringW
 #define SetCalendarInfo  SetCalendarInfoW
@@ -1365,7 +1365,7 @@ typedef LPNUMBERFMTW LPNUMBERFMT;
  *        item's format.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define SetLocaleInfo SetLocaleInfoW
 #if (WINVER >= 0x0500)

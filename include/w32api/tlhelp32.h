@@ -375,7 +375,7 @@ typedef struct tagMODULEENTRY32 {
  * @return TRUE when an entry is copied; FALSE on failure. GetLastError
  *        returns ERROR_NO_MORE_FILES for an invalid or empty heap.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Heap32First(HANDLE hSnapshot,LPHEAPENTRY32 lphe,DWORD th32ProcessID,DWORD th32HeapID);
 #else
@@ -395,7 +395,7 @@ BOOL WINAPI Heap32First(LPHEAPENTRY32,DWORD,DWORD);
  *        returns ERROR_NO_MORE_FILES if there is no heap list or the
  *        snapshot has no heap list information.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Heap32ListFirst(HANDLE hSnapshot,LPHEAPLIST32 lphl);
 /**
@@ -410,7 +410,7 @@ BOOL WINAPI Heap32ListFirst(HANDLE hSnapshot,LPHEAPLIST32 lphl);
  *        or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
  *        the end.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Heap32ListNext(HANDLE hSnapshot,LPHEAPLIST32 lphl);
 #ifdef _WIN32_WCE
@@ -426,7 +426,7 @@ BOOL WINAPI Heap32ListNext(HANDLE hSnapshot,LPHEAPLIST32 lphl);
  *        the end and ERROR_INVALID_DATA if the heap is corrupt or was
  *        modified so that the walk can't continue.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Heap32Next(HANDLE hSnapshot,LPHEAPENTRY32 lphe);
 #else
@@ -445,7 +445,7 @@ BOOL WINAPI Heap32Next(LPHEAPENTRY32);
  * @return TRUE when an entry is copied; FALSE on failure. GetLastError
  *        returns ERROR_NO_MORE_FILES if the snapshot has no modules.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Module32First(HANDLE hSnapshot,LPMODULEENTRY32 lpme);
 BOOL WINAPI Module32FirstW(HANDLE,LPMODULEENTRY32W);
@@ -460,7 +460,7 @@ BOOL WINAPI Module32FirstW(HANDLE,LPMODULEENTRY32W);
  *        or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
  *        the end.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Module32Next(HANDLE hSnapshot,LPMODULEENTRY32 lpme);
 BOOL WINAPI Module32NextW(HANDLE,LPMODULEENTRY32W);
@@ -477,7 +477,7 @@ BOOL WINAPI Module32NextW(HANDLE,LPMODULEENTRY32W);
  * @return TRUE when an entry is copied; FALSE on failure. GetLastError
  *        returns ERROR_NO_MORE_FILES if the snapshot has no processes.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Process32First(HANDLE hSnapshot,LPPROCESSENTRY32 lppe);
 BOOL WINAPI Process32FirstW(HANDLE,LPPROCESSENTRY32W);
@@ -492,7 +492,7 @@ BOOL WINAPI Process32FirstW(HANDLE,LPPROCESSENTRY32W);
  *        or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
  *        the end.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Process32Next(HANDLE hSnapshot,LPPROCESSENTRY32 lppe);
 BOOL WINAPI Process32NextW(HANDLE,LPPROCESSENTRY32W);
@@ -509,7 +509,7 @@ BOOL WINAPI Process32NextW(HANDLE,LPPROCESSENTRY32W);
  * @return TRUE when an entry is copied; FALSE on failure. GetLastError
  *        returns ERROR_NO_MORE_FILES if the snapshot has no threads.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Thread32First(HANDLE hSnapshot,LPTHREADENTRY32 lpte);
 /**
@@ -523,7 +523,7 @@ BOOL WINAPI Thread32First(HANDLE hSnapshot,LPTHREADENTRY32 lpte);
  *        or an error occurs. GetLastError returns ERROR_NO_MORE_FILES at
  *        the end.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Thread32Next(HANDLE hSnapshot,LPTHREADENTRY32 lpte);
 /**
@@ -539,7 +539,7 @@ BOOL WINAPI Thread32Next(HANDLE hSnapshot,LPTHREADENTRY32 lpte);
  * @param lpNumberOfBytesRead Receives the number copied, or NULL.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI Toolhelp32ReadProcessMemory(DWORD th32ProcessID,LPCVOID lpBaseAddress,LPVOID lpBuffer,DWORD cbRead,LPDWORD lpNumberOfBytesRead);
 /**
@@ -556,7 +556,7 @@ BOOL WINAPI Toolhelp32ReadProcessMemory(DWORD th32ProcessID,LPCVOID lpBaseAddres
  * @return Snapshot handle, or INVALID_HANDLE_VALUE on failure (see
  *        GetLastError).
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 HANDLE WINAPI CreateToolhelp32Snapshot(DWORD dwFlags,DWORD th32ProcessID);
 #if (_WIN32_WCE >= 0x200)
@@ -566,7 +566,7 @@ HANDLE WINAPI CreateToolhelp32Snapshot(DWORD dwFlags,DWORD th32ProcessID);
  * @param hSnapshot Snapshot from CreateToolhelp32Snapshot.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 BOOL WINAPI CloseToolhelp32Snapshot(HANDLE hSnapshot);
 #endif

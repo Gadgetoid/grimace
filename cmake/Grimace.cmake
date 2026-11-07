@@ -6,16 +6,19 @@ enable_language(C)
 enable_language(ASM)
 enable_language(CXX)
 
-string(REPLACE "." "" GRIMACE_CE_NAME "ce${GRIMACE_CE_VERSION}")
-if(GRIMACE_ARCH STREQUAL "mips")
-    set(GRIMACE_EXPORTS_NAME "${GRIMACE_CE_NAME}")
-else()
-    set(GRIMACE_EXPORTS_NAME "${GRIMACE_CE_NAME}-${GRIMACE_ARCH}")
+set(GRIMACE_IMPORTS_DIR "${CMAKE_BINARY_DIR}/grimace/imports")
+file(GLOB GRIMACE_MANIFEST_FILES "${GRIMACE_TOOLCHAIN_ROOT}/exports/*/*")
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${GRIMACE_MANIFEST_FILES} "${GRIMACE_TOOLCHAIN_ROOT}/tools/manifests.py")
+execute_process(
+    COMMAND "${Python3_EXECUTABLE}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/manifests.py" --arch "${GRIMACE_ARCH}" --version "${GRIMACE_CE_VERSION}"
+            --platform "${GRIMACE_PLATFORM}" --device "${GRIMACE_DEVICE}" --output "${GRIMACE_IMPORTS_DIR}"
+    OUTPUT_VARIABLE GRIMACE_IMPORTS_SUMMARY OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_VARIABLE GRIMACE_IMPORTS_ERROR ERROR_STRIP_TRAILING_WHITESPACE
+    RESULT_VARIABLE GRIMACE_IMPORTS_RESULT)
+if(NOT GRIMACE_IMPORTS_RESULT EQUAL 0)
+    message(FATAL_ERROR "${GRIMACE_IMPORTS_ERROR}")
 endif()
-set(GRIMACE_EXPORTS_DIR "${GRIMACE_TOOLCHAIN_ROOT}/exports/${GRIMACE_EXPORTS_NAME}")
-if(NOT IS_DIRECTORY "${GRIMACE_EXPORTS_DIR}")
-    message(FATAL_ERROR "No export lists for GRIMACE_CE_VERSION=${GRIMACE_CE_VERSION} GRIMACE_ARCH=${GRIMACE_ARCH}")
-endif()
+message(STATUS "${GRIMACE_IMPORTS_SUMMARY}")
 
 if(NOT DEFINED GRIMACE_OS_SYMBOLS)
     if(GRIMACE_ARCH STREQUAL "sh3")
@@ -75,16 +78,17 @@ else()
     set(GRIMACE_CXX_LIBRARIES grimace::cxx_runtime)
 endif()
 
-file(GLOB GRIMACE_EXPORT_LISTS "${GRIMACE_EXPORTS_DIR}/*.txt")
-file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/grimace/${GRIMACE_EXPORTS_NAME}")
+file(GLOB GRIMACE_EXPORT_LISTS "${GRIMACE_IMPORTS_DIR}/*.txt")
 foreach(exports IN LISTS GRIMACE_EXPORT_LISTS)
     get_filename_component(dll "${exports}" NAME_WE)
     string(TOUPPER "${dll}" dll_upper)
-    set(stubs "${CMAKE_BINARY_DIR}/grimace/${GRIMACE_EXPORTS_NAME}/${dll}.S")
+    set(lazy "${GRIMACE_IMPORTS_DIR}/${dll}.lazy")
+    set(stubs "${GRIMACE_IMPORTS_DIR}/${dll}.S")
     add_custom_command(
         OUTPUT "${stubs}"
         COMMAND "${Python3_EXECUTABLE}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkimplib.py" "${exports}" "${dll_upper}.dll" "${stubs}" --arch ${GRIMACE_ARCH}
-        DEPENDS "${exports}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkimplib.py"
+                --lazy "${lazy}"
+        DEPENDS "${exports}" "${lazy}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkimplib.py"
         VERBATIM)
     add_library(grimace_${dll} STATIC EXCLUDE_FROM_ALL "${stubs}")
     add_library(grimace::${dll} ALIAS grimace_${dll})

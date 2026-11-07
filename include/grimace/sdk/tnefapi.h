@@ -20,7 +20,7 @@ extern "C" {
  * @param cchWideChar Output buffer capacity in wide characters.
  * @return Character count including the terminator, or zero on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int ModifiedUTF7ToUnicode(LPCSTR lpMultiByteStr, int cchMultiByte, LPWSTR lpWideCharStr, int cchWideChar);
 struct _tnefinfo;
@@ -37,7 +37,7 @@ typedef struct _tnefinfo TNEFINFO;
  * @param lpmaa Attachment information.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL TnefBuildInfo(const TNEFINFO *pti, LPWSTR szSubject, MailNonIpmInfo *lpnii, MailAttArray *lpmaa);
 /**
@@ -58,7 +58,7 @@ BOOL TnefBuildInfo(const TNEFINFO *pti, LPWSTR szSubject, MailNonIpmInfo *lpnii,
  * @param cchWideChar Output capacity in wide characters, or zero to query size.
  * @return Number of wide characters written or required, or zero on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int TnefConvertToUnicode(UINT CodePage, DWORD dwFlags, LPCSTR lpMultiByteStr, int cchMultiByte, LPWSTR lpWideCharStr, int cchWideChar);
 typedef enum {
@@ -84,7 +84,7 @@ typedef enum {
  * @param puiLength Input capacity and output decoded size, in bytes.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL TnefDecodeBuffer(INETENCODE EncodeType, LPSTR BufToDecode, BYTE *DecodedBuf, UINT *puiLength);
 /**
@@ -98,7 +98,7 @@ BOOL TnefDecodeBuffer(INETENCODE EncodeType, LPSTR BufToDecode, BYTE *DecodedBuf
  * @param DecodedFileName Output file name.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL TnefDecodeFile(INETENCODE EncodeType, LPWSTR FileToDecode, LPWSTR DecodedFileName);
 /**
@@ -114,7 +114,7 @@ BOOL TnefDecodeFile(INETENCODE EncodeType, LPWSTR FileToDecode, LPWSTR DecodedFi
  * @param EncodedBuf Receives the encoded data.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL TnefEncodeBuffer(INETENCODE EncodeType, UINT cbIn, BYTE *BufToEncode, UINT *pcbOut, LPSTR EncodedBuf);
 /**
@@ -128,7 +128,7 @@ BOOL TnefEncodeBuffer(INETENCODE EncodeType, UINT cbIn, BYTE *BufToEncode, UINT 
  * @param EncodeType Encoding format.
  * @return Name of the encoded file, or NULL on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 LPWSTR TnefEncodeFile(LPWSTR FileToEncode, INETENCODE EncodeType);
 /**
@@ -142,7 +142,7 @@ LPWSTR TnefEncodeFile(LPWSTR FileToEncode, INETENCODE EncodeType);
  * @param lplpmaa Optionally receives attachment information.
  * @return TRUE on success, FALSE on failure.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 BOOL TnefGetInfo(const TNEFINFO *pti, MailNonIpmInfo **lplpnii, MailAttArray **lplpmaa);
 /**
@@ -158,7 +158,7 @@ BOOL TnefGetInfo(const TNEFINFO *pti, MailNonIpmInfo **lplpnii, MailAttArray **l
  * @param cchOut Output buffer capacity in characters.
  * @return Number of input characters translated; `cchIn` indicates success.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 int UnicodeToModifiedUTF7(LPCWSTR wszIn, int cchIn, LPSTR pchOut, int cchOut);
 typedef int (*LPFNMODIFIEDUTF7TOUNICODE)(LPCSTR, int, LPWSTR, int);

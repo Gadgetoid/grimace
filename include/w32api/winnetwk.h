@@ -271,7 +271,7 @@ DWORD APIENTRY WNetAddConnection3A(HWND,LPNETRESOURCEA,LPCSTR,LPCSTR,DWORD);
  * @return NO_ERROR on success, or a Win32 error code (see
  *         WNetGetLastErrorW for provider errors).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetAddConnection3W(HWND hwndOwner,LPNETRESOURCEW lpNetResource,LPCWSTR lpPassword,LPCWSTR lpUserName,DWORD dwFlags);
 DWORD APIENTRY WNetCancelConnectionA(LPCSTR,BOOL);
@@ -287,7 +287,7 @@ DWORD APIENTRY WNetCancelConnection2A(LPCSTR,DWORD,BOOL);
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_NOT_CONNECTED or ERROR_OPEN_FILES.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetCancelConnection2W(LPCWSTR lpName,DWORD dwFlags,BOOL fForce);
 DWORD APIENTRY WNetGetConnectionA(LPCSTR,LPSTR,PDWORD);
@@ -301,7 +301,7 @@ DWORD APIENTRY WNetGetConnectionA(LPCSTR,LPSTR,PDWORD);
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetGetConnectionW(LPCWSTR lpLocalName,LPWSTR lpRemoteName,PDWORD lpnLength);
 DWORD APIENTRY WNetUseConnectionA(HWND,LPNETRESOURCEA,LPCSTR,LPCSTR,DWORD,LPSTR,PDWORD,PDWORD);
@@ -317,7 +317,7 @@ DWORD APIENTRY WNetConnectionDialog(HWND,DWORD);
  * @return NO_ERROR on success, -1 if the user cancelled, or a Win32 error
  *         code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetDisconnectDialog(HWND hwnd,DWORD dwType);
 DWORD APIENTRY WNetConnectionDialog1A(LPCONNECTDLGSTRUCTA);
@@ -330,7 +330,7 @@ DWORD APIENTRY WNetConnectionDialog1A(LPCONNECTDLGSTRUCTA);
  * @return NO_ERROR on success, -1 if the user cancelled, or a Win32 error
  *         code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetConnectionDialog1W(LPCONNECTDLGSTRUCTW lpConnectDlgStruc);
 DWORD APIENTRY WNetDisconnectDialog1A(LPDISCDLGSTRUCTA);
@@ -345,7 +345,7 @@ DWORD APIENTRY WNetDisconnectDialog1A(LPDISCDLGSTRUCTA);
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_OPEN_FILES or ERROR_NOT_CONNECTED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetDisconnectDialog1W(LPDISCDLGSTRUCTW lpDiscDlgStruc);
 DWORD APIENTRY WNetOpenEnumA(DWORD,DWORD,DWORD,LPNETRESOURCEA,LPHANDLE);
@@ -365,7 +365,7 @@ DWORD APIENTRY WNetOpenEnumA(DWORD,DWORD,DWORD,LPNETRESOURCEA,LPHANDLE);
  * @param lphEnum Receives the enumeration handle.
  * @return NO_ERROR on success, or a Win32 error code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetOpenEnumW(DWORD dwScope,DWORD dwType,DWORD dwUsage,LPNETRESOURCEW lpNetResource,LPHANDLE lphEnum);
 DWORD APIENTRY WNetEnumResourceA(HANDLE,PDWORD,PVOID,PDWORD);
@@ -385,7 +385,7 @@ DWORD APIENTRY WNetEnumResourceA(HANDLE,PDWORD,PVOID,PDWORD);
  * @return NO_ERROR, ERROR_NO_MORE_ITEMS, ERROR_MORE_DATA, or another Win32
  *         error code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetEnumResourceW(HANDLE hEnum,PDWORD lpcCount,PVOID lpBuffer,PDWORD lpBufferSize);
 /**
@@ -394,7 +394,7 @@ DWORD APIENTRY WNetEnumResourceW(HANDLE hEnum,PDWORD lpcCount,PVOID lpBuffer,PDW
  * @param hEnum The enumeration handle.
  * @return NO_ERROR on success, or a Win32 error code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetCloseEnum(HANDLE hEnum);
 DWORD APIENTRY WNetGetUniversalNameA(LPCSTR,DWORD,PVOID,PDWORD);
@@ -413,7 +413,7 @@ DWORD APIENTRY WNetGetUniversalNameA(LPCSTR,DWORD,PVOID,PDWORD);
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetGetUniversalNameW(LPCWSTR lpLocalPath,DWORD dwInfoLevel,PVOID lpBuffer,PDWORD lpBufferSize);
 DWORD APIENTRY WNetGetUserA(LPCSTR,LPSTR,PDWORD);
@@ -428,7 +428,7 @@ DWORD APIENTRY WNetGetUserA(LPCSTR,LPSTR,PDWORD);
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY WNetGetUserW(LPCWSTR lpName,LPWSTR lpUserName,PDWORD lpnLength);
 DWORD APIENTRY WNetGetProviderNameA(DWORD,LPSTR,PDWORD);
@@ -468,7 +468,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @return NO_ERROR, ERROR_NO_MORE_ITEMS, ERROR_MORE_DATA, or another Win32
  *         error code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetEnumResource WNetEnumResourceW
 /**
@@ -487,7 +487,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @param lphEnum Receives the enumeration handle.
  * @return NO_ERROR on success, or a Win32 error code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetOpenEnum WNetOpenEnumW
 #define WNetGetResourceInformation WNetGetResourceInformationW
@@ -507,7 +507,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetGetUniversalName WNetGetUniversalNameW
 #define WNetSetConnection WNetSetConnectionW
@@ -522,7 +522,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetGetConnection WNetGetConnectionW
 /**
@@ -535,7 +535,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_NOT_CONNECTED or ERROR_OPEN_FILES.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetCancelConnection2 WNetCancelConnection2W
 #define WNetCancelConnection WNetCancelConnectionW
@@ -560,7 +560,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @return NO_ERROR on success, or a Win32 error code (see
  *         WNetGetLastErrorW for provider errors).
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetAddConnection3 WNetAddConnection3W
 #define WNetAddConnection2 WNetAddConnection2W
@@ -574,7 +574,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @return NO_ERROR on success, -1 if the user cancelled, or a Win32 error
  *         code.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetConnectionDialog1 WNetConnectionDialog1W
 /**
@@ -588,7 +588,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_OPEN_FILES or ERROR_NOT_CONNECTED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetDisconnectDialog1 WNetDisconnectDialog1W
 #define WNetGetNetworkInformation WNetGetNetworkInformationW
@@ -604,7 +604,7 @@ typedef UNIVERSAL_NAME_INFOW UNIVERSAL_NAME_INFO,*LPUNIVERSAL_NAME_INFO;
  * @return NO_ERROR on success, or a Win32 error code such as
  *         ERROR_NOT_CONNECTED or ERROR_MORE_DATA.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define WNetGetUser WNetGetUserW
 #define MultinetGetConnectionPerformance MultinetGetConnectionPerformanceW

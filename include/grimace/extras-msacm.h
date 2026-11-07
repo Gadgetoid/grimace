@@ -13,7 +13,7 @@ extern "C" {
  * @return The version as 0xAABBCCCC: major in the high byte, minor in the
  *         next, build in the low word.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD WINAPI acmGetVersion(void);
 /**
@@ -25,7 +25,7 @@ DWORD WINAPI acmGetVersion(void);
  * @param fdwDriverID Reserved; must be zero.
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmDriverID(HACMOBJ hao, LPHACMDRIVERID phadid, DWORD fdwDriverID);
 /**
@@ -40,7 +40,7 @@ MMRESULT WINAPI acmDriverID(HACMOBJ hao, LPHACMDRIVERID phadid, DWORD fdwDriverI
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE or
  *         MMSYSERR_INVALFLAG.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmDriverPriority(HACMDRIVERID hadid, DWORD dwPriority, DWORD fdwPriority);
 /**
@@ -52,7 +52,7 @@ MMRESULT WINAPI acmDriverPriority(HACMDRIVERID hadid, DWORD dwPriority, DWORD fd
  * @param lParam2 Message-specific.
  * @return Message-specific result from the driver.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 LRESULT WINAPI acmDriverMessage(HACMDRIVER had, UINT uMsg, LPARAM lParam1, LPARAM lParam2);
 /**
@@ -65,7 +65,7 @@ LRESULT WINAPI acmDriverMessage(HACMDRIVER had, UINT uMsg, LPARAM lParam1, LPARA
  * @return MMSYSERR_NOERROR, or an error such as MMSYSERR_INVALHANDLE or
  *         MMSYSERR_NOTSUPPORTED.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmStreamMessage(HACMSTREAM has, UINT uMsg, LPARAM lParam1, LPARAM lParam2);
 /**
@@ -81,7 +81,7 @@ MMRESULT WINAPI acmStreamMessage(HACMSTREAM has, UINT uMsg, LPARAM lParam1, LPAR
  * @return MMSYSERR_NOERROR, or an error such as ACMERR_NOTPOSSIBLE or
  *         MMSYSERR_INVALPARAM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmFormatDetails(HACMDRIVER had, LPACMFORMATDETAILSW pafd, DWORD fdwDetails);
 /**
@@ -98,7 +98,7 @@ MMRESULT WINAPI acmFormatDetails(HACMDRIVER had, LPACMFORMATDETAILSW pafd, DWORD
  * @return MMSYSERR_NOERROR, or an error such as ACMERR_NOTPOSSIBLE or
  *         MMSYSERR_INVALPARAM.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 MMRESULT WINAPI acmFormatTagDetails(HACMDRIVER had, LPACMFORMATTAGDETAILSW paftd, DWORD fdwDetails);
 

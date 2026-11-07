@@ -910,7 +910,7 @@ DWORD APIENTRY RasHangUpA (HRASCONN);
  * @param hRasConn Connection from RasDialW or RasEnumConnectionsW.
  * @return 0 on success, or a RAS error or ERROR_INVALID_HANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 DWORD APIENTRY RasHangUpW (HRASCONN hRasConn);
 DWORD APIENTRY RasGetProjectionInfoA (HRASCONN, RASPROJECTION, LPVOID,
@@ -927,7 +927,7 @@ DWORD APIENTRY RasGetProjectionInfoA (HRASCONN, RASPROJECTION, LPVOID,
  * @param lpcb Input buffer size and output required size, in bytes.
  * @return Zero on success, or a RAS error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD APIENTRY RasGetProjectionInfoW (HRASCONN hrasconn, RASPROJECTION rasprojection, LPVOID lpprojection,
 				LPDWORD lpcb);
@@ -978,7 +978,7 @@ DWORD APIENTRY RasEnumDevicesA (LPRASDEVINFOA, LPDWORD, LPDWORD);
  * @param lpcDevices Receives the number of structures written.
  * @return Zero on success, or a RAS error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD APIENTRY RasEnumDevicesW (LPRASDEVINFOW lpRasDevinfo, LPDWORD lpcb, LPDWORD lpcDevices);
 DWORD APIENTRY RasGetCountryInfoA (LPRASCTRYINFOA, LPDWORD);
@@ -1126,7 +1126,7 @@ DWORD APIENTRY RasInvokeEapUI (HRASCONN, DWORD, LPRASDIALEXTENSIONS, HWND);
  * @param lpStatistics Receives the RAS_STATS structure.
  * @return Zero on success, or a RAS error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 DWORD APIENTRY RasGetLinkStatistics (HRASCONN hRasConn, DWORD dwSubEntry, RAS_STATS*lpStatistics);
 DWORD APIENTRY RasGetConnectionStatistics (HRASCONN, RAS_STATS*);
@@ -1223,7 +1223,7 @@ VOID APIENTRY RasFreeEapUserIdentityA (LPRASEAPUSERIDENTITYA);
  * @param hRasConn Connection from RasDialW or RasEnumConnectionsW.
  * @return 0 on success, or a RAS error or ERROR_INVALID_HANDLE.
  *
- * @note Windows CE 2.0 and 3.0 only.
+ * @note Windows CE 2.0 and later.
  */
 #define RasHangUp RasHangUpW
 /**
@@ -1238,7 +1238,7 @@ VOID APIENTRY RasFreeEapUserIdentityA (LPRASEAPUSERIDENTITYA);
  * @param lpcb Input buffer size and output required size, in bytes.
  * @return Zero on success, or a RAS error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 #define RasGetProjectionInfo RasGetProjectionInfoW
 #define RasCreatePhonebookEntry RasCreatePhonebookEntryW
@@ -1283,7 +1283,7 @@ VOID APIENTRY RasFreeEapUserIdentityA (LPRASEAPUSERIDENTITYA);
  * @param lpcDevices Receives the number of structures written.
  * @return Zero on success, or a RAS error code.
  *
- * @note Windows CE 3.0 only.
+ * @note Windows CE 3.0 and later.
  */
 #define RasEnumDevices RasEnumDevicesW
 #define RasGetCountryInfo RasGetCountryInfoW
