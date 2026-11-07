@@ -83,10 +83,15 @@ The Win32 headers are CeGCC's w32api (public domain) in `include/w32api`, patche
 - Every function the ROMs export has a docstring and named parameters, from `docs/api`, with the versions that have it where they differ.
 - `windowsx.h` has the SDK's message crackers. Include it yourself, except on CE 1.01, whose `windows.h` includes it.
 
-`grimace::runtime` is always linked: compiler-rt builtins (soft float, 64-bit division), `memcpy`, `memmove`, `memset` and `memcmp`, then:
+`grimace::runtime` is always linked, and a program only gets the parts it calls:
 
-- CE 1.0 and 2.0 (`runtime/nocrt`): `swprintf` and `vswprintf` over coredll's `wsprintfW`, which has no floating point and writes at most 1023 characters. Coredll has no other C library, so the stdio, maths and allocation functions are unavailable: use `LocalAlloc`, `wsprintfW` and your own maths.
-- CE 3.0 (`runtime/crt`): coredll has the C runtime (stdio, maths, `malloc`, `printf`, `setjmp`). The runtime adds the C99 functions libc++ needs that coredll lacks: `snprintf`, `strtoll`, `float` and `long double` maths, `errno`, `wmemcpy` and others. `swprintf` keeps Microsoft's form; define `GRIMACE_C99_SWPRINTF` for C99's.
+- compiler-rt builtins (soft float, 64-bit division), `memcpy`, `memmove`, `memset` and `memcmp`.
+- `runtime/libc`: the C library CE 3.0's coredll exports, for the targets whose coredll lacks it. A function is built from here unless every device the target covers exports it, so CE 1.0 and 2.0 programs get stdio, `printf` and `scanf`, `malloc`, the string, `ctype` and `stdlib` functions, maths and `setjmp`. CE 3.0 programs use the ROM's. The maths is musl's (MIT, `runtime/libc/math/README`). Microsoft's Bessel functions (`_j0` and so on) aren't there, so they're unavailable below CE 3.0.
+- `runtime/c99`: the C99 functions libc++ needs that Microsoft's C library lacks, over whichever one the target has: `snprintf`, `strtoll`, `float` and `long double` maths, `errno`, `wmemcpy` and others. `swprintf` keeps Microsoft's form; define `GRIMACE_C99_SWPRINTF` for C99's.
+
+`runtime/libc` behaves as CE 3.0's coredll does where they differ from C99, so a program prints and reads the same on every version: `printf` writes three exponent digits (`1e+006`), `1.#INF` and `1.#QNAN`, and rounds halfway decimals away from zero, from the exact binary value. `strtod` and `scanf` round correctly. Files open in text mode unless the mode has `b`, with `\r\n` on disk for `\n`. `stdout` and `stderr` go to the debug output a line at a time, and `stdin` is always at its end. Narrow file names and strings in wide functions are Latin-1.
+
+`tests/libc/host.c` (`make check-libc-host`) checks the formatting, `strtod` and `scanf` engines against this computer's C library. `tests/libc/device` (`make check-libc`) checks the C library on a device: it passes on the Velo's CE 1.0 and 2.0 ROMs, an HP 620LX (SH3 CE 2.0) and the Jornada 720, whose ROM's C library it also checks.
 
 ## C++
 
@@ -124,7 +129,8 @@ Anything that can reach the TCP port can copy files to the device and run progra
 | `check-headers` | compare the headers with each SDK's (`GRIMACE_REFERENCE`, a folder with `include/ce100`, `ce101`, `ce200` and `ce300`) |
 | `check-abi`, `check-stdlib`, `check-debugmgr` | the ARM calling standard, the C++ standard library on CE 3.0, and debugmgr with `grimace-debug` on this computer |
 | `check-lazy`, `check-lazy-<target>` | build `tests/lazy` |
-| `check` | `check-abi`, `check-cxx-headers`, `check-stdlib`, `check-debugmgr`, `check-lazy`, `examples` and `debugmgr` |
+| `check-libc`, `check-libc-<target>`, `check-libc-host` | build `tests/libc/device`, and run `tests/libc/host.c` here |
+| `check` | `check-abi`, `check-cxx-headers`, `check-stdlib`, `check-debugmgr`, `check-lazy`, `check-libc`, `examples` and `debugmgr` |
 | `headers` | regenerate `include/` from a CeGCC checkout's w32api (`GRIMACE_W32API`) and the SDKs (`GRIMACE_REFERENCE`) |
 | `docstrings` | rewrite the docstrings from `docs/api` |
 | `exports` | read `exports/jornada720-ce3` from a Jornada 720 ROM image (`GRIMACE_ROM`) |

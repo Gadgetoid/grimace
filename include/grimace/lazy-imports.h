@@ -398,10 +398,6 @@ extern struct grimace_lazy_import __grimace_lazy_import_getservbyname;
 extern struct grimace_lazy_import __grimace_lazy_import_getservbyport;
 #define __grimace_lazy_mouse_event 1
 extern struct grimace_lazy_import __grimace_lazy_import_mouse_event;
-#define __grimace_lazy_towlower 1
-extern struct grimace_lazy_import __grimace_lazy_import_towlower;
-#define __grimace_lazy_towupper 1
-extern struct grimace_lazy_import __grimace_lazy_import_towupper;
 #define __grimace_lazy_waveInAddBuffer 1
 extern struct grimace_lazy_import __grimace_lazy_import_waveInAddBuffer;
 #define __grimace_lazy_waveInClose 1
@@ -882,10 +878,6 @@ extern struct grimace_lazy_import __grimace_lazy_import_getservbyname;
 extern struct grimace_lazy_import __grimace_lazy_import_getservbyport;
 #define __grimace_lazy_mouse_event 1
 extern struct grimace_lazy_import __grimace_lazy_import_mouse_event;
-#define __grimace_lazy_towlower 1
-extern struct grimace_lazy_import __grimace_lazy_import_towlower;
-#define __grimace_lazy_towupper 1
-extern struct grimace_lazy_import __grimace_lazy_import_towupper;
 #define __grimace_lazy_waveInAddBuffer 1
 extern struct grimace_lazy_import __grimace_lazy_import_waveInAddBuffer;
 #define __grimace_lazy_waveInClose 1

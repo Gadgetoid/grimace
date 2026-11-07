@@ -42,16 +42,22 @@ endif()
 target_include_directories(grimace_headers SYSTEM INTERFACE "${GRIMACE_TOOLCHAIN_ROOT}/include" "${GRIMACE_TOOLCHAIN_ROOT}/include/w32api")
 add_library(grimace::headers ALIAS grimace_headers)
 
-if(GRIMACE_WIN32_WCE GREATER_EQUAL 300)
-    set(GRIMACE_RUNTIME_VARIANT crt)
-else()
-    set(GRIMACE_RUNTIME_VARIANT nocrt)
+file(GLOB_RECURSE GRIMACE_LIBC_FILES "${GRIMACE_TOOLCHAIN_ROOT}/runtime/libc/*")
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${GRIMACE_LIBC_FILES} "${GRIMACE_TOOLCHAIN_ROOT}/tools/runtime.py")
+execute_process(
+    COMMAND "${Python3_EXECUTABLE}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/runtime.py" --arch "${GRIMACE_ARCH}" --imports "${GRIMACE_IMPORTS_DIR}"
+            --output "${GRIMACE_IMPORTS_DIR}/libc-sources"
+    RESULT_VARIABLE GRIMACE_LIBC_RESULT)
+if(NOT GRIMACE_LIBC_RESULT EQUAL 0)
+    message(FATAL_ERROR "tools/runtime.py failed")
 endif()
-file(GLOB GRIMACE_RUNTIME_SOURCES "${GRIMACE_TOOLCHAIN_ROOT}/runtime/${GRIMACE_RUNTIME_VARIANT}/*.c")
+file(STRINGS "${GRIMACE_IMPORTS_DIR}/libc-sources" GRIMACE_LIBC_SOURCES)
+file(GLOB GRIMACE_RUNTIME_SOURCES "${GRIMACE_TOOLCHAIN_ROOT}/runtime/c99/*.c")
 file(GLOB GRIMACE_COMPILER_RT_SOURCES "${GRIMACE_TOOLCHAIN_ROOT}/runtime/compiler-rt/*.c")
 file(GLOB GRIMACE_COMMON_RUNTIME_SOURCES "${GRIMACE_TOOLCHAIN_ROOT}/runtime/*.c")
-list(APPEND GRIMACE_RUNTIME_SOURCES ${GRIMACE_COMPILER_RT_SOURCES} ${GRIMACE_COMMON_RUNTIME_SOURCES})
+list(APPEND GRIMACE_RUNTIME_SOURCES ${GRIMACE_LIBC_SOURCES} ${GRIMACE_COMPILER_RT_SOURCES} ${GRIMACE_COMMON_RUNTIME_SOURCES})
 add_library(grimace_runtime STATIC EXCLUDE_FROM_ALL ${GRIMACE_RUNTIME_SOURCES})
+target_include_directories(grimace_runtime PRIVATE "${GRIMACE_TOOLCHAIN_ROOT}/include")
 target_compile_options(grimace_runtime PRIVATE -fno-builtin -w)
 add_library(grimace::runtime ALIAS grimace_runtime)
 

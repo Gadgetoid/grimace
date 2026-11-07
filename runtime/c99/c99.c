@@ -28,6 +28,8 @@ double modf(double value, double *integer);
 double _hypot(double x, double y);
 double _copysign(double value, double sign);
 int _vsnprintf(char *buffer, size_t count, const char *format, va_list arguments);
+void *malloc(size_t size);
+void free(void *memory);
 double strtod(const char *text, char **end);
 double wcstod(const wchar_type *text, wchar_type **end);
 int _vsnwprintf(wchar_type *buffer, size_t count, const wchar_type *format, va_list arguments);
@@ -197,16 +199,34 @@ unsigned long long wcstoull(const wchar_type *text, wchar_type **end, int base) 
     return unsigned_result(value, negative, overflow);
 }
 
+static int measure(const char *format, va_list arguments) {
+    for (size_t size = 256;; size *= 2) {
+        char *scratch = malloc(size);
+        if (!scratch) {
+            return -1;
+        }
+        va_list copy;
+        va_copy(copy, arguments);
+        int written = _vsnprintf(scratch, size, format, copy);
+        va_end(copy);
+        free(scratch);
+        if (written >= 0 && (size_t)written < size) {
+            return written;
+        }
+    }
+}
+
 int vsnprintf(char *buffer, size_t count, const char *format, va_list arguments) {
-    if (count == 0) {
-        return 0;
+    va_list copy;
+    va_copy(copy, arguments);
+    int written = count ? _vsnprintf(buffer, count - 1, format, arguments) : -1;
+    if (count) {
+        buffer[written >= 0 ? (size_t)written : count - 1] = 0;
     }
-    int written = _vsnprintf(buffer, count - 1, format, arguments);
-    if (written < 0 || (size_t)written >= count - 1) {
-        buffer[count - 1] = 0;
-        return written < 0 ? (int)count : written;
+    if (written < 0) {
+        written = measure(format, copy);
     }
-    buffer[written] = 0;
+    va_end(copy);
     return written;
 }
 

@@ -21,7 +21,7 @@ typedef int jmp_buf[_JBLEN];
  *
  * @note Windows CE 3.0 and later.
  */
-int setjmp(jmp_buf environment);
+int setjmp(jmp_buf environment) __attribute__((returns_twice));
 #define _setjmp setjmp
 /**
  * Restores a stack environment saved by setjmp and resumes after that call.

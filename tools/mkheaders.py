@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 import manifests
+import runtime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UNWRAPPED = {"pshpack1.h", "pshpack2.h", "pshpack4.h", "pshpack8.h", "poppack.h", "README.w32api", "VENDOR.md"}
@@ -101,20 +102,8 @@ def declaring_headers():
     return find
 
 
-def runtime_sources(version):
-    variant = "crt" if version >= 300 else "nocrt"
-    return glob.glob(os.path.join(ROOT, "runtime", "*.c")) + glob.glob(os.path.join(ROOT, "runtime", variant, "*.c"))
-
-
-def runtime_functions(version):
-    names = set()
-    for path in runtime_sources(version):
-        names.update(re.findall(r"^[A-Za-z_][\w \t*]*?\b(\w+)\s*\([^;]*\)\s*\{", open(path).read(), re.M))
-    return names
-
-
 def exported(target):
-    names = set(runtime_functions(target.version))
+    names = set(runtime.provided())
     for direct, lazy in manifests.imports(target).values():
         names |= direct | lazy
     return names
@@ -124,7 +113,7 @@ def lazy_imports(target):
     names = set()
     for direct, lazy in manifests.imports(target).values():
         names |= lazy
-    return names
+    return names - runtime.provided()
 
 
 def unavailable_reason(target):
