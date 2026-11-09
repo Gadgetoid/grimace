@@ -71,6 +71,45 @@ With `GRIMACE_DEVICE` the target imports exactly what that device's ROM exports 
 
 `tests/lazy` calls a few lazy imports and reports what it found. `make check-lazy` builds it for every target. Run on the devices, the MIPS CE 1.0 build binds on CE 2.0 and reports missing functions on CE 1.0, and the SH3 CE 1.0 build binds on an HP 620LX (CE 2.0).
 
+## Packages
+
+`grimace_package()` packages programs as a CAB, which wceload installs on CE 2.0 and later, and a zip of the same files:
+
+```cmake
+grimace_package("My App" PROVIDER "Me"
+    TARGETS myapp mylib
+    FILES readme.txt
+    SHORTCUTS myapp "My App")
+```
+
+`cmake --build build --target packages` writes `build/packages/MyApp-<target>.cab` and `.zip`, where `<target>` is the architecture and version (`mips-ce2`), plus the platform or device if set.
+
+- `DIRECTORY`: where they go, default `%CE1%\<name>` (`\Program Files\<name>`). wceload on the Handheld PC 2000 asks first, starting there.
+- `SHORTCUTS`: pairs of a target and the name of its shortcut in the Start menu's Programs (`%CE11%`).
+- `FORMATS`: `cab`, `zip` or both (the default).
+- CE 1.0 has no CAB installer, so copy the zip's files across, or install velo-ce1-cab's CE 2.0 wceload first.
+
+`tools/cab.py` writes uncompressed cabinets with the setup file (`.000`) wceload reads. The examples' CAB installs with the Jornada 720's own wceload, with its files and shortcuts.
+
+### Every target at once
+
+A toolchain file builds for one target, so `cmake/GrimaceMatrix.cmake` builds a project for several, each in its own folder, and gathers their packages:
+
+```cmake
+cmake_minimum_required(VERSION 3.20)
+project(myapp_all NONE)
+include(/path/to/grimace/cmake/GrimaceMatrix.cmake)
+
+grimace_matrix(NAME "My App" SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/app PACKAGE
+    TARGETS mips-ce1 sh3-ce1 x86-ce2 arm-ce3)
+```
+
+- Targets are `<arch>-ce<version>`, with `ce101` for 1.01, and an optional `-<device>`: `mips-ce1-velo1`.
+- `GRIMACE_MIPS_LLVM`, `GRIMACE_SH3_LLVM`, `GRIMACE_X86_LLVM` and `GRIMACE_ARM_LLVM` (settings or environment variables) choose each architecture's LLVM. `CMAKE_ARGS` passes more settings to every build.
+- With `PACKAGE`, `build/packages` gets every target's CAB and zip, and `<NAME>.ini` for the desktop Application Manager. It lists one CAB per processor, the build for the lowest version, which runs on later ones too.
+
+`make packages` builds `examples/matrix`, the examples for every target.
+
 ## Headers and runtime
 
 The Win32 headers are CeGCC's w32api (public domain) in `include/w32api`, patched to match the Windows CE 1.0, 2.0 and 3.0 SDKs. `include/w32api/VENDOR.md` lists the patches. `include/` wraps them:
@@ -125,6 +164,7 @@ Anything that can reach the TCP port can copy files to the device and run progra
 | --- | --- |
 | `examples-<target>`, `debugmgr-<target>` | build into `build/<target>` and `build/debugmgr/<target>`, for `mips-ce1`, `mips-ce2`, `sh3-ce1`, `sh3-ce101`, `sh3-ce2`, `x86-ce2` and `arm-ce3` |
 | `examples`, `debugmgr` | all targets |
+| `packages-<target>`, `packages` | package the examples for a target, or build and package them for every target (`examples/matrix`) |
 | `check-cxx-headers-<arch>` | the headers declare C functions with C linkage in C++, and the C++ layer compiles, for each CE version of `mips`, `sh3`, `x86` or `arm` |
 | `check-headers` | compare the headers with each SDK's (`GRIMACE_REFERENCE`, a folder with `include/ce100`, `ce101`, `ce200` and `ce300`) |
 | `check-abi`, `check-stdlib`, `check-debugmgr` | the ARM calling standard, the C++ standard library on CE 3.0, and debugmgr with `grimace-debug` on this computer |

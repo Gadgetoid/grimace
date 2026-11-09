@@ -14,3 +14,7 @@ if(GRIMACE_LIBCXX)
     add_subdirectory(stl-text)
     add_subdirectory(stl-collections)
 endif()
+
+grimace_package("Grimace Examples" PROVIDER "Grimace"
+    TARGETS hello window window-cxx dialog maths greeter greet cxx-basics cxx-counter
+    SHORTCUTS hello "Hello" window "Window" window-cxx "Window C++" dialog "Dialog")

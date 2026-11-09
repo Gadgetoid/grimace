@@ -9,14 +9,17 @@ selection = -DGRIMACE_PLATFORM=$(PLATFORM) -DGRIMACE_DEVICE=$(DEVICE)
 variant = $(if $(PLATFORM),-$(PLATFORM))$(if $(DEVICE),-$(DEVICE))
 llvm_clang = $(if $(GRIMACE_$(1)_LLVM),--clang $(GRIMACE_$(1)_LLVM)/bin/clang,--clang $(CLANG))
 
-.PHONY: check examples debugmgr check-lazy check-libc check-libc-host headers docstrings exports check-headers check-cxx-headers check-abi check-stdlib check-debugmgr clean
+.PHONY: check examples debugmgr packages check-lazy check-libc check-libc-host headers docstrings exports check-headers check-cxx-headers check-abi check-stdlib check-debugmgr clean
 
 define target
-.PHONY: examples-$(1) debugmgr-$(1) check-lazy-$(1) check-libc-$(1)
+.PHONY: examples-$(1) debugmgr-$(1) packages-$(1) check-lazy-$(1) check-libc-$(1)
 
 examples-$(1):
 	cmake -S examples -B build/$(1)$(variant) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(selection) $(call llvm,$(4))
 	cmake --build build/$(1)$(variant)
+
+packages-$(1): examples-$(1)
+	cmake --build build/$(1)$(variant) --target packages
 
 debugmgr-$(1):
 	cmake -S debugmgr -B build/debugmgr/$(1)$(variant) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(selection) $(call llvm,$(4))
@@ -44,6 +47,10 @@ check: check-abi check-cxx-headers check-stdlib check-debugmgr check-lazy check-
 examples: $(addprefix examples-,$(TARGETS))
 
 debugmgr: $(addprefix debugmgr-,$(TARGETS))
+
+packages:
+	cmake -S examples/matrix -B build/matrix $(foreach arch,MIPS SH3 X86 ARM,$(if $(GRIMACE_$(arch)_LLVM),-DGRIMACE_$(arch)_LLVM=$(GRIMACE_$(arch)_LLVM)))
+	cmake --build build/matrix
 
 check-lazy: $(addprefix check-lazy-,$(TARGETS))
 
