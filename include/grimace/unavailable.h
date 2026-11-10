@@ -27326,6 +27326,7 @@ extern __typeof__(GetFileType) GetFileType __attribute__((unavailable("not in Wi
 extern __typeof__(GetFullPathNameA) GetFullPathNameA __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(GetFullPathNameW) GetFullPathNameW __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(GetHandleInformation) GetHandleInformation __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
+extern __typeof__(GetIdleTime) GetIdleTime __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(GetKernelObjectSecurity) GetKernelObjectSecurity __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(GetLengthSid) GetLengthSid __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(GetLogicalDriveStringsA) GetLogicalDriveStringsA __attribute__((unavailable("not in Windows CE 1.0 on velo1")));

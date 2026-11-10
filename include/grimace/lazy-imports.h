@@ -157,6 +157,8 @@ extern struct grimace_lazy_import __grimace_lazy_import_GetDiskFreeSpaceExW;
 extern struct grimace_lazy_import __grimace_lazy_import_GetDlgItemTextW;
 #define __grimace_lazy_GetExitCodeProcess 1
 extern struct grimace_lazy_import __grimace_lazy_import_GetExitCodeProcess;
+#define __grimace_lazy_GetIdleTime 1
+extern struct grimace_lazy_import __grimace_lazy_import_GetIdleTime;
 #define __grimace_lazy_GetKeyboardStatus 1
 extern struct grimace_lazy_import __grimace_lazy_import_GetKeyboardStatus;
 #define __grimace_lazy_GetMessageSource 1
@@ -615,6 +617,8 @@ extern struct grimace_lazy_import __grimace_lazy_import_GetDiskFreeSpaceExW;
 extern struct grimace_lazy_import __grimace_lazy_import_GetDlgItemTextW;
 #define __grimace_lazy_GetExitCodeProcess 1
 extern struct grimace_lazy_import __grimace_lazy_import_GetExitCodeProcess;
+#define __grimace_lazy_GetIdleTime 1
+extern struct grimace_lazy_import __grimace_lazy_import_GetIdleTime;
 #define __grimace_lazy_GetKeyboardStatus 1
 extern struct grimace_lazy_import __grimace_lazy_import_GetKeyboardStatus;
 #define __grimace_lazy_GetMessageSource 1

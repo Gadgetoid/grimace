@@ -195,6 +195,8 @@ def patch(vendor):
               "BOOL WINAPI Heap32First(HANDLE,LPHEAPENTRY32,DWORD,DWORD);")
     vendor.ce("tlhelp32.h", "Heap32Next takes the snapshot handle on CE", "BOOL WINAPI Heap32Next(LPHEAPENTRY32);",
               "BOOL WINAPI Heap32Next(HANDLE,LPHEAPENTRY32);")
+    vendor.edit("winbase.h", "GetIdleTime is declared on CE", "WINBASEAPI BOOL WINAPI GetHandleInformation(HANDLE,PDWORD);",
+                "WINBASEAPI BOOL WINAPI GetHandleInformation(HANDLE,PDWORD);\n#ifdef _WIN32_WCE\nWINBASEAPI DWORD WINAPI GetIdleTime(void);\n#endif")
     vendor.ce("winnt.h", "SH3 CONTEXT has CE's exception fields and the CE 1.0, 1.01 or 2.0 union after Psr", SH3_CONTEXT_TAIL, CE_SH3_CONTEXT_TAIL)
     vendor.edit("winnt.h", "x86 CONTEXT has no ExtendedRegisters on CE", "\tBYTE\tExtendedRegisters[MAXIMUM_SUPPORTED_EXTENSION];\n",
                 "#ifndef _WIN32_WCE\n\tBYTE\tExtendedRegisters[MAXIMUM_SUPPORTED_EXTENSION];\n#endif\n")
