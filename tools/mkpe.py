@@ -17,6 +17,7 @@ Linked MIPS, SH3, x86 or ARM ELF (--emit-relocs) to Windows CE PE32.
 """
 import argparse
 import struct
+import sys
 
 IMAGE_BASE = 0x10000
 SECTION_ALIGNMENT = 0x1000
@@ -361,6 +362,8 @@ def subsystem_version(ce_version):
 
 def build(elf_path, output_path, ce_version, exports=None, dll_name=None, resources=None):
     data, sections, symbols, entry = read_elf(elf_path)
+    if entry < IMAGE_BASE:
+        sys.exit("mkpe: %s has no entry point, define %s" % (elf_path, "DllMain" if exports else "WinMain"))
     text_va, text = section_bytes(data, sections[".text"])
     if ".rdata" in sections:
         rdata_va, rdata = section_bytes(data, sections[".rdata"])
@@ -371,6 +374,9 @@ def build(elf_path, output_path, ce_version, exports=None, dll_name=None, resour
     if ".got" in sections:
         got_va, got = section_bytes(data, sections[".got"])
         writable += bytes(got_va - data_va - len(writable)) + got
+    data_size = len(writable)
+    if ".bss" in sections and sections[".bss"][5]:
+        data_size = sections[".bss"][3] + sections[".bss"][5] - data_va
 
     runs = import_runs(symbols)
     iat_va = runs[0][1][0][0]
@@ -400,7 +406,7 @@ def build(elf_path, output_path, ce_version, exports=None, dll_name=None, resour
             raise ValueError("imports need 0x%x bytes before the IAT, link with --defsym=GRIMACE_IMPORT_RESERVE=<more>" % (descriptor_size + lookup_size))
         names_rva = iat_rva + 4 * (import_count + 1)
     else:
-        idata_va = align(data_va + len(writable), SECTION_ALIGNMENT)
+        idata_va = align(data_va + data_size, SECTION_ALIGNMENT)
         idata_rva = idata_va - IMAGE_BASE
         lookup_rva = idata_rva + descriptor_size
         names_rva = lookup_rva + lookup_size
@@ -438,6 +444,7 @@ def build(elf_path, output_path, ce_version, exports=None, dll_name=None, resour
         (b".data", data_va, bytes(writable), READ_WRITE),
         (b".idata", idata_va, bytes(idata), READ_WRITE),
     ]
+    virtual_sizes = {b".data": data_size}
     next_va = align(idata_va + len(idata), SECTION_ALIGNMENT)
     export_table = b""
     if exports:
@@ -457,7 +464,8 @@ def build(elf_path, output_path, ce_version, exports=None, dll_name=None, resour
     body = bytearray()
     for name, va, contents, flags in layout:
         raw_size = align(len(contents), FILE_ALIGNMENT)
-        section_headers += struct.pack("<8sIIIIIIHHI", name, len(contents), va - IMAGE_BASE, raw_size, file_position, 0, 0, 0, 0, flags)
+        virtual_size = virtual_sizes.get(name, len(contents))
+        section_headers += struct.pack("<8sIIIIIIHHI", name, virtual_size, va - IMAGE_BASE, raw_size, file_position, 0, 0, 0, 0, flags)
         body += contents + bytes(raw_size - len(contents))
         file_position += raw_size
     image_size = align(reloc_va + len(relocations), SECTION_ALIGNMENT) - IMAGE_BASE

@@ -16,7 +16,8 @@ SECTIONS
         PROVIDE_HIDDEN(__fini_array_end = .);
     }
     . = ALIGN(0x1000);
-    .data : { *(.data .data.* .sdata .sdata.*) *(.sbss .sbss.* .bss .bss.* COMMON) *(.got) LONG(0) }
+    .data : { *(.data .data.* .sdata .sdata.*) *(.got) LONG(0) }
+    .bss (NOLOAD) : { *(.sbss .sbss.* .bss .bss.* COMMON) }
     . = ALIGN(0x1000);
     .idata : { . = . + (DEFINED(GRIMACE_IMPORT_RESERVE) ? GRIMACE_IMPORT_RESERVE : 0x200); *(.iat) *(SORT_BY_NAME(.iat.*)) }
     /DISCARD/ : { *(.MIPS.abiflags) *(.reginfo) *(.pdr) *(.gnu.attributes) *(.mdebug.*) *(.rel.pdr) *(.ARM.exidx*) *(.ARM.extab*) *(.ARM.attributes) *(.comment) *(.eh_frame) *(.note*) }

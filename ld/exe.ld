@@ -16,6 +16,7 @@ SECTIONS
         PROVIDE_HIDDEN(__fini_array_end = .);
     }
     . = ALIGN(0x1000);
-    .data : { *(.iat) *(SORT_BY_NAME(.iat.*)) *(.data .data.* .sdata .sdata.*) *(.sbss .sbss.* .bss .bss.* COMMON) }
+    .data : { *(.iat) *(SORT_BY_NAME(.iat.*)) *(.data .data.* .sdata .sdata.*) }
+    .bss (NOLOAD) : { *(.sbss .sbss.* .bss .bss.* COMMON) }
     /DISCARD/ : { *(.MIPS.abiflags) *(.reginfo) *(.pdr) *(.gnu.attributes) *(.mdebug.*) *(.rel.pdr) *(.ARM.exidx*) *(.ARM.extab*) *(.ARM.attributes) *(.comment) *(.eh_frame) *(.note*) }
 }

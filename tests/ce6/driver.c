@@ -9,13 +9,11 @@ struct device {
     HANDLE queue;
     HANDLE notifications;
     BYTE buffer[64];
+    BYTE log[65536];
+    DWORD idle;
 };
 
 static struct device state;
-
-BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved) {
-    return TRUE;
-}
 
 DWORD TST_Init(LPCTSTR context, LPCVOID bus_context) {
     PHYSICAL_ADDRESS address;
@@ -72,6 +70,8 @@ BOOL TST_IOControl(DWORD context, DWORD code, PBYTE input, DWORD input_size, PBY
     if (returned) {
         *returned = 0;
     }
+    state.idle = GetIdleTime();
+    state.log[state.idle % sizeof state.log]++;
     return state.registers != NULL;
 }
 

@@ -39,7 +39,7 @@ cmake --build build
 This gives `build/myapp.exe` and `build/mylib.dll`, with the linked `.elf` beside each.
 
 - `grimace_add_executable(target [EXCLUDE_FROM_ALL] [OUTPUT file.exe] [ICON file.ico] [RESOURCES files...] sources...)`: entry point `WinMain`.
-- `grimace_add_library(target [EXCLUDE_FROM_ALL] [OUTPUT file.dll] [RESOURCES files...] EXPORTS name[=symbol]... | EXPORTS_FILE file sources...)`: entry point `DllMain`. `EXPORTS_FILE` has one export per line.
+- `grimace_add_library(target [EXCLUDE_FROM_ALL] [OUTPUT file.dll] [RESOURCES files...] EXPORTS name[=symbol]... | EXPORTS_FILE file sources...)`: entry point `DllMain`, or one that returns `TRUE` if the library has none. `EXPORTS_FILE` has one export per line.
 - `GRIMACE_ARCH`: `mips` (default), `sh3`, `x86` or `arm`. `GRIMACE_CE_VERSION`, the oldest version the program runs on, defaults to `3` for `arm` and `1` otherwise. `_WIN32_WCE` is `100`, `101`, `200`, `300` or `600`.
 - `GRIMACE_DEVICE` pins the target to one device's ROM, and `GRIMACE_PLATFORM` (`hpc`, `hpc2000`, `autopc`, `brain`) to one platform's devices. See [Imports](#imports).
 - `RESOURCES`: `.rc` files are compiled with `llvm-rc` and linked into `.rsrc` with the icon. Other files listed are dependencies. Set `GRIMACE_RC_INCLUDES` to a list of folders to search for headers too. CE has no `DialogBoxParamW`: use `FindResource`, `LoadResource` and `DialogBoxIndirectParamW`.
@@ -156,6 +156,7 @@ Anything that can reach the TCP port can copy files to the device and run progra
 - CE 1.0 has no `GetModuleFileNameW`, and `LoadLibraryW` doesn't search the program's folder. DLLs normally go in `\Windows`, or pass a full path (see `examples/dll`).
 - A DLL's import tables go in a 0x200 byte space before its IAT. `mkpe.py` says if a DLL needs more: `target_link_options(mylib PRIVATE --defsym=GRIMACE_IMPORT_RESERVE=0x400)`.
 - `tools/grimace-cc` filters clang's "MIPS-I support is experimental" warning on MIPS.
+- Zero-initialised data takes no space in the file: `.data`'s virtual size covers it, as Microsoft's linker does.
 - Programs and DLLs have no `.pdata`, so CE can't unwind their frames: `__try` doesn't work in them, and a fault inside a window procedure ends the process.
 - The ARM target follows Microsoft's CE ARM calling standard as eVC3 compiles it; `make check-abi` checks it.
 - ARM CE 6.0 targets ARMV4I: code is built for ARMv4T and returns with `bx`, as do the import stubs, so Thumb code in the ROM can call it and be called.
