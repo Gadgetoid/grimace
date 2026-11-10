@@ -187,11 +187,43 @@ def arm_thunk(function, thunk, descriptor):
 """
 
 
+def armv4i_stub(function, slot):
+    return f"""    .section .text.{function},"ax",%progbits
+    .balign 4
+    .weak {function}
+    .type {function},%function
+{function}:
+    ldr ip, .Lslot_{function}
+    ldr ip, [ip]
+    bx ip
+.Lslot_{function}:
+    .long {slot}
+
+"""
+
+
+def armv4i_thunk(function, thunk, descriptor):
+    return f"""    .section .text.{thunk},"ax",%progbits
+    .balign 4
+{thunk}:
+    stmfd sp!, {{r0-r3, ip, lr}}
+    ldr r0, .Ldescriptor_{function}
+    bl __grimace_lazy_bind
+    str r0, [sp, #16]
+    ldmfd sp!, {{r0-r3, ip, lr}}
+    bx ip
+.Ldescriptor_{function}:
+    .long {descriptor}
+
+"""
+
+
 ARCHITECTURES = {
     "mips": (["    .set noreorder", "    .set noat", ""], mips_stub, mips_thunk, ".word"),
     "sh3": ([], sh3_stub, sh3_thunk, ".long"),
     "x86": ([], x86_stub, x86_thunk, ".long"),
     "arm": (["    .arm", ""], arm_stub, arm_thunk, ".long"),
+    "armv4i": (["    .arm", "    .arch armv4t", ""], armv4i_stub, armv4i_thunk, ".long"),
 }
 
 

@@ -7,6 +7,10 @@ enable_language(ASM)
 enable_language(CXX)
 
 set(GRIMACE_IMPORTS_DIR "${CMAKE_BINARY_DIR}/grimace/imports")
+set(GRIMACE_IMPLIB_ARCH "${GRIMACE_ARCH}")
+if(GRIMACE_ARCH STREQUAL "arm" AND GRIMACE_WIN32_WCE GREATER_EQUAL 400)
+    set(GRIMACE_IMPLIB_ARCH armv4i)
+endif()
 file(GLOB GRIMACE_MANIFEST_FILES "${GRIMACE_TOOLCHAIN_ROOT}/exports/*/*")
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${GRIMACE_MANIFEST_FILES} "${GRIMACE_TOOLCHAIN_ROOT}/tools/manifests.py")
 execute_process(
@@ -92,7 +96,7 @@ foreach(exports IN LISTS GRIMACE_EXPORT_LISTS)
     set(stubs "${GRIMACE_IMPORTS_DIR}/${dll}.S")
     add_custom_command(
         OUTPUT "${stubs}"
-        COMMAND "${Python3_EXECUTABLE}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkimplib.py" "${exports}" "${dll_upper}.dll" "${stubs}" --arch ${GRIMACE_ARCH}
+        COMMAND "${Python3_EXECUTABLE}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkimplib.py" "${exports}" "${dll_upper}.dll" "${stubs}" --arch ${GRIMACE_IMPLIB_ARCH}
                 --lazy "${lazy}"
         DEPENDS "${exports}" "${lazy}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkimplib.py"
         VERBATIM)

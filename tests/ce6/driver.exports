@@ -1,0 +1,10 @@
+TST_Init
+TST_Deinit
+TST_Open
+TST_Close
+TST_Read
+TST_Write
+TST_Seek
+TST_IOControl
+TST_PowerUp
+TST_PowerDown

@@ -1,5 +1,8 @@
 """
-Read a Windows CE 3.0 ROM image: its modules, files and DLL export tables.
+Read a Windows CE ROM image: its modules, files and DLL export tables.
+
+CE 6.0's module header has a timestamp before its table of data directories, which CE 3.0's lacks. The reader uses the
+layout that puts coredll's export table inside one of its sections.
 
 The image is a flat dump of ROM starting at the address in ROMHDR.physfirst, with the
 "ECEC" signature at 0x40 followed by the virtual address of ROMHDR.
@@ -12,7 +15,7 @@ SIGNATURE_OFFSET = 0x40
 ROMHDR_SIZE = 84
 TOC_ENTRY_SIZE = 32
 FILES_ENTRY_SIZE = 28
-E32_UNIT_OFFSET = 32
+E32_UNIT_OFFSETS = (32, 36)
 O32_SIZE = 24
 EXPORT_UNIT = 0
 IMAGE_SCN_COMPRESSED = 0x2000
@@ -26,7 +29,21 @@ class Rom:
         self.romhdr_address = struct.unpack_from("<I", self.data, SIGNATURE_OFFSET + 4)[0]
         self.base = self._find_base()
         self.header = self._romhdr_fields(self.base)
-        self.modules = [self._module(index) for index in range(self.header["nummods"])]
+        self.unit_offset = E32_UNIT_OFFSETS[0]
+        for offset in E32_UNIT_OFFSETS:
+            self.unit_offset = offset
+            self.modules = [self._module(index) for index in range(self.header["nummods"])]
+            if self._exports_readable("coredll.dll"):
+                break
+
+    def _exports_readable(self, name):
+        try:
+            module = self.module(name)
+            rva, size = module["units"][EXPORT_UNIT]
+            self.module_bytes(module, rva, 40)
+            return True
+        except (KeyError, ValueError):
+            return False
 
     def _find_base(self):
         candidate = self.romhdr_address & ~0xFFFF
@@ -66,7 +83,7 @@ class Rom:
         offset = self.romhdr_address - self.base + ROMHDR_SIZE + TOC_ENTRY_SIZE * index
         attributes, _, _, size, name, e32, o32, load = struct.unpack_from("<8I", self.data, offset)
         objects, flags, entry, vbase = struct.unpack_from("<HHII", self.data, e32 - self.base)
-        units = struct.unpack_from("<18I", self.data, e32 - self.base + E32_UNIT_OFFSET)
+        units = struct.unpack_from("<18I", self.data, e32 - self.base + self.unit_offset)
         sections = []
         for section in range(objects):
             vsize, rva, psize, dataptr, realaddr, section_flags = struct.unpack_from(
@@ -116,7 +133,7 @@ class Rom:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="List a Windows CE 3.0 ROM's modules or write its DLLs' export lists")
+    parser = argparse.ArgumentParser(description="List a Windows CE ROM's modules or write its DLLs' export lists")
     parser.add_argument("rom")
     parser.add_argument("--exports", metavar="FOLDER", help="write <dll>.txt, one exported name per line, for each DLL")
     parser.add_argument("--dll", action="append", default=[], help="only these DLLs (default: all)")

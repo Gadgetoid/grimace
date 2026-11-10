@@ -2,7 +2,68 @@
 extern "C" {
 #endif
 
-#if GRIMACE_WCE == 300 && GRIMACE_ARM && !defined(GRIMACE_DEVICE)
+#if GRIMACE_WCE == 300 && GRIMACE_ARM && !defined(GRIMACE_DEVICE) && !defined(GRIMACE_PLATFORM)
+#endif
+
+#if GRIMACE_WCE == 300 && GRIMACE_ARM && !defined(GRIMACE_DEVICE) && defined(GRIMACE_PLATFORM_HPC2000)
+#endif
+
+#if GRIMACE_WCE == 600 && GRIMACE_ARM && !defined(GRIMACE_DEVICE) && !defined(GRIMACE_PLATFORM)
+#define __grimace_lazy_CloseToolhelp32Snapshot 1
+extern struct grimace_lazy_import __grimace_lazy_import_CloseToolhelp32Snapshot;
+#define __grimace_lazy_CreateToolhelp32Snapshot 1
+extern struct grimace_lazy_import __grimace_lazy_import_CreateToolhelp32Snapshot;
+#define __grimace_lazy_Heap32First 1
+extern struct grimace_lazy_import __grimace_lazy_import_Heap32First;
+#define __grimace_lazy_Heap32ListFirst 1
+extern struct grimace_lazy_import __grimace_lazy_import_Heap32ListFirst;
+#define __grimace_lazy_Heap32ListNext 1
+extern struct grimace_lazy_import __grimace_lazy_import_Heap32ListNext;
+#define __grimace_lazy_Heap32Next 1
+extern struct grimace_lazy_import __grimace_lazy_import_Heap32Next;
+#define __grimace_lazy_Module32First 1
+extern struct grimace_lazy_import __grimace_lazy_import_Module32First;
+#define __grimace_lazy_Module32Next 1
+extern struct grimace_lazy_import __grimace_lazy_import_Module32Next;
+#define __grimace_lazy_Process32First 1
+extern struct grimace_lazy_import __grimace_lazy_import_Process32First;
+#define __grimace_lazy_Process32Next 1
+extern struct grimace_lazy_import __grimace_lazy_import_Process32Next;
+#define __grimace_lazy_Thread32First 1
+extern struct grimace_lazy_import __grimace_lazy_import_Thread32First;
+#define __grimace_lazy_Thread32Next 1
+extern struct grimace_lazy_import __grimace_lazy_import_Thread32Next;
+#define __grimace_lazy_Toolhelp32ReadProcessMemory 1
+extern struct grimace_lazy_import __grimace_lazy_import_Toolhelp32ReadProcessMemory;
+#endif
+
+#if GRIMACE_WCE == 600 && GRIMACE_ARM && !defined(GRIMACE_DEVICE) && defined(GRIMACE_PLATFORM_BRAIN)
+#define __grimace_lazy_CloseToolhelp32Snapshot 1
+extern struct grimace_lazy_import __grimace_lazy_import_CloseToolhelp32Snapshot;
+#define __grimace_lazy_CreateToolhelp32Snapshot 1
+extern struct grimace_lazy_import __grimace_lazy_import_CreateToolhelp32Snapshot;
+#define __grimace_lazy_Heap32First 1
+extern struct grimace_lazy_import __grimace_lazy_import_Heap32First;
+#define __grimace_lazy_Heap32ListFirst 1
+extern struct grimace_lazy_import __grimace_lazy_import_Heap32ListFirst;
+#define __grimace_lazy_Heap32ListNext 1
+extern struct grimace_lazy_import __grimace_lazy_import_Heap32ListNext;
+#define __grimace_lazy_Heap32Next 1
+extern struct grimace_lazy_import __grimace_lazy_import_Heap32Next;
+#define __grimace_lazy_Module32First 1
+extern struct grimace_lazy_import __grimace_lazy_import_Module32First;
+#define __grimace_lazy_Module32Next 1
+extern struct grimace_lazy_import __grimace_lazy_import_Module32Next;
+#define __grimace_lazy_Process32First 1
+extern struct grimace_lazy_import __grimace_lazy_import_Process32First;
+#define __grimace_lazy_Process32Next 1
+extern struct grimace_lazy_import __grimace_lazy_import_Process32Next;
+#define __grimace_lazy_Thread32First 1
+extern struct grimace_lazy_import __grimace_lazy_import_Thread32First;
+#define __grimace_lazy_Thread32Next 1
+extern struct grimace_lazy_import __grimace_lazy_import_Thread32Next;
+#define __grimace_lazy_Toolhelp32ReadProcessMemory 1
+extern struct grimace_lazy_import __grimace_lazy_import_Toolhelp32ReadProcessMemory;
 #endif
 
 #if GRIMACE_WCE == 100 && GRIMACE_MIPS && !defined(GRIMACE_DEVICE)
@@ -1251,6 +1312,21 @@ extern struct grimace_lazy_import __grimace_lazy_import_waveOutWrite;
 #endif
 
 #if GRIMACE_WCE == 200 && GRIMACE_X86 && !defined(GRIMACE_DEVICE)
+#endif
+
+#if GRIMACE_WCE == 600 && GRIMACE_ARM && defined(GRIMACE_DEVICE_PWA7300)
+#endif
+
+#if GRIMACE_WCE == 600 && GRIMACE_ARM && defined(GRIMACE_DEVICE_PWG5300)
+#endif
+
+#if GRIMACE_WCE == 600 && GRIMACE_ARM && defined(GRIMACE_DEVICE_PWSH2)
+#endif
+
+#if GRIMACE_WCE == 600 && GRIMACE_ARM && defined(GRIMACE_DEVICE_PWSB1)
+#endif
+
+#if GRIMACE_WCE == 600 && GRIMACE_ARM && defined(GRIMACE_DEVICE_PWSH4)
 #endif
 
 #if GRIMACE_WCE == 300 && GRIMACE_ARM && defined(GRIMACE_DEVICE_JORNADA720)

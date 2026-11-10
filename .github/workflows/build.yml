@@ -49,10 +49,10 @@ jobs:
       - name: Run the checks and build the examples and debugmgr, with no warnings
         run: |
           make check-cxx-headers-mips check-cxx-headers-sh3 check-cxx-headers-arm check-abi check-stdlib check-debugmgr \
-            examples-mips-ce1 examples-mips-ce2 examples-sh3-ce1 examples-sh3-ce101 examples-sh3-ce2 examples-arm-ce3 \
-            debugmgr-mips-ce1 debugmgr-mips-ce2 debugmgr-sh3-ce1 debugmgr-sh3-ce2 debugmgr-arm-ce3 \
-            check-lazy-mips-ce1 check-lazy-mips-ce2 check-lazy-sh3-ce1 check-lazy-sh3-ce101 check-lazy-sh3-ce2 check-lazy-arm-ce3 \
-            check-libc-host check-libc-mips-ce1 check-libc-mips-ce2 check-libc-sh3-ce1 check-libc-sh3-ce101 check-libc-sh3-ce2 check-libc-arm-ce3 2>&1 | tee build.log
+            examples-mips-ce1 examples-mips-ce2 examples-sh3-ce1 examples-sh3-ce101 examples-sh3-ce2 examples-arm-ce3 examples-arm-ce6 check-ce6 \
+            debugmgr-mips-ce1 debugmgr-mips-ce2 debugmgr-sh3-ce1 debugmgr-sh3-ce2 debugmgr-arm-ce3 debugmgr-arm-ce6 \
+            check-lazy-mips-ce1 check-lazy-mips-ce2 check-lazy-sh3-ce1 check-lazy-sh3-ce101 check-lazy-sh3-ce2 check-lazy-arm-ce3 check-lazy-arm-ce6 \
+            check-libc-host check-libc-mips-ce1 check-libc-mips-ce2 check-libc-sh3-ce1 check-libc-sh3-ce101 check-libc-sh3-ce2 check-libc-arm-ce3 check-libc-arm-ce6 2>&1 | tee build.log
           ! grep -i "warning:" build.log
 
       - name: Package the examples

@@ -14,7 +14,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UNWRAPPED = {"pshpack1.h", "pshpack2.h", "pshpack4.h", "pshpack8.h", "poppack.h", "README.w32api", "VENDOR.md"}
 WINDOWS_EXTRAS = ["stdint.h", "mmsystem.h", "shellapi.h", "wchar.h", "stdlib.h", "string.h", "stdio.h", "math.h", "ctype.h", "setjmp.h", "time.h", "windbase.h"]
 WINDOWS_VERSION_EXTRAS = [("GRIMACE_WCE == 101", "windowsx.h"), ("GRIMACE_CE >= 2 || GRIMACE_WCE == 101", "tchar.h")]
-OWN_HEADERS = ["wchar.h", "stdlib.h", "string.h", "stdio.h", "math.h", "ctype.h", "setjmp.h", "time.h", "windbase.h", "tchar.h"]
+OWN_HEADERS = ["wchar.h", "stdlib.h", "string.h", "stdio.h", "math.h", "ctype.h", "setjmp.h", "time.h", "windbase.h", "tchar.h", "ceddk.h", "msgqueue.h",
+               "pm.h"]
+DRIVER_HEADERS = ["ceddk.h", "msgqueue.h", "pm.h"]
 MACRO_HEADERS = {"windowsx.h"}
 MIPS_TARGET = ["--target=mipsel-unknown-none-elf", "-march=mips1", "-msoft-float"]
 ARCHITECTURES = {"mips": {"target": MIPS_TARGET, "defines": []},
@@ -62,7 +64,7 @@ def write_wrappers():
 
 
 def declarations(clang, version, arch):
-    source = "#include <windows.h>\n#include <winsock.h>\n#include <tchar.h>\n" + "".join("#include <%s>\n" % header for header in vendored())
+    source = "#include <windows.h>\n#include <winsock.h>\n#include <tchar.h>\n" + "".join("#include <%s>\n" % header for header in vendored() + DRIVER_HEADERS)
     command = [clang] + ARCHITECTURES[arch]["target"] + ["-fshort-wchar", "-ffreestanding", "-nostdlibinc",
                "-Wno-unknown-warning-option", "-Wno-experimental-option", "-fsyntax-only", "-Xclang", "-ast-dump=json", "-D_WIN32_WCE=%d" % version,
                "-DGRIMACE_ALL_DECLARATIONS", "-DGRIMACE_NO_CONSTANTS"] + ARCHITECTURES[arch]["defines"] + ["-I", os.path.join(ROOT, "include"), "-I", os.path.join(ROOT, "include", "w32api"), "-x", "c", "-"]
@@ -89,7 +91,7 @@ def header_paths():
 
 def declaring_headers():
     texts = {}
-    for path in header_paths():
+    for path in header_paths() + sorted(glob.glob(os.path.join(ROOT, "include", "grimace", "sdk", "*.h"))):
         texts[path] = open(path, errors="replace").read()
 
     @functools.cache

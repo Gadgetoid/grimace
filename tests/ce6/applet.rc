@@ -1,0 +1,9 @@
+#define IDI_APPLET 100
+
+IDI_APPLET ICON "applet.ico"
+
+STRINGTABLE
+BEGIN
+    1, "Applet"
+    2, "A Control Panel applet built with grimace"
+END

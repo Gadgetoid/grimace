@@ -9,7 +9,11 @@
 #ifndef _ARM_
 #define _ARM_
 #endif
-#ifndef ARMV4
+#if GRIMACE_CE >= 6
+#ifndef ARMV4I
+#define ARMV4I
+#endif
+#elif !defined(ARMV4)
 #define ARMV4
 #endif
 #elif GRIMACE_X86
@@ -71,7 +75,9 @@
 
 #pragma push_macro("_WIN32_WCE")
 #undef _WIN32_WCE
-#if GRIMACE_CE >= 3
+#if GRIMACE_CE >= 6
+#define _WIN32_WCE 0x600
+#elif GRIMACE_CE >= 3
 #define _WIN32_WCE 0x300
 #elif GRIMACE_CE >= 2
 #define _WIN32_WCE 0x200

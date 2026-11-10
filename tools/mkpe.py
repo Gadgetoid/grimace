@@ -2,7 +2,7 @@
 Linked MIPS, SH3, x86 or ARM ELF (--emit-relocs) to Windows CE PE32.
 
 - Machine 0x166 (MIPS little endian), 0x1A2 (SH3), 0x14C (x86) or 0x1C0 (ARM), from the ELF's machine. Subsystem 9
-  (Windows CE GUI), version from --ce-version (1.0, 2.0 or 3.0), as Microsoft's linker writes for
+  (Windows CE GUI), version from --ce-version (1.0, 2.0, 3.0 or 6.0), as Microsoft's linker writes for
   /subsystem:windowsce,<version>.
 - Image base 0x10000, headers 0x400, file alignment 0x200.
 - Sections 4 KB aligned: the R3910 has 4 KB pages only.
@@ -496,7 +496,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert a linked MIPS, SH3, x86 or ARM ELF into a Windows CE PE")
     parser.add_argument("elf")
     parser.add_argument("output")
-    parser.add_argument("--ce-version", required=True, help="Windows CE version the program targets, e.g. 1, 2 or 3")
+    parser.add_argument("--ce-version", required=True, help="Windows CE version the program targets, e.g. 1, 2, 3 or 6")
     parser.add_argument("--exports", help="comma-separated exports, NAME or NAME=SYMBOL; makes a DLL")
     parser.add_argument("--exports-file", help="exports, one per line; makes a DLL")
     parser.add_argument("--icon")

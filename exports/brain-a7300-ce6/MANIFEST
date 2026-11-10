@@ -1,0 +1,5 @@
+arch: arm
+version: 6
+platform: brain
+device: pwa7300 pwg5300
+source: Sharp Brain PW-A7300 ROM, also PW-G5300 (identical lists), tools/cerom.py

@@ -3,8 +3,8 @@ Export lists in exports/<name>/: one <dll>.txt per DLL, a name per line, and a M
 
 A target is an architecture and a minimum Windows CE version, optionally narrowed to a platform or pinned to a device.
 Pinned to a device, it imports exactly what that device's list at that version exports. Otherwise it may run on any
-device whose list is at that version or later, so it imports directly only what all of those export, and gets lazy
-imports, bound when first called, for what only some of them export.
+device of a platform with a list at that version, whose list is at that version or later, so it imports directly only
+what all of those export, and gets lazy imports, bound when first called, for what only some of them export.
 """
 import argparse
 import functools
@@ -14,8 +14,8 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXPORTS = os.path.join(ROOT, "exports")
-WIN32_WCE = {"1": 100, "1.01": 101, "2": 200, "3": 300}
-VERSION_NAMES = {100: "1.0", 101: "1.01", 200: "2.0", 300: "3.0"}
+WIN32_WCE = {"1": 100, "1.01": 101, "2": 200, "3": 300, "6": 600}
+VERSION_NAMES = {100: "1.0", 101: "1.01", 200: "2.0", 300: "3.0", 600: "6.0"}
 
 
 class Manifest:
@@ -29,7 +29,7 @@ class Manifest:
         self.arch = fields["arch"]
         self.version = WIN32_WCE[fields["version"]]
         self.platform = fields["platform"]
-        self.device = fields.get("device") or None
+        self.devices = fields.get("device", "").split()
         self.source = fields.get("source", "")
         self._dlls = None
 
@@ -83,18 +83,20 @@ def platforms(arch):
 
 
 def reachable(target):
-    """The lists a program built for target may meet: at its version or later, or the pinned device's at its version."""
+    """The lists a program built for target may meet: those at its version or later, of the platforms with a list at its
+    version (or the one chosen), or the pinned device's at its version."""
     found = [manifest for manifest in manifests() if manifest.arch == target.arch]
     if target.device:
-        found = [manifest for manifest in found if manifest.device == target.device and manifest.version == target.version]
+        found = [manifest for manifest in found if target.device in manifest.devices and manifest.version == target.version]
         if not found:
             raise LookupError("no export list for %s" % target.label())
         return found
     if target.platform:
         found = [manifest for manifest in found if manifest.platform == target.platform]
-    if not any(manifest.version == target.version for manifest in found):
+    platforms_at_version = {manifest.platform for manifest in found if manifest.version == target.version}
+    if not platforms_at_version:
         raise LookupError("no export list for %s" % target.label())
-    return [manifest for manifest in found if manifest.version >= target.version]
+    return [manifest for manifest in found if manifest.version >= target.version and manifest.platform in platforms_at_version]
 
 
 def imports(target):
@@ -118,11 +120,11 @@ def targets():
         if not any(target.condition() == generic.condition() for target in found):
             found.append(generic)
             if len(platforms(manifest.arch)) > 1:
-                for platform in platforms(manifest.arch):
+                for platform in sorted({other.platform for other in manifests() if other.arch == manifest.arch and other.version == manifest.version}):
                     found.append(Target(manifest.arch, manifest.version, platform=platform))
     for manifest in manifests():
-        if manifest.device:
-            found.append(Target(manifest.arch, manifest.version, device=manifest.device))
+        for device in manifest.devices:
+            found.append(Target(manifest.arch, manifest.version, device=device))
     return found
 
 
@@ -157,7 +159,7 @@ if __name__ == "__main__":
     if not arguments.arch:
         for manifest in manifests():
             print("%-16s %-5s CE %-5s %-8s %-11s %5d names  %s" % (manifest.name, manifest.arch, VERSION_NAMES[manifest.version], manifest.platform,
-                                                                   manifest.device or "-", len(manifest.names()), manifest.source))
+                                                                   " ".join(manifest.devices) or "-", len(manifest.names()), manifest.source))
         sys.exit(0)
     target = Target(arguments.arch, WIN32_WCE[arguments.version], arguments.platform or None, arguments.device or None)
     try:

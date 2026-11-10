@@ -8,6 +8,7 @@ A CMake toolchain for Windows CE programs and DLLs. It uses clang and lld, then 
 | SH3 CE 1.0, 1.01 and 2.0 | `sh3` | `1`, `1.01`, `2` | Microsoft's SH3 SDK import libraries (`exports/sh3-sdk-ce1`, `ce101`, `ce2`) | |
 | x86 CE 2.x (Clarion Joyride) | `x86` | `2` | a Joyride ROM (`exports/joyride-ce2`) | `joyride` |
 | ARM CE 3.0, Handheld PC 2000 (HP Jornada 720) | `arm` | `3` | the Jornada 720's ROM (`exports/jornada720-ce3`) | `jornada720` |
+| ARM CE 6.0 (Sharp Brain) | `arm` | `6` | PW-SH2 and PW-A7300 ROMs (`exports/brain-sh2-ce6`, `brain-a7300-ce6`) | `pwsh2`, `pwsb1`, `pwsh4`, `pwa7300`, `pwg5300` |
 
 ## LLVM
 
@@ -39,8 +40,8 @@ This gives `build/myapp.exe` and `build/mylib.dll`, with the linked `.elf` besid
 
 - `grimace_add_executable(target [EXCLUDE_FROM_ALL] [OUTPUT file.exe] [ICON file.ico] [RESOURCES files...] sources...)`: entry point `WinMain`.
 - `grimace_add_library(target [EXCLUDE_FROM_ALL] [OUTPUT file.dll] [RESOURCES files...] EXPORTS name[=symbol]... | EXPORTS_FILE file sources...)`: entry point `DllMain`. `EXPORTS_FILE` has one export per line.
-- `GRIMACE_ARCH`: `mips` (default), `sh3`, `x86` or `arm`. `GRIMACE_CE_VERSION`, the oldest version the program runs on, defaults to `3` for `arm` and `1` otherwise. `_WIN32_WCE` is `100`, `101`, `200` or `300`.
-- `GRIMACE_DEVICE` pins the target to one device's ROM, and `GRIMACE_PLATFORM` (`hpc`, `hpc2000`, `autopc`) to one platform's devices. See [Imports](#imports).
+- `GRIMACE_ARCH`: `mips` (default), `sh3`, `x86` or `arm`. `GRIMACE_CE_VERSION`, the oldest version the program runs on, defaults to `3` for `arm` and `1` otherwise. `_WIN32_WCE` is `100`, `101`, `200`, `300` or `600`.
+- `GRIMACE_DEVICE` pins the target to one device's ROM, and `GRIMACE_PLATFORM` (`hpc`, `hpc2000`, `autopc`, `brain`) to one platform's devices. See [Imports](#imports).
 - `RESOURCES`: `.rc` files are compiled with `llvm-rc` and linked into `.rsrc` with the icon. Other files listed are dependencies. Set `GRIMACE_RC_INCLUDES` to a list of folders to search for headers too. CE has no `DialogBoxParamW`: use `FindResource`, `LoadResource` and `DialogBoxIndirectParamW`.
 - `llvm-rc` needs the comma after a control's text or name (`LTEXT "Text", -1, 5, 5, 50, 12`), and keeps the leading spaces of a line continued with `\`. Microsoft's rc does neither.
 - The PE has subsystem 9 (Windows CE GUI) with the CE version, as Microsoft's linkers write. CE 2.0 treats a program marked 1.0 as a CE 1.0 program, with another system font for client-area text.
@@ -49,9 +50,9 @@ This gives `build/myapp.exe` and `build/mylib.dll`, with the linked `.elf` besid
 
 ## Imports
 
-Each folder in `exports/` is a ROM's or SDK's export lists, one `<dll>.txt` per DLL, with a `MANIFEST` giving its architecture, CE version, platform, device and source. `python3 tools/manifests.py` lists them.
+Each folder in `exports/` is a ROM's or SDK's export lists, one `<dll>.txt` per DLL, with a `MANIFEST` giving its architecture, CE version, platform, devices and source. Devices with identical lists share a folder. `python3 tools/manifests.py` lists them.
 
-A target imports from the lists of its architecture at its CE version and later, since the program may run on any of those devices:
+A target imports from the lists of its architecture at its CE version and later, since the program may run on any of those devices, but only those of the platforms with lists at its own version: ARM CE 3.0 programs don't import from the Brain's CE 6.0 lists.
 
 - A function all of them export is a direct import, which the loader binds.
 - A function only some of them export is a lazy import. Its first call loads the DLL and looks the function up with `GetProcAddressW`, also trying the name with or without a trailing `W` (CE 1.0 exports `FindResource`, CE 2.0 `FindResourceW`). If the device lacks it, the call sets `ERROR_CALL_NOT_IMPLEMENTED` and returns 0.
@@ -157,12 +158,14 @@ Anything that can reach the TCP port can copy files to the device and run progra
 - `tools/grimace-cc` filters clang's "MIPS-I support is experimental" warning on MIPS.
 - Programs and DLLs have no `.pdata`, so CE can't unwind their frames: `__try` doesn't work in them, and a fault inside a window procedure ends the process.
 - The ARM target follows Microsoft's CE ARM calling standard as eVC3 compiles it; `make check-abi` checks it.
+- ARM CE 6.0 targets ARMV4I: code is built for ARMv4T and returns with `bx`, as do the import stubs, so Thumb code in the ROM can call it and be called.
+- `ceddk.h`, `msgqueue.h` and `pm.h` declare what CE 6.0 drivers use, from Microsoft's documentation. Their values haven't been checked against an SDK. `tests/ce6` builds a program, a control panel applet and a stream driver DLL.
 
 ## Make
 
 | Target | |
 | --- | --- |
-| `examples-<target>`, `debugmgr-<target>` | build into `build/<target>` and `build/debugmgr/<target>`, for `mips-ce1`, `mips-ce2`, `sh3-ce1`, `sh3-ce101`, `sh3-ce2`, `x86-ce2` and `arm-ce3` |
+| `examples-<target>`, `debugmgr-<target>` | build into `build/<target>` and `build/debugmgr/<target>`, for `mips-ce1`, `mips-ce2`, `sh3-ce1`, `sh3-ce101`, `sh3-ce2`, `x86-ce2`, `arm-ce3` and `arm-ce6` |
 | `examples`, `debugmgr` | all targets, but no x86 debugmgr |
 | `packages-<target>`, `packages` | package the examples for a target, or build and package them for every target (`examples/matrix`) |
 | `check-cxx-headers-<arch>` | the headers declare C functions with C linkage in C++, and the C++ layer compiles, for each CE version of `mips`, `sh3`, `x86` or `arm` |
@@ -170,10 +173,11 @@ Anything that can reach the TCP port can copy files to the device and run progra
 | `check-abi`, `check-stdlib`, `check-debugmgr` | the ARM calling standard, the C++ standard library on CE 3.0, and debugmgr with `grimace-debug` on this computer |
 | `check-lazy`, `check-lazy-<target>` | build `tests/lazy` |
 | `check-libc`, `check-libc-<target>`, `check-libc-host` | build `tests/libc/device`, and run `tests/libc/host.c` here |
-| `check` | `check-abi`, `check-cxx-headers`, `check-stdlib`, `check-debugmgr`, `check-lazy`, `check-libc`, `examples` and `debugmgr` |
+| `check-ce6` | build `tests/ce6` for ARM CE 6.0 and each Brain, and check with `tests/check-imports.py` that every import is in the device's lists |
+| `check` | `check-abi`, `check-cxx-headers`, `check-stdlib`, `check-debugmgr`, `check-lazy`, `check-libc`, `check-ce6`, `examples` and `debugmgr` |
 | `headers` | regenerate `include/` from a CeGCC checkout's w32api (`GRIMACE_W32API`) and the SDKs (`GRIMACE_REFERENCE`) |
 | `docstrings` | rewrite the docstrings from `docs/api` |
-| `exports` | read `exports/jornada720-ce3` from a Jornada 720 ROM image (`GRIMACE_ROM`) |
+| `exports` | read `exports/jornada720-ce3` from a Jornada 720 ROM image (`GRIMACE_ROM`). `tools/cerom.py` also reads CE 6.0 ROMs |
 
 Set `GRIMACE_MIPS_LLVM`, `GRIMACE_SH3_LLVM`, `GRIMACE_X86_LLVM` or `GRIMACE_ARM_LLVM` to choose an LLVM for that architecture's targets and checks. Set `DEVICE` or `PLATFORM` to build for one device or platform, into `build/<target>-<device>`: `make examples-mips-ce1 DEVICE=velo1`.
 

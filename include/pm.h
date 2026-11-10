@@ -1,0 +1,41 @@
+#ifndef GRIMACE_PM_H
+#define GRIMACE_PM_H
+
+#include <windows.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define PBT_TRANSITION 0x00000001
+#define PBT_RESUME 0x00000002
+#define PBT_POWERSTATUSCHANGE 0x00000004
+#define PBT_POWERINFOCHANGE 0x00000008
+#define POWER_NOTIFY_ALL 0xFFFFFFFF
+
+#define POWER_STATE_ON 0x00010000
+#define POWER_STATE_OFF 0x00020000
+#define POWER_STATE_CRITICAL 0x00040000
+#define POWER_STATE_BOOT 0x00080000
+#define POWER_STATE_IDLE 0x00100000
+#define POWER_STATE_SUSPEND 0x00200000
+#define POWER_STATE_UNATTENDED 0x00400000
+#define POWER_STATE_RESET 0x00800000
+#define POWER_STATE_USERIDLE 0x01000000
+#define POWER_STATE_PASSWORD 0x10000000
+
+typedef struct _POWER_BROADCAST {
+    DWORD Message;
+    DWORD Flags;
+    DWORD Length;
+    WCHAR SystemPowerState[1];
+} POWER_BROADCAST, *PPOWER_BROADCAST;
+
+HANDLE WINAPI RequestPowerNotifications(HANDLE hMsgQ, DWORD Flags);
+DWORD WINAPI StopPowerNotifications(HANDLE h);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

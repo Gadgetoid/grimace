@@ -1,0 +1,5 @@
+ChooseColor
+ChooseFontW
+CommDlgExtendedError
+PageSetupDlgW
+PrintDlg

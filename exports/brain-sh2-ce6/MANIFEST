@@ -1,0 +1,5 @@
+arch: arm
+version: 6
+platform: brain
+device: pwsh2 pwsb1 pwsh4
+source: Sharp Brain PW-SH2 ROM, also PW-SB1 and PW-SH4 (identical lists), tools/cerom.py

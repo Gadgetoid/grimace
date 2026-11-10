@@ -2,7 +2,8 @@ TOOLCHAIN = $(CURDIR)/cmake/toolchain.cmake
 CLANG ?= $(firstword $(wildcard $(CURDIR)/llvm/bin/clang) $(wildcard $(shell brew --prefix llvm 2>/dev/null)/bin/clang) clang)
 ROM ?= $(GRIMACE_ROM)
 EXPORT_DLLS = addrstor asform ceshell commctrl commdlg coredll cxport htmlview imgdecmp inkx mlang mqoa msgstore msmqrt mshtml ndis ole32 oleaut32 richink secur32 shdocvw tnefutil toolhelp urlmon webview wininet winscard winsock
-TARGETS = mips-ce1 mips-ce2 sh3-ce1 sh3-ce101 sh3-ce2 x86-ce2 arm-ce3
+TARGETS = mips-ce1 mips-ce2 sh3-ce1 sh3-ce101 sh3-ce2 x86-ce2 arm-ce3 arm-ce6
+CE6_DEVICES = pwsh2 pwsb1 pwsh4 pwa7300 pwg5300
 DEBUGMGR_TARGETS = $(filter-out x86-%,$(TARGETS))
 
 llvm = $(if $(GRIMACE_$(1)_LLVM),-DGRIMACE_LLVM_ROOT=$(GRIMACE_$(1)_LLVM))
@@ -10,7 +11,7 @@ selection = -DGRIMACE_PLATFORM=$(PLATFORM) -DGRIMACE_DEVICE=$(DEVICE)
 variant = $(if $(PLATFORM),-$(PLATFORM))$(if $(DEVICE),-$(DEVICE))
 llvm_clang = $(if $(GRIMACE_$(1)_LLVM),--clang $(GRIMACE_$(1)_LLVM)/bin/clang,--clang $(CLANG))
 
-.PHONY: check examples debugmgr packages check-lazy check-libc check-libc-host headers docstrings exports check-headers check-cxx-headers check-abi check-stdlib check-debugmgr clean
+.PHONY: check examples debugmgr packages check-ce6 check-lazy check-libc check-libc-host headers docstrings exports check-headers check-cxx-headers check-abi check-stdlib check-debugmgr clean
 
 define target
 .PHONY: examples-$(1) debugmgr-$(1) packages-$(1) check-lazy-$(1) check-libc-$(1)
@@ -42,8 +43,9 @@ $(eval $(call target,sh3-ce101,sh3,1.01,SH3))
 $(eval $(call target,sh3-ce2,sh3,2,SH3))
 $(eval $(call target,x86-ce2,x86,2,X86))
 $(eval $(call target,arm-ce3,arm,3,ARM))
+$(eval $(call target,arm-ce6,arm,6,ARM))
 
-check: check-abi check-cxx-headers check-stdlib check-debugmgr check-lazy check-libc examples debugmgr
+check: check-abi check-cxx-headers check-stdlib check-debugmgr check-lazy check-libc check-ce6 examples debugmgr
 
 examples: $(addprefix examples-,$(TARGETS))
 
@@ -56,6 +58,12 @@ packages:
 check-lazy: $(addprefix check-lazy-,$(TARGETS))
 
 check-libc: check-libc-host $(addprefix check-libc-,$(TARGETS))
+
+check-ce6:
+	cmake -S tests/ce6 -B build/ce6/arm-ce6 -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=arm -DGRIMACE_CE_VERSION=6 $(call llvm,ARM)
+	cmake --build build/ce6/arm-ce6
+	python3 tests/check-imports.py build/ce6/arm-ce6 --arch arm --version 6
+	$(foreach device,$(CE6_DEVICES),cmake -S tests/ce6 -B build/ce6/arm-ce6-$(device) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=arm -DGRIMACE_CE_VERSION=6 -DGRIMACE_DEVICE=$(device) $(call llvm,ARM) && cmake --build build/ce6/arm-ce6-$(device) && python3 tests/check-imports.py build/ce6/arm-ce6-$(device) --arch arm --version 6 --device $(device) &&) true
 
 check-libc-host:
 	mkdir -p build
