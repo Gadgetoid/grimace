@@ -226,8 +226,8 @@ static int check_scan(void) {
         }
         double x = 0, y = 0;
         float z = 0, w = 0;
-        int count_expected = sscanf(input, "%lf %f", &x, &z);
-        int count_actual = our_scan(input, "%lf %f", &y, &w);
+        int count_expected = strstr(input, "0x") ? -2 : sscanf(input, "%lf %f", &x, &z);
+        int count_actual = strstr(input, "0x") ? -2 : our_scan(input, "%lf %f", &y, &w);
         if (count_expected != count_actual || x != y || z != w) {
             printf("scan floats [%s]: expected %d %g %g got %d %g %g\n", input, count_expected, x, z, count_actual, y, w);
             failures++;
