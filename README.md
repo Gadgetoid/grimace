@@ -146,7 +146,7 @@ The Win32 headers are CeGCC's w32api (public domain) in `include/w32api`, patche
 `debugmgr.exe` runs on the device and lets `tools/grimace-debug` copy files, list folders and start and stop programs. The protocol is in `debugmgr/PROTOCOL.md`.
 
 - CE 3.0 (`debugmgr/*.cpp`): over TCP, port 2100, or an emulator's host mailbox when started with `mailbox`. Set `GRIMACE_DEVICE` to the device's address, or `GRIMACE_AGENT` to an emulator's agent socket.
-- CE 1.0 and 2.0 (`debugmgr/debugmgr.c`): over an emulator's host mailbox only. On SH3 it's `grimace-debugmgr.exe`, so the ROM's `debugmgr.exe` doesn't shadow it.
+- CE 1.0 and 2.0 (`debugmgr/debugmgr.c`): over an emulator's host mailbox only, on MIPS and SH3. On SH3 it's `grimace-debugmgr.exe`, so the ROM's `debugmgr.exe` doesn't shadow it. There's no x86 build.
 
 Anything that can reach the TCP port can copy files to the device and run programs, so only leave it running on a network you trust.
 
@@ -163,7 +163,7 @@ Anything that can reach the TCP port can copy files to the device and run progra
 | Target | |
 | --- | --- |
 | `examples-<target>`, `debugmgr-<target>` | build into `build/<target>` and `build/debugmgr/<target>`, for `mips-ce1`, `mips-ce2`, `sh3-ce1`, `sh3-ce101`, `sh3-ce2`, `x86-ce2` and `arm-ce3` |
-| `examples`, `debugmgr` | all targets |
+| `examples`, `debugmgr` | all targets, but no x86 debugmgr |
 | `packages-<target>`, `packages` | package the examples for a target, or build and package them for every target (`examples/matrix`) |
 | `check-cxx-headers-<arch>` | the headers declare C functions with C linkage in C++, and the C++ layer compiles, for each CE version of `mips`, `sh3`, `x86` or `arm` |
 | `check-headers` | compare the headers with each SDK's (`GRIMACE_REFERENCE`, a folder with `include/ce100`, `ce101`, `ce200` and `ce300`) |

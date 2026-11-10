@@ -69,7 +69,7 @@ jobs:
       - name: Check the x86 headers and build the x86 examples, with no warnings
         if: runner.os == 'Linux'
         run: |
-          make check-cxx-headers-x86 examples-x86-ce2 debugmgr-x86-ce2 check-lazy-x86-ce2 check-libc-x86-ce2 CLANG=clang 2>&1 | tee build-x86.log
+          make check-cxx-headers-x86 examples-x86-ce2 check-lazy-x86-ce2 check-libc-x86-ce2 CLANG=clang 2>&1 | tee build-x86.log
           make examples-x86-ce2 DEVICE=joyride 2>&1 | tee -a build-x86.log
           ! grep -i "warning:" build-x86.log
 

@@ -3,6 +3,7 @@ CLANG ?= $(firstword $(wildcard $(CURDIR)/llvm/bin/clang) $(wildcard $(shell bre
 ROM ?= $(GRIMACE_ROM)
 EXPORT_DLLS = addrstor asform ceshell commctrl commdlg coredll cxport htmlview imgdecmp inkx mlang mqoa msgstore msmqrt mshtml ndis ole32 oleaut32 richink secur32 shdocvw tnefutil toolhelp urlmon webview wininet winscard winsock
 TARGETS = mips-ce1 mips-ce2 sh3-ce1 sh3-ce101 sh3-ce2 x86-ce2 arm-ce3
+DEBUGMGR_TARGETS = $(filter-out x86-%,$(TARGETS))
 
 llvm = $(if $(GRIMACE_$(1)_LLVM),-DGRIMACE_LLVM_ROOT=$(GRIMACE_$(1)_LLVM))
 selection = -DGRIMACE_PLATFORM=$(PLATFORM) -DGRIMACE_DEVICE=$(DEVICE)
@@ -46,7 +47,7 @@ check: check-abi check-cxx-headers check-stdlib check-debugmgr check-lazy check-
 
 examples: $(addprefix examples-,$(TARGETS))
 
-debugmgr: $(addprefix debugmgr-,$(TARGETS))
+debugmgr: $(addprefix debugmgr-,$(DEBUGMGR_TARGETS))
 
 packages:
 	cmake -S examples/matrix -B build/matrix $(foreach arch,MIPS SH3 X86 ARM,$(if $(GRIMACE_$(arch)_LLVM),-DGRIMACE_$(arch)_LLVM=$(GRIMACE_$(arch)_LLVM)))
