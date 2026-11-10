@@ -8,7 +8,7 @@ from importlib.machinery import SourceFileLoader
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 check = SourceFileLoader("check_headers", os.path.join(ROOT, "tests", "check-headers.py")).load_module()
 ARM = check.ARCHITECTURES["arm"]
-VERSIONS = [(3, "GRIMACE_CE == 3", None)]
+VERSIONS = [(3, "GRIMACE_CE >= 3", None)]
 
 
 SDK_HEADER_HOMES = {"types.h": "windef.h", "tchar.h": "winnt.h"}

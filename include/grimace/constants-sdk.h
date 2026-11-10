@@ -1,4 +1,4 @@
-#if GRIMACE_CE == 3
+#if GRIMACE_CE >= 3
 #ifdef GRIMACE_ADDRMAPI_H_CONTENT
 #ifndef HHAB_CARD_NUMPROPS
 #define HHAB_CARD_NUMPROPS 50
@@ -1296,6 +1296,47 @@
 #endif
 #ifndef CommDlg_OpenSave_SetDefExt
 #define CommDlg_OpenSave_SetDefExt(_hdlg,_pszext) (void)SNDMSG(_hdlg, CDM_SETDEFEXT, 0, (LPARAM)(LPSTR)_pszext)
+#endif
+#endif
+#ifdef GRIMACE_CPL_H_CONTENT
+#ifndef CPL_DBLCLK
+#define CPL_DBLCLK 5
+#endif
+#ifndef CPL_DYNAMIC_RES
+#define CPL_DYNAMIC_RES 0
+#endif
+#ifndef CPL_EXIT
+#define CPL_EXIT 7
+#endif
+#ifndef CPL_GETCOUNT
+#define CPL_GETCOUNT 2
+#endif
+#ifndef CPL_INIT
+#define CPL_INIT 1
+#endif
+#ifndef CPL_INQUIRE
+#define CPL_INQUIRE 3
+#endif
+#ifndef CPL_NEWINQUIRE
+#define CPL_NEWINQUIRE 8
+#endif
+#ifndef CPL_SELECT
+#define CPL_SELECT 4
+#endif
+#ifndef CPL_SETUP
+#define CPL_SETUP 200
+#endif
+#ifndef CPL_STARTWPARMS
+#define CPL_STARTWPARMS 9
+#endif
+#ifndef CPL_STOP
+#define CPL_STOP 6
+#endif
+#ifndef WM_CPL_LAUNCH
+#define WM_CPL_LAUNCH 0x7E8
+#endif
+#ifndef WM_CPL_LAUNCHED
+#define WM_CPL_LAUNCHED 0x7E9
 #endif
 #endif
 #ifdef __DBGAPI_H_

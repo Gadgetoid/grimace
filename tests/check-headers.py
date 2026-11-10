@@ -15,7 +15,7 @@ CORE_HEADERS = ["windows.h", "commctrl.h", "commdlg.h", "winsock.h", "notify.h",
                 "windowsx.h", "winnetwk.h", "mmsystem.h", "lmcons.h", "tchar.h"]
 HEADERS = CORE_HEADERS + ["wincrypt.h", "sipapi.h", "tapi.h", "shlobj.h", "wininet.h", "sspi.h", "objbase.h", "ole2.h", "oleauto.h", "olectl.h",
                           "msgstore.h", "addrstor.h", "imgdecmp.h", "inkx.h", "richink.h", "mlang.h", "htmlctrl.h", "tnefapi.h", "urlmon.h",
-                          "winscard.h", "mshtml.h"]
+                          "winscard.h", "mshtml.h", "cpl.h"]
 WIN32_WCE = {1: 100, 101: 101, 2: 200, 3: 300}
 VERSION_NAMES = {1: "1.0", 101: "1.01", 2: "2.0", 3: "3.0"}
 COMMON_FLAGS = ["-fshort-wchar", "-ffreestanding", "-nostdlibinc", "-w", "-ferror-limit=0"]

@@ -1,21 +1,7 @@
 #include <windows.h>
+#include <cpl.h>
 
-#define CPL_INIT 1
-#define CPL_GETCOUNT 2
-#define CPL_DBLCLK 5
-#define CPL_NEWINQUIRE 8
 #define IDI_APPLET 100
-
-typedef struct {
-    DWORD dwSize;
-    DWORD dwFlags;
-    DWORD dwHelpContext;
-    LONG lData;
-    HICON hIcon;
-    WCHAR szName[32];
-    WCHAR szInfo[64];
-    WCHAR szHelpFile[128];
-} applet_information;
 
 static HINSTANCE module;
 
@@ -27,14 +13,14 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved) {
 }
 
 LONG CPlApplet(HWND window, UINT message, LPARAM first, LPARAM second) {
-    applet_information *information;
+    NEWCPLINFO *information;
     switch (message) {
     case CPL_INIT:
         return 1;
     case CPL_GETCOUNT:
         return 1;
     case CPL_NEWINQUIRE:
-        information = (applet_information *)second;
+        information = (NEWCPLINFO *)second;
         information->dwSize = sizeof *information;
         information->hIcon = LoadIconW(module, MAKEINTRESOURCEW(IDI_APPLET));
         LoadStringW(module, 1, information->szName, 32);
