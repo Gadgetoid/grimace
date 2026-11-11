@@ -14,7 +14,7 @@ A CMake toolchain for Windows CE programs and DLLs. It uses clang and lld, then 
 
 MIPS and x86 work with any LLVM that has those backends, such as Homebrew's (`brew install llvm lld cmake`) or Ubuntu's (`apt install clang lld llvm cmake`). Apple's clang has neither.
 
-SH3 needs the `sh3el-unknown-none-wince` target and ARM the `armv4-unknown-none-wince` target, which no LLVM release has. Download [llvm-builds](https://github.com/grimace-sdk/llvm-builds/releases) v3, which has ARM, MIPS and SuperH and the C++ standard library. The macOS binaries aren't notarized: if a browser downloaded the tarball, run `xattr -dr com.apple.quarantine` on the unpacked folder.
+SH3 needs the `sh3el-unknown-none-wince` target and ARM the `armv4-unknown-none-wince` target, which no LLVM release has. Download [llvm-builds](https://github.com/grimace-sdk/llvm-builds/releases) v4 or later, which has ARM, MIPS and SuperH and the C++ standard library. The macOS binaries aren't notarized: if a browser downloaded the tarball, run `xattr -dr com.apple.quarantine` on the unpacked folder.
 
 The toolchain uses, in order: `GRIMACE_LLVM_ROOT` (a CMake setting or environment variable), `llvm` in this folder (a link to the unpacked release), Homebrew's LLVM, then the `clang` on `PATH`.
 
@@ -140,7 +140,7 @@ The Win32 headers are CeGCC's w32api (public domain) in `include/w32api`, patche
 - A target linked as C++ gets `grimace::cxx_runtime`: global constructors and destructors, `operator new` and `delete` on `LocalAlloc`, `__cxa_atexit` and `__cxa_pure_virtual`. Its entry point runs the constructors, calls `WinMain` or `DllMain`, then the destructors.
 - The headers' functions have C linkage in C++. Functions a DLL exports need `extern "C"`.
 - `include/grimace/cxx` is a header-only C++ layer: RAII handles, results instead of exceptions, a checked `format`, and a window base. See [its README](include/grimace/cxx/README.md).
-- On CE 3.0 with llvm-builds v3, the C++ standard library works: strings, containers, `<algorithm>`, `optional`, `variant`, smart pointers, `std::function`, ranges and `std::format`, without threads, locales, iostreams, filesystem or exceptions. See `examples/stl-text` and `examples/stl-collections`. Elsewhere, `include/new` and `include/initializer_list` are the only standard library headers.
+- On CE 3.0 with llvm-builds v3 or later, the C++ standard library works: strings, containers, `<algorithm>`, `optional`, `variant`, smart pointers, `std::function`, ranges and `std::format`, without threads, locales, iostreams, filesystem or exceptions. See `examples/stl-text` and `examples/stl-collections`. Elsewhere, `include/new` and `include/initializer_list` are the only standard library headers.
 
 ## debugmgr
 

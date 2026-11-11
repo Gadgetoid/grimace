@@ -19,7 +19,7 @@ jobs:
       run:
         shell: bash
     env:
-      GRIMACE_LLVM_RELEASE: v3
+      GRIMACE_LLVM_RELEASE: v4
     steps:
       - uses: actions/checkout@v7
 
@@ -31,7 +31,7 @@ jobs:
 
       - name: Download the Windows CE LLVM
         run: |
-          name=velo-llvm-$GRIMACE_LLVM_RELEASE-${{ matrix.llvm }}
+          name=llvm-$GRIMACE_LLVM_RELEASE-${{ matrix.llvm }}
           url=https://github.com/grimace-sdk/llvm-builds/releases/download/$GRIMACE_LLVM_RELEASE
           curl -fsSLO $url/$name.tar.xz
           curl -fsSLO $url/$name.tar.xz.sha256
