@@ -4,17 +4,16 @@ ROM ?= $(GRIMACE_ROM)
 EXPORT_DLLS = addrstor asform ceshell commctrl commdlg coredll cxport htmlview imgdecmp inkx mlang mqoa msgstore msmqrt mshtml ndis ole32 oleaut32 richink secur32 shdocvw tnefutil toolhelp urlmon webview wininet winscard winsock
 TARGETS = mips-ce1 mips-ce2 sh3-ce1 sh3-ce101 sh3-ce2 x86-ce2 arm-ce3 arm-ce6
 CE6_DEVICES = pwsh2 pwsb1 pwsh4 pwa7300 pwg5300
-DEBUGMGR_TARGETS = $(filter-out x86-%,$(TARGETS))
 
 llvm = $(if $(GRIMACE_$(1)_LLVM),-DGRIMACE_LLVM_ROOT=$(GRIMACE_$(1)_LLVM))
 selection = -DGRIMACE_PLATFORM=$(PLATFORM) -DGRIMACE_DEVICE=$(DEVICE)
 variant = $(if $(PLATFORM),-$(PLATFORM))$(if $(DEVICE),-$(DEVICE))
 llvm_clang = $(if $(GRIMACE_$(1)_LLVM),--clang $(GRIMACE_$(1)_LLVM)/bin/clang,--clang $(CLANG))
 
-.PHONY: check examples debugmgr packages check-ce6 check-lazy check-libc check-libc-host headers docstrings exports check-headers check-cxx-headers check-abi check-stdlib check-debugmgr clean
+.PHONY: check examples packages check-ce6 check-lazy check-libc check-libc-host headers docstrings exports check-headers check-cxx-headers check-abi check-stdlib clean
 
 define target
-.PHONY: examples-$(1) debugmgr-$(1) packages-$(1) check-lazy-$(1) check-libc-$(1)
+.PHONY: examples-$(1) packages-$(1) check-lazy-$(1) check-libc-$(1)
 
 examples-$(1):
 	cmake -S examples -B build/$(1)$(variant) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(selection) $(call llvm,$(4))
@@ -22,10 +21,6 @@ examples-$(1):
 
 packages-$(1): examples-$(1)
 	cmake --build build/$(1)$(variant) --target packages
-
-debugmgr-$(1):
-	cmake -S debugmgr -B build/debugmgr/$(1)$(variant) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(selection) $(call llvm,$(4))
-	cmake --build build/debugmgr/$(1)$(variant)
 
 check-lazy-$(1):
 	cmake -S tests/lazy -B build/lazy/$(1)$(variant) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=$(2) -DGRIMACE_CE_VERSION=$(3) $(selection) $(call llvm,$(4))
@@ -45,11 +40,9 @@ $(eval $(call target,x86-ce2,x86,2,X86))
 $(eval $(call target,arm-ce3,arm,3,ARM))
 $(eval $(call target,arm-ce6,arm,6,ARM))
 
-check: check-abi check-cxx-headers check-stdlib check-debugmgr check-lazy check-libc check-ce6 examples debugmgr
+check: check-abi check-cxx-headers check-stdlib check-lazy check-libc check-ce6 examples
 
 examples: $(addprefix examples-,$(TARGETS))
-
-debugmgr: $(addprefix debugmgr-,$(DEBUGMGR_TARGETS))
 
 packages:
 	cmake -S examples/matrix -B build/matrix $(foreach arch,MIPS SH3 X86 ARM,$(if $(GRIMACE_$(arch)_LLVM),-DGRIMACE_$(arch)_LLVM=$(GRIMACE_$(arch)_LLVM)))
@@ -96,9 +89,6 @@ check-abi:
 check-stdlib:
 	cmake -S tests/stdlib -B build/check-stdlib -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN) -DGRIMACE_ARCH=arm $(call llvm,ARM)
 	cmake --build build/check-stdlib
-
-check-debugmgr:
-	python3 tests/check-debugmgr.py
 
 exports:
 	python3 tools/cerom.py $(ROM) --exports exports/jornada720-ce3 $(foreach dll,$(EXPORT_DLLS),--dll $(dll).dll)

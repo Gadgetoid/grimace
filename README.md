@@ -143,14 +143,9 @@ The Win32 headers are CeGCC's w32api (public domain) in `include/w32api`, patche
 - `include/grimace/cxx` is a header-only C++ layer: RAII handles, results instead of exceptions, a checked `format`, and a window base. See [its README](include/grimace/cxx/README.md).
 - On CE 3.0 with llvm-builds v3 or later, the C++ standard library works: strings, containers, `<algorithm>`, `optional`, `variant`, smart pointers, `std::function`, ranges and `std::format`, without threads, locales, iostreams, filesystem or exceptions. See `examples/stl-text` and `examples/stl-collections`. Elsewhere, `include/new` and `include/initializer_list` are the only standard library headers.
 
-## debugmgr
+## Debugging
 
-`debugmgr.exe` runs on the device and lets `tools/grimace-debug` copy files, list folders and start and stop programs. The protocol is in `debugmgr/PROTOCOL.md`.
-
-- CE 3.0 (`debugmgr/*.cpp`): over TCP, port 2100, or an emulator's host mailbox when started with `mailbox`. Set `GRIMACE_DEVICE` to the device's address, or `GRIMACE_AGENT` to an emulator's agent socket.
-- CE 1.0 and 2.0 (`debugmgr/debugmgr.c`): over an emulator's host mailbox only, on MIPS and SH3. On SH3 it's `grimace-debugmgr.exe`, so the ROM's `debugmgr.exe` doesn't shadow it. There's no x86 build.
-
-Anything that can reach the TCP port can copy files to the device and run programs, so only leave it running on a network you trust.
+[ce-debug](https://github.com/grimace-sdk/ce-debug) is the debugger for grimace programs: an agent on the device, built with grimace, for copying files, listing folders, starting and stopping programs and taking screenshots, over TCP, serial, USB or an emulator's host mailbox.
 
 ## Notes
 
@@ -168,16 +163,16 @@ Anything that can reach the TCP port can copy files to the device and run progra
 
 | Target | |
 | --- | --- |
-| `examples-<target>`, `debugmgr-<target>` | build into `build/<target>` and `build/debugmgr/<target>`, for `mips-ce1`, `mips-ce2`, `sh3-ce1`, `sh3-ce101`, `sh3-ce2`, `x86-ce2`, `arm-ce3` and `arm-ce6` |
-| `examples`, `debugmgr` | all targets, but no x86 debugmgr |
+| `examples-<target>` | build into `build/<target>`, for `mips-ce1`, `mips-ce2`, `sh3-ce1`, `sh3-ce101`, `sh3-ce2`, `x86-ce2`, `arm-ce3` and `arm-ce6` |
+| `examples` | all targets |
 | `packages-<target>`, `packages` | package the examples for a target, or build and package them for every target (`examples/matrix`) |
 | `check-cxx-headers-<arch>` | the headers declare C functions with C linkage in C++, and the C++ layer compiles, for each CE version of `mips`, `sh3`, `x86` or `arm` |
 | `check-headers` | compare the headers with each SDK's (`GRIMACE_REFERENCE`, a folder with `include/ce100`, `ce101`, `ce200` and `ce300`) |
-| `check-abi`, `check-stdlib`, `check-debugmgr` | the ARM calling standard, the C++ standard library on CE 3.0, and debugmgr with `grimace-debug` on this computer |
+| `check-abi`, `check-stdlib` | the ARM calling standard, and the C++ standard library on CE 3.0 |
 | `check-lazy`, `check-lazy-<target>` | build `tests/lazy` |
 | `check-libc`, `check-libc-<target>`, `check-libc-host` | build `tests/libc/device`, and run `tests/libc/host.c` here |
 | `check-ce6` | build `tests/ce6` for ARM CE 6.0 and each Brain, and check with `tests/check-imports.py` that every import is in the device's lists |
-| `check` | `check-abi`, `check-cxx-headers`, `check-stdlib`, `check-debugmgr`, `check-lazy`, `check-libc`, `check-ce6`, `examples` and `debugmgr` |
+| `check` | `check-abi`, `check-cxx-headers`, `check-stdlib`, `check-lazy`, `check-libc`, `check-ce6` and `examples` |
 | `headers` | regenerate `include/` from a CeGCC checkout's w32api (`GRIMACE_W32API`) and the SDKs (`GRIMACE_REFERENCE`) |
 | `docstrings` | rewrite the docstrings from `docs/api` |
 | `exports` | read `exports/jornada720-ce3` from a Jornada 720 ROM image (`GRIMACE_ROM`). `tools/cerom.py` also reads CE 6.0 ROMs |
