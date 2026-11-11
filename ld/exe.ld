@@ -1,7 +1,7 @@
 ENTRY(WinMain)
 SECTIONS
 {
-    . = 0x11000;
+    . = DEFINED(GRIMACE_TEXT_ADDRESS) ? GRIMACE_TEXT_ADDRESS : 0x11000;
     .text : { *(.text .text.*) }
     . = ALIGN(0x1000);
     .rdata : {

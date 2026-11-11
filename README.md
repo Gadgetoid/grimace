@@ -38,7 +38,7 @@ cmake --build build
 
 This gives `build/myapp.exe` and `build/mylib.dll`, with the linked `.elf` beside each.
 
-- `grimace_add_executable(target [EXCLUDE_FROM_ALL] [OUTPUT file.exe] [ICON file.ico] [RESOURCES files...] sources...)`: entry point `WinMain`.
+- `grimace_add_executable(target [EXCLUDE_FROM_ALL] [OUTPUT file.exe] [ICON file.ico] [TEXT_ADDRESS address] [RESOURCES files...] sources...)`: entry point `WinMain`. `TEXT_ADDRESS` links the code at another address than `0x11000`, a multiple of `0x1000`. The image base stays `0x10000`, so the image covers the space between.
 - `grimace_add_library(target [EXCLUDE_FROM_ALL] [OUTPUT file.dll] [RESOURCES files...] EXPORTS name[=symbol]... | EXPORTS_FILE file sources...)`: entry point `DllMain`, or one that returns `TRUE` if the library has none. `EXPORTS_FILE` has one export per line.
 - `GRIMACE_ARCH`: `mips` (default), `sh3`, `x86` or `arm`. `GRIMACE_CE_VERSION`, the oldest version the program runs on, defaults to `3` for `arm` and `1` otherwise. `_WIN32_WCE` is `100`, `101`, `200`, `300` or `600`.
 - `GRIMACE_DEVICE` pins the target to one device's ROM, and `GRIMACE_PLATFORM` (`hpc`, `hpc2000`, `autopc`, `brain`) to one platform's devices. See [Imports](#imports).
