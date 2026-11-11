@@ -61,11 +61,12 @@ Retrieves selected information about a file-system object.
 SHGFI_USEFILEATTRIBUTES lets you query a file type without opening an
 existing file, for example by passing just an extension with
 FILE_ATTRIBUTE_NORMAL; it can't be combined with SHGFI_ATTRIBUTES,
-SHGFI_EXETYPE or SHGFI_PIDL. Windows CE 2.10 and later don't support
-SHGFI_ATTRIBUTES, SHGFI_EXETYPE, SHGFI_ICONLOCATION, SHGFI_LINKOVERLAY,
-SHGFI_OPENICON, SHGFI_SELECTED or SHGFI_SHELLICONSIZE. Windows CE 2.10
-supports SHGFI_PIDL on the H/PC only; Handheld PC 2000 doesn't support
-it. Destroy an icon returned in psfi with DestroyIcon.
+SHGFI_EXETYPE or SHGFI_PIDL. SHGFI_ATTRIBUTES works from Windows CE 2.0;
+on Windows CE 1.0 it succeeds but returns no attributes. The Windows CE
+2.10 and later references list SHGFI_EXETYPE, SHGFI_ICONLOCATION,
+SHGFI_LINKOVERLAY, SHGFI_OPENICON, SHGFI_SELECTED and SHGFI_SHELLICONSIZE
+as unsupported, and SHGFI_PIDL as supported on the H/PC with Windows CE
+2.10 but not on Handheld PC 2000. Destroy an icon returned in psfi with DestroyIcon.
 
 @param pszPath File path or extension, or with SHGFI_PIDL a fully
        qualified PIDL.

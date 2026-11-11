@@ -307,8 +307,8 @@ int __grimace_c99_swprintf(wchar_t *buffer, size_t count, const wchar_t *format,
  * Formats values into a string buffer, printf style.
  *
  * Doesn't check the buffer size: use _snwprintf to limit it. Supports the
- * same conversions as printf, including floating point. Windows CE 1.0
- * and 2.0 coredll has no swprintf, so there it comes from
+ * same conversions as printf, including floating point. Where coredll has
+ * no swprintf (Windows CE 1.0, and 2.0 on MIPS and SH3), it comes from
  * grimace::runtime.
  *
  * @param buffer Buffer that receives the output. Must be large enough.
@@ -322,8 +322,9 @@ int swprintf(wchar_t *buffer, const wchar_t *format, ...);
 /**
  * Formats values from a va_list into a string buffer, printf style.
  *
- * The va_list form of swprintf, with the same formats. On Windows CE 1.0
- * and 2.0 it comes from grimace::runtime.
+ * The va_list form of swprintf, with the same formats. Where coredll has
+ * no vswprintf (Windows CE 1.0, and 2.0 on MIPS and SH3), it comes from
+ * grimace::runtime.
  *
  * @param buffer Buffer that receives the output. Must be large enough.
  * @param format Format string.

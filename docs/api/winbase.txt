@@ -964,10 +964,9 @@ Retrieves creation, exit, kernel and user time for a thread.
 
 Times are FILETIME values in 100-nanosecond units. Creation and exit
 times count from 1 January 1601; the exit time is undefined until the
-thread exits. On Windows CE 1.0 and 2.0 only lpUserTime is supported:
-it receives the thread's total running time, with no split between
-user and kernel mode, and isn't valid once the thread exits. The other
-times are unsupported and set to zero.
+thread exits. On Windows CE 3.0 there's no split between user and
+kernel mode: lpKernelTime is zero and lpUserTime is the thread's total
+running time.
 
 @param hThread Thread handle with THREAD_QUERY_INFORMATION access.
 @param lpCreationTime Receives the creation time.
@@ -1859,9 +1858,10 @@ avoid long waits on such threads.
 ## WaitForSingleObject(hHandle, dwMilliseconds)
 Waits until an object is signalled or the timeout elapses.
 
-Can wait on events and, from Windows CE 1.01, mutexes, processes and
-threads; Windows CE 3.0 adds semaphores. Windows CE 1.0 and 2.0 can't
-wait on semaphores, change notifications, console input or timers. A
+Can wait on events, processes, threads, mutexes (from Windows CE 1.01)
+and semaphores (from Windows CE 3.0), the versions where they can be
+created. Windows CE 1.0 and 2.0 can't wait on change notifications,
+console input or timers. A
 satisfied wait resets an auto-reset event, takes ownership of a mutex or
 decrements a semaphore. A thread that owns windows shouldn't wait
 forever; use MsgWaitForMultipleObjects to keep processing messages.

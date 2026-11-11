@@ -8551,8 +8551,7 @@ WINUSERAPI BOOL WINAPI AttachThreadInput(DWORD,DWORD,BOOL);
  * EndDeferWindowPos. If any window entry specifies SWP_HIDEWINDOW or
  * SWP_SHOWWINDOW, none of the windows are repositioned. If the structure
  * must grow beyond nNumWindows and memory runs out, the whole sequence
- * fails, so pass the maximum needed to detect failure early. Available
- * from Windows CE 2.10.
+ * fails, so pass the maximum needed to detect failure early.
  *
  * @param nNumWindows Initial number of windows to position; the structure
  *        may grow as needed.
@@ -9389,8 +9388,7 @@ WINUSERAPI BOOL WINAPI EnableWindow(HWND hWnd,BOOL bEnable);
  *
  * Moves and sizes all the windows in a single screen refresh. Sends
  * WM_WINDOWPOSCHANGED to each window; Windows CE does not send
- * WM_WINDOWPOSCHANGING for this operation. Available from Windows CE
- * 2.10.
+ * WM_WINDOWPOSCHANGING for this operation.
  *
  * @param hWinPosInfo Batch from BeginDeferWindowPos or DeferWindowPos.
  * @return Nonzero on success, or 0 on failure (see GetLastError).
@@ -9488,11 +9486,9 @@ WINUSERAPI BOOL WINAPI EqualRect(LPCRECT lprc1,LPCRECT lprc2);
 /**
  * Asks the system to shut down or restart.
  *
- * Not documented in the Windows CE 2.0 or 3.0 SDK. On Windows CE 3.0 it
- * isn't exported, so calling it is a compile error. Desktop Win32 takes
+ * Not documented in the Windows CE 2.0 or 3.0 SDK. Desktop Win32 takes
  * EWX_LOGOFF, EWX_SHUTDOWN, EWX_REBOOT or EWX_POWEROFF, optionally with
- * EWX_FORCE; which of these a Windows CE 1.0 or 2.0 ROM honours is
- * unknown.
+ * EWX_FORCE; which of these a Windows CE ROM honours is unknown.
  *
  * @param uFlags EWX_* shutdown type.
  * @param dwReserved Reserved, pass 0.
@@ -10102,10 +10098,11 @@ WINUSERAPI LONG WINAPI GetWindowLongA(HWND,int);
 /**
  * Returns a window attribute or a value from its extra window memory.
  *
- * Windows CE doesn't support GWL_HINSTANCE or GWL_HWNDPARENT. The Windows
- * CE 3.0 reference lists GWL_ID and GWL_USERDATA as unsupported. Windows
- * CE 1.0 also lacks GWL_USERDATA and DWL_DLGPROC; use extra window memory
- * (WNDCLASSW.cbWndExtra) instead.
+ * Windows CE doesn't support GWL_HINSTANCE or GWL_HWNDPARENT. Windows CE
+ * 1.0 doesn't support GWL_USERDATA (ERROR_INVALID_INDEX); use extra window
+ * memory (WNDCLASSW.cbWndExtra) instead. DWL_DLGPROC returns the dialog
+ * procedure's address in the process's slot, so it doesn't compare equal
+ * to the procedure's own address.
  *
  * @param hWnd The window.
  * @param nIndex GWL_STYLE, GWL_EXSTYLE, GWL_WNDPROC, GWL_ID, GWL_USERDATA,
@@ -10513,17 +10510,15 @@ WINUSERAPI HCURSOR WINAPI LoadCursorFromFileW(LPCWSTR);
 WINUSERAPI HCURSOR WINAPI LoadCursorW(HINSTANCE hInstance,LPCWSTR lpCursorName);
 WINUSERAPI HICON WINAPI LoadIconA(HINSTANCE,LPCSTR);
 /**
- * Loads an icon resource from a module or the system.
+ * Loads an icon resource from a module.
  *
  * The icon must match the system icon dimensions; use LoadImageW for
- * other sizes. On Windows CE 3.0, pass NULL for hInstance to load a
- * standard icon, and the resource is cached: repeated calls return the
- * existing handle. On Windows CE 1.0 and 2.0 the predefined IDI_* icons
- * aren't supported and each call returns a new handle, so load once and
- * keep it. On Windows CE 1.0 the icon must be monochrome or 2 bpp (.ic2).
+ * other sizes. The predefined IDI_* icons aren't available: LoadIconW(NULL,
+ * IDI_APPLICATION) fails on Windows CE 1.0, 2.0 and 3.0. On Windows CE 1.0
+ * and 2.0 each call returns a new handle, so load once and keep it. On
+ * Windows CE 1.0 the icon must be monochrome or 2 bpp (.ic2).
  *
- * @param hInstance Module containing the resource, or NULL for a standard
- *        icon on Windows CE 3.0.
+ * @param hInstance Module containing the resource.
  * @param lpIconName Resource name, or MAKEINTRESOURCE(id).
  * @return The icon, or NULL on failure (see GetLastError).
  */
@@ -11466,9 +11461,8 @@ WINUSERAPI LONG WINAPI SetWindowLongA(HWND,int,LONG);
  *        reserved with cbWndExtra), or GWL_STYLE, GWL_EXSTYLE,
  *        GWL_WNDPROC, GWL_ID or GWL_USERDATA. For dialogs, also
  *        DWL_MSGRESULT, DWL_USER and DWL_DLGPROC. Windows CE doesn't
- *        support GWL_HINSTANCE or GWL_HWNDPARENT. Windows CE 1.0 doesn't
- *        support DWL_DLGPROC, and the Windows CE 1.0 and 2.0 references
- *        list GWL_USERDATA as unsupported.
+ *        support GWL_HINSTANCE or GWL_HWNDPARENT, and Windows CE 1.0
+ *        doesn't support GWL_USERDATA (ERROR_INVALID_INDEX).
  * @param dwNewLong The new value.
  * @return The previous value, or 0 on failure (see GetLastError).
  */
@@ -12870,10 +12864,11 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
 /**
  * Returns a window attribute or a value from its extra window memory.
  *
- * Windows CE doesn't support GWL_HINSTANCE or GWL_HWNDPARENT. The Windows
- * CE 3.0 reference lists GWL_ID and GWL_USERDATA as unsupported. Windows
- * CE 1.0 also lacks GWL_USERDATA and DWL_DLGPROC; use extra window memory
- * (WNDCLASSW.cbWndExtra) instead.
+ * Windows CE doesn't support GWL_HINSTANCE or GWL_HWNDPARENT. Windows CE
+ * 1.0 doesn't support GWL_USERDATA (ERROR_INVALID_INDEX); use extra window
+ * memory (WNDCLASSW.cbWndExtra) instead. DWL_DLGPROC returns the dialog
+ * procedure's address in the process's slot, so it doesn't compare equal
+ * to the procedure's own address.
  *
  * @param hWnd The window.
  * @param nIndex GWL_STYLE, GWL_EXSTYLE, GWL_WNDPROC, GWL_ID, GWL_USERDATA,
@@ -13044,17 +13039,15 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
 #define LoadCursor LoadCursorW
 #define LoadCursorFromFile LoadCursorFromFileW
 /**
- * Loads an icon resource from a module or the system.
+ * Loads an icon resource from a module.
  *
  * The icon must match the system icon dimensions; use LoadImageW for
- * other sizes. On Windows CE 3.0, pass NULL for hInstance to load a
- * standard icon, and the resource is cached: repeated calls return the
- * existing handle. On Windows CE 1.0 and 2.0 the predefined IDI_* icons
- * aren't supported and each call returns a new handle, so load once and
- * keep it. On Windows CE 1.0 the icon must be monochrome or 2 bpp (.ic2).
+ * other sizes. The predefined IDI_* icons aren't available: LoadIconW(NULL,
+ * IDI_APPLICATION) fails on Windows CE 1.0, 2.0 and 3.0. On Windows CE 1.0
+ * and 2.0 each call returns a new handle, so load once and keep it. On
+ * Windows CE 1.0 the icon must be monochrome or 2 bpp (.ic2).
  *
- * @param hInstance Module containing the resource, or NULL for a standard
- *        icon on Windows CE 3.0.
+ * @param hInstance Module containing the resource.
  * @param lpIconName Resource name, or MAKEINTRESOURCE(id).
  * @return The icon, or NULL on failure (see GetLastError).
  */
@@ -13340,9 +13333,8 @@ typedef MONITORINFOEXW MONITORINFOEX, *LPMONITORINFOEX;
  *        reserved with cbWndExtra), or GWL_STYLE, GWL_EXSTYLE,
  *        GWL_WNDPROC, GWL_ID or GWL_USERDATA. For dialogs, also
  *        DWL_MSGRESULT, DWL_USER and DWL_DLGPROC. Windows CE doesn't
- *        support GWL_HINSTANCE or GWL_HWNDPARENT. Windows CE 1.0 doesn't
- *        support DWL_DLGPROC, and the Windows CE 1.0 and 2.0 references
- *        list GWL_USERDATA as unsupported.
+ *        support GWL_HINSTANCE or GWL_HWNDPARENT, and Windows CE 1.0
+ *        doesn't support GWL_USERDATA (ERROR_INVALID_INDEX).
  * @param dwNewLong The new value.
  * @return The previous value, or 0 on failure (see GetLastError).
  */

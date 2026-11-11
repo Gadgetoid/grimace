@@ -357,11 +357,12 @@ Windows CE specific.
 Sets a socket option.
 
 For BOOL options, optval points to an int: nonzero to enable, 0 to
-disable. SO_REUSEADDR only takes effect if set before bind. Not
-supported: SO_RCVLOWAT, SO_SNDLOWAT and SO_SNDTIMEO; Windows CE 1.0 and
-2.0 also don't support SO_ACCEPTCONN, SO_ERROR, SO_TYPE, SO_RCVTIMEO or
-IP_OPTIONS, and Windows CE 2.0 doesn't support SO_RCVBUF
-(WSAEOPNOTSUPP). From Windows CE 2.0, SO_SECURE at SOL_SOCKET with a
+disable. SO_REUSEADDR only takes effect if set before bind. The Jornada 720's
+Windows CE 3.0 rejects SO_RCVTIMEO, SO_RCVBUF, SO_SNDBUF, SO_RCVLOWAT
+and IP_OPTIONS with WSAENOPROTOOPT, and accepts SO_SNDTIMEO, which the
+references list as unsupported along with SO_SNDLOWAT. The Windows CE
+1.0 and 2.0 references also list SO_ACCEPTCONN, SO_ERROR and SO_TYPE as
+unsupported, and Windows CE 2.0 returns WSAEOPNOTSUPP for SO_RCVBUF. From Windows CE 2.0, SO_SECURE at SOL_SOCKET with a
 DWORD set to SO_SEC_SSL, before connecting, uses SSL (WSAEISCONN if
 already connected). Windows CE 3.0 supports IP_MULTICAST_TTL,
 IP_MULTICAST_IF, IP_ADD_MEMBERSHIP and IP_DROP_MEMBERSHIP at
@@ -376,7 +377,7 @@ calls. Of the SOL_SOCKET options, IrDA supports only SO_LINGER.
        or SOL_IRLMP.
 @param optname Option, e.g. SO_BROADCAST, SO_DEBUG, SO_DONTLINGER,
        SO_DONTROUTE, SO_KEEPALIVE, SO_LINGER, SO_OOBINLINE,
-       SO_REUSEADDR, SO_SNDBUF or TCP_NODELAY (disables Nagle).
+       SO_REUSEADDR or TCP_NODELAY (disables Nagle).
 @param optval The value: a struct linger for SO_LINGER (l_onoff,
        l_linger in seconds), a DWORD for SO_SECURE, an option-specific
        structure, otherwise usually an int.

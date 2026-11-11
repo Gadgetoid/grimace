@@ -550,7 +550,7 @@ BOOL WINAPI Toolhelp32ReadProcessMemory(DWORD th32ProcessID,LPCVOID lpBaseAddres
  *
  * @param dwFlags TH32CS_SNAPPROCESS, TH32CS_SNAPTHREAD, TH32CS_SNAPMODULE
  *        and/or TH32CS_SNAPHEAPLIST, or TH32CS_SNAPALL for all four.
- *        THCS_GETALLMODES lists all modules loaded in the system.
+ *        TH32CS_GETALLMODS lists all modules loaded in the system.
  * @param th32ProcessID Process to snapshot for heap or module data, or 0
  *        for the current process. Ignored otherwise.
  * @return Snapshot handle, or INVALID_HANDLE_VALUE on failure (see
