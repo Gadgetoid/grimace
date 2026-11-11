@@ -8,3 +8,4 @@ grimace_add_executable(program_high program.c OUTPUT program-high.exe TEXT_ADDRE
 grimace_add_library(applet applet.c OUTPUT applet.cpl RESOURCES applet.rc applet.ico EXPORTS CPlApplet)
 grimace_add_library(driver driver.c OUTPUT driver.dll EXPORTS_FILE driver.exports)
 target_link_libraries(driver PRIVATE grimace::ceddk)
+grimace_add_library(display display.c layout.c OUTPUT display.dll EXPORTS DrvEnableDriver)

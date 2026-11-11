@@ -122,7 +122,8 @@ def document_struct(text, entry, name):
         position = end + 1
     for member, lines in members.items():
         for line_start, code in code_lines:
-            if line_start > open_brace and re.search(r"\b%s\s*(\[[^\]]*\])?\s*(:\s*\w+\s*)?[;,]" % re.escape(member), code):
+            if line_start > open_brace and (re.search(r"\b%s\s*(\[[^\]]*\])?\s*(:\s*\w+\s*)?[;,]" % re.escape(member), code)
+                                            or re.search(r"\(\s*\*\s*%s\s*\)\s*\(" % re.escape(member), code)):
                 placements.append((line_start, lines))
                 break
     seen = set()
