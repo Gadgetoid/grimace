@@ -1035,10 +1035,11 @@ BOOL APIENTRY DrvContrastControl(DHPDEV dhpdev, ULONG cmd, ULONG *pValue);
  * Tells the driver the device is suspending or resuming.
  *
  * The Windows CE 5.0 reference says it isn't used from Windows CE .NET
- * 4.2. It also says TRUE powers up, against the parameter's name.
+ * 4.2, and that TRUE powers up. On a PW-SH2, CE 6.0 calls it with TRUE on
+ * suspend and FALSE on resume.
  *
  * @param dhpdev Handle from DrvEnablePDEV.
- * @param bOff Whether the device is powering down.
+ * @param bOff TRUE when suspending, FALSE when resuming.
  */
 VOID APIENTRY DrvPowerHandler(DHPDEV dhpdev, BOOL bOff);
 /**
@@ -1070,7 +1071,9 @@ BOOL APIENTRY DrvStartPage(SURFOBJ *pso);
  *
  * For QUERYESCSUPPORT, pvIn points to an escape code: return nonzero if
  * the driver supports it. Return 0 for unsupported escapes. Driver-defined
- * escapes start at 100000; Microsoft reserves those below.
+ * escapes start at 100000; Microsoft reserves those below. On a PW-SH2,
+ * CE 6.0 also sends 6151 often, and 6303 and 6304 around rotation, which
+ * no public reference names.
  *
  * @param dhpdev Handle from DrvEnablePDEV.
  * @param pso Surface the call is for.
