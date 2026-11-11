@@ -6,7 +6,7 @@ static ENGCALLBACKS engine;
 static DHPDEV enable_pdev(DEVMODEW *pdm, LPWSTR pwszLogAddress, ULONG cPat, HSURF *phsurfPatterns, ULONG cjCaps, ULONG *pdevcaps,
                           ULONG cjDevInfo, DEVINFO *pdi, HDEV hdev, LPWSTR pwszDeviceName, HANDLE hDriver) {
     GDIINFO *information = (GDIINFO *)pdevcaps;
-    if (cjCaps < sizeof(GDIINFO) || cjDevInfo < sizeof(DEVINFO)) {
+    if (cjCaps < sizeof(GDIINFO)) {
         return NULL;
     }
     information->ulTechnology = DT_RASDISPLAY;
@@ -15,7 +15,9 @@ static DHPDEV enable_pdev(DEVMODEW *pdm, LPWSTR pwszLogAddress, ULONG cPat, HSUR
     information->cBitsPixel = 16;
     information->cPlanes = 1;
     information->flRaster = RC_BITBLT;
-    pdi->flGraphicsCaps = GCAPS_PALMANAGED;
+    if (cjDevInfo >= sizeof(DEVINFO)) {
+        pdi->flGraphicsCaps = GCAPS_PALMANAGED;
+    }
     return (DHPDEV)hdev;
 }
 

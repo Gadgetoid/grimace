@@ -731,7 +731,8 @@ BOOL APIENTRY DisplayInit(LPCTSTR pszInstance, DWORD dwNumMonitors);
  * @param cjCaps Size of the buffer at pdevcaps.
  * @param pdevcaps Receives a GDIINFO, zeroed by GDI. Write no more than
  *        cjCaps bytes.
- * @param cjDevInfo Size of the buffer at pdi.
+ * @param cjDevInfo Size of the buffer at pdi. On rotation, CE 6.0 calls
+ *        again with the width and height swapped and cjDevInfo 0.
  * @param pdi Receives a DEVINFO, zeroed by GDI. Write only the members
  *        the driver understands, and no more than cjDevInfo bytes.
  * @param hdev GDI's handle for the device.
@@ -953,8 +954,10 @@ BOOL APIENTRY DrvSetPalette(DHPDEV dhpdev, PALOBJ *ppalo, FLONG fl, ULONG iStart
  * the mask and color surfaces can key a pointer cache.
  *
  * @param pso Display surface.
- * @param psoMask AND mask over XOR mask, so twice the pointer's height;
- *        NULL for no pointer.
+ * @param psoMask 1 bpp AND mask over XOR mask, so twice the pointer's
+ *        height: 32 x 64 on a PW-A7300. NULL hides the pointer, which is
+ *        how CE 6.0 hides it there, rather than a negative x to
+ *        DrvMovePointer.
  * @param psoColor Color image, half the mask's height; NULL for a
  *        monochrome pointer.
  * @param pxlo Translates psoColor's colors.
@@ -1072,8 +1075,8 @@ BOOL APIENTRY DrvStartPage(SURFOBJ *pso);
  * For QUERYESCSUPPORT, pvIn points to an escape code: return nonzero if
  * the driver supports it. Return 0 for unsupported escapes. Driver-defined
  * escapes start at 100000; Microsoft reserves those below. On a PW-SH2,
- * CE 6.0 also sends 6151 often, and 6303 and 6304 around rotation, which
- * no public reference names.
+ * CE 6.0 also sends 6151 often, and 6150, 6303 and 6304 around rotation,
+ * which no public reference names.
  *
  * @param dhpdev Handle from DrvEnablePDEV.
  * @param pso Surface the call is for.
