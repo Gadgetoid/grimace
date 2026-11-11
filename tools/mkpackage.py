@@ -5,10 +5,11 @@ Package a program for Windows CE from a JSON description, written by grimace_pac
      "directory": "%CE1%\\\\Hello", "files": [{"path": "/build/hello.exe", "name": "hello.exe"}],
      "shortcuts": [{"file": "hello.exe", "name": "Hello", "directory": "%CE11%"}],
      "registry": [{"root": "HKLM", "key": "Software\\\\Example", "name": "Installed", "value": 1}],
-     "output": "/build/packages", "formats": ["cab", "zip"]}
+     "output": "/build/packages", "formats": ["cab", "zip", "exe"], "installer": "/build/ceinstall.exe"}
 
 The CAB installs the files with wceload, on CE 2.0 and later. The zip holds the same files, in a folder named after the
-program, for copying by hand.
+program, for copying by hand. The exe is a self-installer (installer/ceinstall.c with the files appended, written by
+selfinstall.py), which also installs on CE 1.0; running it again removes the program.
 
 With --collect, gather the CABs and zips from several build folders into one, with a CEAppMgr .ini listing a CAB per
 processor, so the desktop Application Manager installs the one for the connected device. That's the build for the lowest
@@ -24,6 +25,7 @@ import sys
 import zipfile
 
 import cab
+import selfinstall
 
 
 def package_name(description):
@@ -58,6 +60,13 @@ def write_zip(description, path):
             archive.write(item["path"], "%s/%s" % (folder, item["name"]))
 
 
+def write_exe(description, path):
+    with open(description["installer"], "rb") as stub:
+        installer = selfinstall.plan_from_description(description).build(stub.read())
+    with open(path, "wb") as output:
+        output.write(installer)
+
+
 def build(description_path):
     with open(description_path) as source:
         description = json.load(source)
@@ -70,11 +79,14 @@ def build(description_path):
     if "zip" in description["formats"]:
         write_zip(description, base + ".zip")
         written.append(base + ".zip")
+    if "exe" in description["formats"]:
+        write_exe(description, base + "-setup.exe")
+        written.append(base + "-setup.exe")
     return written
 
 
-VERSION_ORDER = {"1": 0, "101": 1, "2": 2, "3": 3}
-LABEL = re.compile(r"-(mips|sh3|x86|arm)-ce(1|101|2|3)(-[^.]+)?\.cab$")
+VERSION_ORDER = {"1": 0, "101": 1, "2": 2, "3": 3, "6": 4}
+LABEL = re.compile(r"-(mips|sh3|x86|arm)-ce(1|101|2|3|6)(-[^.]+)?\.cab$")
 
 
 def choose_cabs(names):
@@ -94,7 +106,7 @@ def collect(folders, output, name):
     os.makedirs(output, exist_ok=True)
     copied = []
     for folder in folders:
-        for path in sorted(glob.glob(os.path.join(folder, "*.cab")) + glob.glob(os.path.join(folder, "*.zip"))):
+        for path in sorted(glob.glob(os.path.join(folder, "*.cab")) + glob.glob(os.path.join(folder, "*.zip")) + glob.glob(os.path.join(folder, "*.exe"))):
             shutil.copyfile(path, os.path.join(output, os.path.basename(path)))
             copied.append(os.path.basename(path))
     cabs = choose_cabs(copied)
@@ -107,7 +119,7 @@ def collect(folders, output, name):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Package a Windows CE program as a CAB and a zip, or collect packages from several builds")
+    parser = argparse.ArgumentParser(description="Package a Windows CE program as a CAB, a zip and a self-installer, or collect packages from several builds")
     parser.add_argument("description", nargs="?", help="JSON description from grimace_package()")
     parser.add_argument("--collect", nargs="+", metavar="FOLDER", help="package folders to gather")
     parser.add_argument("--output", help="folder to gather them into, with --collect")

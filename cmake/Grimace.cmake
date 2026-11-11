@@ -308,7 +308,17 @@ function(grimace_package name)
         set(PACKAGE_DIRECTORY "%CE1%\\${name}")
     endif()
     if(NOT PACKAGE_FORMATS)
-        set(PACKAGE_FORMATS cab zip)
+        set(PACKAGE_FORMATS cab zip exe)
+    endif()
+    set(installer_json "")
+    set(installer_target "")
+    if("exe" IN_LIST PACKAGE_FORMATS)
+        if(NOT TARGET grimace_installer)
+            grimace_add_executable(grimace_installer EXCLUDE_FROM_ALL OUTPUT ceinstall.exe "${GRIMACE_TOOLCHAIN_ROOT}/installer/ceinstall.c")
+        endif()
+        _grimace_json_string(installer_path "$<TARGET_FILE_DIR:grimace_installer>/ceinstall.exe")
+        set(installer_json ", \"installer\": ${installer_path}")
+        set(installer_target grimace_installer)
     endif()
     string(REPLACE "." "" version "${GRIMACE_CE_VERSION}")
     set(label "${GRIMACE_ARCH}-ce${version}")
@@ -356,12 +366,13 @@ function(grimace_package name)
     file(GENERATE OUTPUT "${description}" CONTENT
 "{\"name\": ${json_name}, \"provider\": ${json_provider}, \"arch\": \"${GRIMACE_ARCH}\", \"label\": \"${label}\",
  \"directory\": ${json_directory}, \"files\": [${files}], \"shortcuts\": [${shortcuts}],
- \"output\": ${json_output}, \"formats\": [${formats}]}
+ \"output\": ${json_output}, \"formats\": [${formats}]${installer_json}}
 ")
     string(MAKE_C_IDENTIFIER "${name}" identifier)
     add_custom_target(grimace_package_${identifier}
         COMMAND "${Python3_EXECUTABLE}" "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkpackage.py" "${description}"
-        DEPENDS ${PACKAGE_TARGETS} "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkpackage.py" "${GRIMACE_TOOLCHAIN_ROOT}/tools/cab.py"
+        DEPENDS ${PACKAGE_TARGETS} ${installer_target} "${GRIMACE_TOOLCHAIN_ROOT}/tools/mkpackage.py" "${GRIMACE_TOOLCHAIN_ROOT}/tools/cab.py"
+                "${GRIMACE_TOOLCHAIN_ROOT}/tools/selfinstall.py"
         VERBATIM)
     if(NOT TARGET packages)
         add_custom_target(packages)

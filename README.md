@@ -74,7 +74,7 @@ With `GRIMACE_DEVICE` the target imports exactly what that device's ROM exports 
 
 ## Packages
 
-`grimace_package()` packages programs as a CAB, which wceload installs on CE 2.0 and later, and a zip of the same files:
+`grimace_package()` packages programs as a CAB, which wceload installs on CE 2.0 and later, a self-installing program, which also installs on CE 1.0, and a zip of the same files:
 
 ```cmake
 grimace_package("My App" PROVIDER "Me"
@@ -83,12 +83,13 @@ grimace_package("My App" PROVIDER "Me"
     SHORTCUTS myapp "My App")
 ```
 
-`cmake --build build --target packages` writes `build/packages/MyApp-<target>.cab` and `.zip`, where `<target>` is the architecture and version (`mips-ce2`), plus the platform or device if set.
+`cmake --build build --target packages` writes `build/packages/MyApp-<target>.cab`, `MyApp-<target>-setup.exe` and `.zip`, where `<target>` is the architecture and version (`mips-ce2`), plus the platform or device if set.
 
 - `DIRECTORY`: where they go, default `%CE1%\<name>` (`\Program Files\<name>`). wceload on the Handheld PC 2000 asks first, starting there.
 - `SHORTCUTS`: pairs of a target and the name of its shortcut in the Start menu's Programs (`%CE11%`).
-- `FORMATS`: `cab`, `zip` or both (the default).
-- CE 1.0 has no CAB installer, so copy the zip's files across, or install velo-ce1-cab's CE 2.0 wceload first.
+- `FORMATS`: any of `cab`, `zip` and `exe`, all three by default.
+- The self-installer is `installer/ceinstall.c`, from CEM Porter, with the files, shortcuts and registry values appended as a `.cepk` section by `tools/selfinstall.py`. Run it on the device to install, with `/q` to install without asking, and run it again to remove the program.
+- `tools/selfinstall.py MyApp.cab MyApp.exe --stub ceinstall.exe` converts a CAB, uncompressed or MSZIP, to a self-installer for CE 1.0, with `ceinstall.exe` built for the CAB's processor.
 
 `tools/cab.py` writes uncompressed cabinets with the setup file (`.000`) wceload reads. The examples' CAB installs with the Jornada 720's own wceload, with its files and shortcuts.
 
@@ -107,7 +108,7 @@ grimace_matrix(NAME "My App" SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/app PACKAGE
 
 - Targets are `<arch>-ce<version>`, with `ce101` for 1.01, and an optional `-<device>`: `mips-ce1-velo1`.
 - `GRIMACE_MIPS_LLVM`, `GRIMACE_SH3_LLVM`, `GRIMACE_X86_LLVM` and `GRIMACE_ARM_LLVM` (settings or environment variables) choose each architecture's LLVM. `CMAKE_ARGS` passes more settings to every build.
-- With `PACKAGE`, `build/packages` gets every target's CAB and zip, and `<NAME>.ini` for the desktop Application Manager. It lists one CAB per processor, the build for the lowest version, which runs on later ones too.
+- With `PACKAGE`, `build/packages` gets every target's CAB, self-installer and zip, and `<NAME>.ini` for the desktop Application Manager. It lists one CAB per processor, the build for the lowest version, which runs on later ones too.
 
 `make packages` builds `examples/matrix`, the examples for every target.
 
