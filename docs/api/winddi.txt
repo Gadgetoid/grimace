@@ -210,9 +210,9 @@ needs.
 @param pbo Brush, if rop4 uses one.
 @param pptlBrush Brush origin.
 @param rop4 As for DrvBitBlt.
-@param iMode Unused.
-@param bltFlags BLT_STRETCH for a stretch, otherwise 0. The public
-       references don't give BLT_STRETCH's value.
+@param iMode Documented as unused, but 1 in ordinary blits on a PW-SH2.
+@param bltFlags BLT_STRETCH for a stretch, otherwise 0. BLT_STRETCH's
+       value, 8, is measured on a PW-SH2 (CE 6.0).
 @return TRUE on success, FALSE on failure.
 
 ## DrvTransparentBlt(psoDest, psoSrc, pco, pxlo, prclDest, prclSrc, TransColor)
@@ -386,6 +386,8 @@ The display driver's functions, filled in by DrvEnableDriver.
 Windows CE's form: a fixed set of function pointers, not the desktop's
 array of indexed DRVFN entries. Leave NULL any the driver doesn't
 implement. DrvContrastControl has no Windows CE 5.0 reference page.
+On a PW-SH2, CE 6.0 passes a cj of 124: three more pointers after these,
+which no public reference describes.
 
 @member DrvEnablePDEV See DrvEnablePDEV.
 @member DrvDisablePDEV See DrvDisablePDEV.
@@ -420,7 +422,8 @@ implement. DrvContrastControl has no Windows CE 5.0 reference page.
 GDI's helper functions for display drivers, passed to DrvEnableDriver.
 
 Windows CE has no exported Eng* functions: drivers call GDI through this
-table.
+table. On a PW-SH2, CE 6.0 passes 16 entries: three more after these,
+which no public reference describes.
 
 @member BRUSHOBJ_pvAllocRbrush Allocates cj bytes for a brush's
        realization, which GDI keeps and frees. Returns NULL on failure.
@@ -463,8 +466,10 @@ A drawing surface: the display, a device bitmap or a GDI bitmap.
 @member pvScan0 First line's address, for a GDI bitmap.
 @member lDelta Bytes from one line to the next; negative if bottom-up.
 @member iUniq Changes whenever the surface's contents change.
-@member iBitmapFormat BMF_ format.
-@member iType STYPE_BITMAP, STYPE_DEVICE or STYPE_DEVBITMAP.
+@member iBitmapFormat BMF_ format. A PW-SH2 also passes 9 for 2 bpp
+       bitmaps, which has no public name.
+@member iType STYPE_BITMAP, STYPE_DEVICE or STYPE_DEVBITMAP. A GPE
+       driver's primary surface reports STYPE_BITMAP.
 
 ## CLIPOBJ
 A clip region.
@@ -503,9 +508,12 @@ How to translate colors from one palette to another.
 ## GDIINFO
 The device's capabilities, filled in by DrvEnablePDEV.
 
-Windows CE's is shorter than the desktop's, ending at ulPanningVertRes.
-The Windows CE 5.0 reference's declaration has no ulNumColors but its
-member list has one, after ulNumBrushes; this follows the declaration.
+Windows CE's is shorter than the desktop's. The Windows CE 5.0
+reference's declaration is 144 bytes, but CE 6.0 on a PW-SH2 passes a
+cjCaps of 152, and a GPE driver's values place one undocumented word
+after flTextCaps (ulReserved1). Where the other goes is unknown;
+ulReserved2 keeps the size. A GPE driver puts the color count, 65536 at
+16 bpp, in ulNumBrushes's place.
 
 @member ulVersion Driver version: major in the high byte, minor in the
        low byte.
@@ -519,7 +527,9 @@ member list has one, after ulNumBrushes; this follows the declaration.
 @member flRaster RC_ raster capabilities, such as RC_BITBLT.
 @member ulLogPixelsX Pixels per logical inch across.
 @member ulLogPixelsY Pixels per logical inch down.
-@member flTextCaps 0, or GCAPS_GRAY16 for antialiased text.
+@member flTextCaps 0, or GCAPS_GRAY16 for antialiased text. A GPE
+       driver copies DEVINFO.flGraphicsCaps here.
+@member ulReserved1 Undocumented; a GPE driver sets 0x17.
 @member ulAspectX Relative pixel width, 1 to 1000.
 @member ulAspectY Relative pixel height, 1 to 1000.
 @member ulAspectXY Relative pixel diagonal: the square root of
@@ -528,7 +538,8 @@ member list has one, after ulNumBrushes; this follows the declaration.
 ## DEVINFO
 The driver's graphics capabilities, filled in by DrvEnablePDEV.
 
-Its layout follows the desktop's, without the later flGraphicsCaps2.
+Its layout follows the desktop's, without the later flGraphicsCaps2:
+296 bytes, the cjDevInfo CE 6.0 passes on a PW-SH2.
 
 @member flGraphicsCaps GCAPS_ flags.
 @member hpalDefault Default palette, from the EngCreatePalette callback.

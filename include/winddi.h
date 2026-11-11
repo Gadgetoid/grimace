@@ -114,6 +114,8 @@ typedef struct _RECTFX {
 
 #define HS_DDI_MAX 6
 
+#define BLT_STRETCH 0x00000008
+
 #define ED_ABORTDOC 0x00000001
 
 #define GCAPS_BEZIERS 0x00000001
@@ -189,11 +191,13 @@ typedef struct _SURFOBJ {
      */
     ULONG iUniq;
     /**
-     * BMF_ format.
+     * BMF_ format. A PW-SH2 also passes 9 for 2 bpp
+     * bitmaps, which has no public name.
      */
     ULONG iBitmapFormat;
     /**
-     * STYPE_BITMAP, STYPE_DEVICE or STYPE_DEVBITMAP.
+     * STYPE_BITMAP, STYPE_DEVICE or STYPE_DEVBITMAP. A GPE
+     * driver's primary surface reports STYPE_BITMAP.
      */
     USHORT iType;
     USHORT fjBitmap;
@@ -313,7 +317,8 @@ typedef struct _XFORMOBJ {
 /**
  * The driver's graphics capabilities, filled in by DrvEnablePDEV.
  *
- * Its layout follows the desktop's, without the later flGraphicsCaps2.
+ * Its layout follows the desktop's, without the later flGraphicsCaps2:
+ * 296 bytes, the cjDevInfo CE 6.0 passes on a PW-SH2.
  */
 typedef struct _DEVINFO {
     /**
@@ -336,9 +341,12 @@ typedef struct _DEVINFO {
 /**
  * The device's capabilities, filled in by DrvEnablePDEV.
  *
- * Windows CE's is shorter than the desktop's, ending at ulPanningVertRes.
- * The Windows CE 5.0 reference's declaration has no ulNumColors but its
- * member list has one, after ulNumBrushes; this follows the declaration.
+ * Windows CE's is shorter than the desktop's. The Windows CE 5.0
+ * reference's declaration is 144 bytes, but CE 6.0 on a PW-SH2 passes a
+ * cjCaps of 152, and a GPE driver's values place one undocumented word
+ * after flTextCaps (ulReserved1). Where the other goes is unknown;
+ * ulReserved2 keeps the size. A GPE driver puts the color count, 65536 at
+ * 16 bpp, in ulNumBrushes's place.
  */
 typedef struct tagGDIINFO {
     /**
@@ -388,9 +396,14 @@ typedef struct tagGDIINFO {
      */
     ULONG ulLogPixelsY;
     /**
-     * 0, or GCAPS_GRAY16 for antialiased text.
+     * 0, or GCAPS_GRAY16 for antialiased text. A GPE
+     * driver copies DEVINFO.flGraphicsCaps here.
      */
     ULONG flTextCaps;
+    /**
+     * Undocumented; a GPE driver sets 0x17.
+     */
+    ULONG ulReserved1;
     ULONG ulDACRed;
     ULONG ulDACGreen;
     ULONG ulDACBlue;
@@ -422,6 +435,7 @@ typedef struct tagGDIINFO {
     ULONG ulBltAlignment;
     ULONG ulPanningHorzRes;
     ULONG ulPanningVertRes;
+    ULONG ulReserved2;
 } GDIINFO, *PGDIINFO;
 
 /**
@@ -460,6 +474,8 @@ struct ContrastCmdInputParm {
  * Windows CE's form: a fixed set of function pointers, not the desktop's
  * array of indexed DRVFN entries. Leave NULL any the driver doesn't
  * implement. DrvContrastControl has no Windows CE 5.0 reference page.
+ * On a PW-SH2, CE 6.0 passes a cj of 124: three more pointers after these,
+ * which no public reference describes.
  */
 typedef struct tagDrvEnableData {
     /**
@@ -587,7 +603,8 @@ typedef struct tagDrvEnableData {
  * GDI's helper functions for display drivers, passed to DrvEnableDriver.
  *
  * Windows CE has no exported Eng* functions: drivers call GDI through this
- * table.
+ * table. On a PW-SH2, CE 6.0 passes 16 entries: three more after these,
+ * which no public reference describes.
  */
 typedef struct _ENGCALLBACKS {
     /**
@@ -892,9 +909,9 @@ BOOL APIENTRY DrvCopyBits(SURFOBJ *psoDest, SURFOBJ *psoSrc, CLIPOBJ *pco, XLATE
  * @param pbo Brush, if rop4 uses one.
  * @param pptlBrush Brush origin.
  * @param rop4 As for DrvBitBlt.
- * @param iMode Unused.
- * @param bltFlags BLT_STRETCH for a stretch, otherwise 0. The public
- *        references don't give BLT_STRETCH's value.
+ * @param iMode Documented as unused, but 1 in ordinary blits on a PW-SH2.
+ * @param bltFlags BLT_STRETCH for a stretch, otherwise 0. BLT_STRETCH's
+ *        value, 8, is measured on a PW-SH2 (CE 6.0).
  * @return TRUE on success, FALSE on failure.
  */
 BOOL APIENTRY DrvAnyBlt(SURFOBJ *psoDest, SURFOBJ *psoSrc, SURFOBJ *psoMask, CLIPOBJ *pco, XLATEOBJ *pxlo, POINTL *pptlHTOrg, RECTL *prclDest,

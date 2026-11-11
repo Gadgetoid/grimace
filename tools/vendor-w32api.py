@@ -203,8 +203,14 @@ def patch(vendor):
     vendor.edit("winnt.h", "x86 FLOATING_SAVE_AREA has a pointer type, PFLOATING_SAVE_AREA", "} FLOATING_SAVE_AREA;", "} FLOATING_SAVE_AREA,*PFLOATING_SAVE_AREA;")
     vendor.edit("excpt.h", "x86 DISPATCHER_CONTEXT is CE's registration pointer and ControlPc", X86_DISPATCHER_CONTEXT,
                 "#if defined(_WIN32_WCE) && defined(_X86_)\n%s\n#else\n%s\n#endif" % (CE_X86_DISPATCHER_CONTEXT, X86_DISPATCHER_CONTEXT))
-    vendor.edit("wingdi.h", "DEVMODEW has no dmDisplayOrientation on CE 1.0 and 2.0", "  DWORD  dmDisplayFrequency; \n  DWORD  dmDisplayOrientation;\n} DEVMODEW",
-                "  DWORD  dmDisplayFrequency; \n#ifndef _WIN32_WCE\n  DWORD  dmDisplayOrientation;\n#endif\n} DEVMODEW")
+    vendor.edit("wingdi.h", "DEVMODEW has no dmDisplayOrientation before CE 5.0", "  DWORD  dmDisplayFrequency; \n  DWORD  dmDisplayOrientation;\n} DEVMODEW",
+                "  DWORD  dmDisplayFrequency; \n#if !defined(_WIN32_WCE) || _WIN32_WCE >= 0x500\n  DWORD  dmDisplayOrientation;\n#endif\n} DEVMODEW")
+    vendor.edit("wingdi.h", "GRADIENT_FILL_ flags are defined from CE 5.0",
+                "#if (WINVER >= 0x0500)\n#define GRADIENT_FILL_RECT_H 0x00\n#define GRADIENT_FILL_RECT_V 0x01\n#define GRADIENT_FILL_TRIANGLE 0x02\n#define GRADIENT_FILL_OP_FLAG 0xff\n",
+                "#if (WINVER >= 0x0500) || (defined(_WIN32_WCE) && _WIN32_WCE >= 0x500)\n#define GRADIENT_FILL_RECT_H 0x00\n#define GRADIENT_FILL_RECT_V 0x01\n"
+                "#define GRADIENT_FILL_TRIANGLE 0x02\n#define GRADIENT_FILL_OP_FLAG 0xff\n#endif\n#if (WINVER >= 0x0500)\n")
+    vendor.edit("wingdi.h", "CLEARTYPE_QUALITY is defined from CE 5.0", "#if _WIN32_WINNT >= 0x0500\n#define CLEARTYPE_QUALITY 5",
+                "#if _WIN32_WINNT >= 0x0500 || (defined(_WIN32_WCE) && _WIN32_WCE >= 0x500)\n#define CLEARTYPE_QUALITY 5")
     vendor.ce("commctrl.h", "TB_SETTOOLTIPS is WM_USER+81 on CE", "#define TB_SETTOOLTIPS\t(WM_USER+36)", "#define TB_SETTOOLTIPS\t(WM_USER+81)")
     vendor.ce("commctrl.h", "RB_GETBANDINFO is RB_GETBANDINFOW (WM_USER+28) on CE", "#define RB_GETBANDINFO (WM_USER+5)",
               "#define RB_GETBANDINFO (WM_USER+28)")

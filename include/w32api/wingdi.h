@@ -372,7 +372,7 @@ extern "C" {
 #define PROOF_QUALITY	2
 #define NONANTIALIASED_QUALITY 3
 #define ANTIALIASED_QUALITY 4
-#if _WIN32_WINNT >= 0x0500
+#if _WIN32_WINNT >= 0x0500 || (defined(_WIN32_WCE) && _WIN32_WCE >= 0x500)
 #define CLEARTYPE_QUALITY 5
 #endif
 #define DEFAULT_PITCH	0
@@ -1313,11 +1313,13 @@ extern "C" {
 #define CS_DISABLE          0x00000002
 #define CS_DELETE_TRANSFORM 0x00000003
 #endif
-#if (WINVER >= 0x0500)
+#if (WINVER >= 0x0500) || (defined(_WIN32_WCE) && _WIN32_WCE >= 0x500)
 #define GRADIENT_FILL_RECT_H 0x00
 #define GRADIENT_FILL_RECT_V 0x01
 #define GRADIENT_FILL_TRIANGLE 0x02
 #define GRADIENT_FILL_OP_FLAG 0xff
+#endif
+#if (WINVER >= 0x0500)
 #define COLORMATCHTOTARGET_EMBEDED 0x00000001
 #define CREATECOLORSPACE_EMBEDED   0x00000001
 #define SETICMPROFILE_EMBEDED      0x00000001
@@ -2043,7 +2045,7 @@ typedef struct _devicemodeW {
   DWORD  dmPelsHeight; 
   DWORD  dmDisplayFlags; 
   DWORD  dmDisplayFrequency; 
-#ifndef _WIN32_WCE
+#if !defined(_WIN32_WCE) || _WIN32_WCE >= 0x500
   DWORD  dmDisplayOrientation;
 #endif
 } DEVMODEW,*PDEVMODEW,*NPDEVMODEW,*LPDEVMODEW;

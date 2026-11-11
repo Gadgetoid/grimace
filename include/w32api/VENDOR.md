@@ -54,7 +54,9 @@ Windows CE has few ANSI functions, and the declarations of those a target lacks 
 - `winnt.h`: x86 CONTEXT has no ExtendedRegisters on CE
 - `winnt.h`: x86 FLOATING_SAVE_AREA has a pointer type, PFLOATING_SAVE_AREA
 - `excpt.h`: x86 DISPATCHER_CONTEXT is CE's registration pointer and ControlPc
-- `wingdi.h`: DEVMODEW has no dmDisplayOrientation on CE 1.0 and 2.0
+- `wingdi.h`: DEVMODEW has no dmDisplayOrientation before CE 5.0
+- `wingdi.h`: GRADIENT_FILL_ flags are defined from CE 5.0
+- `wingdi.h`: CLEARTYPE_QUALITY is defined from CE 5.0
 - `commctrl.h`: TB_SETTOOLTIPS is WM_USER+81 on CE
 - `commctrl.h`: RB_GETBANDINFO is RB_GETBANDINFOW (WM_USER+28) on CE
 - `commctrl.h`: TB_INSERTBUTTON and TB_ADDBUTTONS are the W messages on CE 2.0
