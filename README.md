@@ -160,7 +160,7 @@ Anything that can reach the TCP port can copy files to the device and run progra
 - Programs and DLLs have no `.pdata`, so CE can't unwind their frames: `__try` doesn't work in them, and a fault inside a window procedure ends the process.
 - The ARM target follows Microsoft's CE ARM calling standard as eVC3 compiles it; `make check-abi` checks it.
 - ARM CE 6.0 targets ARMV4I: code is built for ARMv4T and returns with `bx`, as do the import stubs, so Thumb code in the ROM can call it and be called.
-- `ceddk.h`, `msgqueue.h` and `pm.h` declare what CE 6.0 drivers use, from Microsoft's documentation. Their values haven't been checked against an SDK. `tests/ce6` builds a program, a control panel applet and a stream driver DLL.
+- `ceddk.h`, `msgqueue.h` and `pm.h` declare what CE 6.0 drivers use, checked against Platform Builder 6.0. `tests/ce6` builds a program, a control panel applet and a stream driver DLL.
 
 ## Make
 

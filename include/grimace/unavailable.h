@@ -17,6 +17,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -1565,6 +1566,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -6167,6 +6169,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -7777,6 +7780,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -9404,6 +9408,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -10999,6 +11004,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -12594,6 +12600,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -14205,6 +14212,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -23513,6 +23521,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -25065,6 +25074,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -26757,6 +26767,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 #endif
 #ifdef GRIMACE_PM_H
@@ -28544,6 +28555,7 @@ extern __typeof__(CreateMsgQueue) CreateMsgQueue __attribute__((unavailable("not
 extern __typeof__(GetMsgQueueInfo) GetMsgQueueInfo __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
 extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
+extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
 #endif
 #ifdef GRIMACE_PM_H
