@@ -1,0 +1,46 @@
+## KernelIoControl(dwIoControlCode, lpInBuf, nInBufSize, lpOutBuf, nOutBufSize, lpBytesReturned)
+Passes an IOCTL to the OEM adaptation layer (OAL) in the kernel.
+
+The kernel doesn't process the call: it hands the parameters to the
+OAL's OEMIoControl, as DeviceIoControl does for a driver. Which codes
+work depends on the device's OAL.
+
+@param dwIoControlCode The IOCTL.
+@param lpInBuf Input buffer, or NULL.
+@param nInBufSize Size of lpInBuf in bytes.
+@param lpOutBuf Output buffer, or NULL.
+@param nOutBufSize Size of lpOutBuf in bytes.
+@param lpBytesReturned Receives the number of bytes written to lpOutBuf.
+@return TRUE on success, FALSE on failure (see GetLastError).
+
+## InterruptInitialize(idInt, hEvent, pvData, cbData)
+Registers an event for a hardware interrupt and enables the interrupt.
+
+Call it before waiting on hEvent: the kernel signals hEvent when the
+interrupt's ISR returns idInt. Wait on hEvent only with
+WaitForSingleObject; WaitForMultipleObjects fails with it, and waiting
+before this call makes this call fail. The kernel passes pvData to the
+OAL's OEMInterruptEnable.
+
+@param idInt SYSINTR identifier of the interrupt.
+@param hEvent Event, from CreateEvent, for the interrupt service thread
+       to wait on.
+@param pvData Data for OEMInterruptEnable, or NULL.
+@param cbData Size of pvData in bytes.
+@return TRUE on success, FALSE on failure.
+
+## InterruptDone(idInt)
+Tells the kernel the driver has finished with an interrupt.
+
+Call it after handling each interrupt, before waiting on the event
+again: it unmasks the interrupt, through the OAL's OEMInterruptDone.
+
+@param idInt SYSINTR identifier of the interrupt.
+
+## InterruptDisable(idInt)
+Disables a hardware interrupt and unregisters its event.
+
+Call it before closing the event InterruptInitialize registered. The
+kernel calls the OAL's OEMInterruptDisable.
+
+@param idInt SYSINTR identifier of the interrupt.

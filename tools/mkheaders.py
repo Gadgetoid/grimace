@@ -15,8 +15,8 @@ UNWRAPPED = {"pshpack1.h", "pshpack2.h", "pshpack4.h", "pshpack8.h", "poppack.h"
 WINDOWS_EXTRAS = ["stdint.h", "mmsystem.h", "shellapi.h", "wchar.h", "stdlib.h", "string.h", "stdio.h", "math.h", "ctype.h", "setjmp.h", "time.h", "windbase.h"]
 WINDOWS_VERSION_EXTRAS = [("GRIMACE_WCE == 101", "windowsx.h"), ("GRIMACE_CE >= 2 || GRIMACE_WCE == 101", "tchar.h")]
 OWN_HEADERS = ["wchar.h", "stdlib.h", "string.h", "stdio.h", "math.h", "ctype.h", "setjmp.h", "time.h", "windbase.h", "tchar.h", "ceddk.h", "msgqueue.h",
-               "pm.h", "winddi.h"]
-DRIVER_HEADERS = ["ceddk.h", "msgqueue.h", "pm.h"]
+               "pm.h", "winddi.h", "pkfuncs.h"]
+DRIVER_HEADERS = ["ceddk.h", "msgqueue.h", "pm.h", "pkfuncs.h"]
 MACRO_HEADERS = {"windowsx.h"}
 MIPS_TARGET = ["--target=mipsel-unknown-none-elf", "-march=mips1", "-msoft-float"]
 ARCHITECTURES = {"mips": {"target": MIPS_TARGET, "defines": []},

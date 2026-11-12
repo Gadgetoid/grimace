@@ -261,12 +261,20 @@ extern struct grimace_lazy_import __grimace_lazy_import_ImmSimulateHotKey;
 extern struct grimace_lazy_import __grimace_lazy_import_ImmUnregisterWordW;
 #define __grimace_lazy_InitCommonControlsEx 1
 extern struct grimace_lazy_import __grimace_lazy_import_InitCommonControlsEx;
+#define __grimace_lazy_InterruptDisable 1
+extern struct grimace_lazy_import __grimace_lazy_import_InterruptDisable;
+#define __grimace_lazy_InterruptDone 1
+extern struct grimace_lazy_import __grimace_lazy_import_InterruptDone;
+#define __grimace_lazy_InterruptInitialize 1
+extern struct grimace_lazy_import __grimace_lazy_import_InterruptInitialize;
 #define __grimace_lazy_IsDBCSLeadByte 1
 extern struct grimace_lazy_import __grimace_lazy_import_IsDBCSLeadByte;
 #define __grimace_lazy_IsDBCSLeadByteEx 1
 extern struct grimace_lazy_import __grimace_lazy_import_IsDBCSLeadByteEx;
 #define __grimace_lazy_IsValidCodePage 1
 extern struct grimace_lazy_import __grimace_lazy_import_IsValidCodePage;
+#define __grimace_lazy_KernelIoControl 1
+extern struct grimace_lazy_import __grimace_lazy_import_KernelIoControl;
 #define __grimace_lazy_LCMapStringW 1
 extern struct grimace_lazy_import __grimace_lazy_import_LCMapStringW;
 #define __grimace_lazy_LoadCursorW 1
@@ -729,12 +737,20 @@ extern struct grimace_lazy_import __grimace_lazy_import_ImmSimulateHotKey;
 extern struct grimace_lazy_import __grimace_lazy_import_ImmUnregisterWordW;
 #define __grimace_lazy_InitCommonControlsEx 1
 extern struct grimace_lazy_import __grimace_lazy_import_InitCommonControlsEx;
+#define __grimace_lazy_InterruptDisable 1
+extern struct grimace_lazy_import __grimace_lazy_import_InterruptDisable;
+#define __grimace_lazy_InterruptDone 1
+extern struct grimace_lazy_import __grimace_lazy_import_InterruptDone;
+#define __grimace_lazy_InterruptInitialize 1
+extern struct grimace_lazy_import __grimace_lazy_import_InterruptInitialize;
 #define __grimace_lazy_IsDBCSLeadByte 1
 extern struct grimace_lazy_import __grimace_lazy_import_IsDBCSLeadByte;
 #define __grimace_lazy_IsDBCSLeadByteEx 1
 extern struct grimace_lazy_import __grimace_lazy_import_IsDBCSLeadByteEx;
 #define __grimace_lazy_IsValidCodePage 1
 extern struct grimace_lazy_import __grimace_lazy_import_IsValidCodePage;
+#define __grimace_lazy_KernelIoControl 1
+extern struct grimace_lazy_import __grimace_lazy_import_KernelIoControl;
 #define __grimace_lazy_LCMapStringW 1
 extern struct grimace_lazy_import __grimace_lazy_import_LCMapStringW;
 #define __grimace_lazy_LoadCursorW 1
@@ -1086,6 +1102,8 @@ extern struct grimace_lazy_import __grimace_lazy_import_ImageList_Copy;
 extern struct grimace_lazy_import __grimace_lazy_import_ImageList_SetImageCount;
 #define __grimace_lazy_InitCommonControlsEx 1
 extern struct grimace_lazy_import __grimace_lazy_import_InitCommonControlsEx;
+#define __grimace_lazy_KernelIoControl 1
+extern struct grimace_lazy_import __grimace_lazy_import_KernelIoControl;
 #define __grimace_lazy_LoadCursorW 1
 extern struct grimace_lazy_import __grimace_lazy_import_LoadCursorW;
 #define __grimace_lazy_LoadFSD 1

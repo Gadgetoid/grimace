@@ -156,7 +156,7 @@ The Win32 headers are CeGCC's w32api (public domain) in `include/w32api`, patche
 - Programs and DLLs have no `.pdata`, so CE can't unwind their frames: `__try` doesn't work in them, and a fault inside a window procedure ends the process.
 - The ARM target follows Microsoft's CE ARM calling standard as eVC3 compiles it; `make check-abi` checks it.
 - ARM CE 6.0 targets ARMV4I: code is built for ARMv4T and returns with `bx`, as do the import stubs, so Thumb code in the ROM can call it and be called.
-- `ceddk.h`, `msgqueue.h` and `pm.h` declare what CE 6.0 drivers use, checked against Platform Builder 6.0. `tests/ce6` builds a program, a control panel applet a stream driver DLL and a display driver DLL.
+- `ceddk.h`, `msgqueue.h` and `pm.h` declare what CE 6.0 drivers use, checked against Platform Builder 6.0. `pkfuncs.h` declares `KernelIoControl`, `InterruptInitialize`, `InterruptDone` and `InterruptDisable`, from Microsoft's public reference, without the OAL's IOCTL and `SYSINTR_` values, which no public source gives. `tests/ce6` builds a program, a control panel applet a stream driver DLL and a display driver DLL.
 - `winddi.h` declares the display driver interface: `DrvEnableDriver`, `DRVENABLEDATA`, the `ENGCALLBACKS` table drivers call GDI through (CE exports no `Eng*` functions), and the structures and constants. It's written only from Microsoft's public Windows CE 5.0 reference and mingw-w64's public domain `winddi.h`, not from Platform Builder or any GPE or BSP source. Where the reference contradicts itself, the doc comments say which reading the header takes.
 
 ## Make

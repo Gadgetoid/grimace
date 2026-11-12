@@ -2,12 +2,15 @@
 #include <ceddk.h>
 #include <msgqueue.h>
 #include <pm.h>
+#include <pkfuncs.h>
 #include <string.h>
 
 struct device {
     volatile DWORD *registers;
     HANDLE queue;
     HANDLE notifications;
+    HANDLE interrupt;
+    DWORD sysintr;
     BYTE buffer[64];
     BYTE log[65536];
     DWORD idle;
@@ -28,10 +31,16 @@ DWORD TST_Init(LPCTSTR context, LPCVOID bus_context) {
     state.queue = CreateMsgQueue(NULL, &options);
     state.notifications = RequestPowerNotifications(state.queue, PBT_TRANSITION | PBT_RESUME);
     CeSetThreadPriority(GetCurrentThread(), 100);
+    state.interrupt = CreateEventW(NULL, FALSE, FALSE, NULL);
+    if (KernelIoControl((DWORD)bus_context, &state.sysintr, sizeof state.sysintr, &state.sysintr, sizeof state.sysintr, NULL)) {
+        InterruptInitialize(state.sysintr, state.interrupt, NULL, 0);
+    }
     return (DWORD)&state;
 }
 
 BOOL TST_Deinit(DWORD context) {
+    InterruptDisable(state.sysintr);
+    CloseHandle(state.interrupt);
     StopPowerNotifications(state.notifications);
     CloseMsgQueue(state.queue);
     MmUnmapIoSpace((PVOID)state.registers, 0x1000);
@@ -53,6 +62,7 @@ DWORD TST_Read(DWORD context, LPVOID buffer, DWORD count) {
     if (ReadMsgQueue(state.queue, message, sizeof message, &read, 0, &flags)) {
         memcpy(state.buffer, message, read < sizeof state.buffer ? read : sizeof state.buffer);
     }
+    InterruptDone(state.sysintr);
     count = count < sizeof state.buffer ? count : sizeof state.buffer;
     memcpy(buffer, state.buffer, count);
     return count;
