@@ -11,6 +11,8 @@ struct device {
     HANDLE notifications;
     HANDLE interrupt;
     DWORD sysintr;
+    ULONG physical;
+    PVOID frame;
     BYTE buffer[64];
     BYTE log[65536];
     DWORD idle;
@@ -40,6 +42,9 @@ DWORD TST_Init(LPCTSTR context, LPCVOID bus_context) {
 
 BOOL TST_Deinit(DWORD context) {
     InterruptDisable(state.sysintr);
+    if (state.frame) {
+        FreePhysMem(state.frame);
+    }
     CloseHandle(state.interrupt);
     StopPowerNotifications(state.notifications);
     CloseMsgQueue(state.queue);
@@ -77,6 +82,21 @@ DWORD TST_Seek(DWORD context, long amount, WORD type) {
 }
 
 BOOL TST_IOControl(DWORD context, DWORD code, PBYTE input, DWORD input_size, PBYTE output, DWORD output_size, PDWORD returned) {
+    HANDLE caller = OpenProcess(0, FALSE, GetCallerVMProcessId());
+    if (!state.frame) {
+        state.frame = AllocPhysMem(0x10000, PAGE_READWRITE, 0, 0, &state.physical);
+    }
+    if (caller && output_size >= sizeof(PVOID)) {
+        PVOID view = VirtualAllocEx(caller, NULL, 0x10000, MEM_RESERVE, PAGE_NOACCESS);
+        if (view && VirtualCopyEx(caller, view, GetCurrentProcess(), state.frame, 0x10000, PAGE_READWRITE)) {
+            *(PVOID *)output = view;
+        } else if (view) {
+            VirtualFreeEx(caller, view, 0, MEM_RELEASE);
+        }
+    }
+    if (caller) {
+        CloseHandle(caller);
+    }
     if (returned) {
         *returned = 0;
     }

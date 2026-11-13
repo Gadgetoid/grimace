@@ -66,6 +66,48 @@ VOID InterruptDone(DWORD idInt);
  * @note Windows CE 2.0 and later.
  */
 VOID InterruptDisable(DWORD idInt);
+/**
+ * Maps memory from one process into another's address space.
+ *
+ * The CE 6.0 form of VirtualCopy, across processes: drivers use it to give
+ * an application a view of a buffer they allocated.
+ *
+ * @param hDstProc Process to map into.
+ * @param lpvDest Address in hDstProc, reserved with VirtualAllocEx.
+ * @param hSrcProc Process the memory belongs to.
+ * @param lpvSrc Address in hSrcProc.
+ * @param cbSize Bytes to map.
+ * @param fdwProtect PAGE_ protection for the mapping.
+ * @return TRUE on success, FALSE on failure (see GetLastError).
+ */
+BOOL VirtualCopyEx(HANDLE hDstProc, LPVOID lpvDest, HANDLE hSrcProc, LPVOID lpvSrc, DWORD cbSize, DWORD fdwProtect);
+/**
+ * Allocates physically contiguous memory, for DMA or a frame buffer.
+ *
+ * Free it with FreePhysMem.
+ *
+ * @param cbSize Bytes to allocate.
+ * @param fdwProtect PAGE_ protection.
+ * @param dwAlignmentMask Alignment mask for the physical address, or 0.
+ * @param dwFlags Reserved, 0.
+ * @param pPhysicalAddress Receives the physical address.
+ * @return The memory's virtual address, or NULL on failure.
+ */
+LPVOID AllocPhysMem(DWORD cbSize, DWORD fdwProtect, DWORD dwAlignmentMask, DWORD dwFlags, PULONG pPhysicalAddress);
+/**
+ * Frees memory from AllocPhysMem.
+ *
+ * @param lpvAddress Address AllocPhysMem returned.
+ * @return TRUE on success, FALSE on failure.
+ */
+BOOL FreePhysMem(LPVOID lpvAddress);
+/**
+ * Returns the ID of the process whose address space the caller is
+ * working in: in a driver, the application that called it.
+ *
+ * @return The process ID.
+ */
+DWORD GetCallerVMProcessId(VOID);
 
 #ifdef __cplusplus
 }

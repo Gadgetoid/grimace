@@ -20,6 +20,12 @@ extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 #endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+#endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(StopPowerNotifications) StopPowerNotifications __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
@@ -1568,6 +1574,12 @@ extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+#endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
 #endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 3.0 or later on ARM")));
@@ -6172,6 +6184,12 @@ extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
 #endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
+#endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
 extern __typeof__(StopPowerNotifications) StopPowerNotifications __attribute__((unavailable("not in Windows CE 1.0 or later on MIPS")));
@@ -7782,6 +7800,12 @@ extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
+#endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
 #endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 2.0 or later on MIPS")));
@@ -9411,6 +9435,12 @@ extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
 #endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
+#endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
 extern __typeof__(StopPowerNotifications) StopPowerNotifications __attribute__((unavailable("not in Windows CE 1.0 or later on SH3")));
@@ -11007,6 +11037,12 @@ extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
 #endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
+#endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
 extern __typeof__(StopPowerNotifications) StopPowerNotifications __attribute__((unavailable("not in Windows CE 1.01 or later on SH3")));
@@ -12602,6 +12638,12 @@ extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
+#endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
 #endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 2.0 or later on SH3")));
@@ -14214,6 +14256,12 @@ extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
+#endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
 #endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 2.0 or later on X86")));
@@ -23524,6 +23572,12 @@ extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
 #endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
+#endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
 extern __typeof__(StopPowerNotifications) StopPowerNotifications __attribute__((unavailable("not in Windows CE 3.0 on jornada720")));
@@ -25076,6 +25130,12 @@ extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
+#endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
 #endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 2.0 on joyride")));
@@ -26771,10 +26831,14 @@ extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 #endif
 #ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(InterruptDisable) InterruptDisable __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(InterruptDone) InterruptDone __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(InterruptInitialize) InterruptInitialize __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 extern __typeof__(KernelIoControl) KernelIoControl __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
 #endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 1.0 on velo1")));
@@ -28563,6 +28627,12 @@ extern __typeof__(OpenMsgQueue) OpenMsgQueue __attribute__((unavailable("not in 
 extern __typeof__(ReadMsgQueue) ReadMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
 extern __typeof__(ReadMsgQueueEx) ReadMsgQueueEx __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
 extern __typeof__(WriteMsgQueue) WriteMsgQueue __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
+#endif
+#ifdef GRIMACE_PKFUNCS_H
+extern __typeof__(AllocPhysMem) AllocPhysMem __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
+extern __typeof__(FreePhysMem) FreePhysMem __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
+extern __typeof__(GetCallerVMProcessId) GetCallerVMProcessId __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
+extern __typeof__(VirtualCopyEx) VirtualCopyEx __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
 #endif
 #ifdef GRIMACE_PM_H
 extern __typeof__(RequestPowerNotifications) RequestPowerNotifications __attribute__((unavailable("not in Windows CE 2.0 on velo1")));
